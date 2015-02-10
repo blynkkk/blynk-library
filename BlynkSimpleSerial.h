@@ -5,10 +5,10 @@
 
 #if defined(USBCON)
     // For versions with hw USB, like Micro
-    typedef BlynkArduinoStreamChecked<Serial_> ArduinoHwSerial;
+    typedef BlynkTransportSerialChecked<Serial_> ArduinoHwSerial;
 #else
     // For versions with UART
-    typedef BlynkArduinoStream<HardwareSerial> ArduinoHwSerial;
+    typedef BlynkTransportSerial<HardwareSerial> ArduinoHwSerial;
 #endif
 
 static ArduinoHwSerial _blynkTransport(Serial);

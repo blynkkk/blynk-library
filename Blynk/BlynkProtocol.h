@@ -1,8 +1,6 @@
 #ifndef BlynkProtocol_h
 #define BlynkProtocol_h
 
-#define BLYNK_MAX_READBYTES 200
-
 #include <string.h>
 #include <stdlib.h>
 #include <Blynk/BlynkDebug.h>

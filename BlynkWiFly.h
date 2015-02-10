@@ -1,0 +1,89 @@
+#ifndef BlynkEthernet_h
+#define BlynkEthernet_h
+
+#include <Blynk/BlynkProtocol.h>
+#include <BlynkArduinoClient.h>
+
+class BlynkTransportWiFly
+{
+public:
+    BlynkTransportWiFly()
+        : client(NULL)
+    {}
+
+    void begin_domain(const char* d,  uint16_t p) {
+        if (client)
+            delete client;
+        client = new WiFlyClient(d, p);
+    }
+
+    void begin_addr(uint8_t* a, uint16_t p) {
+        if (client)
+            delete client;
+        client = new WiFlyClient(a, p);
+    }
+
+    int connect() {
+        if (!client)
+            return 0;
+        if (client->_domain) {
+            BLYNK_LOG("WiFly: Connecting to %s:%d", client->_domain, client->_port);
+        } else if (client->_ip) {
+            BLYNK_LOG("WiFly: Connecting to %d.%d.%d.%d:%d",
+                client->_ip[0], client->_ip[1], client->_ip[2], client->_ip[3], port);
+        }
+        return client->connect();
+    }
+    void disconnect() { client->stop(); }
+
+    size_t read(void* buf, size_t len) {
+        return client->readBytes((char*)buf, len);
+    }
+    size_t write(const void* buf, size_t len) {
+        return client->write((const uint8_t*)buf, len);
+    }
+
+    void flush()	{ client->flush(); }
+    int connected() { return client->connected(); }
+    int available() { return client->available(); }
+
+private:
+    WiFlyClient* client;
+};
+
+class BlynkWiFly
+    : public BlynkProtocol<BlynkTransportWiFly>
+{
+public:
+    BlynkWiFly(BlynkTransportWiFly& conn)
+        : BlynkProtocol<BlynkTransportWiFly>(conn)
+    {}
+
+    void begin( const char* auth,
+                const char* ssid, const char* pass,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
+        WiFly.begin();
+        if (!WiFly.join(ssid, pass)) {
+            BLYNK_LOG("WiFly: Association failed.");
+            return;
+        }
+        this->authkey = auth;
+        this->conn.begin_domain(domain, port);
+    }
+
+    void run(void)
+    {
+        if(!this->conn.connected()) {
+            BLYNK_LOG("Reconnecting...");
+            this->connect();
+        }
+        if (this->conn.available()) {
+            this->processInput();
+        }
+    }
+
+};
+
+#endif

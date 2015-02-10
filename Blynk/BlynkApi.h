@@ -1,6 +1,7 @@
 #ifndef BlynkApi_h
 #define BlynkApi_h
 
+#include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkParam.h>
 #include <Blynk/Delegate.h>
 #include <Arduino.h>
@@ -61,8 +62,8 @@ protected:
     void processCmd(BlynkParam& param);
 
 private:
-    WidgetReadHandler  vPinsR[16];
-    WidgetWriteHandler vPinsW[16];
+    WidgetReadHandler  vPinsR[BLYNK_MAX_HANDLERS];
+    WidgetWriteHandler vPinsW[BLYNK_MAX_HANDLERS];
 };
 
 template<class Proto>
@@ -103,7 +104,7 @@ void BlynkApi<Proto>::processCmd(BlynkParam& param)
             } else if (!strcmp(it.asStr(), "pu")) {
                 pinMode(pin, INPUT_PULLUP);
             } else {
-                // TODO
+                //! \todo
             }
         } else if (!strcmp(cmd, "dw")) {
             BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());

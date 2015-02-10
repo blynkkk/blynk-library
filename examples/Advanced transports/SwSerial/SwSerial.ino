@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 #include <BlynkSerial.h>
 
-typedef BlynkArduinoStream<SoftwareSerial> SwSerialTransp;
+typedef BlynkTransportSerial<SoftwareSerial> SwSerialTransp;
 
 SoftwareSerial mySerial(10,11);
 SwSerialTransp myTransp(mySerial);

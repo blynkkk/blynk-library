@@ -3,21 +3,22 @@
 
 #include <Blynk/BlynkProtocol.h>
 #include <BlynkArduinoClient.h>
+#include <Ethernet.h>
 
 static const byte _blynkEthernetMac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
 
-class BlynkEthernet
+class BlynkTransportEthernet
     : public BlynkProtocol<BlynkArduinoClient>
 {
 public:
-    BlynkEthernet(BlynkArduinoClient& conn)
+    BlynkTransportEthernet(BlynkArduinoClient& conn)
         : BlynkProtocol<BlynkArduinoClient>(conn)
     {}
 
     void begin( const char* auth,
-                const char* domain = "blynk.lan.ua",
-                uint16_t port = 8181,
-                const byte mac[] = _blynkEthernetMac)
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t port      = BLYNK_DEFAULT_PORT,
+                const byte mac[]   = _blynkEthernetMac)
     {
         Ethernet.begin((byte*)mac);
         this->authkey = auth;
@@ -37,7 +38,7 @@ public:
 
     void begin( const char* auth,
                 const byte addr[],
-                uint16_t port = 8181,
+                uint16_t port,
                 const byte mac[] = _blynkEthernetMac)
     {
         Ethernet.begin((byte*)mac);
