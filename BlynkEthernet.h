@@ -7,11 +7,11 @@
 
 static const byte _blynkEthernetMac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
 
-class BlynkTransportEthernet
+class BlynkEthernet
     : public BlynkProtocol<BlynkArduinoClient>
 {
 public:
-    BlynkTransportEthernet(BlynkArduinoClient& conn)
+    BlynkEthernet(BlynkArduinoClient& conn)
         : BlynkProtocol<BlynkArduinoClient>(conn)
     {}
 

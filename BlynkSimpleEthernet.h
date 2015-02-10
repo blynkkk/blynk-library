@@ -7,6 +7,6 @@
 
 static EthernetClient _blynkEthernetClient;
 static BlynkArduinoClient _blynkTransport(_blynkEthernetClient);
-BlynkTransportEthernet Blynk(_blynkTransport);
+BlynkEthernet Blynk(_blynkTransport);
 
 #endif
