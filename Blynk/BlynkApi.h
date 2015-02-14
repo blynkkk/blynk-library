@@ -35,16 +35,48 @@ public:
         memset(vPinsW, 0, sizeof(vPinsW));
     }
 
+    void virtualWrite(int pin, int value) {
+        char str[2 + 8 * sizeof(value)];
+        itoa(value, str, 10);
+        virtualWrite(pin, str);
+    }
+
+    void virtualWrite(unsigned int pin, int value) {
+        char str[1 + 8 * sizeof(value)];
+        utoa(value, str, 10);
+        virtualWrite(pin, str);
+    }
+
+    void virtualWrite(int pin, long value) {
+        char str[2 + 8 * sizeof(value)];
+        ltoa(value, str, 10);
+        virtualWrite(pin, str);
+    }
+
+    void virtualWrite(int pin, unsigned long value) {
+        char str[1 + 8 * sizeof(value)];
+        ultoa(value, str, 10);
+        virtualWrite(pin, str);
+    }
+
+    void virtualWrite(int pin, float value) {
+        char str[33];
+        dtostrf(value, 5, 3, str);
+        virtualWrite(pin, str);
+    }
+
+    void virtualWrite(int pin, double value) {
+        char str[33];
+        dtostrf(value, 5, 3, str);
+        virtualWrite(pin, str);
+    }
+
+    void virtualWrite(int pin, const char* str) {
+        virtualWrite(pin, str, strlen(str));
+    }
+
     void virtualWrite(int pin, const BlynkParam& param) {
         virtualWrite(pin, param.getBuffer(), param.getLength());
-    }
-
-    void virtualWrite(int pin, int val) {
-        virtualWrite(pin, "1024", 4); //! \todo
-    }
-
-    void virtualWrite(int pin, unsigned long val) {
-        virtualWrite(pin, "1024", 4); //! \todo
     }
 
     void virtualWrite(int pin, const void* buff, size_t len) {
@@ -80,9 +112,9 @@ void BlynkApi<Proto>::processCmd(BlynkParam& param)
     if (       !strcmp(cmd, "dr")) {
         virtualWrite(pin, digitalRead(pin));
     } else if (!strcmp(cmd, "ar")) {
-        virtualWrite(pin, analogRead(pin));
+        virtualWrite(pin, analogRead(pin)); //! \todo A0+pin?
     } else if (!strcmp(cmd, "vr") && vPinsR[pin]) {
-        BlynkReq req;
+        BlynkReq req = { pin, 0, BLYNK_SUCCESS };
         vPinsR[pin](req);
     } else {
 
