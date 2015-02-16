@@ -1,5 +1,5 @@
 /**
- * @file       BlynkParam.h
+ * @file       BlynkProtocol.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
  * @brief      Blynk protocol implementation

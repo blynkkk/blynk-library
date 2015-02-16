@@ -1,5 +1,13 @@
-#ifndef BlynkEthernet_h
-#define BlynkEthernet_h
+/**
+ * @file       BlynkWiFly.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      
+ *
+ */
+
+#ifndef BlynkWiFly_h
+#define BlynkWiFly_h
 
 #include <Blynk/BlynkProtocol.h>
 #include <BlynkArduinoClient.h>

@@ -1,3 +1,11 @@
+/**
+ * @file       BlynkSimpleWifi.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      
+ *
+ */
+
 #ifndef BlynkSimpleWifi_h
 #define BlynkSimpleWifi_h
 

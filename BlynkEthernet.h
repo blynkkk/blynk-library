@@ -1,3 +1,11 @@
+/**
+ * @file       BlynkEthernet.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      
+ *
+ */
+
 #ifndef BlynkEthernet_h
 #define BlynkEthernet_h
 

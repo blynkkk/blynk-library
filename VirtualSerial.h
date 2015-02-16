@@ -1,3 +1,11 @@
+/**
+ * @file       VirtualSerial.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      
+ *
+ */
+
 #ifndef VirtualSerial_h
 #define VirtualSerial_h
 

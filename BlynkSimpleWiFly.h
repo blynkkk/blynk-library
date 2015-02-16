@@ -1,3 +1,11 @@
+/**
+ * @file       BlynkSimpleWiFly.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      
+ *
+ */
+
 #ifndef BlynkSimpleWiFly_h
 #define BlynkSimpleWiFly_h
 
