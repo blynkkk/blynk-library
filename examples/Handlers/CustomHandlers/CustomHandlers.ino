@@ -8,18 +8,18 @@ Servo servo;
 
 void setup()
 {
-  Blynk.begin("6b291640fd1c4bf69368bf555f514bb9");
+  Blynk.begin("bfedeff2b5a1445eb6e0519a4c965b8c");
   servo.attach(9);
 }
 
-BLYNK_ON_WRITE(V2)
+BLYNK_ON_WRITE(2)
 {
   servo.write(param[0].asInt());
 }
 
-BLYNK_ON_READ(V3)
+BLYNK_ON_READ(3)
 {
-  Blynk.virtualWrite(V3, millis());
+  Blynk.virtualWrite(3, millis());
 }
 
 void loop()

@@ -1,9 +1,15 @@
+/**
+ * @file       BlynkParam.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      Blynk protocol definitions
+ *
+ */
+
 #ifndef BlynkProtocolDefs_h
 #define BlynkProtocolDefs_h
 
 #include <inttypes.h>
-
-#define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
 
 enum BlynkCmd
 {

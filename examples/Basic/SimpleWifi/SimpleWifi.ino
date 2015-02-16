@@ -3,7 +3,7 @@
 #include <BlynkSimpleWifi.h>
 
 // Auth token you get from App
-char auth[] = "6b291640fd1c4bf69368bf555f514bb9";
+char auth[] = "bfedeff2b5a1445eb6e0519a4c965b8c";
 
 void setup()
 {

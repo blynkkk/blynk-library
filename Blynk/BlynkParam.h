@@ -1,8 +1,19 @@
+/**
+ * @file       BlynkParam.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      Container for handler parameters
+ *
+ */
+
 #ifndef BlynkParam_h
 #define BlynkParam_h
 
 #include <string.h>
 #include <stdlib.h>
+#include <inttypes.h>
+#include <Blynk/BlynkConfig.h>
+#include <Blynk/BlynkDebug.h>
 
 class BlynkParam
 {
@@ -67,7 +78,7 @@ public:
         return iterator::invalid();
     }
 
-    void* getBuffer() const { return buff; }
+    uint8_t* getBuffer() const { return (uint8_t*)buff; }
     size_t getLength() const { return len; }
 
 private:

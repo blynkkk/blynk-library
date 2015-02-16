@@ -8,39 +8,31 @@ class VirtualSerial
     : public Print
 {
 public:
-    typedef void (*WriteHandler) (const uint8_t* buff, size_t len);
+    VirtualSerial(int pin)
+        : mPin(pin), mOutQty(0)
+    {}
 
-    VirtualSerial(int pin, WriteHandler on_write = NULL)
-        : mPin(pin), mOutQty(0), mOnWrite(on_write)
-    {
-        Blynk.attachVitrualPin(pin, WidgetWriteHandler(this, &VirtualSerial::onWrite));
-    }
-    ~VirtualSerial() {}
-
-    virtual size_t write(uint8_t byte) {
+    virtual size_t write(uint8_t byte) override {
         mOutBuf[mOutQty++] = byte;
-        if (mOutQty > sizeof(mOutBuf)) {
-            Blynk.virtualWrite(mPin, mOutBuf, mOutQty);
-            mOutQty = 0;
+        if (mOutQty > sizeof(mOutBuf) || byte == '\n') {
+            flush();
         }
         return 1;
     }
-	
-    using Print::write;
-	
-private:
-    void onWrite(BlynkReq& req, const BlynkParam& param) {
-        if (mOnWrite) {
-            mOnWrite((uint8_t*)param.getBuffer(), param.getLength());
+
+    void flush() {
+        if (mOutQty) {
+            Blynk.virtualWrite(mPin, mOutBuf, mOutQty);
+            mOutQty = 0;
         }
     }
 
+    using Print::write;
+
 private:
-    //BlynkApi&	mBlynk;
-    int			mPin;
-    uint8_t		mOutBuf[16];
-    uint8_t		mOutQty;
-    WriteHandler mOnWrite;
+    uint8_t mPin;
+    uint8_t mOutBuf[16];
+    uint8_t mOutQty;
 };
 
 #endif

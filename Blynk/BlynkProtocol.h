@@ -1,3 +1,11 @@
+/**
+ * @file       BlynkParam.h
+ * @author     Volodymyr Shymanskyy
+ * @date       Jan 2015
+ * @brief      Blynk protocol implementation
+ *
+ */
+
 #ifndef BlynkProtocol_h
 #define BlynkProtocol_h
 
@@ -6,20 +14,26 @@
 #include <Blynk/BlynkDebug.h>
 #include <Blynk/BlynkProtocolDefs.h>
 #include <Blynk/BlynkApi.h>
-#include <Arduino.h>
 
 template <class Transp>
 class BlynkProtocol
     : public BlynkApi< BlynkProtocol<Transp> >
 {
 public:
-    BlynkProtocol(Transp& conn) : conn(conn), authkey(NULL) {}
+    BlynkProtocol(Transp& conn)
+        : conn(conn), authkey(NULL)
+        , lastActivityIn(0)
+        , lastActivityOut(0)
+    {}
     bool connect();
     void processInput(void);
-    void send(uint8_t command, const void* data, int16_t length);
+    void send(const void* data, size_t length) {
+        sendCmd(BLYNK_CMD_HARDWARE, data, length);
+    }
 
 private:
     bool readHeader(BlynkHeader& hdr);
+    void sendCmd(uint8_t cmd, const void* data, size_t length);
 
 protected:
     Transp& conn;
@@ -35,7 +49,7 @@ bool BlynkProtocol<Transp>::connect()
     if (conn.connect())
     {
         BLYNK_LOG("Transport connected");
-        send(BLYNK_CMD_LOGIN, authkey, 32);
+        sendCmd(BLYNK_CMD_LOGIN, authkey, 32);
 
         BlynkHeader hdr;
         if (!readHeader(hdr) ||
@@ -69,8 +83,8 @@ void BlynkProtocol<Transp>::processInput(void)
     if (hdr.type == BLYNK_CMD_RESPONSE)
         return;
 
-    if (hdr.length > BLYNK_MAX_READBYTES) { //! \todo memFree? ^_^
-        BLYNK_LOG("Big packet, discarded");
+    if (hdr.length > BLYNK_MAX_READBYTES) {
+        BLYNK_LOG("Packet size (%d) > max allowed (%d)", hdr.length, BLYNK_MAX_READBYTES);
         return;
     }
 
@@ -125,10 +139,10 @@ bool BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 
 template <class Transp>
 inline
-void BlynkProtocol<Transp>::send(uint8_t command, const void* data, int16_t length)
+void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length)
 {
     BlynkHeader hdr;
-    hdr.type = command;
+    hdr.type = cmd;
     hdr.msg_id = htons(12345);
     hdr.length = htons(length);
     conn.write(&hdr, sizeof(hdr));

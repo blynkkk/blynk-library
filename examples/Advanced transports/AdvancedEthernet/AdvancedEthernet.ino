@@ -4,7 +4,7 @@
 #include <BlynkSimpleEthernet.h>
 
 // Auth token you get from App
-char auth[] = "6b291640fd1c4bf69368bf555f514bb9";
+char auth[] = "bfedeff2b5a1445eb6e0519a4c965b8c";
 
 // Mac address should be different for each device in your LAN
 byte arduino_mac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };

@@ -4,12 +4,12 @@
 #include <BlynkSimpleEthernet.h>
 #include <VirtualSerial.h>
 
-VirtualSerial BlynkSerial(1, onReceive);
+VirtualSerial BlynkSerial(1);
 
 void setup()
 {
-  Blynk.begin("6b291640fd1c4bf69368bf555f514bb9");
-  Blynk.onConnect(onConnect);
+  Blynk.begin("bfedeff2b5a1445eb6e0519a4c965b8c");
+  //TODO: Blynk.onConnect(onConnect);
 }
 
 void onConnect()
@@ -17,10 +17,10 @@ void onConnect()
   BlynkSerial.println("Hello there ;)");
 }
 
-void onReceive(const uint8_t* buff, size_t len)
+BLYNK_ON_WRITE(1)
 {
   BlynkSerial.print("I got:");
-  BlynkSerial.write(buff, len);
+  BlynkSerial.write(param.getBuffer(), param.getLength());
 }
 
 void loop()
