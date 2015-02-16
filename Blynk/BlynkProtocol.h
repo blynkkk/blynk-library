@@ -51,6 +51,13 @@ bool BlynkProtocol<Transp>::connect()
         BLYNK_LOG("Transport connected");
         sendCmd(BLYNK_CMD_LOGIN, authkey, 32);
 
+        // TODO: Rewrite
+        for (int i = 0; i< 50; ++i) {
+            if (conn.available())
+                break;
+            delay(100);
+        }
+
         BlynkHeader hdr;
         if (!readHeader(hdr) ||
             BLYNK_CMD_RESPONSE != hdr.type ||
