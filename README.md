@@ -76,3 +76,10 @@ This will not work if the same serial is used for Blynk connection (like SimpleS
 
         hardware vr 9
         You should receive response: vw 9 <values>
+
+### Login data ###
+During connection, library provides info about device:
+* Auth token
+* Device type (Arduino, Linux, ESP8266 ...)
+* Input buffer size (maximum incoming message)
+* Keep-alive timeout
