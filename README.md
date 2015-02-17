@@ -61,7 +61,7 @@ This will not work if the same serial is used for Blynk connection (like SimpleS
 + Analog read:
 
         hardware ar 14
-        You should receive response: aw 9 <val>
+        You should receive response: aw 14 <val>
 
 #### Virtual ####
 
