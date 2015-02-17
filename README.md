@@ -19,6 +19,7 @@ This will not work if the same serial is used for Blynk connection (like SimpleS
 ### Command examples ###
 
 #### Pin Mode ####
+Application should setup pins once before using them, for example when dashboard starts.
 
 + Set pin mode to output:
 
@@ -79,6 +80,7 @@ This will not work if the same serial is used for Blynk connection (like SimpleS
 
 ### Login data ###
 During connection, library provides info about device:
+
 * Auth token
 * Device type (Arduino, Linux, ESP8266 ...)
 * Input buffer size (maximum incoming message)
