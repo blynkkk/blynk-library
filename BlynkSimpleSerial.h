@@ -2,12 +2,16 @@
  * @file       BlynkSimpleSerial.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
- * @brief      
+ * @brief
  *
  */
 
 #ifndef BlynkSimpleSerial_h
 #define BlynkSimpleSerial_h
+
+#ifdef BLYNK_DEBUG
+#error Serial connection cannot be used for debug and Blynk connection simultaneously.
+#endif
 
 #include <BlynkSerial.h>
 

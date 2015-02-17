@@ -2,7 +2,7 @@
  * @file       BlynkSerial.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
- * @brief      
+ * @brief
  *
  */
 
@@ -64,13 +64,14 @@ template <class T>
 class BlynkSerial
     : public BlynkProtocol<T>
 {
+    typedef BlynkProtocol<T> Base;
 public:
     BlynkSerial(T& conn)
         : BlynkProtocol<T>(conn)
     {}
 
     void begin(const char* auth, uint32_t baud = 115200) {
-        this->authkey = auth;
+        Base::begin(auth);
         this->conn.begin(baud);
     }
 

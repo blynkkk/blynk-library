@@ -18,6 +18,7 @@ static const byte _blynkEthernetMac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
 class BlynkEthernet
     : public BlynkProtocol<BlynkArduinoClient>
 {
+    typedef BlynkProtocol<BlynkArduinoClient> Base;
 public:
     BlynkEthernet(BlynkArduinoClient& conn)
         : BlynkProtocol<BlynkArduinoClient>(conn)
@@ -28,8 +29,8 @@ public:
                 uint16_t port      = BLYNK_DEFAULT_PORT,
                 const byte mac[]   = _blynkEthernetMac)
     {
+        Base::begin(auth);
         Ethernet.begin((byte*)mac);
-        this->authkey = auth;
         this->conn.begin(domain, NULL, port);
     }
 
@@ -39,8 +40,8 @@ public:
                 const byte mac[],
                 IPAddress ip)
     {
+        Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
-        this->authkey = auth;
         this->conn.begin(domain, NULL, port);
     }
 
@@ -49,8 +50,8 @@ public:
                 uint16_t port,
                 const byte mac[] = _blynkEthernetMac)
     {
+        Base::begin(auth);
         Ethernet.begin((byte*)mac);
-        this->authkey = auth;
         this->conn.begin(NULL, addr, port);
     }
 
@@ -60,8 +61,8 @@ public:
                 const byte mac[],
                 IPAddress ip)
     {
+        Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
-        this->authkey = auth;
         this->conn.begin(NULL, addr, port);
     }
 

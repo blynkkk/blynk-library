@@ -26,7 +26,6 @@ public:
         , lastActivityOut(0)
     {}
     bool connect();
-    void processInput(void);
     void send(const void* data, size_t length) {
         sendCmd(BLYNK_CMD_HARDWARE, data, length);
     }
@@ -36,7 +35,17 @@ private:
     void sendCmd(uint8_t cmd, const void* data, size_t length);
 
 protected:
+    void begin(const char* authkey) {
+#ifdef BLYNK_DEBUG
+        Serial.begin(9600);
+#endif
+        this->authkey = authkey;
+    }
+    void processInput(void);
+
     Transp& conn;
+
+private:
     const char* authkey;
     unsigned long lastActivityIn;
     unsigned long lastActivityOut;
@@ -50,13 +59,6 @@ bool BlynkProtocol<Transp>::connect()
     {
         BLYNK_LOG("Transport connected");
         sendCmd(BLYNK_CMD_LOGIN, authkey, 32);
-
-        // TODO: Rewrite
-        for (int i = 0; i< 50; ++i) {
-            if (conn.available())
-                break;
-            delay(100);
-        }
 
         BlynkHeader hdr;
         if (!readHeader(hdr) ||

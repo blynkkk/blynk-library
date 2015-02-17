@@ -2,7 +2,7 @@
  * @file       BlynkSimpleWifi.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
- * @brief      
+ * @brief
  *
  */
 
@@ -16,6 +16,7 @@
 class BlynkWifi
     : public BlynkProtocol<BlynkArduinoClient>
 {
+    typedef BlynkProtocol<BlynkArduinoClient> Base;
 public:
     BlynkWifi(BlynkArduinoClient& conn)
         : BlynkProtocol<BlynkArduinoClient>(conn)
@@ -39,14 +40,14 @@ public:
     }
 
     void begin(const char* auth, const char* ssid, const char* pass, const char* domain = "blynk.lan.ua", uint16_t port = 8080) {
+        Base::begin(auth);
         wifi_conn(ssid, pass);
-        this->authkey = auth;
         this->conn.begin(domain, NULL, port);
     }
 
     void begin(const char* auth, const char* ssid, const char* pass, const byte* ip, uint16_t port) {
+        Base::begin(auth);
         wifi_conn(ssid, pass);
-        this->authkey = auth;
         this->conn.begin(NULL, ip, port);
     }
 

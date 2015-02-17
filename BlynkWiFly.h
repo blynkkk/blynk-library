@@ -2,7 +2,7 @@
  * @file       BlynkWiFly.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
- * @brief      
+ * @brief
  *
  */
 
@@ -62,6 +62,7 @@ private:
 class BlynkWiFly
     : public BlynkProtocol<BlynkTransportWiFly>
 {
+    typedef BlynkProtocol<BlynkTransportWiFly> Base;
 public:
     BlynkWiFly(BlynkTransportWiFly& conn)
         : BlynkProtocol<BlynkTransportWiFly>(conn)
@@ -72,12 +73,12 @@ public:
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t port      = BLYNK_DEFAULT_PORT)
     {
+        Base::begin(auth);
         WiFly.begin();
         if (!WiFly.join(ssid, pass)) {
             BLYNK_LOG("WiFly: Association failed.");
             return;
         }
-        this->authkey = auth;
         this->conn.begin_domain(domain, port);
     }
 
