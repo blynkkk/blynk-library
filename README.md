@@ -8,21 +8,18 @@
 
 ### Troubleshooting ###
 
-To enable debug prints on default Serial (baud rate 9600), add BLYNK_DEBUG as a first line in your code:
+To enable debug prints on default Serial (baud 9600), add on the top of your sketch (should be the first line):
 
         #define BLYNK_DEBUG
 
-Alternatively, you can uncomment a similar line in Blynk/BlynkConfig.h, which will enable more prints.
+Alternatively, you can uncomment a similar line in Blynk/BlynkConfig.h, which would enable more prints.
 
-This won't' work if the same serial is used for Blynk connection (like SimpleSerial example).
+This will not work if the same serial is used for Blynk connection (like SimpleSerial example).
 
 ### Command examples ###
 
 #### Pin Mode ####
-Application should setup pin modes(input or output) before using them, when dashboard is switched from Edit mode to Run mode.
-Pin Mode is affected by the Widget type. 
-+ All the pins for Widgets that perform control functions (e.g Button, Slider, Joystick, etc.) should work in Output Mode 
-+ All the pins for Widgets that performs data vizualization (e.g LCD display, Graph, Numerical Display, etc.) should work in Input Mode   
+Application should setup pins once before using them, for example when dashboard starts.
 
 + Set pin mode to output:
 
