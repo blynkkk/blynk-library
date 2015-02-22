@@ -2,12 +2,10 @@
 #include <Blynk/BlynkHandlers.h>
 #include <Blynk/BlynkDebug.h>
 
-#if defined(BLYNK_USE_PROGMEM)
+#if defined(__AVR__)
     #include <avr/pgmspace.h>
-    #define PROGMEM_CONST const
 #else
     #define PROGMEM
-    #define PROGMEM_CONST
 #endif
 
 __attribute__((weak))
@@ -94,7 +92,7 @@ BLYNK_ON_WRITE_IMPL(29);
 BLYNK_ON_WRITE_IMPL(30);
 BLYNK_ON_WRITE_IMPL(31);
 
-static PROGMEM_CONST WidgetReadHandler PROGMEM BlynkReadHandlerVector[32] = {
+static const WidgetReadHandler BlynkReadHandlerVector[32] PROGMEM = {
     BlynkWidgetRead0,   BlynkWidgetRead1,   BlynkWidgetRead2,   BlynkWidgetRead3,
     BlynkWidgetRead4,   BlynkWidgetRead5,   BlynkWidgetRead6,   BlynkWidgetRead7,
     BlynkWidgetRead8,   BlynkWidgetRead9,   BlynkWidgetRead10,  BlynkWidgetRead11,
@@ -105,7 +103,7 @@ static PROGMEM_CONST WidgetReadHandler PROGMEM BlynkReadHandlerVector[32] = {
     BlynkWidgetRead28,  BlynkWidgetRead29,  BlynkWidgetRead30,  BlynkWidgetRead31,
 };
 
-static PROGMEM_CONST WidgetWriteHandler PROGMEM BlynkWriteHandlerVector[32] = {
+static const WidgetWriteHandler BlynkWriteHandlerVector[32] PROGMEM = {
     BlynkWidgetWrite0,  BlynkWidgetWrite1,  BlynkWidgetWrite2,  BlynkWidgetWrite3,
     BlynkWidgetWrite4,  BlynkWidgetWrite5,  BlynkWidgetWrite6,  BlynkWidgetWrite7,
     BlynkWidgetWrite8,  BlynkWidgetWrite9,  BlynkWidgetWrite10, BlynkWidgetWrite11,
@@ -120,18 +118,19 @@ WidgetReadHandler GetReadHandler(unsigned pin)
 {
     if (pin >= COUNT_OF(BlynkReadHandlerVector))
         return NULL;
-#if defined(BLYNK_USE_PROGMEM)
-    return (WidgetReadHandler)pgm_read_ptr(&BlynkReadHandlerVector[pin]);
+#ifdef __AVR__
+    return (WidgetReadHandler)pgm_read_word(&BlynkReadHandlerVector[pin]);
 #else
     return BlynkReadHandlerVector[pin];
 #endif
 }
+
 WidgetWriteHandler GetWriteHandler(unsigned pin)
 {
     if (pin >= COUNT_OF(BlynkWriteHandlerVector))
         return NULL;
-#if defined(BLYNK_USE_PROGMEM)
-    return (WidgetWriteHandler)pgm_read_ptr(&BlynkWriteHandlerVector[pin]);
+#ifdef __AVR__
+    return (WidgetWriteHandler)pgm_read_word(&BlynkWriteHandlerVector[pin]);
 #else
     return BlynkWriteHandlerVector[pin];
 #endif
