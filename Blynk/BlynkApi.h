@@ -133,7 +133,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             return;
 
         if (!strcmp(cmd, "pm")) { // TODO: bulk
-            BLYNK_LOG("pinMode %d -> %s", pin, it.asStr());
+            //BLYNK_LOG("pinMode %d -> %s", pin, it.asStr());
             if (!strcmp(it.asStr(), "in")) {
                 pinMode(pin, INPUT);
             } else if (!strcmp(it.asStr(), "out")) {
@@ -144,13 +144,13 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                 //! \todo
             }
         } else if (!strcmp(cmd, "dw")) {
-            BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
+            //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {
-            BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
+            //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
             analogWrite(pin, it.asInt());
         } else {
-            BLYNK_LOG("Invalid HW cmd");
+            BLYNK_LOG("Invalid HW cmd: %s", cmd);
         }
     }
 }

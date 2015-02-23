@@ -2,7 +2,7 @@
  * @file       VirtualSerial.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
- * @brief      
+ * @brief
  *
  */
 
@@ -20,7 +20,7 @@ public:
         : mPin(pin), mOutQty(0)
     {}
 
-    virtual size_t write(uint8_t byte) override {
+    virtual size_t write(uint8_t byte) {
         mOutBuf[mOutQty++] = byte;
         if (mOutQty > sizeof(mOutBuf) || byte == '\n') {
             flush();

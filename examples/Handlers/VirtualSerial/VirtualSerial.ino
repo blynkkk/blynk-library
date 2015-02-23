@@ -4,6 +4,7 @@
 #include <BlynkSimpleEthernet.h>
 #include <VirtualSerial.h>
 
+// Attach virtual serial to virtual pin 1
 VirtualSerial BlynkSerial(1);
 
 void setup()
