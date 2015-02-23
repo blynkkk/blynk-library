@@ -8,6 +8,6 @@ SERV_PORT=8282
 
 # === Edit lines below only if absolutely sure what you're doing ===
 while [ 1 ]; do
-  socat -d FILE:$COMM_PORT,raw,echo=0,b$COMM_BAUD,nonblock=1 TCP:$SERV_ADDR:$SERV_PORT
+  sudo socat -U -d /dev/tty.usbserial,clocal=1,cs8,nonblock=1,ixoff=0,ixon=0,ispeed=$COMM_BAUD,ospeed=$COMM_BAUD,raw,echo=0,crtscts=0 TCP:$SERV_ADDR:$SERV_PORT
   sleep 2
 done
