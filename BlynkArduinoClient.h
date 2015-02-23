@@ -17,7 +17,7 @@ class BlynkArduinoClient
 {
 public:
     BlynkArduinoClient(Client& client)
-        : client(client), domain(NULL), addr(NULL), port(0)
+        : client(client), addr(NULL), domain(NULL), port(0)
     {}
 
     void begin(const char* d, const byte* a, uint16_t p) {

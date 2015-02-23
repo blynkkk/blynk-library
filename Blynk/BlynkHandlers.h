@@ -14,9 +14,9 @@
 
 struct BlynkReq
 {
-    int pin;
-    int msg_id;
-    int status;
+    unsigned pin;
+    unsigned msg_id;
+    unsigned status;
 };
 
 typedef void (*WidgetReadHandler)(BlynkReq& request);

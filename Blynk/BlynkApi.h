@@ -87,8 +87,8 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add_key("cpu"    , "AT91SAM3X8E");
         rsp.add_key("device" , "Arduino Due");
 #endif
-        //rsp.add_key("arduino_ver", ARDUINO);
-        //rsp.add_key("cpu_speed", F_CPU/1000000);
+        rsp.add_key("arduino_ver", ARDUINO);
+        rsp.add_key("cpu_speed"  , F_CPU/1000000);
 
         static_cast<Proto*>(this)->send(rsp.getBuffer(), rsp.getLength());
         return;
