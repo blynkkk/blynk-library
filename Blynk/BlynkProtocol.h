@@ -26,13 +26,19 @@ public:
         , lastActivityOut(0)
     {}
     bool connect();
+
     void send(const void* data, size_t length) {
         sendCmd(BLYNK_CMD_HARDWARE, data, length);
+    }
+
+    void send(const void* data, size_t length, const void* data2, size_t length2) {
+        sendCmd(BLYNK_CMD_HARDWARE, data, length, data2, length2);
     }
 
 private:
     bool readHeader(BlynkHeader& hdr);
     void sendCmd(uint8_t cmd, const void* data, size_t length);
+    void sendCmd(uint8_t cmd, const void* data, size_t length, const void* data2, size_t length2);
 
 protected:
     void begin(const char* authkey) {
@@ -70,7 +76,7 @@ bool BlynkProtocol<Transp>::connect()
         }
 
         lastActivityIn = lastActivityOut;
-        BLYNK_LOG("Blynk connected");
+        BLYNK_LOG("Blynk v" BLYNK_VERSION " connected");
         return true;
     }
     return false;
@@ -97,13 +103,12 @@ void BlynkProtocol<Transp>::processInput(void)
         return;
     }
 
-    uint8_t inputBuffer[hdr.length+2];
+    uint8_t inputBuffer[hdr.length+1]; // Add 1 to zero-terminate
     if (hdr.length != conn.read(inputBuffer, hdr.length)) {
         BLYNK_LOG("Can't read body");
         return;
     }
     inputBuffer[hdr.length] = 0;
-    inputBuffer[hdr.length+1] = 0;
 
     //Serial.print("Body:");
     //Serial.write(inputBuffer, hdr.length);
@@ -115,8 +120,7 @@ void BlynkProtocol<Transp>::processInput(void)
     case BLYNK_CMD_PING:
         break;
     case BLYNK_CMD_HARDWARE: {
-        BlynkParam param(inputBuffer, hdr.length+2);
-        this->processCmd(param);
+        this->processCmd(inputBuffer, hdr.length);
     } break;
     default:
         BLYNK_LOG("Invalid header type: %d", hdr.type);
@@ -158,5 +162,20 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
     conn.write(data, length);
     lastActivityOut = millis();
 }
+
+template <class Transp>
+inline
+void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length, const void* data2, size_t length2)
+{
+    BlynkHeader hdr;
+    hdr.type = cmd;
+    hdr.msg_id = htons(12345);
+    hdr.length = htons(length+length2);
+    conn.write(&hdr, sizeof(hdr));
+    conn.write(data, length);
+    conn.write(data2, length2);
+    lastActivityOut = millis();
+}
+
 
 #endif

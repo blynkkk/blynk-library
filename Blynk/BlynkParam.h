@@ -30,14 +30,11 @@ public:
         int         asInt() const       { return atoi(ptr); }
         bool isValid() const            { return ptr != NULL; }
 
-        bool operator != (const iterator& it) const { return ptr != it.ptr; }
-        bool operator == (const iterator& it) const { return ptr == it.ptr; }
-        bool operator <  (const iterator& it) const { return ptr <  it.ptr; }
+        bool operator < (const iterator& it) const { return ptr < it.ptr; }
+        bool operator >= (const iterator& it) const { return ptr >= it.ptr; }
 
         iterator& operator ++() {
-            if (isValid()) {
-                ptr += strlen(ptr)+1;
-            }
+            ptr += strlen(ptr)+1;
             return *this;
         }
     private:
@@ -45,16 +42,19 @@ public:
     };
 
 public:
-    BlynkParam(void* addr, int length)
-        : buff((char*)addr), len(length)
+    explicit
+    BlynkParam(void* addr, size_t length)
+        : buff((char*)addr), len(length), buff_size(length)
+    {}
+
+    explicit
+    BlynkParam(void* addr, size_t length, size_t buff_size)
+        : buff((char*)addr), len(length), buff_size(buff_size)
     {
-        // 2 last bytes should be \0
-        BLYNK_ASSERT(buff[len-1] == '\0');
-        BLYNK_ASSERT(buff[len-2] == '\0');
     }
 
     iterator begin() const { return iterator(buff); }
-    iterator end() const   { return iterator(buff+len-1); }
+    iterator end() const   { return iterator(buff+len); }
 
     iterator operator[](int index) const {
         const iterator e = end();
@@ -73,7 +73,7 @@ public:
                 return ++it;
             }
             ++it;
-            if (!(it < e)) break;
+            if (it >= e) break;
         }
         return iterator::invalid();
     }
@@ -81,35 +81,65 @@ public:
     uint8_t* getBuffer() const { return (uint8_t*)buff; }
     size_t getLength() const { return len; }
 
+    // Modification
+
+    void add(int value) {
+        char str[2 + 8 * sizeof(value)];
+        itoa(value, str, 10);
+        add(str);
+    }
+
+    void add(unsigned int value) {
+        char str[1 + 8 * sizeof(value)];
+        utoa(value, str, 10);
+        add(str);
+    }
+
+    void add(long value) {
+        char str[2 + 8 * sizeof(value)];
+        ltoa(value, str, 10);
+        add(str);
+    }
+
+    void add(unsigned long value) {
+        char str[1 + 8 * sizeof(value)];
+        ultoa(value, str, 10);
+        add(str);
+    }
+
+    void add(float value) {
+        char str[33];
+        dtostrf(value, 5, 3, str);
+        add(str);
+    }
+
+    void add(double value) {
+        char str[33];
+        dtostrf(value, 5, 3, str);
+        add(str);
+    }
+
+    void add(const char* str) {
+        add(str, strlen(str)+1);
+    }
+
+    template <typename TK, typename TV>
+    void add_key(const TK& key, const TV& val) {
+        add(key);
+        add(val);
+    }
+
+    void add(const void* b, size_t l) {
+        if (len + l > buff_size)
+            return;
+        memcpy(buff+len, b, l);
+        len += l;
+    }
+
 private:
     char*	buff;
     size_t	len;
+    size_t	buff_size;
 };
 
 #endif
-
-/*
-#include "stdio.h"
-
-char msg[] = "abc\0" "123\0" "def\0" "456\0";
-
-int main() {
-    printf("size %lu\n", sizeof(msg));
-    BlynkParam buff(msg, sizeof(msg));
-
-    for (BlynkParam::Iterator it = buff.begin(); it != buff.end(); ++it) {
-        printf("it: %s\n", it.asStr());
-    }
-
-    for (int i = 0; i < 6; i++) {
-        BlynkParam::Iterator it = buff[i];
-        printf("%d: %s\n", i, it.asStr());
-    }
-
-    printf("abc: %d\n", buff["abc"].asInt());
-    printf("def: %d\n", buff["def"].asInt());
-    printf("123: %s\n", buff["123"]);
-
-    return 0;
-}
-*/

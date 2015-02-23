@@ -21,63 +21,30 @@ template <class Proto>
 class BlynkApi
 {
 public:
-    void virtualWrite(int pin, int value) {
-        char str[2 + 8 * sizeof(value)];
-        itoa(value, str, 10);
-        virtualWrite(pin, str);
+    template <typename T>
+    void virtualWrite(int pin, const T& data) {
+        char mem[64];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add("vw");
+        cmd.add(pin);
+        cmd.add(data);
+        static_cast<Proto*>(this)->send(cmd.getBuffer(), cmd.getLength());
     }
 
-    void virtualWrite(unsigned int pin, int value) {
-        char str[1 + 8 * sizeof(value)];
-        utoa(value, str, 10);
-        virtualWrite(pin, str);
-    }
-
-    void virtualWrite(int pin, long value) {
-        char str[2 + 8 * sizeof(value)];
-        ltoa(value, str, 10);
-        virtualWrite(pin, str);
-    }
-
-    void virtualWrite(int pin, unsigned long value) {
-        char str[1 + 8 * sizeof(value)];
-        ultoa(value, str, 10);
-        virtualWrite(pin, str);
-    }
-
-    void virtualWrite(int pin, float value) {
-        char str[33];
-        dtostrf(value, 5, 3, str);
-        virtualWrite(pin, str);
-    }
-
-    void virtualWrite(int pin, double value) {
-        char str[33];
-        dtostrf(value, 5, 3, str);
-        virtualWrite(pin, str);
-    }
-
-    void virtualWrite(int pin, const char* str) {
-        virtualWrite(pin, str, strlen(str));
+    void virtualWrite(int pin, const void* buff, size_t len) {
+        char mem[8];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add("vw");
+        cmd.add(pin);
+        static_cast<Proto*>(this)->send(cmd.getBuffer(), cmd.getLength(), buff, len);
     }
 
     void virtualWrite(int pin, const BlynkParam& param) {
         virtualWrite(pin, param.getBuffer(), param.getLength());
     }
 
-    void virtualWrite(int pin, const void* buff, size_t len) {
-        static_cast<Proto*>(this)->send(buff, len);
-    }
-
-    //! \todo virtualRead
-
-    //void attachVitrualPin(int pin, WidgetReadHandler h)  { vPinsR[pin] = h; }
-    //void attachVitrualPin(int pin, WidgetWriteHandler h) { vPinsW[pin] = h; }
-    //void onConnect(EventHandler h) {} //! \todo
-    //void onDisconnect(EventHandler h) {} //! \todo
-
 protected:
-    void processCmd(BlynkParam& param);
+    void processCmd(const void* buff, size_t len);
 
 };
 
@@ -87,38 +54,85 @@ protected:
 #include <Arduino.h>
 
 template<class Proto>
-void BlynkApi<Proto>::processCmd(BlynkParam& param)
+void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 {
+    BlynkParam param((void*)buff, len);
     BlynkParam::iterator it = param.begin();
-    if (it == param.end())
+    if (it >= param.end())
         return;
     const char* cmd = it.asStr();
-    if (++it == param.end())
+
+    if (!strcmp(cmd, "info")) {
+        char mem[128];
+        BlynkParam rsp(mem, 0, sizeof(mem));
+        rsp.add_key("ver"    , BLYNK_VERSION);
+        rsp.add_key("k-alive", BLYNK_KEEPALIVE);
+        rsp.add_key("buff-in", BLYNK_MAX_READBYTES);
+#if   defined(__AVR_ATmega168__)
+        rsp.add_key("cpu"    , "ATmega168");
+        rsp.add_key("device" , "Arduino");
+#elif defined(__AVR_ATmega328P__)
+        rsp.add_key("cpu"    , "ATmega328P");
+        rsp.add_key("device" , "Arduino");
+#elif defined(__AVR_ATmega1280__)
+        rsp.add_key("cpu"    , "ATmega1280");
+        rsp.add_key("device" , "Arduino Mega 1280");
+#elif defined(__AVR_ATmega2560__)
+        rsp.add_key("cpu"    , "ATmega2560");
+        rsp.add_key("device" , "Arduino Mega 2560");
+#elif defined(__AVR_ATmega32U4__)
+        rsp.add_key("cpu"    , "ATmega32U4");
+        rsp.add_key("device" , "Arduino Leonardo");
+#elif defined(__SAM3X8E__)
+        rsp.add_key("cpu"    , "AT91SAM3X8E");
+        rsp.add_key("device" , "Arduino Due");
+#endif
+        //rsp.add_key("arduino_ver", ARDUINO);
+        //rsp.add_key("cpu_speed", F_CPU/1000000);
+
+        static_cast<Proto*>(this)->send(rsp.getBuffer(), rsp.getLength());
+        return;
+    }
+
+    if (++it >= param.end())
         return;
     const unsigned pin = it.asInt();
 
-    if (       !strcmp(cmd, "dr")) {
-        virtualWrite(pin, digitalRead(pin));
+    if (!strcmp(cmd, "dr")) {
+        char mem[16];
+        BlynkParam rsp(mem, 0, sizeof(mem));
+        rsp.add("dw");
+        rsp.add(pin);
+        rsp.add(digitalRead(pin));
+        static_cast<Proto*>(this)->send(rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "ar")) {
-        virtualWrite(pin, analogRead(pin)); //! \todo A0+pin?
+        char mem[16];
+        BlynkParam rsp(mem, 0, sizeof(mem));
+        rsp.add("aw");
+        rsp.add(pin);
+        rsp.add(analogRead(pin));
+        static_cast<Proto*>(this)->send(rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
             BlynkReq req = { pin, 0, BLYNK_SUCCESS };
             handler(req);
         }
     } else {
+        ++it;
         if (!strcmp(cmd, "vw")) {
             if (WidgetWriteHandler handler = GetWriteHandler(pin)) {
                 BlynkReq req = { pin, 0, BLYNK_SUCCESS };
-                handler(req, param); //! \todo
+                char* start = (char*)it.asStr();
+                BlynkParam param2(start, len - (start - (char*)buff));
+                handler(req, param2);
             }
             return;
         }
 
-        if (++it == param.end())
+        if (it >= param.end())
             return;
 
-        if (!strcmp(cmd, "pm")) {
+        if (!strcmp(cmd, "pm")) { // TODO: bulk
             BLYNK_LOG("pinMode %d -> %s", pin, it.asStr());
             if (!strcmp(it.asStr(), "in")) {
                 pinMode(pin, INPUT);
