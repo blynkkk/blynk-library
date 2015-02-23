@@ -7,7 +7,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup()
 {
-  Blynk.begin("e09d565bd698439fa547f417d240864b");
+  Blynk.begin("00000000000000000000000000000000");
   strip.begin();
   strip.show();
 }

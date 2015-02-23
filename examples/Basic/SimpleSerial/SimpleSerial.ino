@@ -7,7 +7,7 @@
 // 3. Run the script
 
 // Auth token you get from App
-char auth[] = "bfedeff2b5a1445eb6e0519a4c965b8c";
+char auth[] = "00000000000000000000000000000000";
 
 void setup()
 {

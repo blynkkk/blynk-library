@@ -9,7 +9,7 @@ BlynkSerial<SwSerialTransp> Blynk(myTransp);
 
 void setup()
 {
-  Blynk.begin("bfedeff2b5a1445eb6e0519a4c965b8c", 9600);
+  Blynk.begin("00000000000000000000000000000000", 9600);
 }
 
 void loop()

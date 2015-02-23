@@ -8,7 +8,7 @@ VirtualSerial BlynkSerial(1);
 
 void setup()
 {
-  Blynk.begin("bfedeff2b5a1445eb6e0519a4c965b8c");
+  Blynk.begin("00000000000000000000000000000000");
 }
 
 BLYNK_ON_WRITE(1)

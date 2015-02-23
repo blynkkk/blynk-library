@@ -8,7 +8,7 @@ Servo servo;
 
 void setup()
 {
-  Blynk.begin("bfedeff2b5a1445eb6e0519a4c965b8c");
+  Blynk.begin("00000000000000000000000000000000");
   servo.attach(9);
 }
 
