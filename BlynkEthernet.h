@@ -33,6 +33,8 @@ public:
         Base::begin(auth);
         Ethernet.begin((byte*)mac);
         this->conn.begin(domain, NULL, port);
+        IPAddress myip = Ethernet.localIP();
+        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
     }
 
     void begin( const char* auth,
@@ -45,6 +47,8 @@ public:
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
         this->conn.begin(domain, NULL, port);
+        IPAddress myip = Ethernet.localIP();
+        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
     }
 
     void begin( const char* auth,
@@ -56,6 +60,8 @@ public:
         Base::begin(auth);
         Ethernet.begin((byte*)mac);
         this->conn.begin(NULL, addr, port);
+        IPAddress myip = Ethernet.localIP();
+        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
     }
 
     void begin( const char* auth,
@@ -68,6 +74,8 @@ public:
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
         this->conn.begin(NULL, addr, port);
+        IPAddress myip = Ethernet.localIP();
+        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
     }
 
     void run(void)

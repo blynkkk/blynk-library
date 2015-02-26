@@ -22,7 +22,7 @@ public:
 
     virtual size_t write(uint8_t byte) {
         mOutBuf[mOutQty++] = byte;
-        if (mOutQty > sizeof(mOutBuf) || byte == '\n') {
+        if (mOutQty >= sizeof(mOutBuf)) {
             flush();
         }
         return 1;
@@ -39,7 +39,7 @@ public:
 
 private:
     uint8_t mPin;
-    uint8_t mOutBuf[16];
+    uint8_t mOutBuf[32];
     uint8_t mOutQty;
 };
 
