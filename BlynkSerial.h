@@ -23,7 +23,10 @@ public:
         stream.begin(baud);
     }
 
-    int connect()     { return conn = 1; }
+    int connect() {
+        BLYNK_LOG("Connecting...");
+        return conn = 1;
+    }
     void disconnect() { conn = 0; }
 
     size_t read(void* buf, size_t len) {
@@ -78,7 +81,6 @@ public:
     void run(void)
     {
         if(!this->conn.connected()) {
-            BLYNK_LOG("Reconnecting...");
             this->connect();
         }
         if (this->conn.available()) {

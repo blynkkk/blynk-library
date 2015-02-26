@@ -76,10 +76,10 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add_key("device" , "Arduino");
 #elif defined(__AVR_ATmega1280__)
         rsp.add_key("cpu"    , "ATmega1280");
-        rsp.add_key("device" , "Arduino Mega 1280");
+        rsp.add_key("device" , "Arduino Mega");
 #elif defined(__AVR_ATmega2560__)
         rsp.add_key("cpu"    , "ATmega2560");
-        rsp.add_key("device" , "Arduino Mega 2560");
+        rsp.add_key("device" , "Arduino Mega");
 #elif defined(__AVR_ATmega32U4__)
         rsp.add_key("cpu"    , "ATmega32U4");
         rsp.add_key("device" , "Arduino Leonardo");

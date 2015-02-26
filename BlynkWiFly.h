@@ -35,9 +35,9 @@ public:
         if (!client)
             return 0;
         if (client->_domain) {
-            BLYNK_LOG("WiFly: Connecting to %s:%d", client->_domain, client->_port);
+            BLYNK_LOG("Connecting to %s:%d", client->_domain, client->_port);
         } else if (client->_ip) {
-            BLYNK_LOG("WiFly: Connecting to %d.%d.%d.%d:%d",
+            BLYNK_LOG("Connecting to %d.%d.%d.%d:%d",
                 client->_ip[0], client->_ip[1], client->_ip[2], client->_ip[3], port);
         }
         return client->connect();
@@ -85,7 +85,6 @@ public:
     void run(void)
     {
         if(!this->conn.connected()) {
-            BLYNK_LOG("Reconnecting...");
             this->connect();
         }
         if (this->conn.available()) {

@@ -24,6 +24,7 @@ public:
         : conn(conn), authkey(NULL)
         , lastActivityIn(0)
         , lastActivityOut(0)
+        , currentMsgId(0)
     {}
     bool connect();
 
@@ -40,11 +41,10 @@ private:
     void sendCmd(uint8_t cmd, const void* data, size_t length);
     void sendCmd(uint8_t cmd, const void* data, size_t length, const void* data2, size_t length2);
 
+    uint16_t getNextMsgId();
+
 protected:
     void begin(const char* authkey) {
-#ifdef BLYNK_DEBUG
-        Serial.begin(9600);
-#endif
         this->authkey = authkey;
     }
     void processInput(void);
@@ -55,6 +55,7 @@ private:
     const char* authkey;
     unsigned long lastActivityIn;
     unsigned long lastActivityOut;
+    uint16_t currentMsgId;
 };
 
 template <class Transp>
@@ -67,11 +68,18 @@ bool BlynkProtocol<Transp>::connect()
         sendCmd(BLYNK_CMD_LOGIN, authkey, 32);
 
         BlynkHeader hdr;
-        if (!readHeader(hdr) ||
-            BLYNK_CMD_RESPONSE != hdr.type ||
+        if (!readHeader(hdr)) {
+            BLYNK_LOG("Timeout");
+            conn.disconnect();
+            return false;
+        }
+
+        if (BLYNK_CMD_RESPONSE != hdr.type ||
             BLYNK_SUCCESS != hdr.length)
         {
+            BLYNK_LOG("Auth failed (code: %d)", hdr.length);
             conn.disconnect();
+            delay(5000);
             return false;
         }
 
@@ -120,7 +128,9 @@ void BlynkProtocol<Transp>::processInput(void)
     case BLYNK_CMD_PING:
         break;
     case BLYNK_CMD_HARDWARE: {
+        currentMsgId = hdr.msg_id;
         this->processCmd(inputBuffer, hdr.length);
+        currentMsgId = 0;
     } break;
     default:
         BLYNK_LOG("Invalid header type: %d", hdr.type);
@@ -156,7 +166,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
 {
     BlynkHeader hdr;
     hdr.type = cmd;
-    hdr.msg_id = htons(12345);
+    hdr.msg_id = htons(getNextMsgId());
     hdr.length = htons(length);
     conn.write(&hdr, sizeof(hdr));
     conn.write(data, length);
@@ -169,7 +179,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
 {
     BlynkHeader hdr;
     hdr.type = cmd;
-    hdr.msg_id = htons(12345);
+    hdr.msg_id = htons(getNextMsgId());
     hdr.length = htons(length+length2);
     conn.write(&hdr, sizeof(hdr));
     conn.write(data, length);
@@ -177,5 +187,16 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
     lastActivityOut = millis();
 }
 
+template <class Transp>
+inline
+uint16_t BlynkProtocol<Transp>::getNextMsgId()
+{
+    static uint16_t last = 0;
+    if (currentMsgId != 0)
+        return currentMsgId;
+    if (++last == 0)
+        last = 1;
+    return last;
+}
 
 #endif

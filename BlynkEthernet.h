@@ -29,6 +29,7 @@ public:
                 uint16_t port      = BLYNK_DEFAULT_PORT,
                 const byte mac[]   = _blynkEthernetMac)
     {
+        BLYNK_LOG("Using DHCP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac);
         this->conn.begin(domain, NULL, port);
@@ -37,9 +38,10 @@ public:
     void begin( const char* auth,
                 const char* domain,
                 uint16_t port,
-                const byte mac[],
-                IPAddress ip)
+                IPAddress ip,
+                const byte mac[]= _blynkEthernetMac)
     {
+        BLYNK_LOG("Using static ip");
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
         this->conn.begin(domain, NULL, port);
@@ -50,6 +52,7 @@ public:
                 uint16_t port,
                 const byte mac[] = _blynkEthernetMac)
     {
+        BLYNK_LOG("Using DHCP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac);
         this->conn.begin(NULL, addr, port);
@@ -58,9 +61,10 @@ public:
     void begin( const char* auth,
                 const byte addr[],
                 uint16_t port,
-                const byte mac[],
-                IPAddress ip)
+                IPAddress ip,
+                const byte mac[] = _blynkEthernetMac)
     {
+        BLYNK_LOG("Using static ip");
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
         this->conn.begin(NULL, addr, port);
@@ -69,7 +73,6 @@ public:
     void run(void)
     {
         if(!this->conn.connected()) {
-            BLYNK_LOG("Reconnecting...");
             this->connect();
         }
         if (this->conn.available()) {

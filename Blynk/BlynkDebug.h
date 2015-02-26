@@ -14,7 +14,7 @@
 #define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
 #define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
 
-#ifdef BLYNK_DEBUG
+#ifdef BLYNK_PRINT
 
     #if defined(ARDUINO)
 
@@ -24,7 +24,7 @@
         #define _S(s) PSTR(s)
 
         #define BLYNK_DBG_BREAK()    { for(;;); }
-        #define BLYNK_LOG(msg, ...)  { char buff[128]; snprintf_P(buff, sizeof(buff), PSTR(msg "\n"), ##__VA_ARGS__); Serial.print(buff); }
+        #define BLYNK_LOG(msg, ...)  { char buff[128]; snprintf_P(buff, sizeof(buff), PSTR("[%lu] " msg "\n"), millis(), ##__VA_ARGS__); BLYNK_PRINT.print(buff); }
         #define BLYNK_LOG_RAM()      { BLYNK_LOG("Free RAM: %d", freeRam()); }
         #define BLYNK_TRACE()        BLYNK_LOG("> %s @%d", __PRETTY_FUNCTION__, __LINE__);
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }

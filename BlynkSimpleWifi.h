@@ -54,7 +54,6 @@ public:
     void run(void)
     {
         if(!this->conn.connected()) {
-            BLYNK_LOG("Reconnecting...");
             this->connect();
         }
         if (this->conn.available()) {
