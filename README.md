@@ -87,6 +87,7 @@ Application should setup pins once before using them, for example when dashboard
         hardware info
 
 You should receive:
+
 * Library version
 * Input buffer size (maximum incoming message)
 * Keep-alive timeout
