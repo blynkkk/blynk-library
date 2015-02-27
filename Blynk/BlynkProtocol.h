@@ -118,7 +118,7 @@ void BlynkProtocol<Transp>::processInput(void)
     inputBuffer[hdr.length] = 0;
 
 #ifdef BLYNK_TRACE
-    BLYNK_PRINT.print(">");
+    BLYNK_PRINT.write('>');
     BLYNK_PRINT.write(inputBuffer, hdr.length);
     BLYNK_PRINT.println();
 #endif
@@ -169,7 +169,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
     lastActivityOut = millis();
 
 #ifdef BLYNK_TRACE
-    BLYNK_PRINT.print("<");
+    BLYNK_PRINT.write('<');
     BLYNK_PRINT.write((uint8_t*)data, length);
     BLYNK_PRINT.println();
 #endif
@@ -189,7 +189,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
     lastActivityOut = millis();
 
 #ifdef BLYNK_TRACE
-    BLYNK_PRINT.print("<");
+    BLYNK_PRINT.write('<');
     BLYNK_PRINT.write((uint8_t*)data, length);
     BLYNK_PRINT.write((uint8_t*)data2, length2);
     BLYNK_PRINT.println();

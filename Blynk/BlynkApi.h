@@ -63,34 +63,38 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     const char* cmd = it.asStr();
 
     if (!strcmp(cmd, "info")) {
-        char mem[128];
-        BlynkParam rsp(mem, 0, sizeof(mem));
-        rsp.add_key("ver"    , BLYNK_VERSION);
-        rsp.add_key("h-beat" , BLYNK_HEARTBEAT);
-        rsp.add_key("buff-in", BLYNK_MAX_READBYTES);
+        static const char profile[] BLYNK_PROGMEM =
+            BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
+            BLYNK_PARAM_KV("h-beat" , SX(BLYNK_HEARTBEAT))
+            BLYNK_PARAM_KV("buff-in", SX(BLYNK_MAX_READBYTES))
 #if   defined(__AVR_ATmega168__)
-        rsp.add_key("cpu"    , "ATmega168");
-        rsp.add_key("device" , "Arduino");
+            BLYNK_PARAM_KV("cpu"    , "ATmega168")
+            BLYNK_PARAM_KV("device" , "Arduino")
 #elif defined(__AVR_ATmega328P__)
-        rsp.add_key("cpu"    , "ATmega328P");
-        rsp.add_key("device" , "Arduino");
+            BLYNK_PARAM_KV("cpu"    , "ATmega328P")
+            BLYNK_PARAM_KV("device" , "Arduino")
 #elif defined(__AVR_ATmega1280__)
-        rsp.add_key("cpu"    , "ATmega1280");
-        rsp.add_key("device" , "Arduino Mega");
+            BLYNK_PARAM_KV("cpu"    , "ATmega1280")
+            BLYNK_PARAM_KV("device" , "Arduino Mega")
 #elif defined(__AVR_ATmega2560__)
-        rsp.add_key("cpu"    , "ATmega2560");
-        rsp.add_key("device" , "Arduino Mega");
+            BLYNK_PARAM_KV("cpu"    , "ATmega2560")
+            BLYNK_PARAM_KV("device" , "Arduino Mega")
 #elif defined(__AVR_ATmega32U4__)
-        rsp.add_key("cpu"    , "ATmega32U4");
-        rsp.add_key("device" , "Arduino Leonardo");
+            BLYNK_PARAM_KV("cpu"    , "ATmega32U4")
+            BLYNK_PARAM_KV("device" , "Arduino Leonardo")
 #elif defined(__SAM3X8E__)
-        rsp.add_key("cpu"    , "AT91SAM3X8E");
-        rsp.add_key("device" , "Arduino Due");
+            BLYNK_PARAM_KV("cpu"    , "AT91SAM3X8E")
+            BLYNK_PARAM_KV("device" , "Arduino Due")
 #endif
-        //rsp.add_key("arduino_ver", ARDUINO);
-        //rsp.add_key("cpu_speed"  , F_CPU/1000000);
+        ;
 
-        static_cast<Proto*>(this)->send(rsp.getBuffer(), rsp.getLength());
+#ifdef BLYNK_HAS_PROGMEM
+        char mem[sizeof(profile)];
+        memcpy_P(mem, profile, sizeof(profile));
+        static_cast<Proto*>(this)->send(mem, sizeof(profile));
+#else
+        static_cast<Proto*>(this)->send(profile, sizeof(profile));
+#endif
         return;
     }
 

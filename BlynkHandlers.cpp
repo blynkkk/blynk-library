@@ -2,12 +2,6 @@
 #include <Blynk/BlynkHandlers.h>
 #include <Blynk/BlynkDebug.h>
 
-#if defined(__AVR__)
-    #include <avr/pgmspace.h>
-#else
-    #define PROGMEM
-#endif
-
 __attribute__((weak))
 void BlynkWidgetRead(BlynkReq& request)
 {
@@ -92,7 +86,7 @@ BLYNK_ON_WRITE_IMPL(29);
 BLYNK_ON_WRITE_IMPL(30);
 BLYNK_ON_WRITE_IMPL(31);
 
-static const WidgetReadHandler BlynkReadHandlerVector[32] PROGMEM = {
+static const WidgetReadHandler BlynkReadHandlerVector[32] BLYNK_PROGMEM = {
     BlynkWidgetRead0,   BlynkWidgetRead1,   BlynkWidgetRead2,   BlynkWidgetRead3,
     BlynkWidgetRead4,   BlynkWidgetRead5,   BlynkWidgetRead6,   BlynkWidgetRead7,
     BlynkWidgetRead8,   BlynkWidgetRead9,   BlynkWidgetRead10,  BlynkWidgetRead11,
@@ -103,7 +97,7 @@ static const WidgetReadHandler BlynkReadHandlerVector[32] PROGMEM = {
     BlynkWidgetRead28,  BlynkWidgetRead29,  BlynkWidgetRead30,  BlynkWidgetRead31,
 };
 
-static const WidgetWriteHandler BlynkWriteHandlerVector[32] PROGMEM = {
+static const WidgetWriteHandler BlynkWriteHandlerVector[32] BLYNK_PROGMEM = {
     BlynkWidgetWrite0,  BlynkWidgetWrite1,  BlynkWidgetWrite2,  BlynkWidgetWrite3,
     BlynkWidgetWrite4,  BlynkWidgetWrite5,  BlynkWidgetWrite6,  BlynkWidgetWrite7,
     BlynkWidgetWrite8,  BlynkWidgetWrite9,  BlynkWidgetWrite10, BlynkWidgetWrite11,
@@ -118,7 +112,7 @@ WidgetReadHandler GetReadHandler(unsigned pin)
 {
     if (pin >= COUNT_OF(BlynkReadHandlerVector))
         return NULL;
-#ifdef __AVR__
+#ifdef BLYNK_HAS_PROGMEM
     return (WidgetReadHandler)pgm_read_word(&BlynkReadHandlerVector[pin]);
 #else
     return BlynkReadHandlerVector[pin];
@@ -129,7 +123,7 @@ WidgetWriteHandler GetWriteHandler(unsigned pin)
 {
     if (pin >= COUNT_OF(BlynkWriteHandlerVector))
         return NULL;
-#ifdef __AVR__
+#ifdef BLYNK_HAS_PROGMEM
     return (WidgetWriteHandler)pgm_read_word(&BlynkWriteHandlerVector[pin]);
 #else
     return BlynkWriteHandlerVector[pin];
