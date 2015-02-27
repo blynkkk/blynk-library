@@ -8,9 +8,13 @@
 
 ### Troubleshooting ###
 
-To enable debug prints on default Serial (baud 9600), add on the top of your sketch (should be the first line):
+To enable debug prints on default Serial, add on the top of your sketch (should be the first line):
 
-        #define BLYNK_DEBUG
+        #define BLYNK_PRINT Serial
+
+And enable serial in setup():
+
+        Serial.begin(115200);
 
 Alternatively, you can uncomment a similar line in Blynk/BlynkConfig.h, which would enable more prints.
 
@@ -78,10 +82,14 @@ Application should setup pins once before using them, for example when dashboard
         hardware vr 9
         You should receive response: vw 9 <values>
 
-### Login data ###
-During connection, library provides info about device:
+#### Info ####
 
-* Auth token
-* Device type (Arduino, Linux, ESP8266 ...)
+        hardware info
+
+You should receive:
+
+* Library version
 * Input buffer size (maximum incoming message)
 * Keep-alive timeout
+* Device type (Arduino, Linux, ESP8266 ...)
+* CPU type (ATmega328P, ATmega32U4 ...)
