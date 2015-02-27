@@ -16,9 +16,7 @@ And enable serial in setup():
 
         Serial.begin(115200);
 
-Alternatively, you can uncomment a similar line in Blynk/BlynkConfig.h, which would enable more prints.
-
-This will not work if the same serial is used for Blynk connection (like SimpleSerial example).
+Alternatively, you can uncomment BLYNK_TRACE in Blynk/BlynkConfig.h, which enables more prints.
 
 ### Command examples ###
 
@@ -90,6 +88,6 @@ You should receive:
 
 * Library version
 * Input buffer size (maximum incoming message)
-* Keep-alive timeout
+* Heartbeat interval
 * Device type (Arduino, Linux, ESP8266 ...)
 * CPU type (ATmega328P, ATmega32U4 ...)
