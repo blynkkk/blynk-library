@@ -66,7 +66,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         char mem[128];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add_key("ver"    , BLYNK_VERSION);
-        rsp.add_key("k-alive", BLYNK_KEEPALIVE);
+        rsp.add_key("h-beat" , BLYNK_HEARTBEAT);
         rsp.add_key("buff-in", BLYNK_MAX_READBYTES);
 #if   defined(__AVR_ATmega168__)
         rsp.add_key("cpu"    , "ATmega168");
@@ -118,8 +118,9 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             handler(req);
         }
     } else {
-        ++it;
+
         if (!strcmp(cmd, "vw")) {
+            ++it;
             if (WidgetWriteHandler handler = GetWriteHandler(pin)) {
                 BlynkReq req = { pin, 0, BLYNK_SUCCESS };
                 char* start = (char*)it.asStr();
@@ -129,21 +130,29 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             return;
         }
 
-        if (it >= param.end())
+        if (!strcmp(cmd, "pm")) {
+            while (it < param.end()) {
+                unsigned pin = it.asInt();
+                ++it;
+                BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
+                if (!strcmp(it.asStr(), "in")) {
+                    pinMode(pin, INPUT);
+                } else if (!strcmp(it.asStr(), "out")) {
+                    pinMode(pin, OUTPUT);
+                } else if (!strcmp(it.asStr(), "pu")) {
+                    pinMode(pin, INPUT_PULLUP);
+                } else {
+                    //! \todo
+                }
+                ++it;
+            }
+        }
+
+        // Should be 1 parameter (value)
+        if (++it >= param.end())
             return;
 
-        if (!strcmp(cmd, "pm")) { // TODO: bulk
-            //BLYNK_LOG("pinMode %d -> %s", pin, it.asStr());
-            if (!strcmp(it.asStr(), "in")) {
-                pinMode(pin, INPUT);
-            } else if (!strcmp(it.asStr(), "out")) {
-                pinMode(pin, OUTPUT);
-            } else if (!strcmp(it.asStr(), "pu")) {
-                pinMode(pin, INPUT_PULLUP);
-            } else {
-                //! \todo
-            }
-        } else if (!strcmp(cmd, "dw")) {
+        if (!strcmp(cmd, "dw")) {
             //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {

@@ -15,10 +15,11 @@
 #define BLYNK_DEFAULT_DOMAIN "cloud.blynk.cc"
 #define BLYNK_DEFAULT_PORT   8282
 #define BLYNK_MAX_READBYTES  255
-#define BLYNK_KEEPALIVE      20
 
 // Professional settings
-#define BLYNK_VERSION        "0.1"
-//#define BLYNK_DEBUG
+#define BLYNK_VERSION        "0.1.1"
+#define BLYNK_HEARTBEAT      10
+#define BLYNK_TIMEOUT_MS     1000
+//#define BLYNK_TRACE
 
 #endif

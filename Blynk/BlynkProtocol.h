@@ -117,8 +117,11 @@ void BlynkProtocol<Transp>::processInput(void)
     }
     inputBuffer[hdr.length] = 0;
 
-    //Serial.print("Body:");
-    //Serial.write(inputBuffer, hdr.length);
+#ifdef BLYNK_TRACE
+    BLYNK_PRINT.print(">");
+    BLYNK_PRINT.write(inputBuffer, hdr.length);
+    BLYNK_PRINT.println();
+#endif
 
     switch (hdr.type)
     {
@@ -164,6 +167,12 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
     conn.write(&hdr, sizeof(hdr));
     conn.write(data, length);
     lastActivityOut = millis();
+
+#ifdef BLYNK_TRACE
+    BLYNK_PRINT.print("<");
+    BLYNK_PRINT.write((uint8_t*)data, length);
+    BLYNK_PRINT.println();
+#endif
 }
 
 template <class Transp>
@@ -178,6 +187,13 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length
     conn.write(data, length);
     conn.write(data2, length2);
     lastActivityOut = millis();
+
+#ifdef BLYNK_TRACE
+    BLYNK_PRINT.print("<");
+    BLYNK_PRINT.write((uint8_t*)data, length);
+    BLYNK_PRINT.write((uint8_t*)data2, length2);
+    BLYNK_PRINT.println();
+#endif
 }
 
 template <class Transp>
