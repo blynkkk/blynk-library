@@ -122,9 +122,12 @@ void BlynkProtocol<Transp>::processInput(void)
 
     switch (hdr.type)
     {
-    case BLYNK_CMD_LOGIN:
-        break;
     case BLYNK_CMD_PING:
+        hdr.type = BLYNK_CMD_RESPONSE;
+        hdr.msg_id = htons(hdr.msg_id);
+        hdr.length = htons(BLYNK_SUCCESS);
+        conn.write(&hdr, sizeof(hdr));
+        lastActivityOut = t;
         break;
     case BLYNK_CMD_HARDWARE: {
         currentMsgId = hdr.msg_id;
@@ -135,15 +138,6 @@ void BlynkProtocol<Transp>::processInput(void)
         BLYNK_LOG("Invalid header type: %d", hdr.type);
         break;
     }
-
-    // Send response sometimes
-    //if (t - lastActivityOut > 1000UL*BLYNK_KEEPALIVE) {
-        hdr.type = BLYNK_CMD_RESPONSE;
-        hdr.msg_id = htons(hdr.msg_id);
-        hdr.length = htons(BLYNK_SUCCESS);
-        conn.write(&hdr, sizeof(hdr));
-        lastActivityOut = t;
-    //}
 
 }
 
