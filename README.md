@@ -82,10 +82,13 @@ Application should setup pins once before using them, for example when dashboard
         hardware vr 9
         You should receive response: vw 9 <values>
 
-### Login data ###
-During connection, library provides info about device:
++ Info:
 
-* Auth token
-* Device type (Arduino, Linux, ESP8266 ...)
+        hardware info
+
+You should receive:
+* Library version
 * Input buffer size (maximum incoming message)
 * Keep-alive timeout
+* Device type (Arduino, Linux, ESP8266 ...)
+* CPU type (ATmega328P, ATmega32U4 ...)
