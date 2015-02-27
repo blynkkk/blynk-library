@@ -82,7 +82,7 @@ Application should setup pins once before using them, for example when dashboard
         hardware vr 9
         You should receive response: vw 9 <values>
 
-+ Info:
+#### Info ####
 
         hardware info
 
