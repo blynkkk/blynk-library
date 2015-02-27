@@ -64,12 +64,11 @@ bool BlynkProtocol<Transp>::connect()
     conn.disconnect();
     if (conn.connect())
     {
-        BLYNK_LOG("Transport connected");
         sendCmd(BLYNK_CMD_LOGIN, authkey, 32);
 
         BlynkHeader hdr;
         if (!readHeader(hdr)) {
-            BLYNK_LOG("Timeout");
+            BLYNK_LOG("Login timeout");
             conn.disconnect();
             return false;
         }
@@ -77,7 +76,7 @@ bool BlynkProtocol<Transp>::connect()
         if (BLYNK_CMD_RESPONSE != hdr.type ||
             BLYNK_SUCCESS != hdr.length)
         {
-            BLYNK_LOG("Auth failed (code: %d)", hdr.length);
+            BLYNK_LOG("Login failed (code: %d)", hdr.length);
             conn.disconnect();
             delay(5000);
             return false;
