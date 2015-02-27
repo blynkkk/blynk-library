@@ -13,8 +13,8 @@
 
 // General defines
 
-#define S(x) #x
-#define SX(x) S(x)
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
 #define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
 #define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
 

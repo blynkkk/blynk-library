@@ -65,8 +65,8 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (!strcmp(cmd, "info")) {
         static const char profile[] BLYNK_PROGMEM =
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
-            BLYNK_PARAM_KV("h-beat" , SX(BLYNK_HEARTBEAT))
-            BLYNK_PARAM_KV("buff-in", SX(BLYNK_MAX_READBYTES))
+            BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
+            BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
 #if   defined(__AVR_ATmega168__)
             BLYNK_PARAM_KV("cpu"    , "ATmega168")
             BLYNK_PARAM_KV("device" , "Arduino")
@@ -87,13 +87,13 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             BLYNK_PARAM_KV("device" , "Arduino Due")
 #endif
         ;
-
+        const size_t profile_len = sizeof(profile)-1;
 #ifdef BLYNK_HAS_PROGMEM
-        char mem[sizeof(profile)];
-        memcpy_P(mem, profile, sizeof(profile));
-        static_cast<Proto*>(this)->send(mem, sizeof(profile));
+        char mem[profile_len];
+        memcpy_P(mem, profile, profile_len);
+        static_cast<Proto*>(this)->send(mem, profile_len);
 #else
-        static_cast<Proto*>(this)->send(profile, sizeof(profile));
+        static_cast<Proto*>(this)->send(profile, profile_len);
 #endif
         return;
     }
@@ -138,7 +138,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             while (it < param.end()) {
                 unsigned pin = it.asInt();
                 ++it;
-                BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
+                //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
                 if (!strcmp(it.asStr(), "in")) {
                     pinMode(pin, INPUT);
                 } else if (!strcmp(it.asStr(), "out")) {
