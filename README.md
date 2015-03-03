@@ -16,7 +16,7 @@ And enable serial in setup():
 
         Serial.begin(115200);
 
-Alternatively, you can uncomment BLYNK_TRACE in Blynk/BlynkConfig.h, which enables more prints.
+Also, you can uncomment BLYNK_DEBUG in Blynk/BlynkConfig.h, which enables more verbose prints.
 
 ### Command examples ###
 

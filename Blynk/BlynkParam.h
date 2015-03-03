@@ -32,7 +32,7 @@ public:
         int         asInt() const       { return atoi(ptr); }
         bool isValid() const            { return ptr != NULL; }
 
-        bool operator < (const iterator& it) const { return ptr < it.ptr; }
+        bool operator <  (const iterator& it) const { return ptr < it.ptr; }
         bool operator >= (const iterator& it) const { return ptr >= it.ptr; }
 
         iterator& operator ++() {

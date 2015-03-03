@@ -26,13 +26,13 @@ public:
         addr = a;
     }
 
-    int connect() {
+    bool connect() {
         if (domain) {
             BLYNK_LOG("Connecting to %s:%d", domain, port);
-            return client.connect(domain, port);
+            return (1 == client.connect(domain, port));
         } else if (addr) {
             BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", addr[0], addr[1], addr[2], addr[3], port);
-            return client.connect(addr, port);
+            return (1 == client.connect(addr, port));
         }
         return 0;
     }
@@ -46,7 +46,7 @@ public:
     }
 
     void flush() { client.flush(); }
-    int connected() { return client.connected(); }
+    bool connected() { return client.connected(); }
     int available() { return client.available(); }
 
 private:

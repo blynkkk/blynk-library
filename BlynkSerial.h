@@ -23,11 +23,11 @@ public:
         stream.begin(baud);
     }
 
-    int connect() {
+    bool connect() {
         BLYNK_LOG("Connecting...");
-        return conn = 1;
+        return conn = true;
     }
-    void disconnect() { conn = 0; }
+    void disconnect() { conn = false; }
 
     size_t read(void* buf, size_t len) {
         return stream.readBytes((char*)buf, len);
@@ -36,12 +36,12 @@ public:
         return stream.write((const uint8_t*)buf, len);
     }
     void flush()    { stream.flush(); }
-    int connected() { return conn; }
+    bool connected() { return conn; }
     int available() { return stream.available(); }
 
 protected:
     T&     stream;
-    int    conn;
+    bool   conn;
 };
 
 template <class T>
@@ -76,16 +76,6 @@ public:
     void begin(const char* auth, uint32_t baud = 115200) {
         Base::begin(auth);
         this->conn.begin(baud);
-    }
-
-    void run(void)
-    {
-        if(!this->conn.connected()) {
-            this->connect();
-        }
-        if (this->conn.available()) {
-            this->processInput();
-        }
     }
 
 };

@@ -86,16 +86,6 @@ public:
         delay(1000);
     }
 
-    void run(void)
-    {
-        if(!this->conn.connected()) {
-            this->connect();
-        }
-        if (this->conn.available()) {
-            this->processInput();
-        }
-    }
-
 };
 
 #endif

@@ -31,7 +31,7 @@ public:
         client = new WiFlyClient(a, p);
     }
 
-    int connect() {
+    bool connect() {
         if (!client)
             return 0;
         if (client->_domain) {
@@ -52,7 +52,7 @@ public:
     }
 
     void flush()	{ client->flush(); }
-    int connected() { return client->connected(); }
+    bool connected() { return client->connected(); }
     int available() { return client->available(); }
 
 private:
@@ -80,16 +80,6 @@ public:
             return;
         }
         this->conn.begin_domain(domain, port);
-    }
-
-    void run(void)
-    {
-        if(!this->conn.connected()) {
-            this->connect();
-        }
-        if (this->conn.available()) {
-            this->processInput();
-        }
     }
 
 };

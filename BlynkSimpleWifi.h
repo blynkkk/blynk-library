@@ -51,15 +51,6 @@ public:
         this->conn.begin(NULL, ip, port);
     }
 
-    void run(void)
-    {
-        if(!this->conn.connected()) {
-            this->connect();
-        }
-        if (this->conn.available()) {
-            this->processInput();
-        }
-    }
 };
 
 static WiFiClient _blynkWifiClient;
