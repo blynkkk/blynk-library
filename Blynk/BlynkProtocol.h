@@ -106,7 +106,7 @@ void BlynkProtocol<Transp>::run(void)
         }
     }
 
-    if (conn.available()) {
+    if (conn.available() > sizeof(BlynkHeader)) {
         processInput();
     }
 
@@ -156,6 +156,7 @@ void BlynkProtocol<Transp>::processInput(void)
 
     if (hdr.length > BLYNK_MAX_READBYTES) {
         BLYNK_LOG("Packet size (%d) > max allowed (%d)", hdr.length, BLYNK_MAX_READBYTES);
+        conn.disconnect();
         return;
     }
 
@@ -199,7 +200,6 @@ template <class Transp>
 bool BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 {
     if (sizeof(hdr) != conn.read(&hdr, sizeof(hdr))) {
-        BLYNK_LOG("Can't read header");
         return false;
     }
     hdr.msg_id = ntohs(hdr.msg_id);
