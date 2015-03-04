@@ -24,6 +24,7 @@ public:
         : BlynkProtocol<BlynkArduinoClient>(conn)
     {}
 
+    // DHCP with domain
     void begin( const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t port      = BLYNK_DEFAULT_PORT,
@@ -32,54 +33,57 @@ public:
         BLYNK_LOG("Using DHCP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac);
-        this->conn.begin(domain, NULL, port);
+        this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
         // give the Ethernet shield a second to initialize:
         delay(1000);
     }
 
+    // Static IP with domain
     void begin( const char* auth,
                 const char* domain,
                 uint16_t port,
                 IPAddress ip,
                 const byte mac[]= _blynkEthernetMac)
     {
-        BLYNK_LOG("Using static ip");
+        BLYNK_LOG("Using static IP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
-        this->conn.begin(domain, NULL, port);
+        this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
         // give the Ethernet shield a second to initialize:
         delay(1000);
     }
 
+    // DHCP with server IP
     void begin( const char* auth,
-                const byte addr[],
+                IPAddress addr,
                 uint16_t port,
                 const byte mac[] = _blynkEthernetMac)
     {
         BLYNK_LOG("Using DHCP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac);
-        this->conn.begin(NULL, addr, port);
+        this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
         // give the Ethernet shield a second to initialize:
         delay(1000);
     }
 
+    // Static IP with server IP
     void begin( const char* auth,
-                const byte addr[],
+                IPAddress addr,
                 uint16_t port,
                 IPAddress ip,
                 const byte mac[] = _blynkEthernetMac)
     {
-        BLYNK_LOG("Using static ip");
+        BLYNK_LOG("Using static IP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
-        this->conn.begin(NULL, addr, port);
+        this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
         // give the Ethernet shield a second to initialize:

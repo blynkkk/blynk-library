@@ -17,13 +17,18 @@ class BlynkArduinoClient
 {
 public:
     BlynkArduinoClient(Client& client)
-        : client(client), addr(NULL), domain(NULL), port(0)
+        : client(client), domain(NULL), port(0)
     {}
 
-    void begin(const char* d, const byte* a, uint16_t p) {
-        domain = d;
+    void begin(IPAddress a, uint16_t p) {
+        domain = NULL;
         port = p;
         addr = a;
+    }
+
+    void begin(const char* d, uint16_t p) {
+        domain = d;
+        port = p;
     }
 
     bool connect() {
@@ -51,7 +56,7 @@ public:
 
 private:
     Client&     client;
-    const byte* addr;
+    IPAddress   addr;
     const char* domain;
     uint16_t    port;
 };
