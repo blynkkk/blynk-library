@@ -6,25 +6,39 @@
 #include <SimpleTimer.h>
 
 // For this example you need to have SimpleTimer library:
-// https://github.com/jfturcot/SimpleTimer
+//   https://github.com/jfturcot/SimpleTimer
+// Visit this page for more information:
+//   http://playground.arduino.cc/Code/SimpleTimer
 
 // Auth token you get from App
 char auth[] = "00000000000000000000000000000000";
 
+#define LED_PIN 9
+
 SimpleTimer timer;
+int t1;
 
 void setup()
 {
   Serial.begin(115200);
   Blynk.begin(auth);
-  pinMode(9, OUTPUT);
-  timer.setInterval(500, repeatMe);
+  pinMode(LED_PIN, OUTPUT);
+  t1 = timer.setInterval(500, ledBlynk);
 }
 
-// a function to be executed periodically
-void repeatMe()
+BLYNK_ON_WRITE(1)
 {
-  digitalWrite(9, !digitalRead(9));
+  if (param[0].asInt()) {
+    timer.enable(t1);
+  } else {
+    timer.disable(t1);
+  }
+  Blynk.virtualWrite(5, millis()/1000);
+}
+
+void ledBlynk()
+{
+  digitalWrite(LED_PIN, !digitalRead(LED_PIN));
 }
 
 void loop()
