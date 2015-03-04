@@ -30,11 +30,15 @@ public:
     bool connect();
 
     void send(const void* data, size_t length) {
-        sendCmd(BLYNK_CMD_HARDWARE, data, length);
+        if (conn.connected()) {
+            sendCmd(BLYNK_CMD_HARDWARE, data, length);
+        }
     }
 
     void send(const void* data, size_t length, const void* data2, size_t length2) {
-        sendCmd(BLYNK_CMD_HARDWARE, data, length, data2, length2);
+        if (conn.connected()) {
+            sendCmd(BLYNK_CMD_HARDWARE, data, length, data2, length2);
+        }
     }
 
     void run(void);
@@ -79,7 +83,7 @@ bool BlynkProtocol<Transp>::connect()
     }
 
     if (BLYNK_CMD_RESPONSE != hdr.type ||
-        BLYNK_SUCCESS != hdr.length)
+        (BLYNK_SUCCESS != hdr.length && BLYNK_ALREADY_LOGGED_IN != hdr.length))
     {
         BLYNK_LOG("Login failed (code: %d)", hdr.length);
         conn.disconnect();
