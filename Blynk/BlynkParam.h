@@ -73,8 +73,8 @@ public:
     void add(const char* str);
     void add(const void* b, size_t l);
 
-    template <typename TK, typename TV>
-    void add_key(const TK& key, const TV& val) {
+    template <typename TV>
+    void add_key(const char* key, const TV& val) {
         add(key);
         add(val);
     }
