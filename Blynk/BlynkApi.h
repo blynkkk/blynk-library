@@ -88,12 +88,18 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #endif
         ;
         const size_t profile_len = sizeof(profile)-1;
+
+        char mem_dyn[32];
+        BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
+        profile_dyn.add_key("conn", "Ethernet");
+        //profile_dyn.add_key("conn", "Serial");
+
 #ifdef BLYNK_HAS_PROGMEM
         char mem[profile_len];
         memcpy_P(mem, profile, profile_len);
-        static_cast<Proto*>(this)->send(mem, profile_len);
+        static_cast<Proto*>(this)->send(mem, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
 #else
-        static_cast<Proto*>(this)->send(profile, profile_len);
+        static_cast<Proto*>(this)->send(profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
 #endif
         return;
     }
@@ -147,7 +153,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                     pinMode(pin, INPUT_PULLUP);
                 } else {
 #ifdef BLYNK_DEBUG
-                BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
+                    BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
 #endif
                 }
                 ++it;
