@@ -26,6 +26,7 @@ enum BlynkCmd
 enum BlynkStatus
 {
     BLYNK_SUCCESS				= 200,
+    BLYNK_TIMEOUT				= 1,
     BLYNK_BAD_FORMAT			= 2,
     BLYNK_NOT_REGISTERED		= 3,
     BLYNK_ALREADY_REGISTERED	= 4,
