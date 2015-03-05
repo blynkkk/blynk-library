@@ -32,7 +32,9 @@ public:
     {
         BLYNK_LOG("Using DHCP");
         Base::begin(auth);
-        Ethernet.begin((byte*)mac);
+        if (!Ethernet.begin((byte*)mac)) {
+            BLYNK_LOG("DHCP Failed!");
+        }
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
