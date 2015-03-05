@@ -35,11 +35,11 @@ public:
         if (!Ethernet.begin((byte*)mac)) {
             BLYNK_LOG("DHCP Failed!");
         }
+        // give the Ethernet shield a second to initialize:
+        delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
-        // give the Ethernet shield a second to initialize:
-        delay(1000);
     }
 
     // Static IP with domain
@@ -52,11 +52,11 @@ public:
         BLYNK_LOG("Using static IP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
+        // give the Ethernet shield a second to initialize:
+        delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
-        // give the Ethernet shield a second to initialize:
-        delay(1000);
     }
 
     // DHCP with server IP
@@ -67,12 +67,14 @@ public:
     {
         BLYNK_LOG("Using DHCP");
         Base::begin(auth);
-        Ethernet.begin((byte*)mac);
+        if (!Ethernet.begin((byte*)mac)) {
+            BLYNK_LOG("DHCP Failed!");
+        }
+        // give the Ethernet shield a second to initialize:
+        delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
-        // give the Ethernet shield a second to initialize:
-        delay(1000);
     }
 
     // Static IP with server IP
@@ -85,11 +87,11 @@ public:
         BLYNK_LOG("Using static IP");
         Base::begin(auth);
         Ethernet.begin((byte*)mac, ip);
+        // give the Ethernet shield a second to initialize:
+        delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
-        // give the Ethernet shield a second to initialize:
-        delay(1000);
     }
 
 };
