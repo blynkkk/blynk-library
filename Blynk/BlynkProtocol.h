@@ -73,7 +73,7 @@ bool BlynkProtocol<Transp>::connect()
         return false;
     }
 
-    sendCmd(BLYNK_CMD_LOGIN, authkey, 32);
+    sendCmd(BLYNK_CMD_LOGIN, authkey, strlen(authkey));
 
     BlynkHeader hdr;
     if (!readHeader(hdr)) {

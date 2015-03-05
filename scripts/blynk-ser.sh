@@ -10,4 +10,6 @@ SERV_PORT=8282
 while [ 1 ]; do
   socat -d FILE:$COMM_PORT,raw,echo=0,b$COMM_BAUD,nonblock=1 TCP:$SERV_ADDR:$SERV_PORT
   sleep 2
+  echo Reconnecting...
 done
+
