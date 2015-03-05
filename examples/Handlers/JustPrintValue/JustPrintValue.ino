@@ -1,3 +1,12 @@
+/*
+ * This just prints a value that is sent by widget
+ * connected to virtual pin 1
+ * 
+ * The dasboard:
+ *   Slider (0...100) on V1
+ * 
+ */
+
 #define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
@@ -6,7 +15,7 @@
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Blynk.begin("00000000000000000000000000000000");
 }
 

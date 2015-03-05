@@ -15,7 +15,7 @@ char auth[] = "00000000000000000000000000000000";
 void setup()
 {
   SwSerial.begin(9600);
-  Blynk.begin(auth, 115200);
+  Blynk.begin(auth, 9600);
 }
 
 void loop()

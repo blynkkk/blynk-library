@@ -14,7 +14,7 @@ To enable debug prints on default Serial, add on the top of your sketch (should 
 
 And enable serial in setup():
 
-        Serial.begin(115200);
+        Serial.begin(9600);
 
 Also, you can uncomment BLYNK_DEBUG in Blynk/BlynkConfig.h, which enables more verbose prints.
 

@@ -12,8 +12,8 @@ char auth[] = "00000000000000000000000000000000";
 void setup()
 {
   Blynk.begin(auth);
-  // Default baudrate is 115200. You could specify it like this:
-  //Blynk.begin(auth, 9600);
+  // Default baudrate is 9600. You could specify it like this:
+  //Blynk.begin(auth, 57600);
 }
 
 void loop()

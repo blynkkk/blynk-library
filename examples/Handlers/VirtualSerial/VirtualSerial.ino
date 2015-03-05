@@ -10,7 +10,7 @@ VirtualSerial BlynkSerial(1);
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Blynk.begin("00000000000000000000000000000000");
 }
 

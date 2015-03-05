@@ -1,14 +1,24 @@
+/*
+ * This is a simple stroboscope.
+ * You can tutn it on and of using a button,
+ * and control frequency with a slider.
+ * 
+ * The dasboard:
+ *   Button (Switch) on V1
+ *   Slider (100...1000) on V2
+ * 
+ * For this example you need to have SimpleTimer library:
+ *   https://github.com/jfturcot/SimpleTimer
+ * Visit this page for more information:
+ *   http://playground.arduino.cc/Code/SimpleTimer
+ */
+
 #define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
 #include <BlynkSimpleEthernet.h>
 #include <SimpleTimer.h>
-
-// For this example you need to have SimpleTimer library:
-//   https://github.com/jfturcot/SimpleTimer
-// Visit this page for more information:
-//   http://playground.arduino.cc/Code/SimpleTimer
 
 // Auth token you get from App
 char auth[] = "00000000000000000000000000000000";
