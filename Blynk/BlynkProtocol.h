@@ -31,13 +31,13 @@ public:
 
     void send(const void* data, size_t length) {
         if (conn.connected()) {
-            sendCmd(BLYNK_CMD_HARDWARE, data, length);
+            sendCmd(BLYNK_CMD_HARDWARE, 0, data, length, NULL, 0);
         }
     }
 
     void send(const void* data, size_t length, const void* data2, size_t length2) {
         if (conn.connected()) {
-            sendCmd(BLYNK_CMD_HARDWARE, data, length, data2, length2);
+            sendCmd(BLYNK_CMD_HARDWARE, 0, data, length, data2, length2);
         }
     }
 
@@ -45,8 +45,8 @@ public:
 
 private:
     bool readHeader(BlynkHeader& hdr);
-    void sendCmd(uint8_t cmd, const void* data, size_t length);
-    void sendCmd(uint8_t cmd, const void* data, size_t length, const void* data2, size_t length2);
+    void sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length);
+    void sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2);
 
     uint16_t getNextMsgId();
 
@@ -73,19 +73,24 @@ bool BlynkProtocol<Transp>::connect()
         return false;
     }
 
-    sendCmd(BLYNK_CMD_LOGIN, authkey, strlen(authkey));
+    sendCmd(BLYNK_CMD_LOGIN, 1, authkey, strlen(authkey), NULL, 0);
 
     BlynkHeader hdr;
     if (!readHeader(hdr)) {
-        BLYNK_LOG("Login timeout");
-        conn.disconnect();
-        return false;
+        hdr.length = BLYNK_TIMEOUT;
     }
 
     if (BLYNK_CMD_RESPONSE != hdr.type ||
+        1 != hdr.msg_id ||
         (BLYNK_SUCCESS != hdr.length && BLYNK_ALREADY_LOGGED_IN != hdr.length))
     {
-        BLYNK_LOG("Login failed (code: %d)", hdr.length);
+        if (BLYNK_TIMEOUT == hdr.length) {
+            BLYNK_LOG("Timeout");
+        } else if (BLYNK_INVALID_TOKEN == hdr.length) {
+            BLYNK_LOG("Invalid auth token");
+        } else {
+            BLYNK_LOG("Connect failed (code: %d)", hdr.length);
+        }
         conn.disconnect();
         delay(5000);
         return false;
@@ -106,7 +111,7 @@ void BlynkProtocol<Transp>::run(void)
         }
     }
 
-    if (conn.available() > sizeof(BlynkHeader)) {
+    if (conn.available() >= sizeof(BlynkHeader)) {
         processInput();
     }
 
@@ -191,6 +196,7 @@ void BlynkProtocol<Transp>::processInput(void)
     } break;
     default:
         BLYNK_LOG("Invalid header type: %d", hdr.type);
+        conn.disconnect();
         break;
     }
 
@@ -208,35 +214,17 @@ bool BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 }
 
 template <class Transp>
-void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length)
+void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
     BlynkHeader hdr;
     hdr.type = cmd;
-    hdr.msg_id = htons(getNextMsgId());
-    hdr.length = htons(length);
-    conn.write(&hdr, sizeof(hdr));
-    conn.write(data, length);
-
-    lastActivityOut = millis();
-
-#ifdef BLYNK_DEBUG
-    BLYNK_PRINT.write('<');
-    BLYNK_PRINT.write((uint8_t*)data, length);
-    BLYNK_PRINT.println();
-#endif
-}
-
-template <class Transp>
-void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, const void* data, size_t length, const void* data2, size_t length2)
-{
-    BlynkHeader hdr;
-    hdr.type = cmd;
-    hdr.msg_id = htons(getNextMsgId());
+    hdr.msg_id = htons((id == 0) ? getNextMsgId() : id);
     hdr.length = htons(length+length2);
     conn.write(&hdr, sizeof(hdr));
     conn.write(data, length);
-    conn.write(data2, length2);
-
+    if (length2) {
+        conn.write(data2, length2);
+    }
     lastActivityOut = millis();
 
 #ifdef BLYNK_DEBUG
