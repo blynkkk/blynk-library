@@ -1,9 +1,9 @@
 /*
  * This is a simple stroboscope.
- * You can tutn it on and of using a button,
+ * You can turn it on and of using a button,
  * and control frequency with a slider.
  * 
- * The dasboard:
+ * The dashboard:
  *   Button (Switch) on V1
  *   Slider (100...1000) on V2
  * 

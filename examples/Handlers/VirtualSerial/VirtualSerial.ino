@@ -1,3 +1,10 @@
+/*
+ * You can send/receive any data using VirtualSerial object.
+ * 
+ * The dashboard:
+ *   VirtualConsole widget connected to pin V1
+ */
+
 #define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>

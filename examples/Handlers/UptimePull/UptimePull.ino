@@ -2,9 +2,8 @@
  * This example shows how a custom value
  * is periodically requested by the phone App.
  * 
- * The dasboard:
+ * The dashboard:
  *   Value Display on V5 with Frequency 1000
- * 
  */
 
 #include <SPI.h>

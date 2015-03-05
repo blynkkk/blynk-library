@@ -1,3 +1,10 @@
+/*
+ * Control a color gradient on NeoPixel strip using a slider!
+ * 
+ * The dashboard:
+ *   Slider (0...500) on V1
+ */
+
 #include <BlynkSimpleSerial.h>
 #include <Adafruit_NeoPixel.h>
 

@@ -2,7 +2,7 @@
  * This example shows how a value is periodically pushed
  * from Arduino to the phone App.
  * 
- * The dasboard:
+ * The dashboard:
  *   Value Display on V5
  * 
  * For this example you need to have SimpleTimer library:
@@ -28,7 +28,7 @@ void setup()
   timer.setInterval(1000, sendUptime);
 }
 
-// a function to be executed periodically
+// A function to be executed periodically
 void sendUptime()
 {
   Blynk.virtualWrite(5, millis()/1000);

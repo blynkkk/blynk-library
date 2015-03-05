@@ -1,10 +1,9 @@
 /*
  * This just prints a value that is sent by widget
- * connected to virtual pin 1
+ * connected to virtual pin 1.
  * 
- * The dasboard:
+ * The dashboard:
  *   Slider (0...100) on V1
- * 
  */
 
 #define BLYNK_PRINT Serial

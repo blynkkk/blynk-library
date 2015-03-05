@@ -1,3 +1,10 @@
+/*
+ * Rotate a servo using a slider!
+ * 
+ * The dashboard:
+ *   Slider (0...180) on V3
+ */
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
@@ -12,7 +19,7 @@ void setup()
   servo.attach(9);
 }
 
-BLYNK_ON_WRITE(2)
+BLYNK_ON_WRITE(3)
 {
   servo.write(param[0].asInt());
 }
