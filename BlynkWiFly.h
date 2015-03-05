@@ -25,7 +25,7 @@ public:
         client = new WiFlyClient(d, p);
     }
 
-    void begin_addr(uint8_t* a, uint16_t p) {
+    void begin_addr(IPAddress a, uint16_t p) {
         if (client)
             delete client;
         client = new WiFlyClient(a, p);
@@ -69,7 +69,8 @@ public:
     {}
 
     void begin( const char* auth,
-                const char* ssid, const char* pass,
+                const char* ssid,
+                const char* pass,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t port      = BLYNK_DEFAULT_PORT)
     {
@@ -80,6 +81,21 @@ public:
             return;
         }
         this->conn.begin_domain(domain, port);
+    }
+
+    void begin( const char* auth,
+                const char* ssid,
+                const char* pass,
+                IPAddress addr,
+                uint16_t port)
+    {
+        Base::begin(auth);
+        WiFly.begin();
+        if (!WiFly.join(ssid, pass)) {
+            BLYNK_LOG("WiFly: Association failed.");
+            return;
+        }
+        this->conn.begin_addr(addr, port);
     }
 
 };

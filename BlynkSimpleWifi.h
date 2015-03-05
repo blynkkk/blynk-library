@@ -39,16 +39,26 @@ public:
          BLYNK_LOG("Connected to wifi");
     }
 
-    void begin(const char* auth, const char* ssid, const char* pass, const char* domain = "blynk.lan.ua", uint16_t port = 8080) {
+    void begin(const char* auth,
+               const char* ssid,
+               const char* pass,
+               const char* domain = BLYNK_DEFAULT_DOMAIN,
+               uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
         Base::begin(auth);
         wifi_conn(ssid, pass);
-        this->conn.begin(domain, NULL, port);
+        this->conn.begin(domain, port);
     }
 
-    void begin(const char* auth, const char* ssid, const char* pass, const byte* ip, uint16_t port) {
+    void begin(const char* auth,
+               const char* ssid,
+               const char* pass,
+               IPAddress ip,
+               uint16_t port)
+    {
         Base::begin(auth);
         wifi_conn(ssid, pass);
-        this->conn.begin(NULL, ip, port);
+        this->conn.begin(ip, port);
     }
 
 };
