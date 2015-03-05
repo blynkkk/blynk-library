@@ -19,7 +19,7 @@
 // Professional settings
 #define BLYNK_VERSION        "0.1.2"
 #define BLYNK_HEARTBEAT      10
-#define BLYNK_TIMEOUT_MS     1000
+#define BLYNK_TIMEOUT_MS     1500
 //#define BLYNK_DEBUG
 
 #endif
