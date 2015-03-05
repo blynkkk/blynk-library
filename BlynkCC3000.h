@@ -25,7 +25,7 @@ public:
     }
 
     bool connect() {
-        BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", addr[0], addr[1], addr[2], addr[3], port);
+        BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", addr[3], addr[2], addr[1], addr[0], port);
         client = cc3000.connectTCP(addr, port);
         return client.connected();
     }
