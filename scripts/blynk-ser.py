@@ -3,11 +3,11 @@
 """USAGE: blynk-ser.py [options]
 
 Options:
-  -s, --server      address of server to connect (default cloud.blynk.cc:8282)
-  -p, --port=PORT   serial port, a number, defualt = 0 or a device name
-  -b, --baud=BAUD   baudrate, default 9600
-  -r, --rtscts      enable RTS/CTS flow control (default off)
-  -x, --xonxoff     enable software flow control (default off)
+      --server      address of server to connect           (default blynk-test-east.cloudapp.net:8282)
+  -p, --port=PORT   serial port, a number or a device name (defualt 0)
+  -b, --baud=BAUD   baudrate                               (default 9600)
+  -r, --rtscts      enable RTS/CTS flow control            (default off)
+  -x, --xonxoff     enable software flow control           (default off)
 
 Note: no security measures are implemeted. Anyone can remotely connect
 to this service over the network.
@@ -89,7 +89,7 @@ if __name__ == '__main__':
         print >>sys.stderr, __doc__
         sys.exit(2)
     
-    server      = 'cloud.blynk.cc:8282'
+    server      = 'blynk-test-east.cloudapp.net:8282'
     ser.port    = 0
     ser.baudrate = 9600
     ser.rtscts  = False
@@ -127,9 +127,8 @@ if __name__ == '__main__':
     # Reset Arduino
     ser.setDTR(0)
     time.sleep(0.1)
+    ser.flushInput()
     ser.setDTR(1)
-    #time.sleep(0.1)
-    #ser.flushInput()
 
     print 'Connecting to', server
     while 1:

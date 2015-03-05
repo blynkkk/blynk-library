@@ -3,7 +3,7 @@
 # === Edit these lines to match your need ===
 COMM_PORT=/dev/ttyUSB0
 COMM_BAUD=9600
-SERV_ADDR=cloud.blynk.cc
+SERV_ADDR=blynk-test-east.cloudapp.net
 SERV_PORT=8282
 
 # === Edit lines below only if absolutely sure what you're doing ===
