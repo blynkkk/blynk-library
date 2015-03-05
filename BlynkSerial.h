@@ -73,7 +73,7 @@ public:
         : BlynkProtocol<T>(conn)
     {}
 
-    void begin(const char* auth, uint32_t baud = 115200) {
+    void begin(const char* auth, uint32_t baud = 9600) {
         Base::begin(auth);
         this->conn.begin(baud);
     }
