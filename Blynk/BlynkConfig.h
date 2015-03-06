@@ -13,7 +13,7 @@
 
 // Change these settings to match your need
 #define BLYNK_DEFAULT_DOMAIN "blynk-test-east.cloudapp.net"
-#define BLYNK_DEFAULT_PORT   8282
+#define BLYNK_DEFAULT_PORT   8442
 #define BLYNK_MAX_READBYTES  255
 
 // Professional settings

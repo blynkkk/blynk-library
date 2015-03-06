@@ -3,7 +3,7 @@
 """USAGE: blynk-ser.py [options]
 
 Options:
-      --server      address of server to connect           (default blynk-test-east.cloudapp.net:8282)
+      --server      address of server to connect           (default blynk-test-east.cloudapp.net:8442)
   -p, --port=PORT   serial port, a number or a device name (defualt 0)
   -b, --baud=BAUD   baudrate                               (default 9600)
   -r, --rtscts      enable RTS/CTS flow control            (default off)
@@ -36,7 +36,7 @@ class Redirector:
         self.thread_read.setDaemon(1)
         self.thread_read.start()
         self.writer()
-    
+
     def reader(self):
         """loop forever and copy serial->socket"""
         while self.alive:
@@ -53,7 +53,7 @@ class Redirector:
                 #probably got disconnected
                 break
         self.alive = False
-    
+
     def writer(self):
         """loop forever and copy socket->serial"""
         while self.alive:
@@ -78,7 +78,7 @@ class Redirector:
 
 if __name__ == '__main__':
     ser = serial.Serial()
-    
+
     #parse command line options
     try:
         opts, args = getopt.getopt(sys.argv[1:],
@@ -88,14 +88,14 @@ if __name__ == '__main__':
         # print help information and exit:
         print >>sys.stderr, __doc__
         sys.exit(2)
-    
-    server      = 'blynk-test-east.cloudapp.net:8282'
+
+    server      = 'blynk-test-east.cloudapp.net:8442'
     ser.port    = 0
     ser.baudrate = 9600
     ser.rtscts  = False
     ser.xonxoff = False
     ser.timeout = 1     #required so that the reader thread can exit
-    
+
     for o, a in opts:
         if o in ("-h", "--help"):   #help text
             usage()
@@ -116,7 +116,7 @@ if __name__ == '__main__':
             ser.xonxoff = True
         elif o in ("--server"):
             server = a
-    
+
     try:
         print 'Opening port', ser.port
         ser.open()

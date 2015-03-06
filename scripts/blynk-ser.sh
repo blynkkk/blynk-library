@@ -4,7 +4,7 @@
 COMM_PORT=/dev/ttyUSB0
 COMM_BAUD=9600
 SERV_ADDR=blynk-test-east.cloudapp.net
-SERV_PORT=8282
+SERV_PORT=8442
 
 # === Edit lines below only if absolutely sure what you're doing ===
 echo Connecting device at $COMM_PORT to $SERV_ADDR:$SERV_PORT...
