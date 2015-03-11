@@ -29,6 +29,14 @@
 
 // Diagnostic defines
 
+size_t BlynkFreeRam();
+void BlynkReset();
+void BlynkFatal();
+
+#define BLYNK_FATAL(msg, ...){ BLYNK_LOG(msg, ##__VA_ARGS__); BlynkFatal(); }
+#define BLYNK_LOG_RAM()      { BLYNK_LOG("Free RAM: %d", BlynkFreeRam()); }
+#define BLYNK_LOG_FN()       BLYNK_LOG("> %s @%d", __FUNCTION__, __LINE__);
+
 #ifdef BLYNK_PRINT
 
     #if defined(ARDUINO)
@@ -38,32 +46,9 @@
         #include <Arduino.h>
         #define _S(s) PSTR(s)
 
-        #define BLYNK_DBG_BREAK()    { fatalLoop(); }
+        #define BLYNK_DBG_BREAK()    { for(;;); }
         #define BLYNK_LOG(msg, ...)  { char buff[128]; snprintf_P(buff, sizeof(buff), PSTR("[%lu] " msg "\n"), millis(), ##__VA_ARGS__); BLYNK_PRINT.print(buff); }
-        #define BLYNK_LOG_RAM()      { BLYNK_LOG("Free RAM: %d", freeRam()); }
-        #define BLYNK_LOG_FN()       BLYNK_LOG("> %s @%d", __FUNCTION__, __LINE__);
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
-        #define BLYNK_FATAL(msg, ...){ BLYNK_LOG(msg, ##__VA_ARGS__); BLYNK_DBG_BREAK() }
-
-        static inline int freeRam() {
-            extern int __heap_start, *__brkval;
-            int v;
-            return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-        }
-
-        static void fatalLoop() {
-            pinMode(LED_BUILTIN, OUTPUT);
-            const int rate = 250;
-            int i = 10000/rate;
-            while (i-- > 0) {
-                digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-                delay(rate);
-            }
-            BLYNK_LOG("Resetting");
-            delay(100);
-            void(*resetFunc)(void) = 0;
-            resetFunc();
-        }
 
     #elif defined(LINUX)
 
@@ -75,7 +60,6 @@
 
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_LOG(msg, ...)  { fprintf(stderr, msg, ##__VA_ARGS__); }
-        #define BLYNK_LOG_FN()
         #define BLYNK_ASSERT(expr)   assert(expr)
 
     #elif defined(WINDOWS)
@@ -85,7 +69,6 @@
 
         #define BLYNK_DBG_BREAK()    DebugBreak();
         #define BLYNK_LOG(...)       { char buff[1024]; snprintf(buff, sizeof(buff), __VA_ARGS__); OutputDebugString(buff); }
-        #define BLYNK_LOG_FN()
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_DBG_BREAK() } }
 
     #else
@@ -93,7 +76,6 @@
         #warning Could not detect platform
         #define BLYNK_DBG_BREAK()    { *(char*)(NULL) = 0xFF; } // SEGV!!!
         #define BLYNK_LOG(...)
-        #define BLYNK_LOG_FN()
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_DBG_BREAK() } }
 
     #endif
@@ -102,8 +84,6 @@
 
     #define BLYNK_DBG_BREAK()
     #define BLYNK_LOG(msg, ...)
-    #define BLYNK_LOG_RAM()
-    #define BLYNK_LOG_FN()
     #define BLYNK_ASSERT(expr)
 
 #endif
