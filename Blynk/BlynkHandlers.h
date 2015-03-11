@@ -14,9 +14,9 @@
 
 struct BlynkReq
 {
-    unsigned pin;
-    unsigned msg_id;
-    unsigned status;
+    uint16_t msg_id;
+    uint16_t status;
+    uint8_t pin;
 };
 
 typedef void (*WidgetReadHandler)(BlynkReq& request);
@@ -29,6 +29,11 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 
 #define BLYNK_ON_READ(pin) \
     void BlynkWidgetRead ## pin (BlynkReq& request)
+
+#define BLYNK_ATTACH_WIDGET(widget, pin)	\
+    BLYNK_ON_WRITE(pin) {					\
+        (widget).onWrite(request, param);   \
+    }
 
 // Default read/write handlers (you can redefine them in your code)
 
