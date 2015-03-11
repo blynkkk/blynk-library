@@ -4,6 +4,7 @@
  * The dashboard:
  *   SD widget on V1
  */
+#define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
@@ -15,19 +16,24 @@ WidgetSD sd;
 
 void setup()
 {
-  Blynk.begin("00000000000000000000000000000000");
-  
-  // Pin 10 (or 53 on Mega) should stay output - read SD examples for details
-  pinMode(10, OUTPUT);
-  
+  Serial.begin(9600);
+
   // Arduino Ethernet shield: pin 4
   // Adafruit SD shields and modules: pin 10
   // Sparkfun SD shield: pin 8
-  const int chipSelect = 4;
-  if (!SD.begin(chipSelect)) {
-    Serial.println("SD init failed!");
-    return;
+  const int sdChipSelect = 4;
+
+  // Pin 10 (or 53 on Mega) should stay output - read SD examples for details
+  pinMode(SS, OUTPUT);
+  
+  // Disable the W5100 and init SD
+  digitalWrite(10, HIGH);
+  if (!SD.begin(sdChipSelect)) {
+    BLYNK_FATAL("SD init failed!");
   }
+
+  // Init Ethernet & Blynk
+  Blynk.begin("00000000000000000000000000000000");
 }
 
 BLYNK_ATTACH_WIDGET(sd, 1)

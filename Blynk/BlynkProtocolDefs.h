@@ -20,6 +20,7 @@ enum BlynkCmd
     BLYNK_CMD_LOAD_PROF			= 4,
     BLYNK_CMD_GET_TOKEN			= 5,
     BLYNK_CMD_PING				= 6,
+    BLYNK_CMD_TWEET				= 12,
     BLYNK_CMD_HARDWARE			= 20,
 };
 
@@ -35,9 +36,8 @@ enum BlynkStatus
     BLYNK_NO_CONNECTION			= 7,
     BLYNK_NOT_SUPPORTED			= 8,
     BLYNK_INVALID_TOKEN			= 9,
-    BLYNK_SERVER_ERROR			= 10,	//! \todo What's the difference with 500?
-    BLYNK_ALREADY_LOGGED_IN		= 11,
-    BLYNK_SERVER_ERROR2			= 500,
+    BLYNK_SERVER_ERROR			= 10,
+    BLYNK_ALREADY_LOGGED_IN		= 11
 };
 
 struct BlynkHeader

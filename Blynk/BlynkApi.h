@@ -28,7 +28,7 @@ public:
         cmd.add("vw");
         cmd.add(pin);
         cmd.add(data);
-        static_cast<Proto*>(this)->send(cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
     }
 
     void virtualWrite(int pin, const void* buff, size_t len) {
@@ -36,12 +36,34 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vw");
         cmd.add(pin);
-        static_cast<Proto*>(this)->send(cmd.getBuffer(), cmd.getLength(), buff, len);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength(), buff, len);
     }
 
     void virtualWrite(int pin, const BlynkParam& param) {
         virtualWrite(pin, param.getBuffer(), param.getLength());
     }
+
+    void tweet(const char* msg) {
+        size_t len = strlen(msg);
+        if (len < 140) {
+            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, msg, len);
+        }
+    }
+
+#if defined(BLYNK_HAS_DELAY)
+
+    void delay(unsigned long ms) {
+        uint16_t start = (uint16_t)micros();
+        while (ms > 0) {
+            static_cast<Proto*>(this)->run();
+            if (((uint16_t)micros() - start) >= 1000) {
+                ms--;
+                start += 1000;
+            }
+        }
+    }
+
+#endif
 
 protected:
     void processCmd(const void* buff, size_t len);
@@ -54,6 +76,7 @@ protected:
 #include <Arduino.h>
 
 template<class Proto>
+BLYNK_FORCE_INLINE
 void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 {
     BlynkParam param((void*)buff, len);
@@ -97,9 +120,9 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #ifdef BLYNK_HAS_PROGMEM
         char mem[profile_len];
         memcpy_P(mem, profile, profile_len);
-        static_cast<Proto*>(this)->send(mem, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, mem, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
 #else
-        static_cast<Proto*>(this)->send(profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
 #endif
         return;
     }
@@ -114,14 +137,14 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add("dw");
         rsp.add(pin);
         rsp.add(digitalRead(pin));
-        static_cast<Proto*>(this)->send(rsp.getBuffer(), rsp.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "ar")) {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("aw");
         rsp.add(pin);
         rsp.add(analogRead(pin));
-        static_cast<Proto*>(this)->send(rsp.getBuffer(), rsp.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
             BlynkReq req = { pin, 0, BLYNK_SUCCESS };

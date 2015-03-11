@@ -27,7 +27,7 @@ void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
     if (!strcmp(cmd, "ls")) {
         if (File dir = SD.open(param[1].asStr())) {
             while (File entry = dir.openNextFile()) {
-                char mem[128] = "";
+                char mem[32] = "";
                 BlynkParam result(mem, 0, sizeof(mem));
                 result.add(entry.name());
                 if (entry.isDirectory()) {
@@ -38,25 +38,30 @@ void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
                 Blynk.virtualWrite(request.pin, result);
                 entry.close();
             }
+            dir.close();
         }
-    } else if (!strcmp(cmd, "get")) {	// dc dc dc dc d[l|e]
+    }  else if (!strcmp(cmd, "get")) {	// dc dc dc dc d[l|e]
         if (File f = SD.open(param[1].asStr())) {
-            char mem[128] = "dc";
-            const int maxlen = sizeof(mem)-3;
-            int len;
-            do {
-                len = f.read(mem+3, maxlen);
-                if (len < 0) {
-                    mem[1] = 'e'; // Error!
-                    len = 0;
-                } else if (len < maxlen) {
-                    mem[1] = 'l'; // Last chunk
-                }
-                Blynk.virtualWrite(request.pin, mem, len + 3);
-            } while (len == maxlen);
+            if (!f.isDirectory()) {
+                char mem[32] = "dc";
+                const int maxlen = sizeof(mem)-3;
+                int len;
+                do {
+                    len = f.read(mem+3, maxlen);
+                    if (len < 0) {
+                        mem[1] = 'e'; // Error!
+                        len = 0;
+                    } else if (len < maxlen) {
+                        mem[1] = 'l'; // Last chunk
+                    }
+                    Blynk.virtualWrite(request.pin, mem, len + 3);
+                } while (len == maxlen);
+            } else {
+
+            }
+
             f.close();
         }
-    // TODO: } else if (!strcmp(cmd, "rm")) {
     } else {
         BLYNK_LOG("Invalid SD command: %s", cmd);
     }

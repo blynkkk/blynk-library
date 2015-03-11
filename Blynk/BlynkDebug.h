@@ -17,6 +17,7 @@
 #define TOSTRING(x) STRINGIFY(x)
 #define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
 #define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
+#define BLYNK_FORCE_INLINE __attribute__((always_inline))
 
 #if defined(__AVR__)
     #include <avr/pgmspace.h>
@@ -37,16 +38,31 @@
         #include <Arduino.h>
         #define _S(s) PSTR(s)
 
-        #define BLYNK_DBG_BREAK()    { for(;;); }
+        #define BLYNK_DBG_BREAK()    { fatalLoop(); }
         #define BLYNK_LOG(msg, ...)  { char buff[128]; snprintf_P(buff, sizeof(buff), PSTR("[%lu] " msg "\n"), millis(), ##__VA_ARGS__); BLYNK_PRINT.print(buff); }
         #define BLYNK_LOG_RAM()      { BLYNK_LOG("Free RAM: %d", freeRam()); }
         #define BLYNK_LOG_FN()       BLYNK_LOG("> %s @%d", __FUNCTION__, __LINE__);
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
+        #define BLYNK_FATAL(msg, ...){ BLYNK_LOG(msg, ##__VA_ARGS__); BLYNK_DBG_BREAK() }
 
         static inline int freeRam() {
             extern int __heap_start, *__brkval;
             int v;
             return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+        }
+
+        static void fatalLoop() {
+            pinMode(LED_BUILTIN, OUTPUT);
+            const int rate = 250;
+            int i = 10000/rate;
+            while (i-- > 0) {
+                digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+                delay(rate);
+            }
+            BLYNK_LOG("Resetting");
+            delay(100);
+            void(*resetFunc)(void) = 0;
+            resetFunc();
         }
 
     #elif defined(LINUX)

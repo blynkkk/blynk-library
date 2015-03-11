@@ -29,25 +29,12 @@ public:
     {}
     bool connect();
 
-    void send(const void* data, size_t length) {
-        if (conn.connected()) {
-            sendCmd(BLYNK_CMD_HARDWARE, 0, data, length, NULL, 0);
-        }
-    }
-
-    void send(const void* data, size_t length, const void* data2, size_t length2) {
-        if (conn.connected()) {
-            sendCmd(BLYNK_CMD_HARDWARE, 0, data, length, data2, length2);
-        }
-    }
-
     void run(void);
+
+    void sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2 = NULL, size_t length2 = 0);
 
 private:
     bool readHeader(BlynkHeader& hdr);
-    void sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length);
-    void sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2);
-
     uint16_t getNextMsgId();
 
 protected:
@@ -102,7 +89,6 @@ bool BlynkProtocol<Transp>::connect()
 }
 
 template <class Transp>
-inline
 void BlynkProtocol<Transp>::run(void)
 {
     if (!conn.connected()) {
@@ -142,6 +128,7 @@ void BlynkProtocol<Transp>::run(void)
 }
 
 template <class Transp>
+BLYNK_FORCE_INLINE
 void BlynkProtocol<Transp>::processInput(void)
 {
     BlynkHeader hdr;
@@ -216,6 +203,9 @@ bool BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
+    if (!conn.connected()) {
+        return;
+    }
     BlynkHeader hdr;
     hdr.type = cmd;
     hdr.msg_id = htons((id == 0) ? getNextMsgId() : id);
