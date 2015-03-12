@@ -5,7 +5,7 @@
  *   http://shop.wickeddevice.com/resources/wildfire
  */
 
-#define BLYNK_PRINT Serial
+#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <WildFire_CC3000.h>
 #include <ccspi.h>
 #include <SPI.h>

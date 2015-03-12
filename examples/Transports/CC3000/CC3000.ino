@@ -3,7 +3,7 @@
  *   https://github.com/adafruit/Adafruit_CC3000_Library
  */
 
-#define BLYNK_PRINT Serial
+#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <Adafruit_CC3000.h>
 #include <ccspi.h>
 #include <SPI.h>
