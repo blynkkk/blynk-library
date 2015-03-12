@@ -1,7 +1,6 @@
 /*
  * For this example you need Adafruit_CC3000_Library library:
  *   https://github.com/adafruit/Adafruit_CC3000_Library
- *
  */
 
 #define BLYNK_PRINT Serial

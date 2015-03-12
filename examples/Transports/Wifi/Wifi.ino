@@ -1,3 +1,4 @@
+#define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <WiFi.h>
 #include <BlynkSimpleWifi.h>
@@ -7,6 +8,7 @@ char auth[] = "00000000000000000000000000000000";
 
 void setup()
 {
+  Serial.begin(9600);
   Blynk.begin(auth, "yourNetwork", "yourPassword");
   // Or specify server using one of those commands:
   //Blynk.begin(auth, "yourNetwork", "yourPassword", "server.org", 8080);

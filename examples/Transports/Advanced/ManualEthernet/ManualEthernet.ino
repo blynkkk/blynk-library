@@ -1,3 +1,4 @@
+#define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
@@ -13,6 +14,7 @@ IPAddress server_ip (10, 0, 0, 10);
 
 void setup()
 {
+  Serial.begin(9600);
   // Everything except auth is optional ;)
   Blynk.begin(auth, server_ip, 8282, arduino_ip, arduino_mac);
   // Or like this:

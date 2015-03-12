@@ -1,3 +1,4 @@
+#define BLYNK_PRINT Serial
 #include <SoftwareSerial.h>
 #include <BlynkSerial.h>
 
@@ -9,6 +10,7 @@ BlynkSerial<SwSerialTransp> Blynk(myTransp);
 
 void setup()
 {
+  Serial.begin(9600);
   Blynk.begin("00000000000000000000000000000000", 9600);
 }
 

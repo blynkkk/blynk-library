@@ -1,3 +1,4 @@
+#define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <WiFly.h>
 #include <BlynkSimpleWiFly.h>
@@ -10,6 +11,7 @@ char auth[] = "00000000000000000000000000000000";
 
 void setup()
 {
+  Serial.begin(9600);
   Blynk.begin(auth, "ssid", "pass");
 }
 
