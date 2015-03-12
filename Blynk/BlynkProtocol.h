@@ -218,6 +218,11 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     }
     lastActivityOut = millis();
 
+    if (wlen != sizeof(hdr)+length+length2) {
+        BLYNK_LOG("Can't send cmd");
+        conn.disconnect();
+    }
+
 #ifdef BLYNK_DEBUG
     BLYNK_PRINT.write('<');
     BLYNK_PRINT.print(wlen);
