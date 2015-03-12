@@ -66,12 +66,10 @@ public:
     {
         if (!cc3000.begin())
         {
-            BLYNK_LOG("Couldn't begin()! Check your wiring?");
-            while(1);
+            BLYNK_FATAL("Couldn't begin()! Check your wiring?");
         }
         if (!cc3000.connectToAP(ssid, pass, secmode)) {
-            BLYNK_LOG("Failed!");
-            while(1);
+            BLYNK_FATAL("Failed to connect to AP");
         }
         while (!cc3000.checkDHCP())
         {
@@ -101,7 +99,7 @@ public:
         uint32_t ip = 0;
         while (ip == 0) {
             if (!cc3000.getHostByName((char*)domain, &ip)) {
-                BLYNK_LOG("Couldn't resolve!");
+                BLYNK_LOG("Couldn't resolve %s", domain);
             }
             delay(500);
         }

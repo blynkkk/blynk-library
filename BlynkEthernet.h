@@ -33,7 +33,7 @@ public:
         BLYNK_LOG("Using DHCP");
         Base::begin(auth);
         if (!Ethernet.begin((byte*)mac)) {
-            BLYNK_LOG("DHCP Failed!");
+            BLYNK_FATAL("DHCP Failed!");
         }
         // give the Ethernet shield a second to initialize:
         delay(1000);
@@ -68,7 +68,7 @@ public:
         BLYNK_LOG("Using DHCP");
         Base::begin(auth);
         if (!Ethernet.begin((byte*)mac)) {
-            BLYNK_LOG("DHCP Failed!");
+            BLYNK_FATAL("DHCP Failed!");
         }
         // give the Ethernet shield a second to initialize:
         delay(1000);

@@ -18,6 +18,7 @@
 #define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
 #define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
 #define BLYNK_FORCE_INLINE __attribute__((always_inline))
+#define BLYNK_NORETURN __attribute__ ((noreturn))
 
 #if defined(__AVR__)
     #include <avr/pgmspace.h>
@@ -31,7 +32,7 @@
 
 size_t BlynkFreeRam();
 void BlynkReset();
-void BlynkFatal();
+void BlynkFatal() BLYNK_NORETURN;
 
 #define BLYNK_FATAL(msg, ...){ BLYNK_LOG(msg, ##__VA_ARGS__); BlynkFatal(); }
 #define BLYNK_LOG_RAM()      { BLYNK_LOG("Free RAM: %d", BlynkFreeRam()); }

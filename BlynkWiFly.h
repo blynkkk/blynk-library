@@ -77,8 +77,7 @@ public:
         Base::begin(auth);
         WiFly.begin();
         if (!WiFly.join(ssid, pass)) {
-            BLYNK_LOG("WiFly: Association failed.");
-            return;
+            BLYNK_FATAL("WiFly: Association failed.");
         }
         this->conn.begin_domain(domain, port);
     }
@@ -92,8 +91,7 @@ public:
         Base::begin(auth);
         WiFly.begin();
         if (!WiFly.join(ssid, pass)) {
-            BLYNK_LOG("WiFly: Association failed.");
-            return;
+            BLYNK_FATAL("WiFly: Association failed.");
         }
         this->conn.begin_addr(addr, port);
     }

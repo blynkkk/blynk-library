@@ -27,8 +27,7 @@ public:
         int status = WL_IDLE_STATUS;
          // check for the presence of the shield:
          if (WiFi.status() == WL_NO_SHIELD) {
-             BLYNK_LOG("WiFi shield not present");
-             return;
+             BLYNK_FATAL("WiFi shield not present");
          }
 
          // attempt to connect to Wifi network:

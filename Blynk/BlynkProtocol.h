@@ -210,15 +210,18 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     hdr.type = cmd;
     hdr.msg_id = htons((id == 0) ? getNextMsgId() : id);
     hdr.length = htons(length+length2);
-    conn.write(&hdr, sizeof(hdr));
-    conn.write(data, length);
+    size_t wlen = 0;
+    wlen += conn.write(&hdr, sizeof(hdr));
+    wlen += conn.write(data, length);
     if (length2) {
-        conn.write(data2, length2);
+        wlen += conn.write(data2, length2);
     }
     lastActivityOut = millis();
 
 #ifdef BLYNK_DEBUG
     BLYNK_PRINT.write('<');
+    BLYNK_PRINT.print(wlen);
+    BLYNK_PRINT.write(':');
     BLYNK_PRINT.write((uint8_t*)data, length);
     BLYNK_PRINT.write((uint8_t*)data2, length2);
     BLYNK_PRINT.println();

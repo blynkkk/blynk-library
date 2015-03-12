@@ -65,12 +65,10 @@ public:
     {
         if (!cc3000.begin())
         {
-            BLYNK_LOG("Couldn't begin()! Check your wiring?");
-            while(1);
+            BLYNK_FATAL("Couldn't begin()! Check your wiring?");
         }
         if (!cc3000.connectToAP(ssid, pass, secmode)) {
-            BLYNK_LOG("Failed!");
-            while(1);
+            BLYNK_FATAL("Failed to connect to AP!");
         }
         while (!cc3000.checkDHCP())
         {
@@ -80,8 +78,7 @@ public:
         uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;
         if(!cc3000.getIPAddress(&ipAddress, &netmask, &gateway, &dhcpserv, &dnsserv))
         {
-            BLYNK_LOG("Unable to get the IP Address!");
-            while(1);
+            BLYNK_FATAL("Unable to get the IP Address!");
         }
         uint8_t* addr = (uint8_t*)&ipAddress;
         BLYNK_LOG("My IP: %d.%d.%d.%d", addr[0], addr[1], addr[2], addr[3]);
@@ -100,7 +97,7 @@ public:
         uint32_t ip = 0;
         while (ip == 0) {
             if (!cc3000.getHostByName((char*)domain, &ip)) {
-                BLYNK_LOG("Couldn't resolve!");
+                BLYNK_LOG("Couldn't resolve %s", domain);
             }
             delay(500);
         }
