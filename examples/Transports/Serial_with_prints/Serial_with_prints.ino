@@ -1,3 +1,4 @@
+// You could use a spare Hw Serial on boards that have it (like Mega)
 #include <SoftwareSerial.h>
 SoftwareSerial SwSerial(10, 11);
 #define BLYNK_PRINT SwSerial
