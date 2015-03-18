@@ -10,6 +10,7 @@
 #define BlynkDebug_h
 
 #include <Blynk/BlynkConfig.h>
+#include <stddef.h>
 
 // General defines
 
@@ -47,6 +48,7 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <Arduino.h>
         #define _S(s) PSTR(s)
 
+        #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((char*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
         #define BLYNK_LOG(msg, ...)  { char buff[128]; snprintf_P(buff, sizeof(buff), PSTR("[%lu] " msg "\n"), millis(), ##__VA_ARGS__); BLYNK_PRINT.print(buff); }
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
@@ -59,8 +61,9 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <errno.h>
         #include <signal.h>
 
+        #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_LOG(msg); fwrite(addr, len, 1, stderr); }
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
-        #define BLYNK_LOG(msg, ...)  { fprintf(stderr, msg, ##__VA_ARGS__); }
+        #define BLYNK_LOG(msg, ...)  { fprintf(stderr, msg "\n", ##__VA_ARGS__); }
         #define BLYNK_ASSERT(expr)   assert(expr)
 
     #elif defined(WINDOWS)
