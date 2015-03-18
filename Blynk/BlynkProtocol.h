@@ -27,6 +27,7 @@ public:
         , lastHeartbeat(0)
         , currentMsgId(0)
     {}
+
     bool connect();
 
     void run(void);
@@ -60,7 +61,12 @@ bool BlynkProtocol<Transp>::connect()
         return false;
     }
 
-    sendCmd(BLYNK_CMD_LOGIN, 1, authkey, strlen(authkey), NULL, 0);
+    uint16_t id = getNextMsgId();
+    sendCmd(BLYNK_CMD_LOGIN, id, authkey, strlen(authkey), NULL, 0);
+
+#ifdef BLYNK_DEBUG
+    const unsigned long t = millis();
+#endif
 
     BlynkHeader hdr;
     if (!readHeader(hdr)) {
@@ -68,7 +74,7 @@ bool BlynkProtocol<Transp>::connect()
     }
 
     if (BLYNK_CMD_RESPONSE != hdr.type ||
-        1 != hdr.msg_id ||
+        id != hdr.msg_id ||
         (BLYNK_SUCCESS != hdr.length && BLYNK_ALREADY_LOGGED_IN != hdr.length))
     {
         if (BLYNK_TIMEOUT == hdr.length) {
@@ -85,6 +91,10 @@ bool BlynkProtocol<Transp>::connect()
 
     lastHeartbeat = lastActivityIn = lastActivityOut = millis();
     BLYNK_LOG("Blynk v" BLYNK_VERSION " connected");
+#ifdef BLYNK_DEBUG
+    BLYNK_LOG("Roundtrip: %dms", lastActivityIn-t);
+#endif
+
     return true;
 }
 
@@ -98,10 +108,13 @@ void BlynkProtocol<Transp>::run(void)
     }
 
     if (conn.available() >= sizeof(BlynkHeader)) {
+        //BLYNK_LOG("Available: %d", conn.available());
+        //const unsigned long t = micros();
         processInput();
+        //BLYNK_LOG("Proc time: %d", micros() - t);
     }
 
-    unsigned long t = millis();
+    const unsigned long t = millis();
 
     if (t - lastActivityIn > (1000UL * BLYNK_HEARTBEAT + BLYNK_TIMEOUT_MS*3)) {
 #ifdef BLYNK_DEBUG
@@ -118,11 +131,8 @@ void BlynkProtocol<Transp>::run(void)
 #ifdef BLYNK_DEBUG
         BLYNK_LOG("Heartbeat");
 #endif
-        BlynkHeader hdr;
-        hdr.type = BLYNK_CMD_PING;
-        hdr.msg_id = htons(getNextMsgId());
-        hdr.length = htons(0);
-        conn.write(&hdr, sizeof(hdr));
+
+        sendCmd(BLYNK_CMD_PING, 0, NULL, 0, NULL, 0);
         lastActivityOut = lastHeartbeat = t;
     }
 }
@@ -160,9 +170,7 @@ void BlynkProtocol<Transp>::processInput(void)
     inputBuffer[hdr.length] = 0;
 
 #ifdef BLYNK_DEBUG
-    BLYNK_PRINT.write('>');
-    BLYNK_PRINT.write(inputBuffer, hdr.length);
-    BLYNK_PRINT.println();
+    BLYNK_DBG_DUMP(">", inputBuffer, hdr.length);
 #endif
 
     lastActivityIn = millis();
@@ -204,6 +212,9 @@ template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
     if (!conn.connected()) {
+#ifdef BLYNK_DEBUG
+        BLYNK_LOG("Cmd not sent");
+#endif
         return;
     }
     BlynkHeader hdr;
@@ -212,7 +223,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     hdr.length = htons(length+length2);
     size_t wlen = 0;
     wlen += conn.write(&hdr, sizeof(hdr));
-    wlen += conn.write(data, length);
+    if (length) {
+        wlen += conn.write(data, length);
+    }
     if (length2) {
         wlen += conn.write(data2, length2);
     }
@@ -224,12 +237,8 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     }
 
 #ifdef BLYNK_DEBUG
-    BLYNK_PRINT.write('<');
-    BLYNK_PRINT.print(wlen);
-    BLYNK_PRINT.write(':');
-    BLYNK_PRINT.write((uint8_t*)data, length);
-    BLYNK_PRINT.write((uint8_t*)data2, length2);
-    BLYNK_PRINT.println();
+    BLYNK_DBG_DUMP("<", data, length);
+    BLYNK_DBG_DUMP("<", data2, length2);
 #endif
 }
 
