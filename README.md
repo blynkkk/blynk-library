@@ -2,7 +2,7 @@
 
 ### Quickstart: Arduino + Ethernet shield ###
 
-* In Arduino IDE select File -> Examples -> Blynk -> Basic -> SimpleEthernet
+* In Arduino IDE select File -> Examples -> Blynk -> Transports -> Ethernet
 * Update auth token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
 
