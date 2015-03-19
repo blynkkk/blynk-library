@@ -92,10 +92,13 @@ stty -F $COMM_PORT hupcl
 while [ 1 ]; do
     echo Connecting device $COMM_PORT to $SERV_ADDR:$SERV_PORT...
 
+    TCP_ATTR="nodelay" #,rcvtimeo=1,sndtimeo=1
+    GEN_ATTR="-d -d -T15"
+
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        socat -d -d FILE:$COMM_PORT,raw,echo=0,b$COMM_BAUD,nonblock=1 TCP:$SERV_ADDR:$SERV_PORT,nodelay
+        socat $GEN_ATTR  FILE:$COMM_PORT,raw,echo=0,clocal=1,cs8,nonblock=1,b$COMM_BAUD TCP:$SERV_ADDR:$SERV_PORT,$TCP_ATTR
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        socat -U -d -d GOPEN:$COMM_PORT,clocal=1,cs8,nonblock=1,ixoff=0,ixon=0,ispeed=$COMM_BAUD,ospeed=$COMM_BAUD,raw,echo=0,crtscts=0 TCP:$SERV_ADDR:$SERV_PORT,nodelay
+        socat $GEN_ATTR GOPEN:$COMM_PORT,raw,echo=0,clocal=1,cs8,nonblock=1,ixoff=0,ixon=0,ispeed=$COMM_BAUD,ospeed=$COMM_BAUD,crtscts=0 TCP:$SERV_ADDR:$SERV_PORT,$TCP_ATTR
     fi
     echo Reconnecting in 3s...
     sleep 3
