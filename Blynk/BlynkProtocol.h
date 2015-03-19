@@ -83,6 +83,13 @@ bool BlynkProtocol<Transp>::connect()
             BLYNK_LOG("Invalid auth token");
         } else {
             BLYNK_LOG("Connect failed (code: %d)", hdr.length);
+            // Send some invalid headers to server for disconnection
+            hdr.type = 255;
+            hdr.msg_id = 0;
+            hdr.length = 0;
+            for (int i=0; i<10; i++) {
+                conn.write(&hdr, sizeof(hdr));
+            }
         }
         conn.disconnect();
         delay(5000);
@@ -151,6 +158,10 @@ void BlynkProtocol<Transp>::processInput(void)
 #ifdef BLYNK_DEBUG
         BLYNK_LOG("Got response: %d", hdr.length);
 #endif
+        if (BLYNK_NO_LOGIN == hdr.length) {
+            conn.disconnect();
+            return;
+        }
         // TODO: return code may indicate App presence
         lastActivityIn = millis();
         return;
