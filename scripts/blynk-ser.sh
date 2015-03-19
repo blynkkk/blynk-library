@@ -42,7 +42,7 @@ usage="
 "
 
 # Detect socat
-if ! hash socat2 2>/dev/null; then
+if ! hash socat 2>/dev/null; then
     echo "This script used socat utility, but could not find it."
     echo
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
