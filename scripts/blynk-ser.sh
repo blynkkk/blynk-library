@@ -50,7 +50,7 @@ avrdude_warn="Warning: avrdude is running
 
 function detect_conflicts {
     # Detect if avrdude is running
-    if pidof -x avrdude > /dev/null; then echo -n "$avrdude_warn"; fi
+    if pgrep avrdude; then echo -n "$avrdude_warn"; fi
 }
 
 detect_conflicts
@@ -92,14 +92,18 @@ then
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         echo -n "Select serial port [" `ls /dev/ttyUSB* /dev/ttyACM* 2> /dev/null` "]: "
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo -n "Select serial port [" `ls /dev/tty.usbserial* 2> /dev/null` "]: "
+        echo -n "Select serial port [" `ls /dev/tty.usbserial* /dev/tty.usbmodem* 2> /dev/null` "]: "
     fi
     read COMM_PORT
 fi
 
 # Do the job
 echo Resetting device $COMM_PORT...
-stty -F $COMM_PORT hupcl
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    stty -F $COMM_PORT hupcl
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    stty -f $COMM_PORT hupcl
+fi
 
 while [ 1 ]; do
     echo Connecting device $COMM_PORT to $SERV_ADDR:$SERV_PORT...
