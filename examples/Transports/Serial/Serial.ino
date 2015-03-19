@@ -1,10 +1,10 @@
-#include <BlynkSimpleSerial.h>
+/*
+ * Hey! It is recommended to start with "Serial with prints" example.
+ * You will find a detailed explanation how to use Blynk over serial,
+ * and also enables prints for you to see if everything goes OK.
+ */
 
-// 1. Connect Arduino to your computer with USB cable.
-// 2. Edit COMM_PORT in the script to match serial port of your Arduino:
-//     for Windows:         scrips/blynk-ser.bat
-//     for Linux and OSX:   scrips/blynk-ser.sh
-// 3. Run the script
+#include <BlynkSimpleSerial.h>
 
 // Auth token you get from App
 char auth[] = "00000000000000000000000000000000";
