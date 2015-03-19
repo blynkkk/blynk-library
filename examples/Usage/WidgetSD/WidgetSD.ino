@@ -1,6 +1,6 @@
 /*
  * Browse SD card from phone App
- * 
+ *
  * The dashboard:
  *   SD widget on V1
  */
@@ -10,7 +10,6 @@
 #include <EthernetClient.h>
 #include <SD.h>
 #include <BlynkSimpleEthernet.h>
-#include <WidgetSD.h>
 
 WidgetSD sd;
 
@@ -25,7 +24,7 @@ void setup()
 
   // Pin 10 (or 53 on Mega) should stay output - read SD examples for details
   pinMode(SS, OUTPUT);
-  
+
   // Disable the W5100 and init SD
   digitalWrite(10, HIGH);
   if (!SD.begin(sdChipSelect)) {

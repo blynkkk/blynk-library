@@ -1,19 +1,24 @@
 /*
  * Control a color gradient on NeoPixel strip using a slider!
- * 
+ *
  * The dashboard:
  *   Slider (0...500) on V1
  */
 
-#include <BlynkSimpleSerial.h>
+#define BLYNK_PRINT Serial
+#include <SPI.h>
+#include <Ethernet.h>
+#include <EthernetClient.h>
+#include <BlynkSimpleEthernet.h>
 #include <Adafruit_NeoPixel.h>
 
-#define PIN 9
+#define PIN 8
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup()
 {
+  Serial.begin(9600);
   Blynk.begin("00000000000000000000000000000000");
   strip.begin();
   strip.show();
@@ -22,7 +27,8 @@ void setup()
 BLYNK_ON_WRITE(1)
 {
   int shift = param[0].asInt();
-  for(int i=0; i< strip.numPixels(); i++) {
+  for(int i=0; i< strip.numPixels(); i++)
+  {
     strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
   }
   strip.show();
