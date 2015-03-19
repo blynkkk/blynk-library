@@ -22,4 +22,6 @@
 static ArduinoHwSerial _blynkTransport(Serial);
 BlynkSerial<ArduinoHwSerial> Blynk(_blynkTransport);
 
+#include <BlynkWidgets.h>
+
 #endif

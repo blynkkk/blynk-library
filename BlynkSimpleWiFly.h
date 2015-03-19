@@ -2,7 +2,7 @@
  * @file       BlynkSimpleWiFly.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
- * @brief      
+ * @brief
  *
  */
 
@@ -13,5 +13,7 @@
 
 static BlynkTransportWiFly _blynkTransport;
 BlynkWiFly Blynk(_blynkTransport);
+
+#include <BlynkWidgets.h>
 
 #endif

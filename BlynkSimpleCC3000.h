@@ -25,4 +25,6 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 static BlynkTransportCC3000 _blynkTransport(cc3000);
 BlynkCC3000 Blynk(cc3000, _blynkTransport);
 
+#include <BlynkWidgets.h>
+
 #endif

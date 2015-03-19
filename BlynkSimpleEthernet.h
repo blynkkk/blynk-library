@@ -2,7 +2,7 @@
  * @file       BlynkSimpleEthernet.h
  * @author     Volodymyr Shymanskyy
  * @date       Jan 2015
- * @brief      
+ * @brief
  *
  */
 
@@ -16,5 +16,7 @@
 static EthernetClient _blynkEthernetClient;
 static BlynkArduinoClient _blynkTransport(_blynkEthernetClient);
 BlynkEthernet Blynk(_blynkTransport);
+
+#include <BlynkWidgets.h>
 
 #endif
