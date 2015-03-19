@@ -18,7 +18,8 @@
  *        Arduino IDE may complain with "programmer is not responding".
  *        You need to terminate script before uploading new sketch.
  *
- * 4. Start blynking!
+ * 4. Start blynking! :)
+ *
  */
 
 // You could use a spare Hw Serial on boards that have it (like Mega)

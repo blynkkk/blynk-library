@@ -75,7 +75,11 @@ done
 if [ ! -e "$COMM_PORT" ]
 then
     echo $COMM_PORT not found.
-    echo -n "Select serial port [" `ls /dev/ttyUSB* /dev/ttyACM* 2> /dev/null` "]: "
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        echo -n "Select serial port [" `ls /dev/ttyUSB* /dev/ttyACM* 2> /dev/null` "]: "
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo -n "Select serial port [" `ls /dev/tty.usbserial* 2> /dev/null` "]: "
+    fi
     read COMM_PORT
 fi
 
