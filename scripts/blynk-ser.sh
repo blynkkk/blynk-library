@@ -22,6 +22,7 @@ fi
 
 # Setup exit handler
 trap "echo Exited!; exit;" SIGINT SIGTERM
+echo [ Press Ctrl+C to exit ]
 
 usage="
     This script redirects serial communication to the server.
@@ -41,14 +42,27 @@ usage="
     The script also tries to reestablish connection if it was lost.
 "
 
+avrdude_warn="Warning: avrdude is running
+ Avoid uploading sketches and running this script at the same time.
+ If you didn't run avrdude, maybe it just stuck. You can kill it using:
+   killall avrdude
+"
+
+function detect_conflicts {
+    # Detect if avrdude is running
+    if pidof -x avrdude > /dev/null; then echo -n "$avrdude_warn"; fi
+}
+
+detect_conflicts
+
 # Detect socat
 if ! hash socat 2>/dev/null; then
-    echo "This script used socat utility, but could not find it."
+    echo "This script uses socat utility, but could not find it."
     echo
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        echo "    Try installing it using: sudo apt-get install socat"
+        echo "  Try installing it using: sudo apt-get install socat"
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "    Try installing it using this guide: http://www.xappsoftware.com/wordpress/2013/10/10/how-to-run-socat-on-mac-os-x/"
+        echo "  Try installing it using this guide: http://www.xappsoftware.com/wordpress/2013/10/10/how-to-run-socat-on-mac-os-x/"
     fi
     exit 1
 fi
@@ -84,22 +98,22 @@ then
 fi
 
 # Do the job
-echo [ Press Ctrl+C to exit ]
-
 echo Resetting device $COMM_PORT...
 stty -F $COMM_PORT hupcl
 
 while [ 1 ]; do
     echo Connecting device $COMM_PORT to $SERV_ADDR:$SERV_PORT...
 
-    TCP_ATTR="nodelay" #,rcvtimeo=1,sndtimeo=1
-    GEN_ATTR="-d -d -T15"
+    TCP_ATTR="nodelay" #,nonblock=1,rcvtimeo=1,sndtimeo=1
+    SER_ATTR="raw,echo=0,clocal=1,cs8,nonblock=1"
+    GEN_ATTR="-d -d -T 15"
 
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        socat $GEN_ATTR  FILE:$COMM_PORT,raw,echo=0,clocal=1,cs8,nonblock=1,b$COMM_BAUD TCP:$SERV_ADDR:$SERV_PORT,$TCP_ATTR
+        socat $GEN_ATTR  FILE:$COMM_PORT,$SER_ATTR,b$COMM_BAUD TCP:$SERV_ADDR:$SERV_PORT,$TCP_ATTR
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        socat $GEN_ATTR GOPEN:$COMM_PORT,raw,echo=0,clocal=1,cs8,nonblock=1,ixoff=0,ixon=0,ispeed=$COMM_BAUD,ospeed=$COMM_BAUD,crtscts=0 TCP:$SERV_ADDR:$SERV_PORT,$TCP_ATTR
+        socat $GEN_ATTR GOPEN:$COMM_PORT,$SER_ATTR,ixoff=0,ixon=0,ispeed=$COMM_BAUD,ospeed=$COMM_BAUD,crtscts=0 TCP:$SERV_ADDR:$SERV_PORT,$TCP_ATTR
     fi
+    detect_conflicts
     echo Reconnecting in 3s...
     sleep 3
 done
