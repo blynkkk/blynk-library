@@ -81,8 +81,7 @@ public:
         uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;
         if(!cc3000.getIPAddress(&ipAddress, &netmask, &gateway, &dhcpserv, &dnsserv))
         {
-            BLYNK_LOG("Unable to get the IP Address!");
-            while(1);
+            BLYNK_FATAL("Unable to get the IP Address");
         }
         uint8_t* addr = (uint8_t*)&ipAddress;
         BLYNK_LOG("My IP: %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
