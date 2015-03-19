@@ -54,7 +54,7 @@ if ! hash socat 2>/dev/null; then
 fi
 
 # Get command line options
-while getopts "h?vs:p:c:" opt; do
+while getopts "h?s:p:c:b:" opt; do
     case "$opt" in
     h|\?)
         echo -n "$usage"
@@ -84,9 +84,14 @@ then
 fi
 
 # Do the job
-echo Connecting device $COMM_PORT to $SERV_ADDR:$SERV_PORT...
 echo [ Press Ctrl+C to exit ]
+
+echo Resetting device $COMM_PORT...
+stty -F $COMM_PORT hupcl
+
 while [ 1 ]; do
+    echo Connecting device $COMM_PORT to $SERV_ADDR:$SERV_PORT...
+
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         socat -d -d FILE:$COMM_PORT,raw,echo=0,b$COMM_BAUD,nonblock=1 TCP:$SERV_ADDR:$SERV_PORT,nodelay
     elif [[ "$OSTYPE" == "darwin"* ]]; then
