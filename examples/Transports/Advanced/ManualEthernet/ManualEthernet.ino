@@ -4,7 +4,7 @@
 #include <EthernetClient.h>
 #include <BlynkSimpleEthernet.h>
 
-// You should get Auth Token in Blynk App. Go to the Project Settings (nut icon)  
+// You can get Auth Token for your Project in the Blynk App. Go to the Project Settings (nut icon)  
 char auth[] = "YourAuthToken";
 
 IPAddress server_ip (10, 0, 0, 10);
