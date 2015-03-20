@@ -14,7 +14,7 @@
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin("00000000000000000000000000000000");
+  Blynk.begin("YourAuthToken"); // You can get .....
 
   // Make pin 2 default HIGH, and attach INT to our handler
   pinMode(2, INPUT_PULLUP);
@@ -26,7 +26,7 @@ long lastChangeTime = 0;
 
 void checkPin()
 {
-  // Invert state, as button is "Active LOW"
+  // Invert state, since button is "Active LOW"
   int state = !digitalRead(2);
 
   // Debounce mechanism
