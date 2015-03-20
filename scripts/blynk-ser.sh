@@ -3,7 +3,7 @@
 # === Edit default options to match your need ===
 
 COMM_PORT_LINUX=/dev/ttyUSB0
-COMM_PORT_OSX=/dev/tty.usbserial
+COMM_PORT_OSX=/dev/tty.usbmodem
 COMM_BAUD=9600
 SERV_ADDR=blynk-test-east.cloudapp.net
 SERV_PORT=8442
