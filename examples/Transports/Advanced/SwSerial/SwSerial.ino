@@ -10,8 +10,8 @@ BlynkSerial<SwSerialTransp> Blynk(myTransp);
 
 void setup()
 {
-  Serial.begin(9600);
-  Blynk.begin("00000000000000000000000000000000", 9600);
+  Serial.begin(9600); 
+  Blynk.begin("YourAuthToken", 9600); // You can get Auth Token in the Blynk App. Go to the Project Settings (nut icon). 
 }
 
 void loop()
