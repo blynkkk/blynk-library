@@ -1,11 +1,11 @@
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+#define BLYNK_PRINT Serial    // Comment this out to disable prints and have more memory available
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
 #include <BlynkSimpleEthernet.h>
 
-// Auth token you get from App
-char auth[] = "00000000000000000000000000000000";
+// You should get Auth Token in Blynk App. Go to the Project Settings (nut icon)  
+char auth[] = "YourAuthToken";
 
 IPAddress server_ip (10, 0, 0, 10);
 
