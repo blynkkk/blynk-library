@@ -26,7 +26,7 @@ void setup()
   Serial.begin(9600);
   Blynk.begin("YourAuthToken"); // You can get Auth Token for your Project in the Blynk App. Go to the Project Settings (nut icon)
 
-  // Connect button to pin 2 on your Arduino. Make pin 2 default HIGH, and attach INT to our handler !!!!!!!!!(explain what handler is......)!!!!!!!!!!
+  // Connect button to pin 2 on your Arduino. Make pin 2 HIGH by default and attach INT to our handler (!!! explain what handler is......!!!  find a better name?)
   pinMode(2, INPUT_PULLUP);
   attachInterrupt(0, checkPin, CHANGE);
 }
