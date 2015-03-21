@@ -2,11 +2,11 @@
  * This is a simple stroboscope.
  * You can turn it on and of using a button,
  * and control frequency with a slider.
- * 
+ *
  * App dashboard setup:
  *   Button (Switch) on V1
  *   Slider (100...1000) on V2
- * 
+ *
  * For this example you need to have SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
@@ -20,7 +20,8 @@
 #include <BlynkSimpleEthernet.h>
 #include <SimpleTimer.h>
 
-// Auth token you get from App
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
 #define LED_PIN 9

@@ -9,7 +9,8 @@
 #include <SPI.h>
 #include <BlynkSimpleCC3000.h>
 
-// Auth token you get from App
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
 void setup()

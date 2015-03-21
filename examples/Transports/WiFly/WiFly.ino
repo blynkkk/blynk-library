@@ -6,7 +6,8 @@
 // For this example you need WiFly_Shield library
 // https://github.com/sparkfun/WiFly-Shield/tree/master/Libraries/WiFly_Shield
 
-// Auth token you get from App
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
 void setup()

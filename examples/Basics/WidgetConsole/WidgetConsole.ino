@@ -11,13 +11,17 @@
 #include <EthernetClient.h>
 #include <BlynkSimpleEthernet.h>
 
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
+char auth[] = "YourAuthToken";
+
 // Attach virtual serial console to virtual pin 1
 WidgetConsole console(1);
 
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin("YourAuthToken");
+  Blynk.begin(auth);
 }
 
 BLYNK_WRITE(1)

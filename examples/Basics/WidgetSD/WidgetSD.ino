@@ -4,12 +4,17 @@
  * App dashboard setup:
  *   SD widget on V1
  */
+
 #define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
 #include <SD.h>
 #include <BlynkSimpleEthernet.h>
+
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
+char auth[] = "YourAuthToken";
 
 WidgetSD sd;
 
@@ -34,7 +39,7 @@ void setup()
   }
 
   // Init Ethernet & Blynk
-  Blynk.begin("YourAuthToken");
+  Blynk.begin(auth);
 }
 
 void loop()
