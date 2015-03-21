@@ -30,7 +30,7 @@ public:
                 uint16_t port      = BLYNK_DEFAULT_PORT,
                 const byte mac[]   = _blynkEthernetMac)
     {
-        BLYNK_LOG("Using DHCP");
+        BLYNK_LOG("Getting IP...");
         Base::begin(auth);
         if (!Ethernet.begin((byte*)mac)) {
             BLYNK_FATAL("DHCP Failed!");
@@ -86,7 +86,7 @@ public:
                 uint16_t port,
                 const byte mac[] = _blynkEthernetMac)
     {
-        BLYNK_LOG("Using DHCP");
+        BLYNK_LOG("Getting IP...");
         Base::begin(auth);
         if (!Ethernet.begin((byte*)mac)) {
             BLYNK_FATAL("DHCP Failed!");

@@ -6,11 +6,11 @@
  *    Be sure to select the right port (there may be multiple).
  *
  * 3. Run the script (it will redirect traffic to server):
- *      for Windows:         scrips/blynk-ser.bat
- *      for Linux and OSX:   scrips/blynk-ser.sh (may need to run with sudo)
+ *      for Windows:         scripts/blynk-ser.bat
+ *      for Linux and OSX:   ./scripts/blynk-ser.sh (may need to run with sudo)
  *
  *    You can specify port, baud rate, and server endpoint like this:
- *      blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
+ *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
  *
  *    Run blynk-ser.sh -h for more information
  *
@@ -22,14 +22,15 @@
  *
  */
 
-// You could use a spare Hw Serial on boards that have it (like Mega)
+// You could use a spare Hardware Serial on boards that have it (like Mega)
 #include <SoftwareSerial.h>
 SoftwareSerial SwSerial(10, 11);
 #define BLYNK_PRINT SwSerial
 #include <BlynkSimpleSerial.h>
 
-// Auth token you get from App
-char auth[] = "00000000000000000000000000000000";
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
+char auth[] = "YourAuthToken";
 
 void setup()
 {

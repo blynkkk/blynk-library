@@ -1,17 +1,31 @@
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/*
+ * Rotate a servo using a slider!
+ *
+ * App dashboard setup:
+ *   Slider (0...180) on V3
+ */
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
 #include <BlynkSimpleEthernet.h>
+#include <Servo.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+Servo servo;
+
 void setup()
 {
-  Serial.begin(9600);
   Blynk.begin(auth);
+  servo.attach(9);
+}
+
+BLYNK_WRITE(3)
+{
+  servo.write(param[0].asInt());
 }
 
 void loop()

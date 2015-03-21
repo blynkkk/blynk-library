@@ -6,13 +6,12 @@
 
 #include <BlynkSimpleSerial.h>
 
-// Auth token you get from App
-char auth[] = "00000000000000000000000000000000";
+char auth[] = "YourAuthToken";
 
 void setup()
 {
   Blynk.begin(auth);
-  // Default baudrate is 9600. You could specify it like this:
+  // Default baud rate is 9600. You could specify it like this:
   //Blynk.begin(auth, 57600);
 }
 

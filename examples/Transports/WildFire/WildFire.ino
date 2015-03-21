@@ -17,7 +17,7 @@
 WildFire wildfire;
 
 // Auth token you get from App
-char auth[] = "00000000000000000000000000000000";
+char auth[] = "YourAuthToken";
 
 void setup()
 {
