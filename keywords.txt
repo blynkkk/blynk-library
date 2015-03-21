@@ -2,16 +2,14 @@
 # Datatypes (KEYWORD1)
 #######################################
 Blynk	KEYWORD3
-BlynkSerial	KEYWORD1
-BlynkEthernet	KEYWORD1
-BlynkSimpleEthernet	KEYWORD1
-BlynkSimpleSerial	KEYWORD1
-VirtualSerial	KEYWORD1
+WidgetConsole	KEYWORD1
+WidgetSD	KEYWORD1
+WidgetLCD	KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 begin	KEYWORD2
-connect	KEYWORD2
 run	KEYWORD2
-virtualRead	KEYWORD2
 virtualWrite	KEYWORD2
+BLYNK_READ	KEYWORD2
+BLYNK_WRITE	KEYWORD2
