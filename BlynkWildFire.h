@@ -34,7 +34,15 @@ public:
     void disconnect() { client.close(); }
 
     size_t read(void* buf, size_t len) {
-        return client.read((char*)buf, len);
+        char* beg = (char*)buf;
+	char* end = beg + len;
+        while (beg < end) {
+            int c = client.read();
+            if (c < 0)
+                break;
+            *beg++ = (char)c;
+        }
+        return len;
     }
     size_t write(const void* buf, size_t len) {
         return client.write((const uint8_t*)buf, len);

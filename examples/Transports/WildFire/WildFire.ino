@@ -25,7 +25,6 @@ void setup()
   Serial.begin(9600);
   wildfire.begin();
   Blynk.begin(auth, "ssid", "pass", WLAN_SEC_WPA2);
-  timer.setInterval(1000, sendUptime);
 }
 
 void loop()
