@@ -45,13 +45,28 @@ void BlynkFatal() BLYNK_NORETURN;
 
         #include <avr/pgmspace.h>
         #include <stdio.h>
+        #include <stdarg.h>
         #include <Arduino.h>
         #define _S(s) PSTR(s)
 
         #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
-        #define BLYNK_LOG(msg, ...)  { char buff[128]; snprintf_P(buff, sizeof(buff), PSTR("[%lu] " msg "\n"), millis(), ##__VA_ARGS__); BLYNK_PRINT.print(buff); }
+        #define BLYNK_LOG(msg, ...)  blynk_dbg_print(PSTR(msg), ##__VA_ARGS__)
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
+
+        static
+        void blynk_dbg_print(const PROGMEM char *fmt, ...)
+        {
+            va_list ap;
+            va_start(ap, fmt);
+            char buff[128];
+            BLYNK_PRINT.print('[');
+            BLYNK_PRINT.print(millis());
+            BLYNK_PRINT.print(F("] "));
+            vsnprintf_P(buff, sizeof(buff), fmt, ap);
+            BLYNK_PRINT.println(buff);
+            va_end(ap);
+        }
 
     #elif defined(LINUX)
 
