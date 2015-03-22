@@ -25,8 +25,10 @@
     #include <avr/pgmspace.h>
     #define BLYNK_HAS_PROGMEM
     #define BLYNK_PROGMEM PROGMEM
+    #define _S(s) PSTR(s)
 #else
     #define BLYNK_PROGMEM
+    #define _S(s) s
 #endif
 
 // Diagnostic defines
@@ -42,20 +44,17 @@ void BlynkFatal() BLYNK_NORETURN;
 #ifdef BLYNK_PRINT
 
     #if defined(ARDUINO)
-
-        #include <avr/pgmspace.h>
         #include <stdio.h>
         #include <stdarg.h>
         #include <Arduino.h>
-        #define _S(s) PSTR(s)
 
         #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
-        #define BLYNK_LOG(msg, ...)  blynk_dbg_print(PSTR(msg), ##__VA_ARGS__)
+        #define BLYNK_LOG(msg, ...)  blynk_dbg_print(_S(msg), ##__VA_ARGS__)
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
 
         static
-        void blynk_dbg_print(const PROGMEM char *fmt, ...)
+        void blynk_dbg_print(const BLYNK_PROGMEM char *fmt, ...)
         {
             va_list ap;
             va_start(ap, fmt);
@@ -63,7 +62,11 @@ void BlynkFatal() BLYNK_NORETURN;
             BLYNK_PRINT.print('[');
             BLYNK_PRINT.print(millis());
             BLYNK_PRINT.print(F("] "));
+#if defined(__AVR__)
             vsnprintf_P(buff, sizeof(buff), fmt, ap);
+#else
+            vsnprintf(buff, sizeof(buff), fmt, ap);
+#endif
             BLYNK_PRINT.println(buff);
             va_end(ap);
         }

@@ -46,44 +46,85 @@ void BlynkParam::add(const char* str)
     add(str, strlen(str)+1);
 }
 
-void BlynkParam::add(int value)
-{
-    char str[2 + 8 * sizeof(value)];
-    itoa(value, str, 10);
-    add(str);
-}
+#if defined(__AVR__)
 
-void BlynkParam::add(unsigned int value)
-{
-    char str[1 + 8 * sizeof(value)];
-    utoa(value, str, 10);
-    add(str);
-}
+    #include <stdlib.h>
 
-void BlynkParam::add(long value)
-{
-    char str[2 + 8 * sizeof(value)];
-    ltoa(value, str, 10);
-    add(str);
-}
+    void BlynkParam::add(int value)
+    {
+        char str[2 + 8 * sizeof(value)];
+        itoa(value, str, 10);
+        add(str);
+    }
 
-void BlynkParam::add(unsigned long value)
-{
-    char str[1 + 8 * sizeof(value)];
-    ultoa(value, str, 10);
-    add(str);
-}
+    void BlynkParam::add(unsigned int value)
+    {
+        char str[1 + 8 * sizeof(value)];
+        utoa(value, str, 10);
+        add(str);
+    }
 
-void BlynkParam::add(float value)
-{
-    char str[33];
-    dtostrf(value, 5, 3, str);
-    add(str);
-}
+    void BlynkParam::add(long value)
+    {
+        char str[2 + 8 * sizeof(value)];
+        ltoa(value, str, 10);
+        add(str);
+    }
 
-void BlynkParam::add(double value)
-{
-    char str[33];
-    dtostrf(value, 5, 3, str);
-    add(str);
-}
+    void BlynkParam::add(unsigned long value)
+    {
+        char str[1 + 8 * sizeof(value)];
+        ultoa(value, str, 10);
+        add(str);
+    }
+
+    void BlynkParam::add(float value)
+    {
+        char str[33];
+        dtostrf(value, 5, 3, str);
+        add(str);
+    }
+
+    void BlynkParam::add(double value)
+    {
+        char str[33];
+        dtostrf(value, 5, 3, str);
+        add(str);
+    }
+
+#else
+
+    #include <stdio.h>
+
+    void BlynkParam::add(int value)
+    {
+        len += snprintf(buff+len, buff_size-len, "%i", value)+1;
+    }
+
+    void BlynkParam::add(unsigned int value)
+    {
+        len += snprintf(buff+len, buff_size-len, "%u", value)+1;
+    }
+
+    void BlynkParam::add(long value)
+    {
+        len += snprintf(buff+len, buff_size-len, "%li", value)+1;
+    }
+
+    void BlynkParam::add(unsigned long value)
+    {
+        len += snprintf(buff+len, buff_size-len, "%lu", value)+1;
+    }
+
+    void BlynkParam::add(float value)
+    {
+        len += snprintf(buff+len, buff_size-len, "%2.3f", value)+1;
+    }
+
+    void BlynkParam::add(double value)
+    {
+        len += snprintf(buff+len, buff_size-len, "%2.3f", value)+1;
+    }
+
+#endif
+
