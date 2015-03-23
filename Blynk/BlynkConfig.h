@@ -17,7 +17,7 @@
 #define BLYNK_MAX_READBYTES  255
 
 // Professional settings
-#define BLYNK_VERSION        "0.1.3"
+#define BLYNK_VERSION        "0.1.5"
 #define BLYNK_HEARTBEAT      10
 #define BLYNK_TIMEOUT_MS     1500
 //#define BLYNK_DEBUG
