@@ -8,11 +8,10 @@
  */
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
-#include <WildFire_CC3000.h>
-#include <ccspi.h>
 #include <SPI.h>
-#include <BlynkSimpleWildFire.h>
 #include <WildFire.h>
+#include <WildFire_CC3000.h>
+#include <BlynkSimpleWildFire.h>
 
 WildFire wildfire;
 
