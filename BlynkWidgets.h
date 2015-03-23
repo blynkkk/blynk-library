@@ -6,5 +6,5 @@
  */
 
 #include <WidgetLCD.h>
-#include <WidgetSD.h>
 #include <WidgetConsole.h>
+// Cannot auto-include WidgetSD, as it has library dependency
