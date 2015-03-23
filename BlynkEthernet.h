@@ -9,6 +9,7 @@
 #ifndef BlynkEthernet_h
 #define BlynkEthernet_h
 
+#include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <BlynkArduinoClient.h>
 #include <Ethernet.h>

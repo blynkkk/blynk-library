@@ -5,8 +5,8 @@
  * @brief
  */
 
-#ifndef WidgetSD_h
-#define WidgetSD_h
+#ifndef WidgetLCD_h
+#define WidgetLCD_h
 
 #include <Blynk/BlynkApi.h>
 

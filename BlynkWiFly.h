@@ -9,6 +9,7 @@
 #ifndef BlynkWiFly_h
 #define BlynkWiFly_h
 
+#include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <BlynkArduinoClient.h>
 

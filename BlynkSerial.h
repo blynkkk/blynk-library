@@ -9,6 +9,7 @@
 #ifndef BlynkSerial_h
 #define BlynkSerial_h
 
+#include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 
 template <class T>

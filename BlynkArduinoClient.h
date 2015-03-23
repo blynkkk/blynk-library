@@ -9,7 +9,7 @@
 #ifndef BlynkArduinoClient_h
 #define BlynkArduinoClient_h
 
-#include <Arduino.h>
+#include <BlynkApiArduino.h>
 #include <Client.h>
 #include <Blynk/BlynkDebug.h>
 

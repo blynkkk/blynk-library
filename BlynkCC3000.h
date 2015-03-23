@@ -9,6 +9,7 @@
 #ifndef BlynkCC3000_h
 #define BlynkCC3000_h
 
+#include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adafruit_CC3000.h>
 

@@ -79,9 +79,9 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <errno.h>
         #include <signal.h>
 
-        #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_LOG(msg); fwrite(addr, len, 1, stderr); }
+        #define BLYNK_DBG_DUMP(msg, addr, len) { fprintf(BLYNK_PRINT, msg); fwrite(addr, len, 1, BLYNK_PRINT); fputc('\n', BLYNK_PRINT); }
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
-        #define BLYNK_LOG(msg, ...)  { fprintf(stderr, msg "\n", ##__VA_ARGS__); }
+        #define BLYNK_LOG(msg, ...)  { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", millis(), ##__VA_ARGS__); }
         #define BLYNK_ASSERT(expr)   assert(expr)
 
     #elif defined(WINDOWS)

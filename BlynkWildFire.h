@@ -9,6 +9,7 @@
 #ifndef BlynkWildFire_h
 #define BlynkWildFire_h
 
+#include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <IPAddress.h>
 #include <WildFire_CC3000.h>
@@ -35,7 +36,7 @@ public:
 
     size_t read(void* buf, size_t len) {
         char* beg = (char*)buf;
-	char* end = beg + len;
+        char* end = beg + len;
         while (beg < end) {
             int c = client.read();
             if (c < 0)
