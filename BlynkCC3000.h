@@ -20,13 +20,14 @@ public:
         : cc3000(cc3000), port(0)
     {}
 
-    void begin(IPAddress a, uint16_t p) {
+    void begin(uint32_t a, uint16_t p) {
         port = p;
         addr = a;
     }
 
     bool connect() {
-        BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", addr[3], addr[2], addr[1], addr[0], port);
+        uint8_t* a = (uint8_t*)&addr;
+        BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", a[3], a[2], a[1], a[0], port);
         client = cc3000.connectTCP(addr, port);
         return client.connected();
     }
@@ -47,7 +48,7 @@ public:
 private:
     Adafruit_CC3000& cc3000;
     Adafruit_CC3000_Client client;
-    IPAddress   addr;
+    uint32_t    addr;
     uint16_t    port;
 };
 
@@ -68,8 +69,13 @@ public:
         {
             BLYNK_FATAL("Couldn't begin()! Check your wiring?");
         }
+        /*if (!cc3000.deleteProfiles())
+        {
+            BLYNK_FATAL("Fail deleting old profiles");
+        }*/
         BLYNK_LOG("Connecting to %s...", ssid);
-        if (!cc3000.connectToAP(ssid, pass, secmode)) {
+        if (!cc3000.connectToAP(ssid, pass, secmode))
+        {
             BLYNK_FATAL("Failed to connect to AP");
         }
         BLYNK_LOG("Getting IP address...");
@@ -84,7 +90,11 @@ public:
             BLYNK_FATAL("Unable to get the IP Address");
         }
         uint8_t* addr = (uint8_t*)&ipAddress;
-        BLYNK_LOG("My IP: %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
+        BLYNK_LOG("IP:  %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
+        addr = (uint8_t*)&gateway;
+        BLYNK_LOG("GW:  %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
+        addr = (uint8_t*)&dnsserv;
+        BLYNK_LOG("DNS: %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
 #endif
     }
 
@@ -98,9 +108,10 @@ public:
         Base::begin(auth);
         wifi_begin(ssid, pass, secmode);
         uint32_t ip = 0;
+        BLYNK_LOG("Looking for %s", domain);
         while (ip == 0) {
             if (!cc3000.getHostByName((char*)domain, &ip)) {
-                BLYNK_LOG("Couldn't resolve %s", domain);
+                BLYNK_LOG("Couldn't locate server");
                 delay(500);
             }
         }
@@ -117,7 +128,7 @@ public:
     {
         Base::begin(auth);
         wifi_begin(ssid, pass, secmode);
-        this->conn.begin(addr, port);
+        this->conn.begin(cc3000.IP2U32(addr[0],addr[1],addr[2],addr[3]), port);
     }
 private:
     Adafruit_CC3000& cc3000;
