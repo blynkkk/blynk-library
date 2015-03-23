@@ -11,6 +11,7 @@
 #include <EthernetClient.h>
 #include <SD.h>
 #include <BlynkSimpleEthernet.h>
+#include <WidgetSD.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
