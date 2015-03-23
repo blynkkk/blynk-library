@@ -153,53 +153,36 @@ void BlynkProtocol<Transp>::processInput(void)
     if (!readHeader(hdr))
         return;
 
-    if (hdr.type == BLYNK_CMD_RESPONSE) {
-#ifdef BLYNK_DEBUG
-        BLYNK_LOG("Got response: %d", hdr.length);
-#endif
+    switch (hdr.type)
+    {
+    case BLYNK_CMD_RESPONSE: {
         if (BLYNK_NO_LOGIN == hdr.length) {
             conn.disconnect();
             return;
         }
         // TODO: return code may indicate App presence
-        lastActivityIn = millis();
-        return;
-    }
-
-    if (hdr.length > BLYNK_MAX_READBYTES) {
-        BLYNK_LOG("Packet size (%u) > max allowed (%u)", hdr.length, BLYNK_MAX_READBYTES);
-        conn.disconnect();
-        return;
-    }
-
-    uint8_t inputBuffer[hdr.length+1]; // Add 1 to zero-terminate
-    if (hdr.length != conn.read(inputBuffer, hdr.length)) {
-        BLYNK_LOG("Can't read body");
-        return;
-    }
-    inputBuffer[hdr.length] = '\0';
-
-#ifdef BLYNK_DEBUG
-    if (hdr.length) {
-        BLYNK_DBG_DUMP(">", inputBuffer, hdr.length);
-    }
-#endif
-
-    lastActivityIn = millis();
-
-    switch (hdr.type)
-    {
-    case BLYNK_CMD_PING:
-        hdr.type = BLYNK_CMD_RESPONSE;
-        hdr.msg_id = htons(hdr.msg_id);
-        hdr.length = htons(BLYNK_SUCCESS);
-        conn.write(&hdr, sizeof(hdr));
-        lastActivityOut = lastActivityIn;
-#ifdef BLYNK_DEBUG
-        BLYNK_LOG("<pong %u", ntohs(hdr.msg_id));
-#endif
-        break;
+    } break;
+    case BLYNK_CMD_PING: {
+        sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
+    } break;
     case BLYNK_CMD_HARDWARE: {
+        if (hdr.length > BLYNK_MAX_READBYTES) {
+            BLYNK_LOG("Packet size (%u) > max allowed (%u)", hdr.length, BLYNK_MAX_READBYTES);
+            conn.disconnect();
+            return;
+        }
+
+        uint8_t inputBuffer[hdr.length+1]; // Add 1 to zero-terminate
+        if (hdr.length != conn.read(inputBuffer, hdr.length)) {
+            BLYNK_LOG("Can't read body");
+            return;
+        }
+        inputBuffer[hdr.length] = '\0';
+
+#ifdef BLYNK_DEBUG
+        BLYNK_DBG_DUMP(">", inputBuffer, hdr.length);
+#endif
+
         currentMsgId = hdr.msg_id;
         this->processCmd(inputBuffer, hdr.length);
         currentMsgId = 0;
@@ -207,9 +190,10 @@ void BlynkProtocol<Transp>::processInput(void)
     default:
         BLYNK_LOG("Invalid header type: %d", hdr.type);
         conn.disconnect();
-        break;
+        return;
     }
 
+    lastActivityIn = millis();
 }
 
 template <class Transp>
@@ -244,26 +228,26 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #ifdef BLYNK_DEBUG
     BLYNK_LOG("<msg %d,%u,%u", cmd, ntohs(hdr.msg_id), length+length2);
 #endif
+    if (cmd != BLYNK_CMD_RESPONSE) {
+        if (length) {
+            wlen += conn.write(data, length);
+#ifdef BLYNK_DEBUG
+            BLYNK_DBG_DUMP("<", data, length);
+#endif
+        }
+        if (length2) {
+            wlen += conn.write(data2, length2);
+#ifdef BLYNK_DEBUG
+            BLYNK_DBG_DUMP("<", data2, length2);
+#endif
+        }
 
-    if (length) {
-        wlen += conn.write(data, length);
-#ifdef BLYNK_DEBUG
-        BLYNK_DBG_DUMP("<", data, length);
-#endif
-    }
-    if (length2) {
-        wlen += conn.write(data2, length2);
-#ifdef BLYNK_DEBUG
-        BLYNK_DBG_DUMP("<", data2, length2);
-#endif
+        if (wlen != sizeof(hdr)+length+length2) {
+            BLYNK_LOG("Can't send cmd");
+            conn.disconnect();
+        }
     }
     lastActivityOut = millis();
-
-    if (wlen != sizeof(hdr)+length+length2) {
-        BLYNK_LOG("Can't send cmd");
-        conn.disconnect();
-    }
-
 }
 
 template <class Transp>
