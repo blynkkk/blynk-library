@@ -11,7 +11,10 @@
 
 #include <BlynkSerial.h>
 
-#if defined(USBCON)
+#if defined(__SAM3X8E__)
+    // For Arduino Due
+    typedef BlynkTransportSerialChecked<UARTClass> ArduinoHwSerial;
+#elif defined(USBCON)
     // For versions with hw USB, like Micro
     typedef BlynkTransportSerialChecked<Serial_> ArduinoHwSerial;
 #else

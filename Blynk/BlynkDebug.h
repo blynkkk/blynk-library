@@ -50,7 +50,11 @@ void BlynkFatal() BLYNK_NORETURN;
 
         #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
+#if defined(__SAM3X8E__)
+        #define BLYNK_LOG(msg, ...)  blynk_dbg_print(msg, ##__VA_ARGS__)
+#else
         #define BLYNK_LOG(msg, ...)  blynk_dbg_print(_S(msg), ##__VA_ARGS__)
+#endif
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
 
         static
