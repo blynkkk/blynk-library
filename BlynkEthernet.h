@@ -31,8 +31,8 @@ public:
                 uint16_t port      = BLYNK_DEFAULT_PORT,
                 const byte mac[]   = _blynkEthernetMac)
     {
-        BLYNK_LOG("Getting IP...");
         Base::begin(auth);
+        BLYNK_LOG("Getting IP...");
         if (!Ethernet.begin((byte*)mac)) {
             BLYNK_FATAL("DHCP Failed!");
         }
@@ -51,8 +51,8 @@ public:
                 IPAddress dns,
                 const byte mac[]= _blynkEthernetMac)
     {
-        BLYNK_LOG("Using static IP");
         Base::begin(auth);
+        BLYNK_LOG("Using static IP");
         Ethernet.begin((byte*)mac, local);
         // give the Ethernet shield a second to initialize:
         delay(1000);
@@ -71,8 +71,8 @@ public:
                 IPAddress subnet,
                 const byte mac[]= _blynkEthernetMac)
     {
-        BLYNK_LOG("Using static IP");
         Base::begin(auth);
+        BLYNK_LOG("Using static IP");
         Ethernet.begin((byte*)mac, local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
         delay(1000);
@@ -87,8 +87,8 @@ public:
                 uint16_t port,
                 const byte mac[] = _blynkEthernetMac)
     {
-        BLYNK_LOG("Getting IP...");
         Base::begin(auth);
+        BLYNK_LOG("Getting IP...");
         if (!Ethernet.begin((byte*)mac)) {
             BLYNK_FATAL("DHCP Failed!");
         }
