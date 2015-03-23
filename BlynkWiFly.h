@@ -29,7 +29,8 @@ public:
     void begin_addr(IPAddress a, uint16_t p) {
         if (client)
             delete client;
-        client = new WiFlyClient(a, p);
+        uint32_t addr = a;
+        client = new WiFlyClient((uint8_t*)addr, p);
     }
 
     bool connect() {
@@ -39,7 +40,7 @@ public:
             BLYNK_LOG("Connecting to %s:%d", client->_domain, client->_port);
         } else if (client->_ip) {
             BLYNK_LOG("Connecting to %d.%d.%d.%d:%d",
-                client->_ip[0], client->_ip[1], client->_ip[2], client->_ip[3], port);
+                client->_ip[0], client->_ip[1], client->_ip[2], client->_ip[3], client->_port);
         }
         return client->connect();
     }
