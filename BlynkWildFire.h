@@ -107,9 +107,10 @@ public:
         Base::begin(auth);
         wifi_begin(ssid, pass, secmode);
         uint32_t ip = 0;
+        BLYNK_LOG("Looking for %s", domain);
         while (ip == 0) {
             if (!cc3000.getHostByName((char*)domain, &ip)) {
-                BLYNK_LOG("Couldn't resolve %s", domain);
+                BLYNK_LOG("Couldn't locate server");
                 delay(500);
             }
         }
