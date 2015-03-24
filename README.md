@@ -1,5 +1,16 @@
 # README #
 
+Blynk is a platform with iOS and Android apps to control Arduino, Raspberry Pi and the likes over the Internet.  
+You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
+* [Blynk downloads, docs, tutorials](http://www.blynk.cc)
+* [Blynk community](http://community.blynk.cc)
+* [Facebook](http://www.fb.com/blynkapp)
+* [Twitter](http://twitter.com/blynk_app)
+
+Please find examples how to use different types of connections (transports),
+and also how to do something useful with Blynk.
+You can easily apply any type of board/connection to all examples.
+
 ### Quickstart: Arduino + Ethernet shield ###
 
 * Download Blynk app from the market (iOS & Android).
@@ -8,6 +19,10 @@
 * In Arduino IDE, select File -> Examples -> Blynk -> Transports -> Ethernet
 * Update auth token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
+
+### Supported hardware ###
+
+[The list of supported hardware](http://community.blynk.cc/t/hardware-supported-by-blynk)
 
 ### Troubleshooting ###
 
