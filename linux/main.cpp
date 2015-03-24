@@ -1,3 +1,12 @@
+/**
+ * @file       main.cpp
+ * @author     Volodymyr Shymanskyy
+ * @license    This project is released under the MIT License (MIT)
+ * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
+ * @date       Mar 2015
+ * @brief
+ */
+
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT stdout
 #include <BlynkSocket.h>

@@ -1,6 +1,8 @@
 /**
  * @file       BlynkApiArduino.h
  * @author     Volodymyr Shymanskyy
+ * @license    This project is released under the MIT License (MIT)
+ * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
  * @date       Mar 2015
  * @brief
  *
@@ -14,36 +16,23 @@
 
 #if   defined(__AVR_ATmega168__)
     #define BLYNK_INFO_CPU      "ATmega168"
-    #ifndef BLYNK_INFO_DEVICE
-    # define BLYNK_INFO_DEVICE   "Arduino"
-    #endif
 #elif defined(__AVR_ATmega328P__)
     #define BLYNK_INFO_CPU      "ATmega328P"
-    #ifndef BLYNK_INFO_DEVICE
-    # define BLYNK_INFO_DEVICE  "Arduino"
-    #endif
 #elif defined(__AVR_ATmega1280__)
     #define BLYNK_INFO_CPU      "ATmega1280"
-    #ifndef BLYNK_INFO_DEVICE
-    # define BLYNK_INFO_DEVICE  "Arduino Mega"
-    #endif
+#elif defined(__AVR_ATmega1284__)
+    #define BLYNK_INFO_CPU      "ATmega1284"
 #elif defined(__AVR_ATmega2560__)
     #define BLYNK_INFO_CPU      "ATmega2560"
-    #ifndef BLYNK_INFO_DEVICE
-    # define BLYNK_INFO_DEVICE  "Arduino Mega"
-    #endif
 #elif defined(__AVR_ATmega32U4__)
     #define BLYNK_INFO_CPU      "ATmega32U4"
-    #ifndef BLYNK_INFO_DEVICE
-    # define BLYNK_INFO_DEVICE  "Arduino"
-    #endif
 #elif defined(__SAM3X8E__)
     #define BLYNK_INFO_CPU      "AT91SAM3X8E"
-    #ifndef BLYNK_INFO_DEVICE
-    # define BLYNK_INFO_DEVICE  "Arduino Due"
-    #endif
 #endif
 
+#ifndef BLYNK_INFO_DEVICE
+    #define BLYNK_INFO_DEVICE  "Arduino"
+#endif
 
 template<class Proto>
 BLYNK_FORCE_INLINE
