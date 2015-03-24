@@ -9,6 +9,10 @@
 #ifndef BlynkSerial_h
 #define BlynkSerial_h
 
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION "Serial"
+#endif
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 
@@ -71,7 +75,7 @@ class BlynkSerial
     typedef BlynkProtocol<T> Base;
 public:
     BlynkSerial(T& conn)
-        : BlynkProtocol<T>(conn)
+        : Base(conn)
     {}
 
     void begin(const char* auth, uint32_t baud = 9600) {

@@ -9,8 +9,12 @@
 #ifndef BlynkSimpleYun_h
 #define BlynkSimpleYun_h
 
+#ifndef BLYNK_INFO_DEVICE
+#define BLYNK_INFO_DEVICE  "Arduino Yun"
+#endif
+
 #include <Blynk/BlynkProtocol.h>
-#include <BlynkArduinoClient.h>
+#include <Adapters/BlynkArduinoClient.h>
 #include <YunClient.h>
 
 typedef BlynkArduinoClient BlynkArduinoClientYun;
@@ -21,7 +25,7 @@ class BlynkYun
     typedef BlynkProtocol< BlynkArduinoClientYun > Base;
 public:
     BlynkYun(BlynkArduinoClientYun& conn)
-        : BlynkProtocol< BlynkArduinoClientYun > (conn)
+        : Base(conn)
     {}
 
     void begin(const char* auth,

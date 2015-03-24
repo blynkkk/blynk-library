@@ -8,7 +8,11 @@
 #ifndef BlynkSimpleTinyDuino_h
 #define BlynkSimpleTinyDuino_h
 
-#include <BlynkCC3000.h>
+#ifndef BLYNK_INFO_DEVICE
+#define BLYNK_INFO_DEVICE  "TinyDuino"
+#endif
+
+#include <Adapters/BlynkCC3000.h>
 #include <Adafruit_CC3000.h>
 
 // Pin definitions for the TinyCircuits WiFi TinyShield

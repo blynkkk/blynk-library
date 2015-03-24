@@ -9,6 +9,14 @@
 #ifndef BlynkWildFire_h
 #define BlynkWildFire_h
 
+#ifndef BLYNK_INFO_DEVICE
+#define BLYNK_INFO_DEVICE  "WildFire"
+#endif
+
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION  "CC3000"
+#endif
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <IPAddress.h>
@@ -66,7 +74,7 @@ class BlynkWildFire
     typedef BlynkProtocol<BlynkTransportWildFire> Base;
 public:
     BlynkWildFire(WildFire_CC3000& cc3000, BlynkTransportWildFire& conn)
-        : cc3000(cc3000), Base(conn)
+        : Base(conn), cc3000(cc3000)
     {}
 
     void wifi_begin (const char* ssid,

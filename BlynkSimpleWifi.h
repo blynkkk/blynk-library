@@ -9,8 +9,12 @@
 #ifndef BlynkSimpleWifi_h
 #define BlynkSimpleWifi_h
 
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION  "HDG204"
+#endif
+
 #include <Blynk/BlynkProtocol.h>
-#include <BlynkArduinoClient.h>
+#include <Adapters/BlynkArduinoClient.h>
 #include <WiFi.h>
 
 class BlynkWifi
@@ -19,7 +23,7 @@ class BlynkWifi
     typedef BlynkProtocol<BlynkArduinoClient> Base;
 public:
     BlynkWifi(BlynkArduinoClient& conn)
-        : BlynkProtocol<BlynkArduinoClient>(conn)
+        : Base(conn)
     {}
 
     void wifi_conn(const char* ssid, const char* pass)

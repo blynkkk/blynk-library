@@ -8,7 +8,7 @@
 #ifndef BlynkSimpleCC3000_h
 #define BlynkSimpleCC3000_h
 
-#include <BlynkCC3000.h>
+#include <Adapters/BlynkCC3000.h>
 #include <Adafruit_CC3000.h>
 
 // These are the interrupt and control pins

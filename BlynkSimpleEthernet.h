@@ -9,7 +9,7 @@
 #ifndef BlynkSimpleEthernet_h
 #define BlynkSimpleEthernet_h
 
-#include <BlynkEthernet.h>
+#include <Adapters/BlynkEthernet.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
 

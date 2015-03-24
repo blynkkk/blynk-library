@@ -9,6 +9,8 @@
 #ifndef BlynkCC3000_h
 #define BlynkCC3000_h
 
+#define BLYNK_INFO_CONNECTION "CC3000"
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adafruit_CC3000.h>
@@ -17,7 +19,7 @@ class BlynkTransportCC3000
 {
 public:
     BlynkTransportCC3000(Adafruit_CC3000& cc3000)
-        : cc3000(cc3000), port(0)
+        : cc3000(cc3000), addr(0), port(0)
     {}
 
     void begin(uint32_t a, uint16_t p) {
@@ -58,7 +60,7 @@ class BlynkCC3000
     typedef BlynkProtocol<BlynkTransportCC3000> Base;
 public:
     BlynkCC3000(Adafruit_CC3000& cc3000, BlynkTransportCC3000& conn)
-        : cc3000(cc3000), Base(conn)
+        : Base(conn), cc3000(cc3000)
     {}
 
     void wifi_begin (const char* ssid,

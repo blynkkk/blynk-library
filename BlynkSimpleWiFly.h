@@ -9,7 +9,7 @@
 #ifndef BlynkSimpleWiFly_h
 #define BlynkSimpleWiFly_h
 
-#include <BlynkWiFly.h>
+#include <Adapters/BlynkWiFly.h>
 
 static BlynkTransportWiFly _blynkTransport;
 BlynkWiFly Blynk(_blynkTransport);

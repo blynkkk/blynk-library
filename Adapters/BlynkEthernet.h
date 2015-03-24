@@ -9,9 +9,13 @@
 #ifndef BlynkEthernet_h
 #define BlynkEthernet_h
 
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION "W5000"
+#endif
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
-#include <BlynkArduinoClient.h>
+#include <Adapters/BlynkArduinoClient.h>
 #include <Ethernet.h>
 
 static const byte _blynkEthernetMac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
@@ -22,7 +26,7 @@ class BlynkEthernet
     typedef BlynkProtocol<BlynkArduinoClient> Base;
 public:
     BlynkEthernet(BlynkArduinoClient& conn)
-        : BlynkProtocol<BlynkArduinoClient>(conn)
+        : Base(conn)
     {}
 
     // DHCP with domain

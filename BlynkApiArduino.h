@@ -12,6 +12,39 @@
 #include <Blynk/BlynkApi.h>
 #include <Arduino.h>
 
+#if   defined(__AVR_ATmega168__)
+    #define BLYNK_INFO_CPU      "ATmega168"
+    #ifndef BLYNK_INFO_DEVICE
+    # define BLYNK_INFO_DEVICE   "Arduino"
+    #endif
+#elif defined(__AVR_ATmega328P__)
+    #define BLYNK_INFO_CPU      "ATmega328P"
+    #ifndef BLYNK_INFO_DEVICE
+    # define BLYNK_INFO_DEVICE  "Arduino"
+    #endif
+#elif defined(__AVR_ATmega1280__)
+    #define BLYNK_INFO_CPU      "ATmega1280"
+    #ifndef BLYNK_INFO_DEVICE
+    # define BLYNK_INFO_DEVICE  "Arduino Mega"
+    #endif
+#elif defined(__AVR_ATmega2560__)
+    #define BLYNK_INFO_CPU      "ATmega2560"
+    #ifndef BLYNK_INFO_DEVICE
+    # define BLYNK_INFO_DEVICE  "Arduino Mega"
+    #endif
+#elif defined(__AVR_ATmega32U4__)
+    #define BLYNK_INFO_CPU      "ATmega32U4"
+    #ifndef BLYNK_INFO_DEVICE
+    # define BLYNK_INFO_DEVICE  "Arduino"
+    #endif
+#elif defined(__SAM3X8E__)
+    #define BLYNK_INFO_CPU      "AT91SAM3X8E"
+    #ifndef BLYNK_INFO_DEVICE
+    # define BLYNK_INFO_DEVICE  "Arduino Due"
+    #endif
+#endif
+
+
 template<class Proto>
 BLYNK_FORCE_INLINE
 void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
@@ -27,39 +60,24 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
             BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
             BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
-#if   defined(__AVR_ATmega168__)
-            BLYNK_PARAM_KV("cpu"    , "ATmega168")
-            BLYNK_PARAM_KV("device" , "Arduino")
-#elif defined(__AVR_ATmega328P__)
-            BLYNK_PARAM_KV("cpu"    , "ATmega328P")
-            BLYNK_PARAM_KV("device" , "Arduino")
-#elif defined(__AVR_ATmega1280__)
-            BLYNK_PARAM_KV("cpu"    , "ATmega1280")
-            BLYNK_PARAM_KV("device" , "Arduino Mega")
-#elif defined(__AVR_ATmega2560__)
-            BLYNK_PARAM_KV("cpu"    , "ATmega2560")
-            BLYNK_PARAM_KV("device" , "Arduino Mega")
-#elif defined(__AVR_ATmega32U4__)
-            BLYNK_PARAM_KV("cpu"    , "ATmega32U4")
-            BLYNK_PARAM_KV("device" , "Arduino Leonardo")
-#elif defined(__SAM3X8E__)
-            BLYNK_PARAM_KV("cpu"    , "AT91SAM3X8E")
-            BLYNK_PARAM_KV("device" , "Arduino Due")
+#ifdef BLYNK_INFO_DEVICE
+            BLYNK_PARAM_KV("dev"    , BLYNK_INFO_DEVICE)
+#endif
+#ifdef BLYNK_INFO_CPU
+            BLYNK_PARAM_KV("cpu"    , BLYNK_INFO_CPU)
+#endif
+#ifdef BLYNK_INFO_CONNECTION
+            BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
         ;
         const size_t profile_len = sizeof(profile)-1;
 
-        char mem_dyn[32];
-        BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
-        profile_dyn.add_key("conn", "Ethernet");
-        //profile_dyn.add_key("conn", "Serial");
-
 #ifdef BLYNK_HAS_PROGMEM
         char mem[profile_len];
         memcpy_P(mem, profile, profile_len);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, mem, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, mem, profile_len);
 #else
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, profile, profile_len);
 #endif
         return;
     }

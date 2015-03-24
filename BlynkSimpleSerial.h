@@ -9,7 +9,7 @@
 #ifndef BlynkSimpleSerial_h
 #define BlynkSimpleSerial_h
 
-#include <BlynkSerial.h>
+#include <Adapters/BlynkSerial.h>
 
 #if defined(__SAM3X8E__)
     // For Arduino Due

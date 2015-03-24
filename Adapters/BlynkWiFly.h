@@ -9,9 +9,17 @@
 #ifndef BlynkWiFly_h
 #define BlynkWiFly_h
 
+#ifndef BLYNK_INFO_DEVICE
+#define BLYNK_INFO_DEVICE  "WiFly"
+#endif
+
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION "RN-XV"
+#endif
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
-#include <BlynkArduinoClient.h>
+#include <Adapters/BlynkArduinoClient.h>
 
 class BlynkTransportWiFly
 {
@@ -67,7 +75,7 @@ class BlynkWiFly
     typedef BlynkProtocol<BlynkTransportWiFly> Base;
 public:
     BlynkWiFly(BlynkTransportWiFly& conn)
-        : BlynkProtocol<BlynkTransportWiFly>(conn)
+        : Base(conn)
     {}
 
     void begin( const char* auth,
