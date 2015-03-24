@@ -40,7 +40,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
             BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
             BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
-            BLYNK_PARAM_KV("device" , "Linux")
+            BLYNK_PARAM_KV("dev"    , "Linux")
         ;
         const size_t profile_len = sizeof(profile)-1;
 
