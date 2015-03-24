@@ -1,15 +1,30 @@
-/*
+/**************************************************************
+ * Blynk is a platform with iOS and Android apps to control
+ * Arduino, Raspberry Pi and the likes over the Internet.
+ * You can easily build graphic interfaces for all your
+ * projects by simply dragging and dropping widgets.
+ *
+ *   Downloads, docs, tutorials: http://www.blynk.cc
+ *   Blynk community:            http://community.blynk.cc
+ *   Social groups:              http://www.fb.com/blynkapp
+ *                               http://twitter.com/blynk_app
+ *
+ * Blynk library is licensed under MIT license
+ * This example code is in public domain.
+ *
+ **************************************************************
  * This example shows how a value is periodically pushed
  * from Arduino to the phone App.
- *
- * App dashboard setup:
- *   Value Display on V5
  *
  * For this example you need to have SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
  *   http://playground.arduino.cc/Code/SimpleTimer
- */
+ *
+ * App dashboard setup:
+ *   Value Display widget on V5
+ *
+ **************************************************************/
 
 #include <SPI.h>
 #include <Ethernet.h>

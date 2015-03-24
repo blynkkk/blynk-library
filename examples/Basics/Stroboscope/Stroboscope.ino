@@ -1,17 +1,32 @@
-/*
+/**************************************************************
+ * Blynk is a platform with iOS and Android apps to control
+ * Arduino, Raspberry Pi and the likes over the Internet.
+ * You can easily build graphic interfaces for all your
+ * projects by simply dragging and dropping widgets.
+ *
+ *   Downloads, docs, tutorials: http://www.blynk.cc
+ *   Blynk community:            http://community.blynk.cc
+ *   Social groups:              http://www.fb.com/blynkapp
+ *                               http://twitter.com/blynk_app
+ *
+ * Blynk library is licensed under MIT license
+ * This example code is in public domain.
+ *
+ **************************************************************
  * This is a simple stroboscope.
  * You can turn it on and of using a button,
  * and control frequency with a slider.
  *
- * App dashboard setup:
- *   Button (Switch) on V1
- *   Slider (100...1000) on V2
- *
- * For this example you need to have SimpleTimer library:
+ * For this example you need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
  *   http://playground.arduino.cc/Code/SimpleTimer
- */
+ *
+ * App dashboard setup:
+ *   Button widget (Switch) on V1
+ *   Slider widget (100...1000) on V2
+ *
+ **************************************************************/
 
 #define BLYNK_PRINT Serial
 #include <SPI.h>
