@@ -20,3 +20,6 @@ And enable serial in setup():
 
         Serial.begin(9600);
 
+### License ###
+
+This project is released under The MIT License (MIT)
