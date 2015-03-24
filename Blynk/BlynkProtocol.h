@@ -60,7 +60,9 @@ private:
 template <class Transp>
 bool BlynkProtocol<Transp>::connect()
 {
+    conn.disconnect();
     if (!conn.connect()) {
+        delay(5000);
         return false;
     }
 
