@@ -76,22 +76,22 @@ def clientthread(conn, addr):
             data = conn.recv(hdr.size)
             if not data:
                 break
-            type, msg_id, msg_len = hdr.unpack(data)
-            #print "Got {0}, {1}, {2}".format(type, msg_id, msg_len)
-            if type == MsgType.RSP:
+            msg_type, msg_id, msg_len = hdr.unpack(data)
+            #print "Got {0}, {1}, {2}".format(msg_type, msg_id, msg_len)
+            if msg_type == MsgType.RSP:
                 pass
-            elif type == MsgType.LOGIN:
+            elif msg_type == MsgType.LOGIN:
                 auth = conn.recv(msg_len)
                 print "Auth {0}".format(auth)
                 # Send auth OK and pin modes
                 conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
                 conn.sendall(hw("pm", LED_PIN, "out"))
                 authenticated = True
-            elif type == MsgType.PING:
+            elif msg_type == MsgType.PING:
                 print "Ping"
                 # Send Pong
                 conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
-            elif type == MsgType.HW:
+            elif msg_type == MsgType.HW:
                 data = conn.recv(msg_len)
                 # Print HW messages (just for fun :)
                 print "Hw: {0}".format(data)
