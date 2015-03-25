@@ -10,10 +10,6 @@
 #ifndef BlynkSocket_h
 #define BlynkSocket_h
 
-#define _POSIX_C_SOURCE 200809L
-#include <time.h>
-#include <unistd.h>
-
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -22,10 +18,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <errno.h>
 #include <arpa/inet.h>
 
-#include <BlynkApiLinux.h>
 #include <Blynk/BlynkProtocol.h>
 
 class BlynkTransportSocket

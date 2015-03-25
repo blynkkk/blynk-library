@@ -1,11 +1,27 @@
+# 
+# To build on RaspberryPi:
+# 1. Install WiringPi: http://wiringpi.com/download-and-install/
+# 2. Run:
+#    make target=raspberry
+#    sudo blynk --auth=YourAuthToken
+#
 
-#for raspberry:
-#CCFLAGS=-Ofast -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
+CC = g++
+CFLAGS  = -I ../ -I ./ -DLINUX
+LDFLAGS =
 
-CC=g++
-CFLAGS=-I ../ -I ./ -DLINUX
-CFLAGS+=-c -Wall -O3
-LDFLAGS=-s
+ifeq ($(build),debug)
+	CFLAGS += -c -g -Wall
+else
+	CFLAGS += -c -O3 -w
+	LDFLAGS += -s
+endif
+
+ifeq ($(target),raspberry)
+	CFLAGS += -DRASPBERRY
+	LDFLAGS += -lwiringPi -lpthread
+endif
+
 SOURCES=main.cpp \
 	BlynkDebug.cpp \
 	../BlynkParam.cpp \
@@ -20,7 +36,7 @@ clean:
 	-rm $(OBJECTS) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@

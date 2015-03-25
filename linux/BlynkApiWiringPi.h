@@ -1,5 +1,5 @@
 /**
- * @file       BlynkApiLinux.h
+ * @file       BlynkApiWiringPi.h
  * @author     Volodymyr Shymanskyy
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
@@ -8,32 +8,20 @@
  *
  */
 
-#ifndef BlynkApiLinux_h
-#define BlynkApiLinux_h
+#ifndef BlynkApiWiringPi_h
+#define BlynkApiWiringPi_h
 
 #include <Blynk/BlynkApi.h>
+#include <wiringPi.h>
 
-#define _POSIX_C_SOURCE 200809L
-#include <time.h>
-#include <unistd.h>
-
-static
-void delay(unsigned long ms)
-{
-    usleep(ms * 1000);
-}
-
-static
-unsigned long millis(void)
-{
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts );
-    return ( ts.tv_sec * 1000 + ts.tv_nsec / 1000000L );
-}
+#ifndef BLYNK_INFO_DEVICE
+    #define BLYNK_INFO_DEVICE  "Raspberry"
+#endif
 
 template<class Proto>
 void BlynkApi<Proto>::Init()
 {
+    wiringPiSetupGpio();
 }
 
 template<class Proto>
@@ -51,7 +39,15 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
             BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
             BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
-            BLYNK_PARAM_KV("dev"    , "Linux")
+#ifdef BLYNK_INFO_DEVICE
+            BLYNK_PARAM_KV("dev"    , BLYNK_INFO_DEVICE)
+#endif
+#ifdef BLYNK_INFO_CPU
+            BLYNK_PARAM_KV("cpu"    , BLYNK_INFO_CPU)
+#endif
+#ifdef BLYNK_INFO_CONNECTION
+            BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
+#endif
         ;
         const size_t profile_len = sizeof(profile)-1;
 
@@ -72,14 +68,14 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("dw");
         rsp.add(pin);
-        rsp.add(0); // TODO
+        rsp.add(digitalRead(pin));
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "ar")) {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("aw");
         rsp.add(pin);
-        rsp.add(0); // TODO
+        rsp.add(analogRead(pin));
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
@@ -103,11 +99,22 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             while (it < param.end()) {
                 unsigned pin = it.asInt();
                 ++it;
-                BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
+                //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
+                if (!strcmp(it.asStr(), "in")) {
+                    pinMode(pin, INPUT);
+                } else if (!strcmp(it.asStr(), "out")) {
+                    pinMode(pin, OUTPUT);
+                } else if (!strcmp(it.asStr(), "pu")) {
+                    pinMode(pin, INPUT);
+                    pullUpDnControl(pin, PUD_UP);
+                } else if (!strcmp(it.asStr(), "pd")) {
+                    pinMode(pin, INPUT);
+                    pullUpDnControl(pin, PUD_DOWN);
+                } else {
 #ifdef BLYNK_DEBUG
                     BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
 #endif
-
+                }
                 ++it;
             }
         }
@@ -117,11 +124,11 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             return;
 
         if (!strcmp(cmd, "dw")) {
-            BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
-            // TODO: digitalWrite(pin, it.asInt() ? HIGH : LOW);
+            //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
+            digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {
-            BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
-            // TODO: analogWrite(pin, it.asInt());
+            //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
+            analogWrite(pin, it.asInt());
         } else {
             BLYNK_LOG("Invalid HW cmd: %s", cmd);
         }

@@ -35,6 +35,11 @@
 #endif
 
 template<class Proto>
+void BlynkApi<Proto>::Init()
+{
+}
+
+template<class Proto>
 BLYNK_FORCE_INLINE
 void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 {

@@ -24,6 +24,10 @@ template <class Proto>
 class BlynkApi
 {
 public:
+    BlynkApi() {
+        Init();
+    }
+
     template <typename T>
     void virtualWrite(int pin, const T& data) {
         char mem[64];
@@ -69,6 +73,7 @@ public:
 #endif
 
 protected:
+    void Init();
     void processCmd(const void* buff, size_t len);
 
 };
