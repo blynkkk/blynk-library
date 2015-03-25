@@ -31,11 +31,14 @@ public:
         : sockfd(-1)
     {}
 
-    void begin() {
+    void begin(const char* d, const char* p) {
+    	this->domain = d;
+    	this->port = p;
     }
 
-    bool connect() {
-        BLYNK_LOG("Connecting to " BLYNK_DEFAULT_DOMAIN ":" TOSTRING(BLYNK_DEFAULT_PORT));
+    bool connect()
+    {
+        BLYNK_LOG("Connecting to %s:%s", domain, port);
 
         struct addrinfo hints;
         struct addrinfo *res;  // will point to the results
@@ -72,11 +75,14 @@ public:
         return true;
     }
 
-    void disconnect() {
-        while (::close(sockfd) < 0) {
-            usleep(10000);
+    void disconnect()
+    {
+        if (sockfd != -1) {
+            while (::close(sockfd) < 0) {
+                usleep(10000);
+            }
+            sockfd = -1;
         }
-        sockfd = -1;
     }
 
     size_t read(void* buf, size_t len) {
@@ -93,6 +99,8 @@ public:
 
 protected:
     int    sockfd;
+    const char* domain;
+    const char* port;
 };
 
 class BlynkSocket
@@ -104,9 +112,12 @@ public:
         : Base(transp)
     {}
 
-    void begin(const char* auth)
+    void begin(const char* auth,
+    		   const char* domain = BLYNK_DEFAULT_DOMAIN,
+			   const char* port   = STRINGIFY(BLYNK_DEFAULT_PORT))
     {
         Base::begin(auth);
+        this->conn.begin(domain, port);
     }
 
 };
