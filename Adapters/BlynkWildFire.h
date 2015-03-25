@@ -76,8 +76,8 @@ class BlynkWildFire
 {
     typedef BlynkProtocol<BlynkTransportWildFire> Base;
 public:
-    BlynkWildFire(WildFire_CC3000& cc3000, BlynkTransportWildFire& conn)
-        : Base(conn), cc3000(cc3000)
+    BlynkWildFire(WildFire_CC3000& cc3000, BlynkTransportWildFire& transp)
+        : Base(transp), cc3000(cc3000)
     {}
 
     void wifi_begin (const char* ssid,

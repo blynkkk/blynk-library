@@ -100,8 +100,8 @@ class BlynkSocket
 {
     typedef BlynkProtocol<BlynkTransportSocket> Base;
 public:
-    BlynkSocket(BlynkTransportSocket& conn)
-        : Base(conn)
+    BlynkSocket(BlynkTransportSocket& transp)
+        : Base(transp)
     {}
 
     void begin(const char* auth)

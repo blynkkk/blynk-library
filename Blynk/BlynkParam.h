@@ -52,8 +52,8 @@ public:
     {}
 
     explicit
-    BlynkParam(void* addr, size_t length, size_t buff_size)
-        : buff((char*)addr), len(length), buff_size(buff_size)
+    BlynkParam(void* addr, size_t length, size_t buffsize)
+        : buff((char*)addr), len(length), buff_size(buffsize)
     {}
 
     iterator begin() const { return iterator(buff); }

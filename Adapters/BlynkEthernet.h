@@ -27,8 +27,8 @@ class BlynkEthernet
 {
     typedef BlynkProtocol<BlynkArduinoClient> Base;
 public:
-    BlynkEthernet(BlynkArduinoClient& conn)
-        : Base(conn)
+    BlynkEthernet(BlynkArduinoClient& transp)
+        : Base(transp)
     {}
 
     // DHCP with domain

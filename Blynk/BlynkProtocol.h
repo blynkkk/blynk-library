@@ -22,8 +22,8 @@ class BlynkProtocol
     : public BlynkApi< BlynkProtocol<Transp> >
 {
 public:
-    BlynkProtocol(Transp& conn)
-        : conn(conn), authkey(NULL)
+    BlynkProtocol(Transp& transp)
+        : conn(transp), authkey(NULL)
         , lastActivityIn(0)
         , lastActivityOut(0)
         , lastHeartbeat(0)
@@ -41,9 +41,9 @@ private:
     uint16_t getNextMsgId();
 
 protected:
-    void begin(const char* authkey) {
+    void begin(const char* auth) {
         BLYNK_LOG("Blynk v" BLYNK_VERSION);
-        this->authkey = authkey;
+        this->authkey = auth;
     }
     void processInput(void);
 

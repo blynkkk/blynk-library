@@ -76,8 +76,8 @@ class BlynkWiFly
 {
     typedef BlynkProtocol<BlynkTransportWiFly> Base;
 public:
-    BlynkWiFly(BlynkTransportWiFly& conn)
-        : Base(conn)
+    BlynkWiFly(BlynkTransportWiFly& transp)
+        : Base(transp)
     {}
 
     void begin( const char* auth,

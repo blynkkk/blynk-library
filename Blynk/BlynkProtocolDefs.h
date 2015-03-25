@@ -23,7 +23,7 @@ enum BlynkCmd
     BLYNK_CMD_GET_TOKEN			= 5,
     BLYNK_CMD_PING				= 6,
     BLYNK_CMD_TWEET				= 12,
-    BLYNK_CMD_HARDWARE			= 20,
+    BLYNK_CMD_HARDWARE			= 20
 };
 
 enum BlynkStatus

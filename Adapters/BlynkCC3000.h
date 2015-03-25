@@ -61,8 +61,8 @@ class BlynkCC3000
 {
     typedef BlynkProtocol<BlynkTransportCC3000> Base;
 public:
-    BlynkCC3000(Adafruit_CC3000& cc3000, BlynkTransportCC3000& conn)
-        : Base(conn), cc3000(cc3000)
+    BlynkCC3000(Adafruit_CC3000& cc3000, BlynkTransportCC3000& transp)
+        : Base(transp), cc3000(cc3000)
     {}
 
     void wifi_begin (const char* ssid,

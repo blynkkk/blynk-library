@@ -17,6 +17,10 @@
 #include <time.h>
 #include <unistd.h>
 
+#ifndef BLYNK_INFO_DEVICE
+    #define BLYNK_INFO_DEVICE  "Linux"
+#endif
+
 static
 void delay(unsigned long ms)
 {
@@ -51,7 +55,15 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
             BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
             BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
-            BLYNK_PARAM_KV("dev"    , "Linux")
+#ifdef BLYNK_INFO_DEVICE
+            BLYNK_PARAM_KV("dev"    , BLYNK_INFO_DEVICE)
+#endif
+#ifdef BLYNK_INFO_CPU
+            BLYNK_PARAM_KV("cpu"    , BLYNK_INFO_CPU)
+#endif
+#ifdef BLYNK_INFO_CONNECTION
+            BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
+#endif
         ;
         const size_t profile_len = sizeof(profile)-1;
 
@@ -65,7 +77,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
     if (++it >= param.end())
         return;
-    const unsigned pin = it.asInt();
+    unsigned pin = it.asInt();
 
     if (!strcmp(cmd, "dr")) {
         char mem[16];
@@ -83,7 +95,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
-            BlynkReq req = { pin, 0, BLYNK_SUCCESS };
+            BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
             handler(req);
         }
     } else {
@@ -91,7 +103,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         if (!strcmp(cmd, "vw")) {
             ++it;
             if (WidgetWriteHandler handler = GetWriteHandler(pin)) {
-                BlynkReq req = { pin, 0, BLYNK_SUCCESS };
+                BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
                 char* start = (char*)it.asStr();
                 BlynkParam param2(start, len - (start - (char*)buff));
                 handler(req, param2);
@@ -101,7 +113,6 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
         if (!strcmp(cmd, "pm")) {
             while (it < param.end()) {
-                unsigned pin = it.asInt();
                 ++it;
                 BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
 #ifdef BLYNK_DEBUG

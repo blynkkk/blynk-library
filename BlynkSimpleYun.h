@@ -26,8 +26,8 @@ class BlynkYun
 {
     typedef BlynkProtocol< BlynkArduinoClientYun > Base;
 public:
-    BlynkYun(BlynkArduinoClientYun& conn)
-        : Base(conn)
+    BlynkYun(BlynkArduinoClientYun& transp)
+        : Base(transp)
     {}
 
     void begin(const char* auth,

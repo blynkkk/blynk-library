@@ -76,8 +76,8 @@ class BlynkSerial
 {
     typedef BlynkProtocol<T> Base;
 public:
-    BlynkSerial(T& conn)
-        : Base(conn)
+    BlynkSerial(T& transp)
+        : Base(transp)
     {}
 
     void begin(const char* auth, uint32_t baud = 9600) {
