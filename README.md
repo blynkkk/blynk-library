@@ -7,17 +7,17 @@ You can easily build graphic interfaces for all your projects by simply dragging
 * [Facebook](http://www.fb.com/blynkapp)
 * [Twitter](http://twitter.com/blynk_app)
 
-Please find examples how to use different types of connections (transports),
-and also how to do something useful with Blynk.
+Please find examples on how to use different types of connections (transports),
+and also how to do make something great with Blynk.
 You can easily apply any type of board/connection to all examples.
 
 ### Quickstart: Arduino + Ethernet shield ###
 
-* Download Blynk app from the market (iOS & Android).
-* Get auth token from the app
-* Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries).
+* Download Blynk app (soon in the App Store and Google Play) // 
+* Get the Auth Token from the app
+* Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries)
 * In Arduino IDE, select File -> Examples -> Blynk -> Transports -> Ethernet
-* Update auth token in the sketch and upload it to Arduino
+* Update Auth Token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
 
 ### Supported hardware ###
