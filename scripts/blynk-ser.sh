@@ -101,8 +101,12 @@ fi
 echo Resetting device $COMM_PORT...
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     stty -F $COMM_PORT hupcl
+    # Disable restarting
+    #stty -F $COMM_PORT -hupcl
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     stty -f $COMM_PORT hupcl
+    # Disable restarting
+    #stty -f $COMM_PORT -hupcl
 fi
 
 while [ 1 ]; do
