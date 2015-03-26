@@ -70,13 +70,6 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add(pin);
         rsp.add(digitalRead(pin));
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
-    } else if (!strcmp(cmd, "ar")) {
-        char mem[16];
-        BlynkParam rsp(mem, 0, sizeof(mem));
-        rsp.add("aw");
-        rsp.add(pin);
-        rsp.add(analogRead(pin));
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
     } else if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
             BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
@@ -101,6 +94,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                 //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
                 if (!strcmp(it.asStr(), "in")) {
                     pinMode(pin, INPUT);
+                    pullUpDnControl(pin, PUD_OFF);
                 } else if (!strcmp(it.asStr(), "out")) {
                     pinMode(pin, OUTPUT);
                 } else if (!strcmp(it.asStr(), "pu")) {
@@ -109,6 +103,8 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                 } else if (!strcmp(it.asStr(), "pd")) {
                     pinMode(pin, INPUT);
                     pullUpDnControl(pin, PUD_DOWN);
+                } else if (!strcmp(it.asStr(), "pwm")) {
+                    pinMode(pin, PWM_OUTPUT);
                 } else {
 #ifdef BLYNK_DEBUG
                     BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
@@ -127,7 +123,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {
             //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
-            analogWrite(pin, it.asInt());
+            pwmWrite(pin, it.asInt());
         } else {
             BLYNK_LOG("Invalid HW cmd: %s", cmd);
         }
