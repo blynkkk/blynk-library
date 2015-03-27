@@ -25,7 +25,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
+#include <SimpleTimer.h> // download this library here: https://github.com/jfturcot/SimpleTimer
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
