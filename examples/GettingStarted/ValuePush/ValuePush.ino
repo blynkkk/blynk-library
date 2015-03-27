@@ -13,10 +13,10 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how a value is periodically pushed
- * from Arduino to the phone App.
+ * This example shows how value can be pushed from Arduino to 
+ * the Blynk App.
  *
- * For this example you need to have SimpleTimer library:
+ * For this example you'll need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
  *   http://playground.arduino.cc/Code/SimpleTimer
