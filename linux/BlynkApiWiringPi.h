@@ -120,9 +120,11 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
         if (!strcmp(cmd, "dw")) {
             //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
+            pinMode(pin, OUTPUT);
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {
             //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
+            pinMode(pin, PWM_OUTPUT);
             pwmWrite(pin, it.asInt());
         } else {
             BLYNK_LOG("Invalid HW cmd: %s", cmd);

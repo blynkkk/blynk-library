@@ -118,7 +118,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                 //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
                 if (!strcmp(it.asStr(), "in")) {
                     pinMode(pin, INPUT);
-                } else if (!strcmp(it.asStr(), "out")) {
+                } else if (!strcmp(it.asStr(), "out") || !strcmp(it.asStr(), "pwm")) {
                     pinMode(pin, OUTPUT);
                 } else if (!strcmp(it.asStr(), "pu")) {
                     pinMode(pin, INPUT_PULLUP);
@@ -137,6 +137,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
         if (!strcmp(cmd, "dw")) {
             //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
+            pinMode(pin, OUTPUT);
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {
             //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
