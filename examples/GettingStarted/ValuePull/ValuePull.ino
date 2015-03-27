@@ -13,11 +13,13 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how a custom value
- * is periodically requested by the Blynk App.
- *
- * App dashboard setup:
- *   Value Display widget on V5 with Frequency 1000
+ * This example shows how to send values to the Blynk App,  
+ * when there is a widget, attached to the Virtual Pin and it 
+ * is set to some frequencey
+ * 
+ * Project setup in the app:
+ *   Value Display widget attached to V5. Set any reading 
+ *   frequency (i.e. 1 second)
  *
  **************************************************************/
 
@@ -25,7 +27,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h> // Download Simple Timer library here: https://github.com/jfturcot/SimpleTimer
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -37,10 +38,12 @@ void setup()
   Blynk.begin(auth);
 }
 
-// This function tells Arduino that widget attached to Virtual Pin (5) is requesting data
+// This function tells Arduino what to do if there is a Widget 
+// which is requesting data for Virtual Pin (5)
 BLYNK_READ(5) 
 {
-  Blynk.virtualWrite(5, millis()/1000); // this command writes Arduino's up time to Virtual Pin (5) every second 
+  // This command writes Arduino's uptime in seconds to Virtual Pin (5)
+  Blynk.virtualWrite(5, millis()/1000); 
 }
 
 void loop()
