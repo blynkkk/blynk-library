@@ -17,9 +17,27 @@
  * to connect your project to Blynk.
  * Feel free to apply it to any other example. It's simple!
  *
- * Hey! It is recommended to start with "Serial with prints" example.
- * You will find a detailed explanation how to use Blynk over serial,
- * and also enables prints for you to see if everything goes OK.
+ * 1. Edit auth token and upload this sketch.
+ *
+ * 2. Run the script (it will redirect traffic to server):
+ *      for Windows:         scripts/blynk-ser.bat
+ *      for Linux and OSX:   ./scripts/blynk-ser.sh (may need to run with sudo)
+ *
+ *    You can specify port, baud rate, and server endpoint like this:
+ *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
+ *
+ *    For instance :
+ *      ./blynk-ser.sh -c /dev/ttyACM0 -b 9600 -s cloud.blynk.cc -p 8442
+ *
+ *    Run blynk-ser.sh -h for more information
+ *
+ *    Be sure to select the right serial port (there may be multiple).
+ *
+ *    Attention!
+ *        Arduino IDE may complain with "programmer is not responding".
+ *        You need to terminate script before uploading new sketch.
+ *
+ * 3. Start blynking! :)
  *
  **************************************************************/
 
