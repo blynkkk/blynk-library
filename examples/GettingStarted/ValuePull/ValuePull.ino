@@ -37,10 +37,10 @@ void setup()
   Blynk.begin(auth);
 }
 
-//
-BLYNK_READ(5)
+// This function tells Arduino that widget attached to Virtual Pin (5) is requesting data
+BLYNK_READ(5) 
 {
-  Blynk.virtualWrite(5, millis()/1000);
+  Blynk.virtualWrite(5, millis()/1000); // this command writes Arduino's up time to Virtual Pin (5) every second 
 }
 
 void loop()
