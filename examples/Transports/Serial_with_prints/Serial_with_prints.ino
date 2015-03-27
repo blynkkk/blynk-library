@@ -21,7 +21,6 @@
  *    Connect additional USB-serial adapter to see the prints.
  *
  * 2. Edit auth token and upload this sketch.
- *    Be sure to select the right port (there may be multiple).
  *
  * 3. Run the script (it will redirect traffic to server):
  *      for Windows:         scripts/blynk-ser.bat
@@ -30,7 +29,12 @@
  *    You can specify port, baud rate, and server endpoint like this:
  *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
  *
+ *    For instance :
+ *      ./blynk-ser.sh -c /dev/ttyACM0 -b 9600 -s cloud.blynk.cc -p 8442
+ *
  *    Run blynk-ser.sh -h for more information
+ *
+ *    Be sure to select the right serial port (there may be multiple).
  *
  *    Attention!
  *        Arduino IDE may complain with "programmer is not responding".
