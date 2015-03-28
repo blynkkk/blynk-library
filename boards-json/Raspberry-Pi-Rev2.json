@@ -14,10 +14,10 @@
                 "gp18"
             ],
             "ops": [ "aw" ],
-            "aw-range":[0, 255]
+            "awRange":[0, 255]
         },
         "virtual":  {
-            "pins-range": [ 0, 64 ],
+            "pinsRange": [ 0, 64 ],
             "ops": [ "vr", "vw" ]
         }
     }
