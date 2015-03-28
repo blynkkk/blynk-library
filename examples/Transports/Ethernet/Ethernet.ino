@@ -13,7 +13,7 @@
  * This example code is in public domain.
  *
  **************************************************************
- * 
+ *
  * This example shows how to use Arduino Ethernet shield (W5100)
  * to connect your project to Blynk.
  * Feel free to apply it to any other example. It's simple!
@@ -33,6 +33,10 @@ void setup()
 {
   Serial.begin(9600);
   Blynk.begin(auth);
+  // You can also specify server.
+  // For more options, see Transports/Advanced/CustomEthernet example
+  //Blynk.begin(auth, "server.org", 8442);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8888);
 }
 
 void loop()
