@@ -13,23 +13,23 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how a value is periodically pushed
- * from Arduino to the phone App.
+ * This example shows how value can be pushed from Arduino to 
+ * the Blynk App.
  *
- * For this example you need to have SimpleTimer library:
+ * For this example you'll need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
  *   http://playground.arduino.cc/Code/SimpleTimer
  *
  * App dashboard setup:
- *   Value Display widget on V5
+ *   Value Display widget attached to V5
  *
  **************************************************************/
 
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h> //Download Simple Timer library here: https://github.com/jfturcot/SimpleTimer
+#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -45,17 +45,19 @@ void setup()
   timer.setInterval(1000, sendUptime);
 }
 
-// A function that sends how many seconds Arduino is running
+// This function sends Arduino's up time every second to Virtual Pin (5). 
+// In the app, Widget's reading frequency should be set to PUSH. This means
+// that you define how often to send data to Blynk App.
 void sendUptime()
 {
   // You can send any value at any time.
-  // Please don't send more that 10 values per second!
+  // Please don't send more that 10 values per second.
   Blynk.virtualWrite(5, millis()/1000);
 }
 
 void loop()
 {
-  Blynk.run();
-  timer.run();
+  Blynk.run(); // Initiates Blynk
+  timer.run(); // Initiates SimpleTimer 
 }
 
