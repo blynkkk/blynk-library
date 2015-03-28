@@ -43,11 +43,13 @@ public:
         }
         return 0;
     }
+
     void disconnect() { client.stop(); }
 
     size_t read(void* buf, size_t len) {
         return client.readBytes((char*)buf, len);
     }
+    
     size_t write(const void* buf, size_t len) {
         return client.write((const uint8_t*)buf, len);
     }
