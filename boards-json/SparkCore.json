@@ -14,17 +14,17 @@
                 "A5":  15, "A6":  16, "A7":  17
             },
             "ops": [ "dr", "dw", "ar" ],
-            "ar-range": [0, 4095]
+            "arRange": [0, 4095]
         },
         "pwm": {
             "pins": [
                 "A0", "A1", "A2", "A3", "A4",  "A5",  "A6",  "A7",  "D0",  "D1"
             ],
             "ops": [ "aw" ],
-            "aw-range": [0, 255]
+            "awRange": [0, 255]
         },
         "virtual":  {
-            "pins-range": [ 0, 31 ],
+            "pinsRange": [ 0, 31 ],
             "ops": [ "vr", "vw" ]
         }
     }
