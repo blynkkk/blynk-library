@@ -19,8 +19,8 @@
  *
  * 1. Edit auth token and upload this sketch.
  *
- * 3. Run the script (script located in "scripts" folder of library root)
- *    for redirecting traffic to server:
+ * 2. Run the script (script located in "scripts" folder of library root,
+ *    e.g. 'blynk-library/scripts') for redirecting traffic to server:
  *
  *      for Windows:         scripts/blynk-ser.bat
  *      for Linux and OSX:   ./scripts/blynk-ser.sh (may need to run with sudo)
