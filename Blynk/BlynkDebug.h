@@ -13,6 +13,17 @@
 
 #include <Blynk/BlynkConfig.h>
 #include <stddef.h>
+#ifdef ESP8266
+    #include "ets_sys.h"
+    #include "os_type.h"
+    #include "mem.h"
+#else
+    #include <inttypes.h>
+#endif
+
+#if defined(ARDUINO)
+    #include <Arduino.h>
+#endif
 
 // General defines
 
@@ -27,10 +38,10 @@
     #include <avr/pgmspace.h>
     #define BLYNK_HAS_PROGMEM
     #define BLYNK_PROGMEM PROGMEM
-    #define _S(s) PSTR(s)
+    #define BLYNK_PSTR(s) PSTR(s)
 #else
     #define BLYNK_PROGMEM
-    #define _S(s) s
+    #define BLYNK_PSTR(s) s
 #endif
 
 // Diagnostic defines
@@ -45,17 +56,16 @@ void BlynkFatal() BLYNK_NORETURN;
 
 #ifdef BLYNK_PRINT
 
-    #if defined(ARDUINO)
+    #if defined(ARDUINO) || defined(SPARK)
         #include <stdio.h>
         #include <stdarg.h>
-        #include <Arduino.h>
 
         #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
 #if defined(__SAM3X8E__)
         #define BLYNK_LOG(msg, ...)  blynk_dbg_print(msg, ##__VA_ARGS__)
 #else
-        #define BLYNK_LOG(msg, ...)  blynk_dbg_print(_S(msg), ##__VA_ARGS__)
+        #define BLYNK_LOG(msg, ...)  blynk_dbg_print(BLYNK_PSTR(msg), ##__VA_ARGS__)
 #endif
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
 
@@ -95,13 +105,22 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <windows.h>
         #include <stdio.h>
 
+        #define BLYNK_DBG_DUMP(msg, addr, len)
         #define BLYNK_DBG_BREAK()    DebugBreak();
         #define BLYNK_LOG(...)       { char buff[1024]; snprintf(buff, sizeof(buff), __VA_ARGS__); OutputDebugString(buff); }
+        #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_DBG_BREAK() } }
+
+    #elif defined(ESP8266)
+
+        #define BLYNK_DBG_DUMP(msg, addr, len) { ets_uart_printf(msg); uart0_tx_buffer(addr, len); ets_uart_printf("\n"); }
+        #define BLYNK_DBG_BREAK()    abort()
+        #define BLYNK_LOG(msg, ...)  ets_uart_printf("[%ld] " msg "\n", millis(), ##__VA_ARGS__)
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_DBG_BREAK() } }
 
     #else
 
         #warning Could not detect platform
+        #define BLYNK_DBG_DUMP(msg, addr, len)
         #define BLYNK_DBG_BREAK()    { *(char*)(NULL) = 0xFF; } // SEGV!!!
         #define BLYNK_LOG(...)
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_DBG_BREAK() } }

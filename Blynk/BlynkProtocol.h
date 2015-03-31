@@ -223,14 +223,17 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #endif
         return;
     }
+    if (0 == id) {
+    	id = getNextMsgId();
+    }
     BlynkHeader hdr;
     hdr.type = cmd;
-    hdr.msg_id = htons((id == 0) ? getNextMsgId() : id);
+    hdr.msg_id = htons(id);
     hdr.length = htons(length+length2);
     size_t wlen = 0;
     wlen += conn.write(&hdr, sizeof(hdr));
 #ifdef BLYNK_DEBUG
-    BLYNK_LOG("<msg %d,%u,%u", cmd, ntohs(hdr.msg_id), length+length2);
+    BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
 #endif
     if (cmd != BLYNK_CMD_RESPONSE) {
         if (length) {

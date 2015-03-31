@@ -57,12 +57,36 @@ public:
         }
     }
 
+#if defined(BLYNK_HAS_CALL_BLYNK_READ)
+
+    void call_BLYNK_READ(int pin) {
+        if (WidgetReadHandler handler = GetReadHandler(pin)) {
+            BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
+            handler(req);
+        }
+    }
+
+#endif
+
+#if defined(BLYNK_HAS_VIRTUAL_READ)
+
+    void virtualRead(int pin) {
+        char mem[8];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add("vr");
+        cmd.add(pin);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+    }
+
+#endif
+
 #if defined(BLYNK_HAS_DELAY)
 
     void delay(unsigned long ms) {
         uint16_t start = (uint16_t)micros();
         while (ms > 0) {
             static_cast<Proto*>(this)->run();
+            yield();
             if (((uint16_t)micros() - start) >= 1000) {
                 ms--;
                 start += 1000;

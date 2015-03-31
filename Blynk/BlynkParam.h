@@ -13,7 +13,6 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <inttypes.h>
 #include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkDebug.h>
 

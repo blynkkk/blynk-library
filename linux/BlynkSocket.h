@@ -32,8 +32,8 @@ public:
     {}
 
     void begin(const char* d, const char* p) {
-    	this->domain = d;
-    	this->port = p;
+        this->domain = d;
+        this->port = p;
     }
 
     bool connect()
@@ -113,8 +113,8 @@ public:
     {}
 
     void begin(const char* auth,
-    		   const char* domain = BLYNK_DEFAULT_DOMAIN,
-			   const char* port   = STRINGIFY(BLYNK_DEFAULT_PORT))
+               const char* domain = BLYNK_DEFAULT_DOMAIN,
+               const char* port   = TOSTRING(BLYNK_DEFAULT_PORT))
     {
         Base::begin(auth);
         this->conn.begin(domain, port);
