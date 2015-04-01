@@ -224,37 +224,43 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         return;
     }
     if (0 == id) {
-    	id = getNextMsgId();
+        id = getNextMsgId();
     }
     BlynkHeader hdr;
     hdr.type = cmd;
     hdr.msg_id = htons(id);
     hdr.length = htons(length+length2);
     size_t wlen = 0;
-    wlen += conn.write(&hdr, sizeof(hdr));
 #ifdef BLYNK_DEBUG
     BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
 #endif
+    wlen += conn.write(&hdr, sizeof(hdr));
+
     if (cmd != BLYNK_CMD_RESPONSE) {
         if (length) {
-            wlen += conn.write(data, length);
 #ifdef BLYNK_DEBUG
             BLYNK_DBG_DUMP("<", data, length);
 #endif
+            wlen += conn.write(data, length);
         }
         if (length2) {
-            wlen += conn.write(data2, length2);
 #ifdef BLYNK_DEBUG
             BLYNK_DBG_DUMP("<", data2, length2);
 #endif
+            wlen += conn.write(data2, length2);
         }
 
         if (wlen != sizeof(hdr)+length+length2) {
-            BLYNK_LOG("Can't send cmd");
+            BLYNK_LOG("Sent %u/%u", wlen, sizeof(hdr)+length+length2);
             conn.disconnect();
+            return;
         }
     }
     lastActivityOut = millis();
+
+#ifdef BLYNK_DEBUG
+    BLYNK_LOG("Sent.");
+#endif
 }
 
 template <class Transp>
