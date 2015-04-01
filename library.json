@@ -1,0 +1,18 @@
+{
+  "name": "Blynk",
+  "keywords": "iot, smartphone, mobile, app, widgets, wifi, wi-fi, web, server",
+  "description": "Build a smartphone app for your Spark Core project in minutes. http://blynk.cc",
+  "authors":
+  {
+    "name":  "Volodymyr Shymanskyy",
+    "url":   "https://github.com/vshymanskyy",
+    "maintainer": true
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/blynkkk/blynk-library.git"
+  },
+  "frameworks": "arduino",
+  "platforms": [ "atmelavr", "atmelsam" ]
+}
