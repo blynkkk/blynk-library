@@ -21,7 +21,7 @@ from threading import Thread
 # Parse command line options
 opts, args = getopt.getopt(sys.argv[1:],
     "hb:p:",
-    ["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "wait=", "sleep=", "qty=", "dump"])
+    ["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "sleep=", "qty=", "pin=", "dump"])
 
 # Default options
 HOST = ''       # Bind to all interfaces
@@ -29,7 +29,6 @@ PORT = 8888     # Bind to port 8888
 NODELAY = 0     # No TCP_NODELAY
 SNDBUF = 0      # No SNDBUF override
 RCVBUF = 0      # No RCVBUF override
-WAIT = -1       # No select timeout
 MSG_QTY = 1000  # Amount of messages
 SLEEP = 0       # Wait some time between IO
 HW_PIN = 14     # Pin #
@@ -49,8 +48,6 @@ for o, v in opts:
         RCVBUF = int(v)
     elif o in ("--nodelay",):
         NODELAY = 1
-    elif o in ("--wait",):
-        WAIT = float(v)
     elif o in ("--sleep",):
         SLEEP = float(v)
     elif o in ("--qty",):
@@ -81,22 +78,28 @@ def hw(*args):
     # Prepend HW command header
     return hdr.pack(MsgType.HW, 1, len(data)) + data
 
+# Print utilities
+
 start_time = time.time()
 def log(msg):
     print "[{:7.3f}] {:}".format(float(time.time() - start_time), msg)
 
+draw_col = 0
 def draw(c):
+    global draw_col
     if not DUMP:
         sys.stdout.write(c)
-        sys.stdout.flush()
+        draw_col = (draw_col + 1) % 120
+        if draw_col:
+            sys.stdout.flush()
+        else:
+            sys.stdout.write("\n")
 
 def dump(msg):
     if DUMP:
         log(msg)
-        
-authenticated = False
-msgs_in = 0
-msgs_out = 0
+
+# Threads
 
 def readthread(conn, addr):
 	global msgs_in, authenticated
@@ -151,7 +154,7 @@ except socket.error as msg:
     log('Bind failed. Error Code: {0}, Msg: {1}'.format(str(msg[0]), msg[1]))
     sys.exit()
 
-serv.listen(10)
+serv.listen(1)
 log('Listening on port %d' % PORT)
 
 # Wait for clients
@@ -170,13 +173,16 @@ if RCVBUF != 0:
 	conn.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, RCVBUF)
 
 proc_start = time.time()
+msgs_in = 0
+msgs_out = 0
+authenticated = False
 
 wt = Thread(target=readthread,  args=(conn, addr))
 rt = Thread(target=writethread, args=(conn, addr))
 
 wt.start()
 rt.start()
-serv.close()
+
 wt.join()
 rt.join()
 
