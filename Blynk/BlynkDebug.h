@@ -22,7 +22,11 @@
 #endif
 
 #if defined(ARDUINO)
-    #include <Arduino.h>
+    #if ARDUINO >= 100
+        #include "Arduino.h"
+    #else
+        #include "WProgram.h"
+    #endif
 #endif
 
 // General defines

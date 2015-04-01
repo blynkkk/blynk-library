@@ -73,6 +73,16 @@ public:
         {
             BLYNK_FATAL("Couldn't begin()! Check your wiring?");
         }
+
+#if !defined(CC3000_TINY_DRIVER) && defined(BLYNK_DEBUG)
+        uint8_t major, minor;
+        if(!cc3000.getFirmwareVersion(&major, &minor))
+        {
+            if(major != 0x1 || minor < 0x13) {
+                BLYNK_LOG("CC3000 upgrade needed?");
+            }
+        }
+#endif
         /*if (!cc3000.deleteProfiles())
         {
             BLYNK_FATAL("Fail deleting old profiles");
