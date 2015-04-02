@@ -18,10 +18,11 @@ size_t BlynkFreeRam()
 
 void BlynkReset()
 {
+    exit(1);
+    for(;;); // To make compiler happy
 }
 
 void BlynkFatal()
 {
-    exit(1);
-    for(;;); // To make compiler happy
+    BlynkReset();
 }

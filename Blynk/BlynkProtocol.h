@@ -42,6 +42,9 @@ private:
 
 protected:
     void begin(const char* auth) {
+#ifdef BLYNK_PRINT
+    	BLYNK_PRINT.println();
+#endif
         BLYNK_LOG("Blynk v" BLYNK_VERSION);
         this->authkey = auth;
     }
