@@ -32,7 +32,7 @@ char auth[] = "YourAuthToken";
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth, "ssid", "pass", WLAN_SEC_WPA2);
+  Blynk.begin(auth, "ssid", "pass");
 }
 
 void loop()
