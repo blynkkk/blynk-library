@@ -51,6 +51,17 @@ def hw(*args):
 
 # Main code
 
+def receive(sock, length):
+	d = []
+	l = 0
+	while l < length:
+		r = conn.recv(length-l)
+		if not r:
+			return ''
+		d.append(r)
+		l += len(r)
+	return ''.join(d)
+
 serv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     # Set SO_REUSEADDR, this is needed to ignore WAIT state on next run
@@ -73,7 +84,7 @@ def clientthread(conn, addr):
     while(True):
         rs, _, _ = select.select([conn] , [], [], WAIT*DIVIDER)
         if rs:
-            data = conn.recv(hdr.size)
+            data = receive(conn, hdr.size)
             if not data:
                 break
             msg_type, msg_id, msg_len = hdr.unpack(data)
@@ -81,7 +92,7 @@ def clientthread(conn, addr):
             if msg_type == MsgType.RSP:
                 pass
             elif msg_type == MsgType.LOGIN:
-                auth = conn.recv(msg_len)
+                auth = receive(conn, msg_len)
                 print "Auth {0}".format(auth)
                 # Send auth OK and pin modes
                 conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
@@ -92,12 +103,12 @@ def clientthread(conn, addr):
                 # Send Pong
                 conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
             elif msg_type == MsgType.HW:
-                data = conn.recv(msg_len)
+                data = receive(conn, msg_len)
                 # Print HW messages (just for fun :)
                 print "Hw: {0}".format(data)
             else:
                 break
-        
+
         if (authenticated):
             conn.sendall(hw("aw", LED_PIN, b))
             b = (b + DIVIDER) % 256
@@ -107,9 +118,9 @@ def clientthread(conn, addr):
 
     print "Finished sending {0} messages".format(msgs)
     conn.close()
- 
+
 # Wait for clients
 while True:
     start_new_thread(clientthread, serv.accept())
- 
+
 serv.close()

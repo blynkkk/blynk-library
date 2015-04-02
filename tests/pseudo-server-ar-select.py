@@ -59,7 +59,7 @@ for o, v in opts:
         HW_PIN = int(v)
     elif o in ("--dump",):
         DUMP = 1
-        
+
 
 # Blynk protocol helpers
 
@@ -94,6 +94,17 @@ def dump(msg):
     if DUMP:
         log(msg)
 
+def receive(sock, length):
+	d = []
+	l = 0
+	while l < length:
+		r = conn.recv(length-l)
+		if not r:
+			return ''
+		d.append(r)
+		l += len(r)
+	return ''.join(d)
+
 
 def clientthread(conn, addr):
     log('Connection from {0}:{1}'.format(addr[0], str(addr[1])))
@@ -114,9 +125,9 @@ def clientthread(conn, addr):
     msgs_delta = 0
     msgs_skip = 0
     authenticated = False
-    
+
     proc_start = time.time()
-    
+
     while(True):
         if WAIT != -1:
             rs, ws, es = select.select([conn] , [conn], [conn], WAIT)
@@ -126,7 +137,7 @@ def clientthread(conn, addr):
             log("Socket error")
             break;
         if rs:
-            data = conn.recv(hdr.size)
+            data = receive(conn, hdr.size)
             if not data:
                 break
             msg_type, msg_id, msg_len = hdr.unpack(data)
@@ -134,7 +145,7 @@ def clientthread(conn, addr):
             if msg_type == MsgType.RSP:
                 pass
             elif msg_type == MsgType.LOGIN:
-                auth = conn.recv(msg_len)
+                auth = receive(conn, msg_len)
                 log("Auth {0}".format(auth))
                 # Send auth OK and pin modes
                 conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
@@ -145,7 +156,7 @@ def clientthread(conn, addr):
                 # Send Pong
                 conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
             elif msg_type == MsgType.HW:
-                data = conn.recv(msg_len)
+                data = receive(conn, msg_len)
                 # Print HW messages (just for fun :)
                 draw('v')
                 dump("> " + " ".join(data.split("\0")))

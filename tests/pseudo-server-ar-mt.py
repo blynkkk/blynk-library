@@ -56,7 +56,7 @@ for o, v in opts:
         HW_PIN = int(v)
     elif o in ("--dump",):
         DUMP = 1
-        
+
 
 # Blynk protocol helpers
 
@@ -99,12 +99,23 @@ def dump(msg):
     if DUMP:
         log(msg)
 
+def receive(sock, length):
+	d = []
+	l = 0
+	while l < length:
+		r = conn.recv(length-l)
+		if not r:
+			return ''
+		d.append(r)
+		l += len(r)
+	return ''.join(d)
+
 # Threads
 
 def readthread(conn, addr):
 	global msgs_in, authenticated
 	while(msgs_in < MSG_QTY):
-		data = conn.recv(hdr.size)
+		data = receive(conn, hdr.size)
 		if not data:
 			break
 		msg_type, msg_id, msg_len = hdr.unpack(data)
@@ -112,7 +123,7 @@ def readthread(conn, addr):
 		if msg_type == MsgType.RSP:
 			pass
 		elif msg_type == MsgType.LOGIN:
-			auth = conn.recv(msg_len)
+			auth = receive(conn, msg_len)
 			log("Auth {0}".format(auth))
 			# Send auth OK and pin modes
 			conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
@@ -123,7 +134,7 @@ def readthread(conn, addr):
 			# Send Pong
 			conn.sendall(hdr.pack(MsgType.RSP, msg_id, MsgStatus.OK))
 		elif msg_type == MsgType.HW:
-			data = conn.recv(msg_len)
+			data = receive(conn, msg_len)
 			# Print HW messages (just for fun :)
 			draw('v')
 			dump("> " + " ".join(data.split("\0")))

@@ -89,14 +89,12 @@ def receive(sock, length):
 		l += len(r)
 	return ''.join(d)
 
-socket.receive = receive
-
 # Threads
 
 def readthread(conn, addr):
 	global msgs_in
 	while(msgs_in < MSG_QTY):
-		data = conn.receive(len(MSG))
+		data = receive(conn, len(MSG))
 		if data != MSG:
 			log("Data is wrong:" + data)
 			break
