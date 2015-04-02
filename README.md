@@ -27,7 +27,8 @@ You can easily apply any type of board/connection to all examples.
 ### Troubleshooting ###
 
 To enable debug prints on default Serial, add on the top of your sketch.
-**Should be the first line**:
+**Should be the first line**
+**WARNING : enabling debug mode will slowdown your hardware processing speed up to 10 times.**:
 
         #define BLYNK_DEBUG // Optional, this enables lots of prints
         #define BLYNK_PRINT Serial
