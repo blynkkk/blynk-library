@@ -2,6 +2,12 @@
 '''
  This is a pseudo-server that sends predefined pattern to any connected client.
  It is used to test transport behaviour and throughput.
+ 
+   tcp-echo-test.py --bind=S --port=N --sndbuf=N --rcvbuf=N --nodelay --sleep=F --qty=N --dump
+   
+ S = string
+ N = number
+ F = float
 
  If you want to use it with a sketch, connect your PC and Blynk-enabled device
  into the same network and configure Blynk to connect to this pseudo-server:
