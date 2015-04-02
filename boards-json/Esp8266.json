@@ -12,14 +12,14 @@
         },
         "analog": {
             "pins": {
-                "adc0": 20
+                "adc0": 0
             },
-            "ops": [ "dr", "dw", "ar" ],
+            "ops": [ "ar" ],
             "arRange": [ 0, 1023 ]
         },
         "pwm": {
             "pins": [
-                "gp0", "gp1", "gp3", "gp4", "gp5", "gp12", "gp13", "gp14", "gp15"
+                "gp0", "gp1", "gp2", "gp3", "gp4", "gp5", "gp12", "gp13", "gp14", "gp15"
             ],
             "ops": [ "aw" ],
             "awRange": [ 0, 255 ]

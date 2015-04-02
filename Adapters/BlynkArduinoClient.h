@@ -50,9 +50,28 @@ public:
         return client.readBytes((char*)buf, len);
     }
     
+#ifdef BLYNK_RETRY_SEND
+    size_t write(const void* buf, size_t len) {
+    	size_t sent = 0;
+    	int retry = 0;
+    	while (sent < len && ++retry < 10) {
+    		size_t w = client.write((const uint8_t*)buf+sent, len-sent);
+    		if (w != 0 && w != -1) {
+    			sent += w;
+    		} else {
+        		delay(50);
+#ifdef BLYNK_DEBUG
+    			BLYNK_LOG("Retry %d send (%d/%d)", retry, sent, len);
+#endif
+    		}
+    	}
+        return sent;
+    }
+#else
     size_t write(const void* buf, size_t len) {
         return client.write((const uint8_t*)buf, len);
     }
+#endif
 
     void flush() { client.flush(); }
     bool connected() { return client.connected(); }
