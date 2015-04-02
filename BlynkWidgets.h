@@ -9,4 +9,5 @@
 
 #include <WidgetLCD.h>
 #include <WidgetConsole.h>
+#include <WidgetBridge.h>
 // Cannot auto-include WidgetSD, as it has library dependency

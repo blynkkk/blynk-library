@@ -17,8 +17,8 @@ class WidgetConsole
     : public Print
 {
 public:
-    WidgetConsole(int pin)
-        : mPin(pin), mOutQty(0)
+    WidgetConsole(int vPin)
+        : mPin(vPin), mOutQty(0)
     {}
 
     virtual ~WidgetConsole() {}
