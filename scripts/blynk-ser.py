@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
     for o, a in opts:
         if o in ("-h", "--help"):   #help text
-            usage()
+            print __doc__
             sys.exit()
         elif o in ("-p", "--port"):   #specified port
             try:

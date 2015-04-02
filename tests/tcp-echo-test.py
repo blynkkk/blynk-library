@@ -1,17 +1,25 @@
-#!/usr/bin/python
-'''
+#!/usr/bin/env python
+
+"""USAGE: tcp-echo-test.py [options]
+
+Options:
+  --bind=S      address of server to connect             (default: any)
+  --port=N      serial port, a number or a device name   (defualt: 8888)
+  --sndbuf=N    SO_SNDBUF override                       (default: no override)
+  --rcvbuf=N    SO_RCVBUF override                       (default: no override)
+  --nodelay     enable TCP_NODELAY
+  --msg=S       message content                          (default: 'message')
+  --qty=N       amount of messsages                      (default: 10)
+  --sleep=F     delay between sending messages           (default: 1.0)
+  --mps=N       messages per second (inverse of sleep)   (default: 1)
+
  This is a pseudo-server that sends predefined pattern to any connected client.
  It is used to test transport behaviour and throughput.
 
- If you want to use it with a sketch, connect your PC and Blynk-enabled device
- into the same network and configure Blynk to connect to this pseudo-server:
-
-   IPAddress serv(192,168,0,105); // IP address of your PC
-   Blynk.begin(auth, serv, 8888);
-
  Author:   Volodymyr Shymanskyy
  License:  The MIT license
-'''
+"""
+
 import select, socket, struct
 import os, sys, time, getopt
 from threading import Thread
@@ -19,9 +27,13 @@ from threading import Thread
 # Configuration options
 
 # Parse command line options
-opts, args = getopt.getopt(sys.argv[1:],
-    "hb:p:",
-    ["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "sleep=", "qty=", "msg=", "dump"])
+try:
+	opts, args = getopt.getopt(sys.argv[1:],
+		"hb:p:",
+		["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "sleep=", "qty=", "mps=" "msg=", "dump"])
+except getopt.GetoptError:
+	print >>sys.stderr, __doc__
+	sys.exit(2)
 
 # Default options
 HOST = ''       # Bind to all interfaces
@@ -29,14 +41,14 @@ PORT = 8888     # Bind to port 8888
 NODELAY = 0     # No TCP_NODELAY
 SNDBUF = 0      # No SNDBUF override
 RCVBUF = 0      # No RCVBUF override
-MSG_QTY = 1000  # Amount of messages
-SLEEP = 0       # Wait some time between IO
+MSG_QTY = 10    # Amount of messages
+SLEEP = 1.0     # Wait some time between IO
 MSG = "message" # Message
 DUMP = 0
 
 for o, v in opts:
     if o in ("-h", "--help"):
-        usage()
+        print __doc__
         sys.exit()
     elif o in ("-b", "--bind"):
         HOST = v
@@ -50,6 +62,8 @@ for o, v in opts:
         NODELAY = 1
     elif o in ("--sleep",):
         SLEEP = float(v)
+    elif o in ("--mps",):
+        SLEEP = 1.0/float(v)
     elif o in ("--qty",):
         MSG_QTY = int(v)
     elif o in ("--msg",):
