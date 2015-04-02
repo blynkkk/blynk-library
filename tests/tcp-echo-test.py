@@ -11,7 +11,7 @@ Options:
   --msg=S       message content                          (default: 'message')
   --qty=N       amount of messsages                      (default: 10)
   --sleep=F     delay between sending messages           (default: 1.0)
-  --mps=N       messages per second (inverse of sleep)   (default: 1)
+  --freq=N      messages per second (inverse of sleep)   (default: 1)
 
  This is a pseudo-server that sends predefined pattern to any connected client.
  It is used to test transport behaviour and throughput.
@@ -30,7 +30,7 @@ from threading import Thread
 try:
 	opts, args = getopt.getopt(sys.argv[1:],
 		"hb:p:",
-		["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "sleep=", "qty=", "mps=" "msg=", "dump"])
+		["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "sleep=", "qty=", "freq=", "msg=", "dump"])
 except getopt.GetoptError:
 	print >>sys.stderr, __doc__
 	sys.exit(2)
@@ -62,7 +62,7 @@ for o, v in opts:
         NODELAY = 1
     elif o in ("--sleep",):
         SLEEP = float(v)
-    elif o in ("--mps",):
+    elif o in ("--freq",):
         SLEEP = 1.0/float(v)
     elif o in ("--qty",):
         MSG_QTY = int(v)
