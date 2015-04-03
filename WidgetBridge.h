@@ -21,6 +21,19 @@ public:
     {}
     void onWrite(BlynkReq& request, const BlynkParam& param) {}
 
+#if defined(BLYNK_EXPERIMENTAL)
+
+    void setAuthToken(const char* token) {
+        char mem[64];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add("bridge_auth");
+        cmd.add(mPin);
+        cmd.add(token);
+        Blynk.sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+    }
+
+#endif
+
     void digitalWrite(int pin, int val) {
         char mem[64];
         BlynkParam cmd(mem, 0, sizeof(mem));
