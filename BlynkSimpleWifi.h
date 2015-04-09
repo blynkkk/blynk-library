@@ -36,10 +36,20 @@ public:
              BLYNK_FATAL("WiFi shield not present");
          }
 
+         String fv = WiFi.firmwareVersion();
+         if (fv != "1.1.0") {
+             BLYNK_LOG("Please upgrade the firmware");
+         }
+
          // attempt to connect to Wifi network:
-         while (status != WL_CONNECTED) {
-             BLYNK_LOG("Attempting to connect to SSID: %s", ssid);
+         while (true) {
+             BLYNK_LOG("Connecting to %s...", ssid);
              status = WiFi.begin((char*)ssid, pass);
+             if (status == WL_CONNECTED) {
+            	 break;
+             } else {
+            	 delay(5000);
+             }
          }
          BLYNK_LOG("Connected to wifi");
     }

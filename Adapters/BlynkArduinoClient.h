@@ -20,7 +20,9 @@ class BlynkArduinoClient
 public:
     BlynkArduinoClient(Client& client)
         : client(client), domain(NULL), port(0)
-    {}
+    {
+    	client.setTimeout(3000);
+    }
 
     void begin(IPAddress a, uint16_t p) {
         domain = NULL;
@@ -46,10 +48,17 @@ public:
 
     void disconnect() { client.stop(); }
 
+#ifdef BLYNK_ENC28J60_FIX
+    size_t read(void* buf, size_t len) {
+    	while (client.available() < len) { }
+    	return client.read((uint8_t*)buf, len);
+    }
+#else
     size_t read(void* buf, size_t len) {
         return client.readBytes((char*)buf, len);
     }
-    
+#endif
+
 #ifdef BLYNK_RETRY_SEND
     size_t write(const void* buf, size_t len) {
     	size_t sent = 0;
