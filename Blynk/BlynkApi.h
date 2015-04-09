@@ -159,6 +159,42 @@ public:
     }
 
     /**
+     * digitalWrite + update widget state
+     *
+     * @experimental
+     *
+     * @param pin Digital pin number
+     * @param val Value to set
+     */
+    void digitalWrite(uint8_t pin, uint8_t val) {
+    	::digitalWrite(pin, val);
+        char mem[8];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add("dw");
+        cmd.add(pin);
+        cmd.add(val);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+    }
+
+    /**
+     * analogWrite + update widget state
+     *
+     * @experimental
+     *
+     * @param pin PWM pin number
+     * @param val Value to set
+     */
+    void analogWrite(uint8_t pin, int val) {
+    	::analogWrite(pin, val);
+        char mem[12];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add("aw");
+        cmd.add(pin);
+        cmd.add(val);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+    }
+
+    /**
      * Delays for N milliseconds, handling server communication in background.
      *
      * @experimental
