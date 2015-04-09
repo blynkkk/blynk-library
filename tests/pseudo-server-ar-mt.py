@@ -19,9 +19,13 @@ from threading import Thread
 # Configuration options
 
 # Parse command line options
-opts, args = getopt.getopt(sys.argv[1:],
-    "hb:p:",
-    ["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "sleep=", "qty=", "pin=", "dump"])
+try:
+    opts, args = getopt.getopt(sys.argv[1:],
+        "hb:p:",
+        ["help", "bind=", "port=", "sndbuf=", "rcvbuf=", "nodelay", "sleep=", "qty=", "freq=", "pin=", "dump"])
+except getopt.GetoptError:
+    print >>sys.stderr, __doc__
+    sys.exit(2)
 
 # Default options
 HOST = ''       # Bind to all interfaces
@@ -29,14 +33,14 @@ PORT = 8888     # Bind to port 8888
 NODELAY = 0     # No TCP_NODELAY
 SNDBUF = 0      # No SNDBUF override
 RCVBUF = 0      # No RCVBUF override
-MSG_QTY = 1000  # Amount of messages
-SLEEP = 0       # Wait some time between IO
+MSG_QTY = 10    # Amount of messages
+SLEEP = 1.0     # Wait some time between IO
 HW_PIN = 14     # Pin #
 DUMP = 0
 
 for o, v in opts:
     if o in ("-h", "--help"):
-        usage()
+        print __doc__
         sys.exit()
     elif o in ("-b", "--bind"):
         HOST = v
@@ -50,6 +54,8 @@ for o, v in opts:
         NODELAY = 1
     elif o in ("--sleep",):
         SLEEP = float(v)
+    elif o in ("--freq",):
+        SLEEP = 1.0/float(v)
     elif o in ("--qty",):
         MSG_QTY = int(v)
     elif o in ("--pin",):
@@ -103,7 +109,7 @@ def receive(sock, length):
 	d = []
 	l = 0
 	while l < length:
-		r = conn.recv(length-l)
+		r = sock.recv(length-l)
 		if not r:
 			return ''
 		d.append(r)

@@ -98,7 +98,7 @@ def receive(sock, length):
 	d = []
 	l = 0
 	while l < length:
-		r = conn.recv(length-l)
+		r = sock.recv(length-l)
 		if not r:
 			return ''
 		d.append(r)
