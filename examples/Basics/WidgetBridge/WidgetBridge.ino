@@ -38,6 +38,11 @@ SimpleTimer timer;
 void setup()
 {
   Blynk.begin(auth);
+
+  if (Blynk.connect()) {
+    bridge1.setAuthToken("OtherAuthToken");
+  }
+
   // Call blynkAnotherDevice periodically
   timer.setInterval(1000, blynkAnotherDevice);
 }
