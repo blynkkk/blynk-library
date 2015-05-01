@@ -169,7 +169,8 @@ void BlynkProtocol<Transp>::processInput(void)
     case BLYNK_CMD_PING: {
         sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
     } break;
-    case BLYNK_CMD_HARDWARE: {
+    case BLYNK_CMD_HARDWARE:
+    case BLYNK_CMD_BRIDGE: {
         if (hdr.length > BLYNK_MAX_READBYTES) {
             BLYNK_LOG("Packet size (%u) > max allowed (%u)", hdr.length, BLYNK_MAX_READBYTES);
             conn.disconnect();
