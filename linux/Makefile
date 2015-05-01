@@ -3,7 +3,7 @@
 # 1. Install WiringPi: http://wiringpi.com/download-and-install/
 # 2. Run:
 #    make target=raspberry
-#    sudo blynk --auth=YourAuthToken
+#    sudo blynk --token=YourAuthToken
 #
 
 CC = g++
