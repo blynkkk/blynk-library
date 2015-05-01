@@ -48,7 +48,7 @@ public:
         hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
 
         // get ready to connect
-        getaddrinfo(BLYNK_DEFAULT_DOMAIN, TOSTRING(BLYNK_DEFAULT_PORT), &hints, &res);
+        getaddrinfo(domain, port, &hints, &res);
 
         if ((sockfd = ::socket(res->ai_family, res->ai_socktype, res->ai_protocol)) < 0)
         {
