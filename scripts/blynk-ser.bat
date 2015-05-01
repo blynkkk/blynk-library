@@ -5,7 +5,7 @@ REM === Edit these lines to match your need ===
 
 set COMM_PORT=COM1
 set COMM_BAUD=9600
-set SERV_ADDR=blynk-test-east.cloudapp.net
+set SERV_ADDR=cloud.blynk.cc
 set SERV_PORT=8442
 
 REM === Edit lines below only if absolutely sure what you're doing ===
@@ -56,7 +56,7 @@ goto:eof
     echo.           COM1               (on Windows)
     echo.           /dev/tty.usbserial (on OSX)
     echo.     -b    9600
-    echo.     -s    blynk-test-east.cloudapp.net
+    echo.     -s    cloud.blynk.cc
     echo.     -p    8442
     echo.
     echo.   If the specified serial port is not found, it will ask to enter another one.

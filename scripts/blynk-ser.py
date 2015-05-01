@@ -3,7 +3,7 @@
 """USAGE: blynk-ser.py [options]
 
 Options:
-      --server      address of server to connect           (default blynk-test-east.cloudapp.net:8442)
+      --server      address of server to connect           (default cloud.blynk.cc:8442)
   -p, --port=PORT   serial port, a number or a device name (defualt 0)
   -b, --baud=BAUD   baudrate                               (default 9600)
   -r, --rtscts      enable RTS/CTS flow control            (default off)
@@ -89,7 +89,7 @@ if __name__ == '__main__':
         print >>sys.stderr, __doc__
         sys.exit(2)
 
-    server      = 'blynk-test-east.cloudapp.net:8442'
+    server      = 'cloud.blynk.cc:8442'
     ser.port    = 0
     ser.baudrate = 9600
     ser.rtscts  = False
