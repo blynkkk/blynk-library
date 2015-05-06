@@ -62,7 +62,7 @@ bool BlynkProtocol<Transp>::connect()
 {
     conn.disconnect();
     if (!conn.connect()) {
-        delay(5000);
+        ::delay(5000);
         return false;
     }
 
@@ -97,7 +97,7 @@ bool BlynkProtocol<Transp>::connect()
             }
         }
         conn.disconnect();
-        delay(5000);
+        ::delay(5000);
         return false;
     }
 

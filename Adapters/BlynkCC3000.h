@@ -95,7 +95,7 @@ public:
         BLYNK_LOG("Getting IP address...");
         while (!cc3000.checkDHCP())
         {
-            delay(100);
+        	::delay(100);
         }
 #ifdef BLYNK_PRINT
         uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;
@@ -126,7 +126,7 @@ public:
         while (ip == 0) {
             if (!cc3000.getHostByName((char*)domain, &ip)) {
                 BLYNK_LOG("Couldn't locate server");
-                delay(500);
+                ::delay(500);
             }
         }
 

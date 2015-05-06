@@ -43,7 +43,7 @@ public:
             BLYNK_FATAL("DHCP Failed!");
         }
         // give the Ethernet shield a second to initialize:
-        delay(1000);
+        ::delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
@@ -61,7 +61,7 @@ public:
         BLYNK_LOG("Using static IP");
         Ethernet.begin((byte*)mac, local);
         // give the Ethernet shield a second to initialize:
-        delay(1000);
+        ::delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
@@ -81,7 +81,7 @@ public:
         BLYNK_LOG("Using static IP");
         Ethernet.begin((byte*)mac, local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
-        delay(1000);
+        ::delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
@@ -99,7 +99,7 @@ public:
             BLYNK_FATAL("DHCP Failed!");
         }
         // give the Ethernet shield a second to initialize:
-        delay(1000);
+        ::delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
@@ -116,7 +116,7 @@ public:
         Base::begin(auth);
         Ethernet.begin((byte*)mac, local);
         // give the Ethernet shield a second to initialize:
-        delay(1000);
+        ::delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
@@ -136,7 +136,7 @@ public:
         Base::begin(auth);
         Ethernet.begin((byte*)mac, local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
-        delay(1000);
+        ::delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);

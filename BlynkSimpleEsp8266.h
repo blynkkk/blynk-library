@@ -31,7 +31,7 @@ public:
         BLYNK_LOG("Connecting to %s", ssid);
         WiFi.begin(ssid, pass);
         while (WiFi.status() != WL_CONNECTED) {
-            delay(500);
+            ::delay(500);
         }
         BLYNK_LOG("Connected to WiFi");
     }

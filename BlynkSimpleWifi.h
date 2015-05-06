@@ -48,7 +48,7 @@ public:
              if (status == WL_CONNECTED) {
             	 break;
              } else {
-            	 delay(5000);
+            	 ::delay(5000);
              }
          }
          BLYNK_LOG("Connected to wifi");
