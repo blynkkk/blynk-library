@@ -31,6 +31,7 @@ public:
         operator int () const           { return asInt(); }
         const char* asStr() const       { return ptr; }
         int         asInt() const       { return atoi(ptr); }
+        double      asDouble() const    { return atof(ptr); }
         bool isValid() const            { return ptr != NULL; }
 
         bool operator <  (const iterator& it) const { return ptr < it.ptr; }
@@ -54,6 +55,10 @@ public:
     BlynkParam(void* addr, size_t length, size_t buffsize)
         : buff((char*)addr), len(length), buff_size(buffsize)
     {}
+
+    const char* asStr() const       { return buff; }
+    int         asInt() const       { return atoi(buff); }
+    double      asDouble() const    { return atof(buff); }
 
     iterator begin() const { return iterator(buff); }
     iterator end() const   { return iterator(buff+len); }
