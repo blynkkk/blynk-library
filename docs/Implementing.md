@@ -32,6 +32,8 @@ In the following command examples \0 chars are replaced with spaces.
 
 ### Pin mode
 
+PinMode command is received by library after connection, or when a mobile application starts.
+
     pm <pin> <mode>
     pm <pin> <mode> <pin> <mode> <pin> <mode> ...
 
@@ -51,8 +53,6 @@ Digital read:
 
     dr <pin>
 
-In response to dr command, library should send dw command on the same pin and with the same message id.
-
 ### Analog pin operations
 
     aw <pin> <val>
@@ -70,6 +70,13 @@ In response to dr command, library should send dw command on the same pin and wi
     info
 
 TODO
+
+### Developer notes
+* Values in HW commands are text-encoded.
+* In response to dr/ar command, library should send dw/aw command on the same pin and with the same message id.
+* These situations should cause a connection drop, or reconnection attempt:
+ * Message with ID=0 is received
+ * Message with unknown type is received
 
 ## Wrappers for widgets
 
