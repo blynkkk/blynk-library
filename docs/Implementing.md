@@ -1,5 +1,13 @@
 # Implementing a Blynk HW client (library)
 
+Currently we provide Arduino/C++ implementation of the library.
+But some devices are programmed by other languages, like:
+* Espruino, JavaScript, Node.JS
+* MicroPython, Python
+* NodeMCU, eLua
+
+This document hints how to write a custom library.
+
 ### Blynk library main functions
 
 * Manage connection
@@ -8,6 +16,7 @@
 * Provide easy-to use API
  * Virtual pin handlers registration
  * Provide comfortable wrappers for some widgets
+* Should be portable across similar devices (or same technology/programming language), if possible
 
 ## Blynk protocol
 
@@ -71,8 +80,8 @@ Digital read:
 
 TODO
 
-### Developer notes
-* Values in HW commands are text-encoded.
+## Developer notes
+* Values in HW commands are plain text.
 * In response to dr/ar command, library should send dw/aw command on the same pin and with the same message id.
 * These situations should cause a connection drop, or reconnection attempt:
  * Message with ID=0 is received
