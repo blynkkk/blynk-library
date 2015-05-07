@@ -11,7 +11,7 @@
 
 ## Blynk protocol
 
-Basic protocol description can be found [here](https://github.com/blynkkk/blynk-server/blob/e68260006c8e84ad86b88553ce11b85be7681c43/README_FOR_APP_DEVS.md#protocol-messages).
+Basic protocol description can be found [here](https://github.com/blynkkk/blynk-server/blob/master/README_FOR_APP_DEVS.md#protocol-messages).
 
 Typical Blynk library knows how to send(S)/process(P):
 
