@@ -10,13 +10,13 @@ This document hints how to write a custom library.
 
 ## Blynk library main functions
 
+* Provide easy-to use API
+ * Virtual pin handlers registration
+ * Provide comfortable wrappers for some widgets
 * Manage connection
  * Should support different connection type/hardware, if applicable
 * Serialize/deserialize Blynk protocol
 * Handle direct pin operations
-* Provide easy-to use API
- * Virtual pin handlers registration
- * Provide comfortable wrappers for some widgets
 * Should be portable across similar devices (or same technology/programming language), if possible
 
 ### Adding new HW board to the Blynk mobile app
