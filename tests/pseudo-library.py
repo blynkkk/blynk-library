@@ -1,6 +1,9 @@
 #!/usr/bin/python
 '''
  This is a pseudo-library implementation
+ 
+ Example:
+   ./pseudo-library.py -t b168ccc8c8734fad98323247afbc1113 --dump
 
  Author:   Volodymyr Shymanskyy
  License:  The MIT license
