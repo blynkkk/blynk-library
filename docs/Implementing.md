@@ -1,6 +1,11 @@
 # Implementing a Blynk HW client (library)
 
-Currently we provide Arduino/C++ implementation of the library.
+Currently we provide Arduino/C++ implementation of the library.  
+It is very extensible and modular, look at [the list of supported hardware](http://community.blynk.cc/t/hardware-supported-by-blynk/16/8).  
+Adding new connection types and Arduino-compatible boards is easy.
+
+TODO: Porting guide.
+
 But some devices are programmed by other languages, like:
 * Espruino, JavaScript, Node.JS
 * MicroPython, Python
