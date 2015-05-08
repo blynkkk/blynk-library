@@ -22,11 +22,23 @@ This document hints how to write a custom library.
 ### Adding new HW board to the Blynk mobile app
 
 Different boards can be added by creating JSON board description file.
-Look at the exmaples [here](https://github.com/blynkkk/blynk-library/tree/master/boards-json).
+Look at the examples [here](https://github.com/blynkkk/blynk-library/tree/master/boards-json).
+You can send us your own board description file for review and App integration.
 
 ## Blynk protocol
 
-Basic protocol description can be found [here](https://github.com/blynkkk/blynk-server/blob/master/README_FOR_APP_DEVS.md#protocol-messages).
+Blynk transfers binary messages with the following structure:
+
+| Command       | Message Id    | Length/Status   | Body     |
+|:-------------:|:-------------:|:---------------:|:--------:|
+| 1 byte        | 2 bytes       | 2 bytes         | Variable |
+
+Message Id and Length are [big endian](http://en.wikipedia.org/wiki/Endianness#Big-endian).
+Body has a command-specific format.
+
+Command and Status definitions: [BlynkProtocolDefs.h](https://github.com/blynkkk/blynk-library/blob/master/Blynk/BlynkProtocolDefs.h)
+
+Another protocol description can be found [here](https://github.com/blynkkk/blynk-server/blob/master/README_FOR_APP_DEVS.md#protocol-messages).
 
 Typical Blynk library knows how to send(S)/process(P):
 
@@ -41,7 +53,7 @@ Typical Blynk library knows how to send(S)/process(P):
 
 ## HARDWARE/BRIDGE command body
 
-The message body of these commands are encoded as a sequence of strings, separated by '\0' ([Null character](http://en.wikipedia.org/wiki/Null_character)).
+The body of these commands are encoded as a sequence of strings, separated by '\0' ([Null character](http://en.wikipedia.org/wiki/Null_character)).
 Please note that the last value may be not Null-terminated.
 In the following command examples \0 chars are replaced with spaces.
 
