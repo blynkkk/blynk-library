@@ -2,7 +2,7 @@
 
 ### Connection
 
-If you have connection problems, try looking into [serial debug prints](./Troubleshooting.md#Enable-debug).
+If you have connection problems, try looking into [serial debug prints](./Troubleshooting.md#enable-debug).
 
 ### Delay
 
@@ -33,7 +33,7 @@ For example, in this situation Blynk.run() will quickly finish processing incomi
       Blynk.run();
     }
 
-You might be thinking about adding a delay(), but this creates [a different trouble](./Troubleshooting.md#Delay).
+You might be thinking about adding a delay(), but this creates [a different trouble](./Troubleshooting.md#delay).
 
 If you need periodic actions, consider using some timer library, like shown [in this example](https://github.com/blynkkk/blynk-library/blob/master/examples/GettingStarted/PushData/PushData.ino).
 
