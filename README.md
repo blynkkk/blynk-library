@@ -24,7 +24,7 @@ You can easily apply any type of board/connection to all examples.
 
 [See examples](examples/BoardsAndShields) with different connection types.
 
-[The list of supported hardware](http://community.blynk.cc/t/hardware-supported-by-blynk)
+Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).
 
 ### Troubleshooting
 
