@@ -275,7 +275,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     BlynkAverageSample<10>(deltaCmd, ts - lastActivityOut);
     lastActivityOut = ts;
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
-    	BLYNK_LOG_TROUBLE("Flood");
+    	BLYNK_LOG_TROUBLE("flood");
 		conn.disconnect();
 		::delay(5000);
     }
