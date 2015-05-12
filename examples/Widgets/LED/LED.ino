@@ -13,10 +13,10 @@
  * This example code is in public domain.
  *
  **************************************************************
- * Output any data on LCD widget!
+ * Blynk using a LED widget on your phone!
  *
  * App dashboard setup:
- *   LCD widget on V1
+ *   LED widget on V5
  *
  **************************************************************/
 
@@ -26,11 +26,13 @@
 #include <BlynkSimpleEthernet.h>
 #include <SimpleTimer.h>
 
-SimpleTimer timer;
-
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
+
+WidgetLED led(5);
+
+SimpleTimer timer;
 
 void setup()
 {
@@ -40,13 +42,15 @@ void setup()
   timer.setInterval(1000, blinkLedWidget);
 }
 
-static int led = 0;
 void blinkLedWidget()
 {
-  // Send 255 to turn it ON, 0 to turn it OFF
-  led = led ? 0 : 255;
-  BLYNK_LOG("LED: %d", led);
-  Blynk.virtualWrite(5, led);
+  if (led.getValue()) {
+    led.off();
+    BLYNK_LOG("LED off");
+  } else {
+    led.on();
+    BLYNK_LOG("LED on");
+  }
 }
 
 void loop()
