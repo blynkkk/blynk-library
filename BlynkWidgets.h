@@ -7,6 +7,7 @@
  * @brief
  */
 
+#include <WidgetLED.h>
 #include <WidgetLCD.h>
 #include <WidgetConsole.h>
 #include <WidgetBridge.h>
