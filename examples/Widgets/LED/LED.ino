@@ -16,7 +16,8 @@
  * Blynk using a LED widget on your phone!
  *
  * App dashboard setup:
- *   LED widget on V5
+ *   LED widget on V1
+ *   LED widget on V2
  *
  **************************************************************/
 
@@ -30,7 +31,8 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-WidgetLED led(5);
+WidgetLED led1(1);
+WidgetLED led2(2);
 
 SimpleTimer timer;
 
@@ -40,16 +42,30 @@ void setup()
   Blynk.begin(auth);
 
   timer.setInterval(1000, blinkLedWidget);
+  timer.setInterval(200, fadeLedWidget);
 }
 
 void blinkLedWidget()
 {
-  if (led.getValue()) {
-    led.off();
-    BLYNK_LOG("LED off");
+  if (led1.getValue()) {
+    led1.off();
+    BLYNK_LOG("LED1: off");
   } else {
-    led.on();
-    BLYNK_LOG("LED on");
+    led1.on();
+    BLYNK_LOG("LED1: on");
+  }
+}
+
+void fadeLedWidget()
+{
+  static int value = 0;
+  static int delta = 20;
+  value += delta;
+  if (value > 255 || value < 0) {
+    delta = -delta;
+  } else {
+    BLYNK_LOG("LED2: %d", value);
+    led2.setValue(value);
   }
 }
 
