@@ -28,6 +28,7 @@ public:
         , lastActivityOut(0)
         , lastHeartbeat(0)
         , currentMsgId(0)
+        , deltaCmd(0)
     {}
 
     bool connect();
@@ -51,9 +52,12 @@ protected:
 
 private:
     const char* authkey;
-    unsigned long lastActivityIn;
-    unsigned long lastActivityOut;
-    unsigned long lastHeartbeat;
+    uint32_t lastActivityIn;
+    uint32_t lastActivityOut;
+    uint32_t lastHeartbeat;
+#ifdef BLYNK_MSG_LIMIT
+    uint32_t deltaCmd;
+#endif
     uint16_t currentMsgId;
 };
 
@@ -102,6 +106,7 @@ bool BlynkProtocol<Transp>::connect()
     }
 
     lastHeartbeat = lastActivityIn = lastActivityOut = millis();
+    deltaCmd = 1000;
     BLYNK_LOG("Ready!");
 #ifdef BLYNK_DEBUG
     BLYNK_LOG("Roundtrip: %dms", lastActivityIn-t);
@@ -145,7 +150,7 @@ void BlynkProtocol<Transp>::run(void)
 #endif
 
         sendCmd(BLYNK_CMD_PING, 0, NULL, 0, NULL, 0);
-        lastActivityOut = lastHeartbeat = t;
+        lastHeartbeat = t;
     }
 }
 
@@ -215,6 +220,12 @@ bool BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
     return true;
 }
 
+template <unsigned N>
+void BlynkAverageSample (uint32_t& avg, const uint32_t& input) {
+    avg -= avg/N;
+    avg += input/N;
+}
+
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
@@ -224,6 +235,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #endif
         return;
     }
+
     if (0 == id) {
         id = getNextMsgId();
     }
@@ -257,11 +269,21 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
             return;
         }
     }
-    lastActivityOut = millis();
 
-#ifdef BLYNK_DEBUG
-    BLYNK_LOG("Sent.");
+    uint32_t ts = millis();
+#ifdef BLYNK_MSG_LIMIT
+    BlynkAverageSample<10>(deltaCmd, ts - lastActivityOut);
+    lastActivityOut = ts;
+    BLYNK_LOG("Delta: %d", deltaCmd);
+    if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
+    	BLYNK_LOG_TROUBLE("Flood");
+		conn.disconnect();
+		::delay(5000);
+    }
+#else
+    lastActivityOut = ts;
 #endif
+
 }
 
 template <class Transp>
