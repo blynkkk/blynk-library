@@ -13,7 +13,7 @@ You can easily apply any type of board/connection to all examples.
 
 ### Quickstart: Arduino + Ethernet shield
 
-* Download Blynk app (in the [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8) and [Google Play](https://play.google.com/store/apps/details?id=cc.blynk)) 
+* Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk)) 
 * Get the Auth Token from the app
 * Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries)
 * In Arduino IDE, select File -> Examples -> Blynk -> BoardsAndShields -> Arduino_Ethernet
@@ -24,7 +24,7 @@ You can easily apply any type of board/connection to all examples.
 
 [The list of supported hardware](http://community.blynk.cc/t/hardware-supported-by-blynk)
 
-### Troubleshooting ###
+### Troubleshooting
 
 To enable debug prints on default Serial, add on the top of your sketch **(should be the first line
 )**:
@@ -36,7 +36,7 @@ And enable serial in setup():
 
         Serial.begin(9600);
 
-**WARNING : enabling debug mode will slowdown your hardware processing speed up to 10 times**:
+**WARNING : enabling debug mode will slowdown your hardware processing speed up to 10 times**.
 
 ### License
 
