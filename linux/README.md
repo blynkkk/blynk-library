@@ -8,7 +8,7 @@
 
 2. Download and build Blynk:
 
-        git checkout https://github.com/blynkkk/blynk-library.git
+        git clone https://github.com/blynkkk/blynk-library.git
         cd blynk-library/linux
         make clean all target=raspberry
 
