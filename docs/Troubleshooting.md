@@ -50,5 +50,7 @@ To enable debug prints on the default Serial, add on the top of your sketch **(s
 And enable serial in setup():
 
         Serial.begin(9600);
+        
+You can also use spare Hardware serial ports or SoftwareSerial for debug output (you will need an adapter to connect to it with your PC).
 
 **WARNING : enabling debug mode will slowdown your hardware processing speed up to 10 times**.
