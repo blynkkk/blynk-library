@@ -26,6 +26,10 @@ You can easily apply any type of board/connection to all examples.
 
 Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).
 
+### Linux (Raspberry Pi)
+
+How to [build on Raspberry Pi](/linux/README.md)
+
 ### Troubleshooting
 
 To enable debug prints on default Serial, add on the top of your sketch **(should be the first line
