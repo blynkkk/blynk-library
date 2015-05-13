@@ -2,7 +2,9 @@
 
 ### Connection
 
-If you have connection problems, try looking into [serial debug prints](./Troubleshooting.md#enable-debug).
+If you have connection problems, please try checking your wiring using the examples provided with your shields and hardware. Once you have some understanding how to configure connection, it will be much easier to use Blynk.
+
+Also, try looking into [serial debug prints](./Troubleshooting.md#enable-debug).
 
 ### Delay
 
