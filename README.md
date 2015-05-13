@@ -26,7 +26,7 @@ You can easily apply any type of board/connection to all examples.
 
 Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).
 
-### Linux (Raspberry Pi)
+### Linux, Raspberry Pi
 
 How to [build on Raspberry Pi](/linux/README.md)
 
@@ -34,6 +34,7 @@ How to [build on Raspberry Pi](/linux/README.md)
 ### ESP8266 (standalone)
 
 Yes, you can run Blynk directly on the ESP8266!
+
 TODO: Instructions.
 
 ### Troubleshooting
