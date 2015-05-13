@@ -30,6 +30,12 @@ Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-s
 
 How to [build on Raspberry Pi](/linux/README.md)
 
+
+### ESP8266 (standalone)
+
+Yes, you can run Blynk directly on the ESP8266!
+TODO: Instructions.
+
 ### Troubleshooting
 
 To enable debug prints on default Serial, add on the top of your sketch **(should be the first line
