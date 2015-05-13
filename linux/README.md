@@ -1,5 +1,7 @@
 
-To build on Raspberry Pi:
+### How to build on Raspberry Pi
+
+0. Connect your Raspberry Pi to the internet and open the console on it. ^_^
 
 1. Install WiringPi:
     http://wiringpi.com/download-and-install/
