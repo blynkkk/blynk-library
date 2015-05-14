@@ -15,3 +15,7 @@
 3. Run Blynk:
 
         sudo ./blynk --token=YourAuthToken
+
+We have also provided a build script, you can try just running (inside of the "linux" directory):
+
+        ./build.sh raspberry
