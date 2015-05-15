@@ -11,9 +11,9 @@
 #ifndef BlynkSimpleEthernet_h
 #define BlynkSimpleEthernet_h
 
-#include <Adapters/BlynkEthernet.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
+#include <Adapters/BlynkEthernet.h>
 
 static EthernetClient _blynkEthernetClient;
 static BlynkArduinoClient _blynkTransport(_blynkEthernetClient);

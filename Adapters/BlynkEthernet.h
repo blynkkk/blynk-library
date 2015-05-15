@@ -18,7 +18,6 @@
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
-#include <Ethernet.h>
 
 static const byte _blynkEthernetMac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
 

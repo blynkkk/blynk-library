@@ -12,8 +12,8 @@
 #define BlynkSimpleUipEthernet_h
 
 #define BLYNK_ENC28J60_FIX
-#include <Adapters/BlynkEthernet.h>
 #include <UIPEthernet.h>
+#include <Adapters/BlynkEthernet.h>
 
 static EthernetClient _blynkEthernetClient;
 static BlynkArduinoClient _blynkTransport(_blynkEthernetClient);
