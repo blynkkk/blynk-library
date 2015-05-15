@@ -7,15 +7,18 @@
     http://wiringpi.com/download-and-install/
 
 2. Download and build Blynk:
-
-        git clone https://github.com/blynkkk/blynk-library.git
-        cd blynk-library/linux
-        make clean all target=raspberry
+    ```bash
+    $ git clone https://github.com/blynkkk/blynk-library.git
+    $ cd blynk-library/linux
+    $ make clean all target=raspberry
+    ```
 
 3. Run Blynk:
-
-        sudo ./blynk --token=YourAuthToken
+    ```bash
+    $ sudo ./blynk --token=YourAuthToken
+    ```
 
 We have also provided a build script, you can try just running (inside of the "linux" directory):
-
-        ./build.sh raspberry
+```bash
+$ ./build.sh raspberry
+```
