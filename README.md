@@ -42,13 +42,16 @@ TODO: Instructions.
 To enable debug prints on default Serial, add on the top of your sketch **(should be the first line
 )**:
 
-        #define BLYNK_DEBUG // Optional, this enables lots of prints
-        #define BLYNK_PRINT Serial
+```cpp
+#define BLYNK_DEBUG // Optional, this enables lots of prints
+#define BLYNK_PRINT Serial
+```
 
 And enable serial in setup():
 
-        Serial.begin(9600);
-
+```cpp
+Serial.begin(9600);
+```
 **WARNING : enabling debug mode will slowdown your hardware processing speed up to 10 times**.
 
 ### License
