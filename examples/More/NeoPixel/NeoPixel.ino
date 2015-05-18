@@ -47,7 +47,7 @@ void setup()
 
 BLYNK_WRITE(1)
 {
-  int shift = param[0].asInt();
+  int shift = param.asInt();
   for(int i=0; i< strip.numPixels(); i++)
   {
     strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
