@@ -58,7 +58,7 @@ void setup()
 // Enable/disable blinking using virt pin 1
 BLYNK_WRITE(1)
 {
-  if (param[0].asInt()) {
+  if (param.asInt()) {
     timer.enable(t1);
   } else {
     timer.disable(t1);
@@ -69,7 +69,7 @@ BLYNK_WRITE(1)
 // Change blink interval using virtual pin 2
 BLYNK_WRITE(2)
 {
-  int interval = param[0].asInt();
+  int interval = param.asInt();
   boolean wasEnabled = timer.isEnabled(t1);
   timer.deleteTimer(t1);
   t1 = timer.setInterval(interval, ledBlynk);
