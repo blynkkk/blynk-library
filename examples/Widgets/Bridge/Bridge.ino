@@ -21,6 +21,13 @@
  *   bridge.analogWrite(3, 123)
  *   bridge.virtualWrite(1, "hello")
  *
+ * WARNING :
+ * For this example you'll need SimpleTimer library:
+ *   https://github.com/jfturcot/SimpleTimer
+ * Visit this page for more information:
+ *   http://playground.arduino.cc/Code/SimpleTimer
+ *
+ *
  **************************************************************/
 
 #include <SPI.h>

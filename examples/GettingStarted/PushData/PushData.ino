@@ -16,6 +16,7 @@
  * This example shows how value can be pushed from Arduino to
  * the Blynk App.
  *
+ * WARNING :
  * For this example you'll need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:

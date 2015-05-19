@@ -19,6 +19,13 @@
  *   LED widget on V1
  *   LED widget on V2
  *
+ *
+ * WARNING :
+ * For this example you'll need SimpleTimer library:
+ *   https://github.com/jfturcot/SimpleTimer
+ * Visit this page for more information:
+ *   http://playground.arduino.cc/Code/SimpleTimer
+ *
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space

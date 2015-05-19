@@ -17,10 +17,12 @@
  * You can turn it on and of using a button,
  * and control frequency with a slider.
  *
- * For this example you need SimpleTimer library:
+ * WARNING :
+ * For this example you'll need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
  *   http://playground.arduino.cc/Code/SimpleTimer
+ *
  *
  * App dashboard setup:
  *   Button widget (Switch) on V1
