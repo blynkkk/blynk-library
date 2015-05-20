@@ -2,9 +2,12 @@
 
 ### Connection
 
-If you have connection problems, please try checking your wiring using the examples provided with your shields and hardware. Once you have some understanding how to configure connection, it will be much easier to use Blynk.
+If you experience connection problems, follow these steps:
 
-Also, try looking into [serial debug prints](./Troubleshooting.md#enable-debug).
+1. Check your wiring using the examples (TCP/HTTP Client or similar) **provided with selected shield and hardware**.     Once you have some understanding how to configure connection, it will be much easier to use Blynk.
+2. Try running Blynk default examples for your platform **without modifications** to see if it is working.
+   * If it doesn't work, try looking into [serial debug prints](./Troubleshooting.md#enable-debug).
+3. Done! Add your modifications and functionality. Enjoy Blynk!
 
 ### Delay
 
