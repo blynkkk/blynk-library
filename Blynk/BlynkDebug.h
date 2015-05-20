@@ -14,9 +14,11 @@
 #include <Blynk/BlynkConfig.h>
 #include <stddef.h>
 #ifdef ESP8266
+    extern "C" {
     #include "ets_sys.h"
     #include "os_type.h"
     #include "mem.h"
+    }
 #else
     #include <inttypes.h>
 #endif

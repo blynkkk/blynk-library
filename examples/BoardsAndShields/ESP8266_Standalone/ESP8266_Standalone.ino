@@ -13,8 +13,9 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example runs directly on ESSP8266 chip.
- * Download this IDE for Esp8266 development:
+ * This example runs directly on ESP8266 chip.
+ *
+ * You need to install this for ESP8266 development:
  *   https://github.com/esp8266/Arduino
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
