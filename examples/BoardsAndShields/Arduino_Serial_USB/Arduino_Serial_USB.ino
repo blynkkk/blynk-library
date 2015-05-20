@@ -25,8 +25,8 @@
  * 3. Run the script (script located in "scripts" folder of library root,
  *    e.g. 'blynk-library/scripts') for redirecting traffic to server:
  *
- *      for Windows:         scripts/blynk-ser.bat
- *      for Linux and OSX:   ./scripts/blynk-ser.sh (may need to run with sudo)
+ *      for Windows:         blynk-ser.bat
+ *      for Linux and OSX:   ./blynk-ser.sh (may need to run with sudo)
  *
  *    You can specify port, baud rate, and server endpoint like this:
  *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
