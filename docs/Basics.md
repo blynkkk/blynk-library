@@ -70,7 +70,7 @@ You can also get the RAW data from the param buffer:
     param.getBuffer()
     param.getLength()
 
-### Tweet
+### Tweet (not implemented in the app yet)
 
 For tweeting, you need to configure the tweet widget in the App.
 
@@ -79,7 +79,7 @@ For tweeting, you need to configure the tweet widget in the App.
 Blynk.tweet("some text");
 ```
 
-### Push notification
+### Push notification (not implemented in the app yet)
 
 This will display a short note on the screen of the smartphone:
 
