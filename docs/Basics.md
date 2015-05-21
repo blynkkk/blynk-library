@@ -111,4 +111,5 @@ Blynk.email("someone@blabla.com", "Subject", "some text");
 
 Be sure to check the:
 * [Widgets](./Widgets.md)
+* [Platforms](./Platforms.md)
 * [Troubleshooting](./Troubleshooting.md)
