@@ -2,12 +2,14 @@
 
 ### Digital & Analog pins
 
-The library can perform basic pin IO (input-output) operations out-of-the-box (no need to write code):
+The library can perform basic pin IO (input-output) operations out-of-the-box:
 
     digitalRead
     digitalWrite
     analogRead
     analogWrite (PWM or Analog signal depending on the platform)
+
+So there is no need to write code for simple things like LED, Relay control, and analog sensors.
 
 ### Virtual Pins
 
