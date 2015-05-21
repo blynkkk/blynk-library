@@ -6,7 +6,7 @@ Adding new connection types and Arduino-compatible boards is easy.
 
 TODO: Porting guide.
 
-But some devices are programmed by other languages, like:
+But some devices are programmed in other languages, like:
 * Espruino, JavaScript, Node.JS
 * MicroPython, Python
 * NodeMCU, eLua
