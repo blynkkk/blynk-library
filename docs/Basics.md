@@ -109,4 +109,6 @@ Blynk.email("someone@blabla.com", "Subject", "some text");
 
 ### P.S.
 
-Be sure to check the [troubleshooting page](./Troubleshooting.md)
+Be sure to check the:
+* [Widgets](./Widgets.md)
+* [Troubleshooting](./Troubleshooting.md)
