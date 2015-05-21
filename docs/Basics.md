@@ -57,18 +57,22 @@ The device may send data to the cloud at any time, but we provide 2 common ways 
 
 The actual values are sent as strings, so there is no practical limits on the data that can be sent.  
 However, remember the limitations of the platform when dealing with numbers.  
-For example the integer on Arduino is 16-bit, allowing range -32,768 to 32,767.
+For example the integer on Arduino is 16-bit, allowing range -32768 to 32767.
 
 Actually, the data format is an array of strings, so these are also valid:
 
-    param[0].asInt()
-    param[1].asDouble()
+```cpp
+param[0].asInt()
+param[1].asDouble()
+```
 
 This is needed for more complex widgets.
 You can also get the RAW data from the param buffer:
 
-    param.getBuffer()
-    param.getLength()
+```cpp
+param.getBuffer()
+param.getLength()
+```
 
 ### Tweet (not implemented in the app yet)
 
