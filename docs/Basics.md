@@ -2,7 +2,12 @@
 
 ## Features of Blynk
 * Similar API & UI for all supported hardware & devices
-* Connection to the cloud using Ethernet, WiFi or USB (Serial)
+* Connection to the cloud using:
+  * Ethernet
+  * WiFi
+  * USB (Serial)
+  * ...
+* Set of easy-to-use widgets
 * Direct pin manipulation with no code writing
 * Easy to integrate and add new functionality using virtual pins
 * Device-to-Device communication using Bridge
