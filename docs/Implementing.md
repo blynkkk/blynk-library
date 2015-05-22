@@ -30,6 +30,14 @@ Different boards can be added by creating JSON board description file.
 Look at the examples [here](https://github.com/blynkkk/blynk-library/tree/master/boards-json).
 You can send us your own board description file for review and App integration.
 
+There may be a problem that you want to start testing your implementation, but your board is not listed int the Blynk App.
+On Android, we now have a "Generic Board" specially for such purposes.
+Unfortunately iOS does not have it yet.
+
+Basically you can select UNO board and check how it works using just virtual pins.
+Most digital pins will also work.
+Analog IO/PWM will not work in general, until we add your board to the App.
+
 ## Blynk protocol
 
 Blynk transfers binary messages with the following structure:
@@ -109,6 +117,7 @@ TODO
 * These situations should cause a connection drop, or reconnection attempt:
  * Message with ID=0 is received
  * Message with unknown type is received
+
 
 ## Wrappers for widgets
 
