@@ -25,4 +25,4 @@ If you want to skip SSL, and connect to TCP, you can also do that:
 ./blynk-ser.sh -t TCP
 ```
 
-** Note: SSL is supported by the gateway only on Linux/OSX for now **
+**Note: SSL is supported by the gateway only on Linux/OSX for now**
