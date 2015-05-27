@@ -69,6 +69,4 @@ You can also use spare Hardware serial ports or SoftwareSerial for debug output 
 
 ### P.S.
 
-Be sure to check the:
-* [Basics](./Basics.md)
-* [Widgets](./Widgets.md)
+Be sure to check the [Basics](./Basics.md) page.
