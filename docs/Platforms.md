@@ -1,32 +1,48 @@
 # Platforms
 
+
 ## Arduino
 
 ```cpp
 TODO
 ```
 
-## ESP8266
+## Particle (formely Spark Core)
 
 ```cpp
 TODO
 ```
 
-### Spark Core
+## ESP8266 (standalone)
+
+You can run Blynk directly on the ESP8266!
+
+TODO: Instructions.
 
 ```cpp
 TODO
 ```
 
-## Raspberry Pi / Linux
+## Linux (Raspberry Pi)
 
-```cpp
-TODO
-```
+0. Connect your Raspberry Pi to the internet and open it's console. ^_^
 
-### P.S.
+1. Install WiringPi:
+    http://wiringpi.com/download-and-install/
 
-Be sure to check the:
-* [Basics](./Basics.md)
-* [Widgets](./Widgets.md)
-* [Troubleshooting](./Troubleshooting.md)
+2. Download and build Blynk:
+    ```bash
+    $ git clone https://github.com/blynkkk/blynk-library.git
+    $ cd blynk-library/linux
+    $ make clean all target=raspberry
+    ```
+
+3. Run Blynk:
+    ```bash
+    $ sudo ./blynk --token=YourAuthToken
+    ```
+
+We have also provided a build script, you can try just running (inside of the "linux" directory):
+    ```bash
+    $ ./build.sh raspberry
+    ```
