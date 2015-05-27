@@ -26,33 +26,14 @@ You can easily apply any type of board/connection to all examples.
 
 Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).
 
-### Linux, Raspberry Pi
+### Docs
 
-How to [build on Raspberry Pi](/linux/README.md)
-
-
-### ESP8266 (standalone)
-
-Yes, you can run Blynk directly on the ESP8266!
-
-TODO: Instructions.
-
-### Troubleshooting
-
-To enable debug prints on default Serial, add on the top of your sketch **(should be the first line
-)**:
-
-```cpp
-#define BLYNK_DEBUG // Optional, this enables lots of prints
-#define BLYNK_PRINT Serial
-```
-
-And enable serial in setup():
-
-```cpp
-Serial.begin(9600);
-```
-**WARNING : enabling debug mode will slowdown your hardware processing speed up to 10 times**.
+* [Basics](./Basics.md)
+* [Widgets](./Widgets.md)
+* [Security](./Security.md)
+* [Platforms](./Platforms.md)
+* [Troubleshooting](./Troubleshooting.md)
+* [Implementing your own library](./Implementing.md)
 
 ### License
 
