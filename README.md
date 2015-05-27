@@ -28,12 +28,12 @@ Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-s
 
 ### Docs
 
-* [Basics](./Basics.md)
-* [Widgets](./Widgets.md)
-* [Security](./Security.md)
-* [Platforms/Connection types](./Platforms.md)
-* [Troubleshooting](./Troubleshooting.md)
-* [Implementing your own library](./Implementing.md)
+* [Basics](./docs/Basics.md)
+* [Widgets](./docs/Widgets.md)
+* [Security](./docs/Security.md)
+* [Platforms/Connection types](./docs/Platforms.md)
+* [Troubleshooting](./docs/Troubleshooting.md)
+* [Implementing your own library](./docs/Implementing.md)
 
 ### License
 
