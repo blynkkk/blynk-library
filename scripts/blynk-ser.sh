@@ -142,7 +142,7 @@ while true; do
     --cert)
       shift
       if [ -n "$1" ]; then
-        CLNT_CERT=$1
+        SRVR_CERT=$1
         shift
       fi
       ;;
