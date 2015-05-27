@@ -17,11 +17,10 @@ TODO
 
 You can run Blynk directly on the ESP8266!
 
-TODO: Instructions.
+Install the latest ESP8266 for Arduino using this guide:
+https://github.com/esp8266/Arduino#installing-with-boards-manager13
 
-```cpp
-TODO
-```
+**Example:** [ESP8266_Standalone](https://github.com/blynkkk/blynk-library/blob/master/examples/BoardsAndShields/ESP8266_Standalone/ESP8266_Standalone.ino)
 
 ## Linux (Raspberry Pi)
 
