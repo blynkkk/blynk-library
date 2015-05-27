@@ -15,7 +15,7 @@ However, our [gateway script](https://github.com/blynkkk/blynk-library/blob/mast
 ```bash
 ./blynk-ser.sh -f SSL
 ```
-This will start TCP server on 8441 and forward each connection to the server via SSL.
+This will forward all hardware connections from 8441 port to the server via SSL gateway.
 You can run this script on your Raspberry Pi, desktop computer, or even directly on your router!
 
 **Note:** when using your own server, you should overwrite the bundled server.crt certificate, or specify it to the script using --cert switch:
@@ -24,14 +24,14 @@ You can run this script on your Raspberry Pi, desktop computer, or even directly
 ./blynk-ser.sh -f SSL -s <server ip> -p 8441 --cert=<certificate>.crt
 ```
 
-Security is also enabled for USB communication forwarding by default.
+Flag "-f SSL" is enabled by default for USB communication so you don't have to explicit declare it.
+**Note:** SSL is supported by the gateway only on Linux/OSX for now
+ 
 If you want to skip SSL, and connect to TCP, you can also do that:
 
 ```bash
 ./blynk-ser.sh -t TCP
 ```
-
-**Note:** SSL is supported by the gateway only on Linux/OSX for now
 
 ### Local Blynk Server
 
