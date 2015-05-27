@@ -18,7 +18,7 @@ However, our [gateway script](https://github.com/blynkkk/blynk-library/blob/mast
 This will start TCP server on 8442 and forward each connection to the server via SSL.
 You can run this script on your Raspberry Pi, desktop computer, or even directly on your router!
 
-**Note:** when using your own server, you should overwrite the bundled server.crt certificate, or specify your sertificate to the script using --cert switch:
+**Note:** when using your own server, you should overwrite the bundled server.crt certificate, or specify it to the script using --cert switch:
 
 ```bash
 ./blynk-ser.sh -f TCP -s <server ip> -p 8441 --cert=<certificate>.crt
