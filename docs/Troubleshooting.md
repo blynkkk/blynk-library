@@ -27,6 +27,8 @@ void loop()
     
 You should be aware that this can degrade performance of Blynk, or cause connection drops.
 
+**Note:** This also applies to the BLYNK_READ & BLYNK_WRITE handlers!
+
 If you need periodic actions, consider using some timer library, like shown [in this example](https://github.com/blynkkk/blynk-library/blob/master/examples/GettingStarted/PushData/PushData.ino).
 
 ### Flood
@@ -64,7 +66,7 @@ Serial.begin(9600);
 
 You can also use spare Hardware serial ports or SoftwareSerial for debug output (you will need an adapter to connect to it with your PC).
 
-**WARNING : enabling debug mode will slowdown your hardware processing speed up to 10 times**.
+**Note:** enabling debug mode will slowdown your hardware processing speed up to 10 times.
 
 
 ### P.S.
