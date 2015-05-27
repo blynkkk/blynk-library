@@ -1,5 +1,8 @@
+[![Build Status](https://travis-ci.org/blynkkk/blynk-library.svg)](https://travis-ci.org/blynkkk/blynk-library)
+__________
+
 # What is Blynk?
-Blynk is a platform with iOS and Android apps to control Arduino, Raspberry Pi and the likes over the Internet.  
+Blynk is a platform with iOS and Android apps to control Arduino, Raspberry Pi and the likes over the Internet.
 You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
 If you need more information, please follow these links:
 * [Kickstarter campaign](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
@@ -13,7 +16,7 @@ You can easily apply any type of board/connection to all examples.
 
 ### Quickstart: Arduino + Ethernet shield
 
-* Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk)) 
+* Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk))
 * Get the Auth Token from the app
 * Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries)
 * In Arduino IDE, select File -> Examples -> Blynk -> BoardsAndShields -> Arduino_Ethernet

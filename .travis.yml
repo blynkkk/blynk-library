@@ -1,0 +1,48 @@
+language: python
+python:
+    - "2.7"
+
+env:
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet_Manual
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Serial_USB
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_SoftwareSerial
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_WiFi
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Yun
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/CC3000
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ENC28J60
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Standalone PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TinyDuino_WiFi
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/WildFire PLATFORMIO_CI_BOARDS_ARGS="--board=wildfirev3"
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/PushDataOnRequest
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/Servo
+    - PLATFORMIO_CI_SRC=examples/More/ButtonInterrupt
+    - PLATFORMIO_CI_SRC=examples/More/ButtonPoll
+    - PLATFORMIO_CI_SRC=examples/More/NeoPixel
+    - PLATFORMIO_CI_SRC=examples/More/Stroboscope
+    - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
+    - PLATFORMIO_CI_SRC=examples/Widgets/Console
+    - PLATFORMIO_CI_SRC=examples/Widgets/LCD
+    - PLATFORMIO_CI_SRC=examples/Widgets/LED
+    - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
+    - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
+
+install:
+    - python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+    - rm -rf ./linux
+    #
+    # Libraries from PlatformIO Library Registry:
+    #
+    # http://platformio.org/#!/lib/show/17/Adafruit-CC3000
+    # http://platformio.org/#!/lib/show/28/SPI4Teensy3
+    # http://platformio.org/#!/lib/show/91/UIPEthernet
+    # http://platformio.org/#!/lib/show/418/WildFireCore
+    # http://platformio.org/#!/lib/show/419/SimpleTimer
+    # http://platformio.org/#!/lib/show/420/WildFire-CC3000
+
+    - platformio lib install 17 28 91 418 419 420
+
+script:
+    - if [[ $PLATFORMIO_CI_BOARDS_ARGS ]]; then bash -c 'platformio ci --lib="." $PLATFORMIO_CI_BOARDS_ARGS'; else bash -c 'platformio ci --lib="." --board=uno --board=yun --board=megaatmega2560'; fi
