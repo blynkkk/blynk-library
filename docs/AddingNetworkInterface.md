@@ -1,5 +1,7 @@
 ### Adding network interface
 
+4 entities should be created to add a new network interface to Blynk:
+
 1. Select connection interface that will be used for Blynk operation.  
   This should be something like http://www.arduino.cc/en/Tutorial/WebClient  
   Based on the API of the connection, create the **Transport**.  
