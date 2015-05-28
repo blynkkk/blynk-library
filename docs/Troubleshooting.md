@@ -45,7 +45,7 @@ void loop()
 }
 ```
 
-You might be thinking about adding a delay(), but this creates [a different trouble](./Troubleshooting.md#delay).
+You might be thinking about adding a delay(), but this creates [another trouble](./Troubleshooting.md#delay).
 
 If you need periodic actions, consider using some timer library, like shown [in this example](https://github.com/blynkkk/blynk-library/blob/master/examples/GettingStarted/PushData/PushData.ino).
 
