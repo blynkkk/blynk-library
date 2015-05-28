@@ -23,6 +23,7 @@
 #define BLYNK_HEARTBEAT      10
 #define BLYNK_TIMEOUT_MS     1500
 #define BLYNK_MSG_LIMIT      20
+#define BLYNK_BUILTIN
 //#define BLYNK_DEBUG
 //#define BLYNK_EXPERIMENTAL
 

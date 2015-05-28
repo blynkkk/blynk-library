@@ -80,6 +80,8 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         return;
     unsigned pin = it.asInt();
 
+#ifdef BLYNK_BUILTIN
+
     if (!strcmp(cmd, "dr")) {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
@@ -94,7 +96,11 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add(pin);
         rsp.add(analogRead(pin));
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
-    } else if (!strcmp(cmd, "vr")) {
+    } else
+
+#endif
+
+    if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
             BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
             handler(req);
@@ -111,6 +117,8 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             }
             return;
         }
+
+#ifdef BLYNK_BUILTIN
 
         if (!strcmp(cmd, "pm")) {
             while (it < param.end()) {
@@ -145,6 +153,9 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         } else {
             BLYNK_LOG("Invalid HW cmd: %s", cmd);
         }
+
+#endif
+
     }
 }
 
