@@ -31,6 +31,8 @@ public:
         , deltaCmd(0)
     {}
 
+    bool connected() { return conn.connected(); }
+
     bool connect();
 
     void run(void);
