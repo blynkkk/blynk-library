@@ -2,6 +2,7 @@
 Blynk is a platform with iOS and Android apps to control Arduino, Raspberry Pi and the likes over the Internet.  
 You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
 If you need more information, please follow these links:
+
 * [Kickstarter campaign](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
 * [Blynk downloads, docs, tutorials](http://www.blynk.cc)
 * [Blynk community](http://community.blynk.cc)
