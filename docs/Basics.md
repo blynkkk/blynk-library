@@ -106,7 +106,7 @@ This will display a short note on the screen of the smartphone:
 Blynk.push_notification("some text");
 ```
 
-### Email
+### Email (not implemented in the app yet)
 
 Also you can send an email:
 
