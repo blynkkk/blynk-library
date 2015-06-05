@@ -31,6 +31,7 @@ public:
         operator int () const           { return asInt(); }
         const char* asStr() const       { return ptr; }
         int         asInt() const       { return atoi(ptr); }
+        long        asLong() const      { return atol(ptr); }
         double      asDouble() const    { return atof(ptr); }
         bool isValid() const            { return ptr != NULL; }
 
@@ -58,6 +59,7 @@ public:
 
     const char* asStr() const       { return buff; }
     int         asInt() const       { return atoi(buff); }
+    long        asLong() const      { return atol(buff); }
     double      asDouble() const    { return atof(buff); }
 
     iterator begin() const { return iterator(buff); }
