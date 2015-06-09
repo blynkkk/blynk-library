@@ -51,7 +51,7 @@ public:
             	 ::delay(5000);
              }
          }
-         BLYNK_LOG("Connected to wifi");
+         BLYNK_LOG("Connected to WiFi");
     }
 
     void begin(const char* auth,

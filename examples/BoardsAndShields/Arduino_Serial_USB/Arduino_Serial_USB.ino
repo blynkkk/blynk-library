@@ -48,7 +48,7 @@
 
 // You could use a spare Hardware Serial on boards that have it (like Mega)
 #include <SoftwareSerial.h>
-SoftwareSerial SwSerial(10, 11);
+SoftwareSerial SwSerial(2, 3); // RX, TX
 #define BLYNK_PRINT SwSerial
 #include <BlynkSimpleSerial.h>
 
