@@ -13,6 +13,7 @@
     "type": "git",
     "url": "https://github.com/blynkkk/blynk-library.git"
   },
+  "examples": "examples/*/*/*.ino",
   "frameworks": "arduino",
   "platforms": [ "atmelavr", "atmelsam" ]
 }
