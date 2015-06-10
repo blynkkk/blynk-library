@@ -51,7 +51,6 @@ public:
     }
 
     bool connect() {
-        BLYNK_LOG_FN();
         if (!domain || !port)
             return false;
         status = client->createTCP(domain, port);
@@ -59,20 +58,19 @@ public:
     }
 
     void disconnect() {
-        BLYNK_LOG_FN();
         status = false;
+        buffer.clear();
         client->releaseTCP();
     }
 
     size_t read(void* buf, size_t len) {
-        BLYNK_LOG_FN();
-        while (buffer.getOccupied() < len) {
+        uint32_t start = millis();
+        while ((buffer.getOccupied() < len) && (millis() - start < 1500)) {
             client->run();
         }
         return buffer.read((uint8_t*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
-        BLYNK_LOG_FN();
         if (client->send((const uint8_t*)buf, len)) {
             return len;
         }

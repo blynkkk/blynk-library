@@ -32,12 +32,12 @@
  **************************************************************/
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
-#include "SoftwareSerial.h"
-#include "ESP8266.h"
+#include <ESP8266.h>
 #include <BlynkSimpleShieldEsp8266.h>
 
+#include <SoftwareSerial.h>
 SoftwareSerial SwSerial(2, 3); // RX, TX
-ESP8266 wifi(SwSerial, 9600);  // Set ESP8266 baud rate
+ESP8266 wifi(SwSerial);
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -45,7 +45,12 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(9600);   // Set console baud rate
+  while (!Serial) {}
+
+  SwSerial.begin(9600);  // Set ESP8266 baud rate
+  while (!SwSerial) {}
+
   Blynk.begin(auth, wifi, "ssid", "pass");
 }
 
