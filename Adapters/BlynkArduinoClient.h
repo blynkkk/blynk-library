@@ -21,7 +21,7 @@ public:
     BlynkArduinoClient(Client& client)
         : client(client), domain(NULL), port(0)
     {
-    	client.setTimeout(3000);
+        client.setTimeout(3000);
     }
 
     void begin(IPAddress a, uint16_t p) {
@@ -50,8 +50,8 @@ public:
 
 #ifdef BLYNK_ENC28J60_FIX
     size_t read(void* buf, size_t len) {
-    	while (client.available() < len) { }
-    	return client.read((uint8_t*)buf, len);
+        while (client.available() < len) { }
+        return client.read((uint8_t*)buf, len);
     }
 #else
     size_t read(void* buf, size_t len) {
@@ -61,19 +61,19 @@ public:
 
 #ifdef BLYNK_RETRY_SEND
     size_t write(const void* buf, size_t len) {
-    	size_t sent = 0;
-    	int retry = 0;
-    	while (sent < len && ++retry < 10) {
-    		size_t w = client.write((const uint8_t*)buf+sent, len-sent);
-    		if (w != 0 && w != -1) {
-    			sent += w;
-    		} else {
-        		delay(50);
+        size_t sent = 0;
+        int retry = 0;
+        while (sent < len && ++retry < 10) {
+            size_t w = client.write((const uint8_t*)buf+sent, len-sent);
+            if (w != 0 && w != -1) {
+                sent += w;
+            } else {
+                delay(50);
 #ifdef BLYNK_DEBUG
-    			BLYNK_LOG("Retry %d send (%d/%d)", retry, sent, len);
+                BLYNK_LOG("Retry %d send (%d/%d)", retry, sent, len);
 #endif
-    		}
-    	}
+            }
+        }
         return sent;
     }
 #else
@@ -82,7 +82,6 @@ public:
     }
 #endif
 
-    void flush() { client.flush(); }
     bool connected() { return client.connected(); }
     int available() { return client.available(); }
 

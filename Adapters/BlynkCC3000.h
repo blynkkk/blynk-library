@@ -45,7 +45,6 @@ public:
         return client.write((const uint8_t*)buf, len);
     }
 
-    void flush() { client.flush(); }
     bool connected() { return client.connected(); }
     int available() { return client.available(); }
 
@@ -95,7 +94,7 @@ public:
         BLYNK_LOG("Getting IP address...");
         while (!cc3000.checkDHCP())
         {
-        	::delay(100);
+            ::delay(100);
         }
 #ifdef BLYNK_PRINT
         uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;

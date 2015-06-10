@@ -93,7 +93,6 @@ public:
         return ::write(sockfd, buf, len);
     }
 
-    void flush()    { }
     bool connected() { return sockfd >= 0; }
     int available() { return BLYNK_MAX_READBYTES; }
 

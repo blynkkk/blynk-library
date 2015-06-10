@@ -60,7 +60,6 @@ public:
         return client.write((const uint8_t*)buf, len);
     }
 
-    void flush() { }
     bool connected() { return client.connected(); }
     int available() { return client.available(); }
 

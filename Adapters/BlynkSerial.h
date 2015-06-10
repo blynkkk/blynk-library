@@ -42,7 +42,7 @@ public:
     size_t write(const void* buf, size_t len) {
         return stream.write((const uint8_t*)buf, len);
     }
-    void flush()    { stream.flush(); }
+
     bool connected() { return conn; }
     int available() { return stream.available(); }
 
