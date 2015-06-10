@@ -6,6 +6,7 @@ If you experience connection problems, follow these steps:
 
 1. Check your wiring using the examples (TCP/HTTP Client or similar) **provided with selected shield and hardware**.     Once you have some understanding how to configure connection, it's much easier to use Blynk.
 2. Try running Blynk default examples for your platform **without modifications** to see if it is working.
+   * Read carefully the example comments and explanations
    * Check that your token is valid (copied from the App and **doesn't contain spaces, etc.**)
    * If it doesn't work, try looking into [serial debug prints](./Troubleshooting.md#enable-debug).
 3. Done! Add your modifications and functionality. Enjoy Blynk!
