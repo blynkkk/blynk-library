@@ -54,8 +54,6 @@ void setup()
 
   WiFly.setUart(&WiFlySerial);
 
-  delay(10000);
-
   Blynk.begin(auth, "ssid", "pass");
 }
 
