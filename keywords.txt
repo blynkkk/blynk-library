@@ -13,3 +13,8 @@ run	KEYWORD2
 virtualWrite	KEYWORD2
 BLYNK_READ	KEYWORD2
 BLYNK_WRITE	KEYWORD2
+#######################################
+# Literals (LITERAL1)
+#######################################
+BLYNK_DEBUG	LITERAL1
+BLYNK_PRINT	LITERAL1
