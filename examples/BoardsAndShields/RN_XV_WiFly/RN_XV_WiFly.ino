@@ -25,6 +25,7 @@
  *
  * Note: Ensure a stable serial connection!
  *       Hardware serial is preferred.
+ *       Firmware version 4.41 or bigger is preferred.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
@@ -39,23 +40,23 @@
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "6a3c71e5f44c4a32a7297663fb9c8ef7";
+char auth[] = "YourAuthToken";
 
 #define WiFlySerial Serial1 // Could be a SoftwareSerial object
 
 void setup()
 {
   Serial.begin(9600);
-  while (!Serial);
+  while (!Serial) {}
 
   WiFlySerial.begin(9600);  // Set your RN-XV baud rate
-  while (!WiFlySerial);
+  while (!WiFlySerial) {}
 
   WiFly.setUart(&WiFlySerial);
 
   delay(10000);
 
-  Blynk.begin(auth, "HS", "Test32768");
+  Blynk.begin(auth, "ssid", "pass");
 }
 
 void loop()

@@ -16,16 +16,19 @@
  *
  * This example shows how to use ESP8266 Shield via Hardware Serial
  * (on Mega, Leonardo, Micro...) to connect your project to Blynk.
+ * 
+ * You can also use SoftwareSerial (for UNO, Nano, Mini, ...).
  *
  * For this example you need a modified ITEAD WeeESP8266 library:
  *   https://github.com/vshymanskyy/ITEADLIB_Arduino_WeeESP8266
  *
  * Please adjust the settings in the ESP8266.h:
- *   Comment-out ESP8266_USE_SOFTWARE_SERIAL, if needed
- *   Set USER_SEL_VERSION to the version of your module
+ *   Set ESP8266_USE_SOFTWARE_SERIAL, if needed
+ *   Set USER_SEL_VERSION to the AT version of your module
  *
  * Note: Ensure a stable serial connection to ESP8266!
  *       Hardware serial is preferred.
+ *       Firmware version 1.0.0 (AT v0.22) or bigger is preferred.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
@@ -36,7 +39,16 @@
 #include <ESP8266.h>
 #include <BlynkSimpleShieldEsp8266.h>
 
-ESP8266 wifi(Serial1);
+// Set ESP8266 Serial object
+#define EspSerial Serial1
+
+// This can be a SoftwareSerial object
+// (remember to also edit ESP8266.h):
+//#include <SoftwareSerial.h>
+//SoftwareSerial SwSerial(2, 3); // RX, TX
+//#define EspSerial SwSerial
+
+ESP8266 wifi(EspSerial);
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -47,8 +59,8 @@ void setup()
   Serial.begin(9600);   // Set console baud rate
   while (!Serial) {}
 
-  Serial1.begin(9600);  // Set ESP8266 baud rate
-  while (!Serial1) {}
+  EspSerial.begin(9600);  // Set ESP8266 baud rate
+  while (!EspSerial) {}
 
   Blynk.begin(auth, wifi, "ssid", "pass");
 }
