@@ -46,10 +46,10 @@ char auth[] = "6a3c71e5f44c4a32a7297663fb9c8ef7";
 void setup()
 {
   Serial.begin(9600);
-  while(!Serial);
+  while (!Serial);
 
   WiFlySerial.begin(9600);  // Set your RN-XV baud rate
-  while(!WiFlySerial);
+  while (!WiFlySerial);
 
   WiFly.setUart(&WiFlySerial);
 

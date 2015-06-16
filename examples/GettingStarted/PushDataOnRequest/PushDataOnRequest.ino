@@ -43,7 +43,7 @@ void setup()
 BLYNK_READ(5)
 {
   // This command writes Arduino's uptime in seconds to Virtual Pin (5)
-  Blynk.virtualWrite(5, millis()/1000);
+  Blynk.virtualWrite(5, millis() / 1000);
 }
 
 void loop()

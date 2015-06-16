@@ -14,7 +14,7 @@
  *
  **************************************************************
  * Control another device using Bridge widget!
- * 
+ *
  * Bridge is initialized with the token of any (Blynk-enabled) device.
  * After that, use the familiar functions to control it:
  *   bridge.digitalWrite(8, HIGH)

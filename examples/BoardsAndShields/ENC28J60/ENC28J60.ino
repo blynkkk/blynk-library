@@ -16,10 +16,10 @@
  *
  * This example shows how to use ENC28J60 (UIPEthernet library)
  * to connect your project to Blynk.
- * 
+ *
  * For this example you need UIPEthernet library:
  *   https://github.com/ntruchsess/arduino_uip
- * 
+ *
  * Feel free to apply it to any other example. It's simple!
  *
  **************************************************************/
