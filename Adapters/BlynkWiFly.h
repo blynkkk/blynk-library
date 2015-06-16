@@ -60,7 +60,8 @@ public:
         return client->readBytes((char*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
-        return client->write((const uint8_t*)buf, len);
+        client->write((const uint8_t*)buf, len);
+        return len;
     }
 
     bool connected() { return client->connected(); }
