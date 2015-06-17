@@ -25,7 +25,7 @@
  *
  * Note: Ensure a stable serial connection!
  *       Hardware serial is preferred.
- *       Firmware version 4.41 or bigger is preferred.
+ *       Firmware version 4.41 or later is preferred.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!

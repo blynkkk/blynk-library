@@ -17,6 +17,8 @@
  * to connect your project to Blynk.
  * Feel free to apply it to any other example. It's simple!
  *
+ * Note: Firmware version 1.14 or later is preferred.
+ *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  *
  **************************************************************/

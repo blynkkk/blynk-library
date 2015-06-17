@@ -16,7 +16,7 @@
  *
  * This example shows how to use ESP8266 Shield via Hardware Serial
  * (on Mega, Leonardo, Micro...) to connect your project to Blynk.
- * 
+ *
  * You can also use SoftwareSerial (for UNO, Nano, Mini, ...).
  *
  * For this example you need a modified ITEAD WeeESP8266 library:
@@ -28,7 +28,7 @@
  *
  * Note: Ensure a stable serial connection to ESP8266!
  *       Hardware serial is preferred.
- *       Firmware version 1.0.0 (AT v0.22) or bigger is preferred.
+ *       Firmware version 1.0.0 (AT v0.22) or later is preferred.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!

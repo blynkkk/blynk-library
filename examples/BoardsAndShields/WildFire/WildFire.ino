@@ -22,6 +22,8 @@
  * Please find more information here:
  *   http://shop.wickeddevice.com/resources/wildfire
  *
+ * Note: Firmware version 1.14 or later is preferred.
+ *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  *
  **************************************************************/
