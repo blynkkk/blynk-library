@@ -9,12 +9,14 @@ void setup(void)
   delay(10000);
 }
 
-void draw(char c) {
-  Serial.print(c);
-  static int col = 0;
-  col = (col+1) % 80;
-  if (!col) {
-    Serial.println(c);
+static int col = 0;
+void draw(char c, int qty = 1) {
+  while (qty-- > 0) {
+    Serial.print(c);
+    col = (col+1) % 80;
+    if (!col) {
+      Serial.println(c);
+    }
   }
 }
 
@@ -36,11 +38,9 @@ void loop(void)
         draw(buf[qty]);
         qty++;
       }
-      for (int i=0; i<qty; ++i) {
-        client.write(buf[i]);
-        draw('.');
-      }
-      Spark.process();
+      client.write((uint8_t*)buf, qty);
+      draw('.', qty);
+      SPARK_WLAN_Loop();
     }
   } else {
     Serial.println("Connection failed");
