@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""USAGE: tcp-echo-test.py [options]
+"""USAGE: loopback.py [options]
 
 Options:
   --bind=S      address of server to connect             (default: any)
