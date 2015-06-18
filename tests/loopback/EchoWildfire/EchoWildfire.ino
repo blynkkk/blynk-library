@@ -11,8 +11,8 @@ WildFire_CC3000 cc3000;
 #define WLAN_PASS       "pass"
 #define WLAN_SECURITY   WLAN_SEC_WPA2
 
-uint32_t ip = cc3000.IP2U32(192,168,0,105);
-uint16_t port = 8080;
+uint32_t ip = cc3000.IP2U32(192, 168, 0, 105);
+uint16_t port = 8888;
 
 void setup(void)
 {
@@ -26,13 +26,13 @@ void setup(void)
   if (!cc3000.begin())
   {
     Serial.println(F("Couldn't begin()! Check your wiring?"));
-    while(1);
+    while (1);
   }
 
   Serial.print(F("Attempting to connect to ")); Serial.println(WLAN_SSID);
   if (!cc3000.connectToAP(WLAN_SSID, WLAN_PASS, WLAN_SECURITY)) {
     Serial.println(F("Failed!"));
-    while(1);
+    while (1);
   }
 
   Serial.println(F("Connected!"));
@@ -50,12 +50,14 @@ void setup(void)
   }
 }
 
-void draw(char c) {
-  Serial.print(c);
+void draw(char c, int qty = 1) {
   static int col = 0;
-  col = (col+1) % 80;
-  if (!col) {
-    Serial.println();
+  while (qty-- > 0) {
+    Serial.print(c);
+    col = (col + 1) % 80;
+    if (!col) {
+      Serial.println();
+    }
   }
 }
 
@@ -76,7 +78,7 @@ void loop(void)
         draw(buf[qty]);
         qty++;
       }
-      for (int i=0; i<qty; ++i) {
+      for (int i = 0; i < qty; ++i) {
         client.write(buf[i]);
         draw('.');
       }
@@ -99,7 +101,7 @@ bool displayConnectionDetails(void)
 {
   uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;
 
-  if(!cc3000.getIPAddress(&ipAddress, &netmask, &gateway, &dhcpserv, &dnsserv))
+  if (!cc3000.getIPAddress(&ipAddress, &netmask, &gateway, &dhcpserv, &dnsserv))
   {
     Serial.println(F("Unable to retrieve the IP Address!"));
     return false;

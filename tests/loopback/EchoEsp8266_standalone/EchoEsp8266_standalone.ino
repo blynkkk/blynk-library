@@ -3,8 +3,8 @@
 #define WLAN_SSID       "ssid"
 #define WLAN_PASS       "pass"
 
-IPAddress ip(192,168,0,105);
-uint16_t port = 8080;
+IPAddress ip(192, 168, 0, 105);
+uint16_t port = 8888;
 
 void setup(void)
 {
@@ -23,12 +23,14 @@ void setup(void)
   Serial.println(WiFi.localIP());
 }
 
-void draw(char c) {
-  Serial.print(c);
+void draw(char c, int qty = 1) {
   static int col = 0;
-  col = (col+1) % 80;
-  if (!col) {
-    Serial.println();
+  while (qty-- > 0) {
+    Serial.print(c);
+    col = (col + 1) % 80;
+    if (!col) {
+      Serial.println();
+    }
   }
 }
 
@@ -42,19 +44,15 @@ void loop(void)
     Serial.println(F("Connected."));
     /* Echo incoming data */
     while (client.connected()) {
-      char buf[128];
-      int qty = 0;
-      while (client.available()) {
-        buf[qty] = client.read();
-        draw(buf[qty]);
-        qty++;
-      }
-      for (int i=0; i<qty; ++i) {
-        client.write(buf[i]);
+      byte buf[128];
+      int qty = client.available();
+      if (qty) {
+        qty = client.read((uint8_t*)buf, qty);
+        delay(0); // Allow esp8266 housekeeping
+        qty = client.write((const uint8_t*)buf, qty);
         draw('.');
-        delay(10); // Allow esp8266 housekeeping
       }
-      delay(10); // Allow esp8266 housekeeping
+      delay(0); // Allow esp8266 housekeeping
     }
   } else {
     Serial.println(F("Connection failed"));
@@ -64,4 +62,3 @@ void loop(void)
   // Delay before next connection attempt
   delay(5000);
 }
-

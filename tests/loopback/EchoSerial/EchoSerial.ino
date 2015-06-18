@@ -1,28 +1,30 @@
 void setup(void)
 {
-  Serial.begin(9600);
+  Serial1.begin(9600);
 }
 
-void draw(char c) {
-/*  Serial.print(c);
+void draw(char c, int qty = 1) {
   static int col = 0;
-  col = (col+1) % 80;
-  if (!col) {
-    Serial.println();
-  }*/
+  while (qty-- > 0) {
+    Serial.print(c);
+    col = (col + 1) % 80;
+    if (!col) {
+      Serial.println();
+    }
+  }
 }
 
 void loop(void)
 {
   char buf[128];
   int qty = 0;
-  while (Serial.available()) {
+  while (Serial1.available()) {
     buf[qty] = Serial.read();
     draw(buf[qty]);
     qty++;
   }
-  for (int i=0; i<qty; ++i) {
-    Serial.write(buf[i]);
+  for (int i = 0; i < qty; ++i) {
+    Serial1.write(buf[i]);
     draw('.');
   }
 }

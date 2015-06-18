@@ -1,6 +1,6 @@
 
 IPAddress server(192, 168, 0, 105);
-uint16_t port = 8282;
+uint16_t port = 8888;
 
 void setup(void)
 {
@@ -9,13 +9,13 @@ void setup(void)
   delay(10000);
 }
 
-static int col = 0;
 void draw(char c, int qty = 1) {
+  static int col = 0;
   while (qty-- > 0) {
     Serial.print(c);
-    col = (col+1) % 80;
+    col = (col + 1) % 80;
     if (!col) {
-      Serial.println(c);
+      Serial.println();
     }
   }
 }
@@ -47,9 +47,9 @@ void loop(void)
   }
   client.stop();
   // Delay before next connection attempt
-  for (int i=0; i<50; i++) {
-      Spark.process();
-      delay(100);
+  for (int i = 0; i < 50; i++) {
+    Spark.process();
+    delay(100);
   }
 }
 
