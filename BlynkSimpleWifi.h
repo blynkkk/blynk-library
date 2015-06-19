@@ -46,9 +46,9 @@ public:
              BLYNK_LOG("Connecting to %s...", ssid);
              status = WiFi.begin((char*)ssid, pass);
              if (status == WL_CONNECTED) {
-            	 break;
+                 break;
              } else {
-            	 ::delay(5000);
+                 ::delay(5000);
              }
          }
          BLYNK_LOG("Connected to WiFi");
