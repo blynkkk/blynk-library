@@ -111,7 +111,7 @@ def readthread(conn, addr):
 		data = receive(conn, len(MSG))
 		if data != MSG:
 			log("Data is wrong:" + data)
-			break
+			#break
 		draw('v')
 		dump("> " + data)
 		msgs_in += 1
