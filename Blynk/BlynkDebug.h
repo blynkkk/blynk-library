@@ -75,15 +75,11 @@ void BlynkFatal() BLYNK_NORETURN;
         #define BLYNK_DBG_BREAK()    { for(;;); }
 #if defined(__SAM3X8E__)
         #define BLYNK_LOG(msg, ...)  blynk_dbg_print(msg, ##__VA_ARGS__)
-#elif defined (ARDUINO_ARCH_ESP8266)
-        extern "C" int ets_uart_printf(const char *fmt, ...);
-        #define BLYNK_LOG(msg, ...)  { ets_uart_printf("[%ld] " msg "\n", millis(), ##__VA_ARGS__); }
 #else
         #define BLYNK_LOG(msg, ...)  blynk_dbg_print(BLYNK_PSTR(msg), ##__VA_ARGS__)
 #endif
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
 
-#if !defined (ARDUINO_ARCH_ESP8266)
         static
         void blynk_dbg_print(const BLYNK_PROGMEM char *fmt, ...)
         {
@@ -101,7 +97,6 @@ void BlynkFatal() BLYNK_NORETURN;
             BLYNK_PRINT.println(buff);
             va_end(ap);
         }
-#endif
 
     #elif defined(LINUX)
 

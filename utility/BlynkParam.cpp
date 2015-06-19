@@ -94,43 +94,6 @@ void BlynkParam::add(const char* str)
         add(str);
     }
 
-#elif defined (ARDUINO_ARCH_ESP8266)
-
-    extern "C" {
-    #include "ets_sys.h"
-    }
-    #define sprintf ets_sprintf
-
-    void BlynkParam::add(int value)
-    {
-    	len += sprintf(buff+len, "%i", value)+1;
-    }
-
-    void BlynkParam::add(unsigned int value)
-    {
-    	len += sprintf(buff+len, "%u", value)+1;
-    }
-
-    void BlynkParam::add(long value)
-    {
-    	len += sprintf(buff+len, "%li", value)+1;
-    }
-
-    void BlynkParam::add(unsigned long value)
-    {
-    	len += sprintf(buff+len, "%lu", value)+1;
-    }
-
-    void BlynkParam::add(float value)
-    {
-    	len += sprintf(buff+len, "%2.3f", value)+1;
-    }
-
-    void BlynkParam::add(double value)
-    {
-    	len += sprintf(buff+len, "%2.3f", value)+1;
-    }
-
 #else
 
     #include <stdio.h>
