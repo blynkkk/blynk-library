@@ -48,7 +48,7 @@ void setup()
 
   Blynk.begin(auth);
   // You can also specify server.
-  // For more options, see Transports/Advanced/CustomEthernet example
+  // For more options, see BoardsAndShields/Arduino_Ethernet_Manual example
   //Blynk.begin(auth, "server.org", 8442);
   //Blynk.begin(auth, IPAddress(192,168,1,100), 8888);
 }

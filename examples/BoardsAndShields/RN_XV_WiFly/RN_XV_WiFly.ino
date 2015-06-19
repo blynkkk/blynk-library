@@ -42,15 +42,17 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-#define WiFlySerial Serial1 // Could be a SoftwareSerial object
+#define WiFlySerial Serial1
+// This can be a SoftwareSerial object:
+//#include <SoftwareSerial.h>
+//SoftwareSerial WiFlySerial(2, 3); // RX, TX
 
 void setup()
 {
-  Serial.begin(9600);
-  while (!Serial) {}
-
+  Serial.begin(9600);       // Set console baud rate
+  delay(10);
   WiFlySerial.begin(9600);  // Set your RN-XV baud rate
-  while (!WiFlySerial) {}
+  delay(10);
 
   WiFly.setUart(&WiFlySerial);
 

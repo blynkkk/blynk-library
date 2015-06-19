@@ -41,12 +41,9 @@
 
 // Set ESP8266 Serial object
 #define EspSerial Serial1
-
-// This can be a SoftwareSerial object
-// (remember to also edit ESP8266.h):
+// This can be a SoftwareSerial object (remember to also edit ESP8266.h):
 //#include <SoftwareSerial.h>
-//SoftwareSerial SwSerial(2, 3); // RX, TX
-//#define EspSerial SwSerial
+//SoftwareSerial EspSerial(2, 3); // RX, TX
 
 ESP8266 wifi(EspSerial);
 
@@ -56,11 +53,10 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
-  Serial.begin(9600);   // Set console baud rate
-  while (!Serial) {}
-
+  Serial.begin(9600);     // Set console baud rate
+  delay(10);
   EspSerial.begin(9600);  // Set ESP8266 baud rate
-  while (!EspSerial) {}
+  delay(10);
 
   Blynk.begin(auth, wifi, "ssid", "pass");
 }
