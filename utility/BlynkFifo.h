@@ -11,13 +11,7 @@
 #ifndef BlynkFifo_h
 #define BlynkFifo_h
 
-
-template<class T>
-const T& BlynkMin(const T& a, const T& b)
-{
-    return (b < a) ? b : a;
-}
-
+#include <utility/BlynkUtility.h>
 
 template<typename T, unsigned SIZE>
 class BlynkFifo {
