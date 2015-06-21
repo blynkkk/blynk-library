@@ -51,7 +51,6 @@ endif
 
 SOURCES=main.cpp \
 	BlynkDebug.cpp \
-	../utility/BlynkParam.cpp \
 	../utility/BlynkHandlers.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
