@@ -26,22 +26,22 @@ void setup(void)
 
   /* Join wifi network if not already associated */
   if (!wifly.isAssociated()) {
-      /* Setup the WiFly to connect to a wifi network */
-      Serial.println("Joining network");
-      wifly.setSSID(WLAN_SSID);
-      wifly.setPassphrase(WLAN_PASS);
-      wifly.enableDHCP();
+    /* Setup the WiFly to connect to a wifi network */
+    Serial.println("Joining network");
+    wifly.setSSID(WLAN_SSID);
+    wifly.setPassphrase(WLAN_PASS);
+    wifly.enableDHCP();
     if (wifly.join()) {
-        Serial.println("Joined wifi network");
+      Serial.println("Joined wifi network");
     } else {
-        Serial.println("Failed to join wifi network");
+      Serial.println("Failed to join wifi network");
     }
   } else {
-      Serial.println("Already in network");
+    Serial.println("Already in network");
   }
 
   if (wifly.isConnected()) {
-      Serial.println("Old connection active. Closing");
+    Serial.println("Old connection active. Closing");
     wifly.close();
   }
 }
