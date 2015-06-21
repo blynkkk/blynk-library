@@ -22,7 +22,7 @@ void setup(void)
   }
 
   wifly.setBaud(115200);
-  WiFlySerial.begin(115200);
+  SerialWiFly.begin(115200);
 
   /* Join wifi network if not already associated */
   if (!wifly.isAssociated()) {
@@ -44,6 +44,8 @@ void setup(void)
     Serial.println("Old connection active. Closing");
     wifly.close();
   }
+
+  wifly.setIpFlags(1 << 1);
 }
 
 void draw(char c, int qty = 1) {
