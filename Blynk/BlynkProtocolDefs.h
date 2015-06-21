@@ -22,7 +22,7 @@ enum BlynkCmd
     BLYNK_CMD_PING				= 6,
     BLYNK_CMD_TWEET				= 12,
     BLYNK_CMD_EMAIL				= 13,
-    BLYNK_CMD_PUSH_NOTIFICATION	= 14,
+    BLYNK_CMD_NOTIFY			= 14,
     BLYNK_CMD_BRIDGE			= 15,
     BLYNK_CMD_HARDWARE			= 20
 };

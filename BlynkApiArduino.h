@@ -88,14 +88,14 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add("dw");
         rsp.add(pin);
         rsp.add(digitalRead(pin));
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
     } else if (!strcmp(cmd, "ar")) {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("aw");
         rsp.add(pin);
         rsp.add(analogRead(pin));
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
     } else
 
 #endif
@@ -146,12 +146,17 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         if (!strcmp(cmd, "dw")) {
             //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
             pinMode(pin, OUTPUT);
+#ifdef ESP8266
+            // Disable PWM...
+            analogWrite(pin, 0);
+#endif
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {
             //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
             analogWrite(pin, it.asInt());
         } else {
             BLYNK_LOG("Invalid HW cmd: %s", cmd);
+            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_BAD_FORMAT);
         }
 
 #endif

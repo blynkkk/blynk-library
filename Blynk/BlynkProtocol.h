@@ -16,11 +16,13 @@
 #include <Blynk/BlynkDebug.h>
 #include <Blynk/BlynkProtocolDefs.h>
 #include <Blynk/BlynkApi.h>
+#include <utility/BlynkUtility.h>
 
 template <class Transp>
 class BlynkProtocol
     : public BlynkApi< BlynkProtocol<Transp> >
 {
+	friend class BlynkApi< BlynkProtocol<Transp> >;
 public:
     BlynkProtocol(Transp& transp)
         : conn(transp), authkey(NULL)
@@ -37,7 +39,7 @@ public:
 
     void run(void);
 
-    void sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2 = NULL, size_t length2 = 0);
+    void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
 
 private:
     bool readHeader(BlynkHeader& hdr);
@@ -73,7 +75,7 @@ bool BlynkProtocol<Transp>::connect()
     }
 
     uint16_t id = getNextMsgId();
-    sendCmd(BLYNK_CMD_LOGIN, id, authkey, strlen(authkey), NULL, 0);
+    sendCmd(BLYNK_CMD_LOGIN, id, authkey, strlen(authkey));
 
 #ifdef BLYNK_DEBUG
     const unsigned long t = millis();
@@ -151,7 +153,7 @@ void BlynkProtocol<Transp>::run(void)
         BLYNK_LOG("Heartbeat");
 #endif
 
-        sendCmd(BLYNK_CMD_PING, 0, NULL, 0, NULL, 0);
+        sendCmd(BLYNK_CMD_PING);
         lastHeartbeat = t;
     }
 }
@@ -222,12 +224,6 @@ bool BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
     return true;
 }
 
-template <unsigned N>
-void BlynkAverageSample (uint32_t& avg, const uint32_t& input) {
-    avg -= avg/N;
-    avg += input/N;
-}
-
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
@@ -277,9 +273,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     BlynkAverageSample<10>(deltaCmd, ts - lastActivityOut);
     lastActivityOut = ts;
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
-    	BLYNK_LOG_TROUBLE("flood");
-		conn.disconnect();
-		::delay(5000);
+        BLYNK_LOG_TROUBLE("flood");
+        conn.disconnect();
+        ::delay(5000);
     }
 #else
     lastActivityOut = ts;
