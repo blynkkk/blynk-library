@@ -79,6 +79,10 @@ public:
 		} else {
 			BLYNK_LOG("Already connected to WiFi");
 		}
+		if (wifly.isConnected()) {
+			wifly.close();
+		}
+		wifly->setIpFlags(1 << 1);
     }
 
     void begin( const char* auth,
