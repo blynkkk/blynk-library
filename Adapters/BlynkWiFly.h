@@ -11,64 +11,50 @@
 #ifndef BlynkWiFly_h
 #define BlynkWiFly_h
 
-#ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "WiFly"
-#endif
-
 #ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION "RN-XV"
+#define BLYNK_INFO_CONNECTION "WiFly"
 #endif
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
+#include <WiFlyHQ.h>
 
 class BlynkTransportWiFly
 {
 public:
     BlynkTransportWiFly()
-        : client(NULL)
+        : wifly(NULL)
+        , domain(NULL)
+        , port(0)
     {}
 
-    void begin_domain(const char* d,  uint16_t p) {
-        if (client)
-            delete client;
-        client = new WiFlyClient(d, p);
-    }
-
-    void begin_addr(IPAddress a, uint16_t p) {
-        if (client)
-            delete client;
-        uint32_t addr = a;
-        client = new WiFlyClient((uint8_t*)addr, p);
+    void begin_domain(WiFly* rnxv, const char* h,  uint16_t p) {
+    	wifly = rnxv;
+        domain = h;
+        port = p;
     }
 
     bool connect() {
-        if (!client)
-            return 0;
-        if (client->_domain) {
-            BLYNK_LOG("Connecting to %s:%d", client->_domain, client->_port);
-        } else if (client->_ip) {
-            BLYNK_LOG("Connecting to %d.%d.%d.%d:%d",
-                client->_ip[0], client->_ip[1], client->_ip[2], client->_ip[3], client->_port);
-        }
-        return client->connect();
+    	return wifly->open(domain, port);
     }
-    void disconnect() { client->stop(); }
+    void disconnect() { wifly->close(); }
 
     size_t read(void* buf, size_t len) {
-        return client->readBytes((char*)buf, len);
+        return wifly->readBytes((char*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
-        client->write((const uint8_t*)buf, len);
+    	wifly->write((const uint8_t*)buf, len);
         return len;
     }
 
-    bool connected() { return client->connected(); }
-    int available() { return client->available(); }
+    bool connected() { return wifly->isConnected(); }
+    int available() { return wifly->available(); }
 
 private:
-    WiFlyClient* client;
+    WiFly*      wifly;
+    const char* domain;
+    uint16_t    port;
 };
 
 class BlynkWiFly
@@ -78,36 +64,38 @@ class BlynkWiFly
 public:
     BlynkWiFly(BlynkTransportWiFly& transp)
         : Base(transp)
+        , wifly(NULL)
     {}
 
+    void wifi_conn(const char* ssid, const char* pass) {
+		if (!wifly->isAssociated()) {
+			BLYNK_LOG("Connecting to %s", ssid);
+			wifly->setSSID(ssid);
+			wifly->setPassphrase(pass);
+			wifly->enableDHCP();
+			if (!wifly->join()) {
+				BLYNK_FATAL("Failed.");
+			}
+		} else {
+			BLYNK_LOG("Already connected to WiFi");
+		}
+    }
+
     void begin( const char* auth,
+                WiFly&      rnxv,
                 const char* ssid,
                 const char* pass,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
-                uint16_t port      = BLYNK_DEFAULT_PORT)
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);
-        WiFly.begin();
-        if (!WiFly.join(ssid, pass)) {
-            BLYNK_FATAL("WiFly: Association failed.");
-        }
-        this->conn.begin_domain(domain, port);
+        wifly = &rnxv;
+        wifi_conn(ssid, pass);
+        this->conn.begin_domain(wifly, domain, port);
     }
 
-    void begin( const char* auth,
-                const char* ssid,
-                const char* pass,
-                IPAddress addr,
-                uint16_t port)
-    {
-        Base::begin(auth);
-        WiFly.begin();
-        if (!WiFly.join(ssid, pass)) {
-            BLYNK_FATAL("WiFly: Association failed.");
-        }
-        this->conn.begin_addr(addr, port);
-    }
-
+private:
+    WiFly* wifly;
 };
 
 #endif

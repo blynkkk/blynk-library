@@ -16,12 +16,8 @@
  * This example shows how to use WiFly RN-XV
  * to connect your project to Blynk.
  *
- * For this example you need WiFly_Shield library:
- *   https://github.com/sparkfun/WiFly-Shield/tree/master/Libraries/Arduino
- *
- * You may need to adjust the line in the WiFlyDevice.cpp:
- *   if findInResponse("\r\nwifly-GSX Ver", 1000)) {
- * Please replace the string with the model of your shield.
+ * For this example you need WiFlyHQ library:
+ *   https://github.com/harlequin-tech/WiFlyHQ
  *
  * Note: Ensure a stable serial connection!
  *       Hardware serial is preferred.
@@ -32,10 +28,8 @@
  *
  **************************************************************/
 
-//#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
-#include <SPI.h>
-#include <WiFly.h>
+#include <WiFlyHQ.h>
 #include <BlynkSimpleWiFly.h>
 
 // You should get Auth Token in the Blynk App.
@@ -47,6 +41,8 @@ char auth[] = "YourAuthToken";
 //#include <SoftwareSerial.h>
 //SoftwareSerial WiFlySerial(2, 3); // RX, TX
 
+WiFly wifly;
+
 void setup()
 {
   Serial.begin(9600);       // Set console baud rate
@@ -54,9 +50,16 @@ void setup()
   WiFlySerial.begin(9600);  // Set your RN-XV baud rate
   delay(10);
 
-  WiFly.setUart(&WiFlySerial);
+  // Bind WiFly driver to the serial
+  if (!wifly.begin(&WiFlySerial)) {
+    BLYNK_FATAL("Failed to start wifly");
+  }
 
-  Blynk.begin(auth, "ssid", "pass");
+  // You can try increasing baud rate:
+  //wifly.setBaud(115200);
+  //WiFlySerial.begin(115200);
+
+  Blynk.begin(auth, wifly, "ssid", "pass");
 }
 
 void loop()

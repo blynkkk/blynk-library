@@ -21,6 +21,9 @@ void setup(void)
     Serial.println("Failed to start wifly");
   }
 
+  wifly.setBaud(115200);
+  WiFlySerial.begin(115200);
+
   /* Join wifi network if not already associated */
   if (!wifly.isAssociated()) {
       /* Setup the WiFly to connect to a wifi network */
