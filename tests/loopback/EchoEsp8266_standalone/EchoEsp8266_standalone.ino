@@ -47,10 +47,10 @@ void loop(void)
       byte buf[128];
       int qty = client.available();
       if (qty) {
-        qty = client.read((uint8_t*)buf, qty);
+        yield();
+        qty = client.readBytes((uint8_t*)buf, qty);
         yield();
         qty = client.write((const uint8_t*)buf, qty);
-        yield();
         draw('.');
       }
       yield();
