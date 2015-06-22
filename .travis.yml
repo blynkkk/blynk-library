@@ -12,7 +12,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/CC3000
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ENC28J60
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Standalone PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
-    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/RN_XV_WiFly
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/RN_XV_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TinyDuino_WiFi
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/WildFire PLATFORMIO_CI_BOARDS_ARGS="--board=wildfirev3"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
@@ -47,4 +47,4 @@ install:
     - platformio lib install 17 28 91 418 419 420 65
 
 script:
-    - if [[ $PLATFORMIO_CI_BOARDS_ARGS ]]; then bash -c 'platformio ci --lib="." $PLATFORMIO_CI_BOARDS_ARGS'; else bash -c 'platformio ci --lib="." --board=uno --board=yun --board=megaatmega2560'; fi
+    - if [[ $PLATFORMIO_CI_BOARDS_ARGS ]]; then bash -c 'platformio ci --lib="." $PLATFORMIO_CI_BOARDS_ARGS'; else bash -c 'platformio ci --lib="." --board=uno --board=leonardo --board=yun --board=megaatmega2560'; fi
