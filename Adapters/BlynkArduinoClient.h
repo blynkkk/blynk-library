@@ -15,6 +15,12 @@
 #include <Client.h>
 #include <Blynk/BlynkDebug.h>
 
+#ifdef ESP8266
+	#define YIELD_FIX() yield();
+#else
+	#define YIELD_FIX()
+#endif
+
 class BlynkArduinoClient
 {
 public:
@@ -55,7 +61,9 @@ public:
     }
 #else
     size_t read(void* buf, size_t len) {
-        return client.readBytes((char*)buf, len);
+        size_t res = client.readBytes((char*)buf, len);
+        YIELD_FIX();
+        return res;
     }
 #endif
 
@@ -78,12 +86,15 @@ public:
     }
 #else
     size_t write(const void* buf, size_t len) {
-        return client.write((const uint8_t*)buf, len);
+    	YIELD_FIX();
+        size_t res = client.write((const uint8_t*)buf, len);
+    	YIELD_FIX();
+        return res;
     }
 #endif
 
-    bool connected() { return client.connected(); }
-    int available() { return client.available(); }
+    bool connected() { YIELD_FIX(); return client.connected(); }
+    int available() {  YIELD_FIX(); return client.available(); }
 
 private:
     Client&     client;
