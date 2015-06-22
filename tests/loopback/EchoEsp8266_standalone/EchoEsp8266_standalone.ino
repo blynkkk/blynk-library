@@ -36,7 +36,7 @@ void draw(char c, int qty = 1) {
 
 void loop(void)
 {
-  Serial.print("Connecting to ");
+  Serial.print(F("Connecting to "));
   Serial.println(ip);
 
   WiFiClient client;
@@ -48,11 +48,12 @@ void loop(void)
       int qty = client.available();
       if (qty) {
         qty = client.read((uint8_t*)buf, qty);
-        delay(0); // Allow esp8266 housekeeping
+        yield();
         qty = client.write((const uint8_t*)buf, qty);
+        yield();
         draw('.');
       }
-      delay(0); // Allow esp8266 housekeeping
+      yield();
     }
   } else {
     Serial.println(F("Connection failed"));
