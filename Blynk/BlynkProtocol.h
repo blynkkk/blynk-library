@@ -30,7 +30,9 @@ public:
         , lastActivityOut(0)
         , lastHeartbeat(0)
         , currentMsgId(0)
+#ifdef BLYNK_MSG_LIMIT
         , deltaCmd(0)
+#endif
     {}
 
     bool connected() { return conn.connected(); }
@@ -66,6 +68,7 @@ private:
 };
 
 template <class Transp>
+BLYNK_FORCE_INLINE
 bool BlynkProtocol<Transp>::connect()
 {
     conn.disconnect();
@@ -110,7 +113,9 @@ bool BlynkProtocol<Transp>::connect()
     }
 
     lastHeartbeat = lastActivityIn = lastActivityOut = millis();
+#ifdef BLYNK_MSG_LIMIT
     deltaCmd = 1000;
+#endif
     BLYNK_LOG("Ready!");
 #ifdef BLYNK_DEBUG
     BLYNK_LOG("Roundtrip: %dms", lastActivityIn-t);
@@ -237,15 +242,46 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     if (0 == id) {
         id = getNextMsgId();
     }
+
+#ifdef BLYNK_DEBUG
+    BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
+#endif
+
+#ifdef ESP8266
+    // ESP8266 has more ram and likes single write at a time...
+
+    static uint8_t buff[BLYNK_MAX_READBYTES];
+    BlynkHeader* hdr = (BlynkHeader*)buff;
+    hdr->type = cmd;
+    hdr->msg_id = htons(id);
+    hdr->length = htons(length+length2);
+
+    size_t len2s = sizeof(BlynkHeader);
+    if (data && length) {
+    	memcpy(buff + len2s, data, length);
+    	len2s += length;
+    }
+    if (data2 && length2) {
+    	memcpy(buff + len2s, data2, length2);
+    	len2s += length2;
+    }
+#ifdef BLYNK_DEBUG
+	BLYNK_DBG_DUMP("<", buff+5, len2s-5);
+#endif
+    size_t wlen = conn.write(buff, len2s);
+    if (wlen != len2s) {
+        BLYNK_LOG("Sent %u/%u", wlen, len2s);
+        conn.disconnect();
+        return;
+    }
+#else
+
     BlynkHeader hdr;
     hdr.type = cmd;
     hdr.msg_id = htons(id);
     hdr.length = htons(length+length2);
-    size_t wlen = 0;
-#ifdef BLYNK_DEBUG
-    BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
-#endif
-    wlen += conn.write(&hdr, sizeof(hdr));
+
+    size_t wlen = conn.write(&hdr, sizeof(hdr));
 
     if (cmd != BLYNK_CMD_RESPONSE) {
         if (length) {
@@ -268,7 +304,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         }
     }
 
-    uint32_t ts = millis();
+#endif
+
+    const uint32_t ts = millis();
 #ifdef BLYNK_MSG_LIMIT
     BlynkAverageSample<10>(deltaCmd, ts - lastActivityOut);
     lastActivityOut = ts;
