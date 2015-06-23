@@ -89,7 +89,7 @@ public:
     // DHCP with server IP
     void begin( const char* auth,
                 IPAddress addr,
-                uint16_t port,
+                uint16_t port    = BLYNK_DEFAULT_PORT,
                 const byte mac[] = _blynkEthernetMac)
     {
         Base::begin(auth);
