@@ -74,11 +74,12 @@ public:
      *
      * @param msg Text of the message
      */
-    void tweet(const char* msg) {
-        size_t len = strlen(msg);
-        if (len < 140) {
-            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, msg, len);
-        }
+    template<typename T>
+    void tweet(const T& data) {
+        char mem[128];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(data);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -86,8 +87,12 @@ public:
      *
      * @param msg Text of the message
      */
-    void notify(const char* msg) {
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, msg, strlen(msg));
+    template<typename T>
+    void notify(const T& data) {
+        char mem[128];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(data);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -103,8 +108,12 @@ public:
      *
      * @param msg Text of the message
      */
-    void email(const char* msg) {
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, msg, strlen(msg));
+    template<typename T>
+    void email(const T& data) {
+        char mem[128];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(data);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -114,7 +123,8 @@ public:
      * @param subject Subject of message
      * @param msg     Text of the message
      */
-    void email(const char* email, const char* subject, const char* msg) {
+    template <typename T1, typename T2>
+    void email(const char* email, const T1& subject, const T2& msg) {
         char mem[128];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(email);
