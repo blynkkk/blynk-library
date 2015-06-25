@@ -88,6 +88,9 @@ public:
     void add(const char* str);
     BLYNK_FORCE_INLINE
     void add(const void* b, size_t l);
+#ifdef ARDUINO
+    void add(const String& str);
+#endif
 
     template <typename TV>
     void add_key(const char* key, const TV& val) {
@@ -141,6 +144,17 @@ void BlynkParam::add(const char* str)
 {
     add(str, strlen(str)+1);
 }
+
+#ifdef ARDUINO
+inline
+void BlynkParam::add(const String& str)
+{
+    size_t len = str.length()+1;
+    char buff[len];
+    str.toCharArray(buff, len);
+    BlynkParam::add(buff, len);
+}
+#endif
 
 #if defined(__AVR__)
 
