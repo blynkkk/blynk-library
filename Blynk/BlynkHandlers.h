@@ -33,9 +33,25 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
     void BlynkWidgetRead ## pin (BlynkReq& request)
 
 #define BLYNK_ATTACH_WIDGET(widget, pin)	\
-    BLYNK_WRITE(pin) {					\
-        (widget).onWrite(request, param);   \
-    }
+    BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
+
+#define BLYNK_VAR_INT(name, pin)	int name;  \
+    BLYNK_WRITE(pin) { name = param.asInt(); } \
+    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
+
+#define BLYNK_VAR_LONG(name, pin)	long name;  \
+    BLYNK_WRITE(pin) { name = param.asLong(); } \
+    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
+
+#define BLYNK_VAR_DOUBLE(name, pin)	double name;  \
+    BLYNK_WRITE(pin) { name = param.asDouble(); } \
+    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
+
+#ifdef ARDUINO
+#define BLYNK_VAR_STRING(name, pin)	String name;  \
+    BLYNK_WRITE(pin) { name = param.asStr(); } \
+    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
+#endif
 
 // Default read/write handlers (you can redefine them in your code)
 
