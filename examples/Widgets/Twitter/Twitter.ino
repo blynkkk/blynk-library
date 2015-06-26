@@ -18,6 +18,9 @@
  * App dashboard setup:
  *   Twitter widget (connect it to your Twitter account!)
  *
+ * Connect a button to pin 2 and GND...
+ * Pressing this button will also tweet a message! ;)
+ *
  **************************************************************/
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial
@@ -41,21 +44,37 @@ void setup()
   }
 
   // Tweet immediately on startup
-  tweetUptime();
-  // Setup a function to be called every minute
-  timer.setInterval(60000L, tweetUptime);
+  Blynk.tweet("My Arduino project is tweeting using @blynk_app and this is awesome!\n #arduino #IoT #blynk");
+  // Setup a function to be called every 10 minutes
+  timer.setInterval(10L * 60000L, tweetUptime);
+
+  // Setup twitter button on pin 2
+  pinMode(2, INPUT_PULLUP);
+  // Attach pin 2 interrupt to our handler
+  attachInterrupt(0, tweetOnButtonPress, CHANGE);
 }
 
 void tweetUptime()
 {
-  long uptime = millis() / 1000;
-  BLYNK_LOG("Tweet ;)");
+  long uptime = millis() / 60000L;
+  BLYNK_LOG("Tweeting every 10 minutes ;)");
 
   // Actually send the message.
   // Note:
   //   We allow 1 tweet per minute for now.
   //   Twitter doesn't allow identical subsequent messages.
-  Blynk.tweet(String("Running for ") + uptime + " seconds.");
+  Blynk.tweet(String("Running for ") + uptime + " minutes.");
+}
+
+void tweetOnButtonPress()
+{
+  // Invert state, since button is "Active LOW"
+  int isButtonPressed = !digitalRead(2);
+  if (isButtonPressed) {
+    BLYNK_LOG("Button is pressed.");
+
+    Blynk.tweet("Yaaay... button is pressed! :)\n #arduino #IoT #blynk @blynk_app");
+  }
 }
 
 void loop()
