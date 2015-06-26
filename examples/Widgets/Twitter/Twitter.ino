@@ -16,30 +16,46 @@
  * Simple tweet example
  *
  * App dashboard setup:
- *   Twitter widget
+ *   Twitter widget (connect it to your Twitter account!)
  *
  **************************************************************/
-
+//#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
+#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+SimpleTimer timer;
+
 void setup()
 {
   Serial.begin(9600);
   Blynk.begin(auth);
-  if (Blynk.connect()) {
-    Blynk.tweet("Arduino tweeting!");
+  while (!Blynk.connect()) {
+    // Wait until connected
   }
+
+  // Tweet immediately on startup
+  tweetUptime();
+  // Setup a function to be called every minute
+  timer.setInterval(60000L, tweetUptime);
+}
+
+void tweetUptime()
+{
+  long uptime = millis() / 1000;
+  BLYNK_LOG("Tweet ;)");
+  Blynk.tweet(String("Running for ") + uptime + " seconds.");
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run();
 }
 
