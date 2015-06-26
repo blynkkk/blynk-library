@@ -50,6 +50,11 @@ void tweetUptime()
 {
   long uptime = millis() / 1000;
   BLYNK_LOG("Tweet ;)");
+
+  // Actually send the message.
+  // Note:
+  //   We allow 1 tweet per minute for now.
+  //   Twitter doesn't allow identical subsequent messages.
   Blynk.tweet(String("Running for ") + uptime + " seconds.");
 }
 

@@ -40,15 +40,19 @@ void setup()
     // Wait until connected
   }
 
-  // Tweet immediately on startup
+  // Notify immediately on startup
   notifyUptime();
-  // Setup a function to be called every second
-  timer.setInterval(1000L, notifyUptime);
+  // Setup a function to be called every minute
+  timer.setInterval(60000L, notifyUptime);
 }
 
 void notifyUptime()
 {
   long uptime = millis() / 1000;
+
+  // Actually send the message.
+  // Note:
+  //   We allow 1 notification per minute for now.
   Blynk.notify(String("Running for ") + uptime + " seconds.");
 }
 
