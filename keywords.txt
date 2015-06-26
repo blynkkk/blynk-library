@@ -13,7 +13,7 @@ run	KEYWORD2
 connect	KEYWORD2
 connected	KEYWORD2
 tweet	KEYWORD2
-push_notification	KEYWORD2
+notify	KEYWORD2
 email	KEYWORD2
 virtualWrite	KEYWORD2
 BLYNK_READ	KEYWORD2
