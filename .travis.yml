@@ -29,6 +29,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/LED
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
+    - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
 
 install:
     - python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
