@@ -185,9 +185,6 @@ bool BlynkProtocol<Transp>::processInput(void)
     switch (hdr.type)
     {
     case BLYNK_CMD_RESPONSE: {
-#ifdef BLYNK_DEBUG
-        BLYNK_LOG("Got response: %d", hdr.length);
-#endif
         if (BLYNK_NOT_AUTHENTICATED == hdr.length) {
             conn.disconnect();
             return false;
@@ -262,8 +259,8 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
 #endif
 
-#ifdef ESP8266
-    // ESP8266 has more ram and likes single write at a time...
+#if defined(ESP8266) || defined(SPARK)
+    // Those have more RAM and like single write at a time...
 
     static uint8_t buff[BLYNK_MAX_READBYTES];
     BlynkHeader* hdr = (BlynkHeader*)buff;
