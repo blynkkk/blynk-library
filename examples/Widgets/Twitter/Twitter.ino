@@ -45,6 +45,7 @@ void setup()
 
   // Tweet immediately on startup
   Blynk.tweet("My Arduino project is tweeting using @blynk_app and this is awesome!\n #arduino #IoT #blynk");
+
   // Setup a function to be called every 10 minutes
   timer.setInterval(10L * 60000L, tweetUptime);
 

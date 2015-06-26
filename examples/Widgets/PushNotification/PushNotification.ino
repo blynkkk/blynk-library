@@ -18,6 +18,9 @@
  * App dashboard setup:
  *   Push widget
  *
+ * Connect a button to pin 2 and GND...
+ * Pressing this button will also push a message! ;)
+ *
  **************************************************************/
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial
@@ -41,19 +44,36 @@ void setup()
   }
 
   // Notify immediately on startup
-  notifyUptime();
+  Blynk.notify("Device started");
+
   // Setup a function to be called every minute
   timer.setInterval(60000L, notifyUptime);
+
+  // Setup notification button on pin 2
+  pinMode(2, INPUT_PULLUP);
+  // Attach pin 2 interrupt to our handler
+  attachInterrupt(0, notifyOnButtonPress, CHANGE);
 }
 
 void notifyUptime()
 {
-  long uptime = millis() / 1000;
+  long uptime = millis() / 60000L;
 
   // Actually send the message.
   // Note:
   //   We allow 1 notification per minute for now.
-  Blynk.notify(String("Running for ") + uptime + " seconds.");
+  Blynk.notify(String("Running for ") + uptime + " minutes.");
+}
+
+void notifyOnButtonPress()
+{
+  // Invert state, since button is "Active LOW"
+  int isButtonPressed = !digitalRead(2);
+  if (isButtonPressed) {
+    BLYNK_LOG("Button is pressed.");
+
+    Blynk.notify("Yaaay... button is pressed!");
+  }
 }
 
 void loop()
