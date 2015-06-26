@@ -53,7 +53,7 @@ void setup()
 
   // Configure LED and timer
   pinMode(LED_PIN, OUTPUT);
-  t1 = timer.setInterval(500, ledBlynk);
+  t1 = timer.setInterval(500L, ledBlynk);
   timer.disable(t1);
 }
 
@@ -71,7 +71,7 @@ BLYNK_WRITE(1)
 // Change blink interval using virtual pin 2
 BLYNK_WRITE(2)
 {
-  int interval = param.asInt();
+  long interval = param.asLong();
   boolean wasEnabled = timer.isEnabled(t1);
   timer.deleteTimer(t1);
   t1 = timer.setInterval(interval, ledBlynk);

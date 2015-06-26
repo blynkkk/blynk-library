@@ -50,8 +50,9 @@ void setup()
   while (!Blynk.connect()) {
     // Wait until connected
   }
-  timer.setInterval(1000, blinkLedWidget);
-  timer.setInterval(200, fadeLedWidget);
+
+  timer.setInterval(1000L, blinkLedWidget);
+  timer.setInterval(200L, fadeLedWidget);
 }
 
 void blinkLedWidget()

@@ -53,8 +53,8 @@ void setup()
     bridge1.setAuthToken("OtherAuthToken");
   }
 
-  // Call blynkAnotherDevice periodically
-  timer.setInterval(1000, blynkAnotherDevice);
+  // Call blynkAnotherDevice every second
+  timer.setInterval(1000L, blynkAnotherDevice);
 }
 
 static bool value = true;
