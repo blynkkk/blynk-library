@@ -135,7 +135,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             // TODO: analogWrite(pin, it.asInt());
         } else {
             BLYNK_LOG("Invalid HW cmd: %s", cmd);
-            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_BAD_FORMAT);
+            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_ILLEGAL_COMMAND);
         }
     }
 }
