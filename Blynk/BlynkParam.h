@@ -88,7 +88,7 @@ public:
     void add(const char* str);
     BLYNK_FORCE_INLINE
     void add(const void* b, size_t l);
-#ifdef ARDUINO
+#if defined(ARDUINO) || defined(SPARK)
     void add(const String& str);
 #endif
 
@@ -145,7 +145,7 @@ void BlynkParam::add(const char* str)
     add(str, strlen(str)+1);
 }
 
-#ifdef ARDUINO
+#if defined(ARDUINO) || defined(SPARK)
 inline
 void BlynkParam::add(const String& str)
 {

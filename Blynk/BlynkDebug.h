@@ -23,6 +23,10 @@
     #include <inttypes.h>
 #endif
 
+#if defined(SPARK)
+    #include "application.h"
+#endif
+
 #if defined(ARDUINO)
     #if ARDUINO >= 100
         #include "Arduino.h"
