@@ -85,7 +85,7 @@ void BlynkFatal() BLYNK_NORETURN;
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
 
         static
-        void blynk_dbg_print(const BLYNK_PROGMEM char *fmt, ...)
+        void blynk_dbg_print(const char* BLYNK_PROGMEM fmt, ...)
         {
             va_list ap;
             va_start(ap, fmt);
