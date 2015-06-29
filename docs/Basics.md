@@ -88,7 +88,7 @@ param.getBuffer()
 param.getLength()
 ```
 
-### Tweet (not implemented in the app yet)
+### Tweet
 
 For tweeting, you need to configure the tweet widget in the App.
 
@@ -97,26 +97,20 @@ For tweeting, you need to configure the tweet widget in the App.
 Blynk.tweet("some text");
 ```
 
-### Push notification (not implemented in the app yet)
+### Push notification
 
 This will display a short note on the screen of the smartphone:
 
 ```cpp
 // Send a push notification to the App
-Blynk.push_notification("some text");
+Blynk.notify("some text");
 ```
 
-### Email (not implemented in the app yet)
+### Email
 
 Also you can send an email:
 
 ```cpp
-// Send a pre-defined email message
-Blynk.email();
-
-// Send an email message with custom body
-Blynk.email("some text");
-
 // Send an email message with custom body, subject and recipient
 Blynk.email("someone@blabla.com", "Subject", "some text");
 ```
