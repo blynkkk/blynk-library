@@ -72,21 +72,13 @@ public:
     size_t getLength() const { return len; }
 
     // Modification
-    BLYNK_FORCE_INLINE
     void add(int value);
-    BLYNK_FORCE_INLINE
     void add(unsigned int value);
-    BLYNK_FORCE_INLINE
     void add(long value);
-    BLYNK_FORCE_INLINE
     void add(unsigned long value);
-    BLYNK_FORCE_INLINE
     void add(float value);
-    BLYNK_FORCE_INLINE
     void add(double value);
-    BLYNK_FORCE_INLINE
     void add(const char* str);
-    BLYNK_FORCE_INLINE
     void add(const void* b, size_t l);
 #if defined(ARDUINO) || defined(SPARK)
     void add(const String& str);
