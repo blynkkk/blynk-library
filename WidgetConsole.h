@@ -21,8 +21,6 @@ public:
         : mPin(vPin), mOutQty(0)
     {}
 
-    virtual ~WidgetConsole() {}
-
     virtual size_t write(uint8_t byte) {
         mOutBuf[mOutQty++] = byte;
         if (mOutQty >= sizeof(mOutBuf)) {
