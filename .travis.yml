@@ -24,11 +24,12 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/NeoPixel
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
-    - PLATFORMIO_CI_SRC=examples/Widgets/Console
+    - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
     - PLATFORMIO_CI_SRC=examples/Widgets/LCD
     - PLATFORMIO_CI_SRC=examples/Widgets/LED
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
+    - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
 
 install:

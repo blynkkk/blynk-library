@@ -1,5 +1,5 @@
 /**
- * @file       WidgetConsole.h
+ * @file       WidgetTerminal.h
  * @author     Volodymyr Shymanskyy
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
@@ -7,17 +7,17 @@
  * @brief
  */
 
-#ifndef WidgetConsole_h
-#define WidgetConsole_h
+#ifndef WidgetTerminal_h
+#define WidgetTerminal_h
 
 #include <Print.h>
 #include <Blynk/BlynkApi.h>
 
-class WidgetConsole
+class WidgetTerminal
     : public Print
 {
 public:
-    WidgetConsole(int vPin)
+    WidgetTerminal(int vPin)
         : mPin(vPin), mOutQty(0)
     {}
 

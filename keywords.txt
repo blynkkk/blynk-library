@@ -2,7 +2,7 @@
 # Datatypes (KEYWORD1)
 #######################################
 Blynk	KEYWORD3
-WidgetConsole	KEYWORD1
+WidgetTerminal	KEYWORD1
 WidgetSD	KEYWORD1
 WidgetLCD	KEYWORD1
 

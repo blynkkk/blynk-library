@@ -13,10 +13,10 @@
  * This example code is in public domain.
  *
  **************************************************************
- * You can send/receive any data using WidgetConsole object.
+ * You can send/receive any data using WidgetTerminal object.
  *
  * App dashboard setup:
- *   Console widget on V1
+ *   Terminal widget on V1
  *
  **************************************************************/
 
@@ -29,8 +29,8 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// Attach virtual serial console to virtual pin 1
-WidgetConsole console(1);
+// Attach virtual serial terminal to virtual pin 1
+WidgetTerminal terminal(1);
 
 void setup()
 {
@@ -43,9 +43,9 @@ BLYNK_WRITE(1)
   BLYNK_LOG("Hey! I got a new message!");
 
   // Send it back
-  console.println("I got:");
-  console.write(param.getBuffer(), param.getLength());
-  console.flush();
+  terminal.println("I got:");
+  terminal.write(param.getBuffer(), param.getLength());
+  terminal.flush();
 }
 
 void loop()
