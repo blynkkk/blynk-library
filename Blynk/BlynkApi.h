@@ -96,27 +96,6 @@ public:
     }
 
     /**
-     * Sends an pre-defined email message
-     * The message is defined in the App
-     */
-    void email() {
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL);
-    }
-
-    /**
-     * Sends an email message
-     *
-     * @param msg Text of the message
-     */
-    template<typename T>
-    void email(const T& data) {
-        char mem[128];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(data);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
      * Sends an email message
      *
      * @param email   Email to send to
