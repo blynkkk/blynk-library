@@ -16,8 +16,6 @@
 
 struct BlynkReq
 {
-    uint16_t msg_id;
-    uint16_t status;
     uint8_t pin;
 };
 

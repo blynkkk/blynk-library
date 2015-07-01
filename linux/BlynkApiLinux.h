@@ -95,7 +95,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
     } else if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
-            BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
+            BlynkReq req = { (uint8_t)pin };
             handler(req);
         }
     } else {
@@ -103,7 +103,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         if (!strcmp(cmd, "vw")) {
             ++it;
             if (WidgetWriteHandler handler = GetWriteHandler(pin)) {
-                BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
+                BlynkReq req = { (uint8_t)pin };
                 char* start = (char*)it.asStr();
                 BlynkParam param2(start, len - (start - (char*)buff));
                 handler(req, param2);
