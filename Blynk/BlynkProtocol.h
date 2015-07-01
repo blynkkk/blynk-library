@@ -29,10 +29,10 @@ public:
         , lastActivityIn(0)
         , lastActivityOut(0)
         , lastHeartbeat(0)
-        , currentMsgId(0)
 #ifdef BLYNK_MSG_LIMIT
         , deltaCmd(0)
 #endif
+        , currentMsgId(0)
     {}
 
     bool connected() { return conn.connected(); }
