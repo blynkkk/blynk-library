@@ -19,7 +19,7 @@
  *   LCD widget on V1
  *
  **************************************************************/
-
+#define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
@@ -32,7 +32,13 @@ WidgetLCD lcd(1);
 
 void setup()
 {
+  Serial.begin(9600);
   Blynk.begin(auth);
+
+  while (!Blynk.connect()) {
+    // Wait until connected
+  }
+
   lcd.clear();
   lcd.print(0, 1, "Wow! :)");
 }

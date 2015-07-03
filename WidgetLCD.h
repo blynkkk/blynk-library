@@ -21,7 +21,8 @@ public:
         Blynk.virtualWrite(mPin, "clr");
     }
 
-    void print(int x, int y, const char* str) {
+    template<typename T>
+    void print(int x, int y, const T& str) {
         char mem[64] = "";
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("p");
