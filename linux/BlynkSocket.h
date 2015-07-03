@@ -58,14 +58,14 @@ public:
 
         if (::connect(sockfd, res->ai_addr, res->ai_addrlen) < 0)
         {
-            BLYNK_LOG("Can't connect to %s", BLYNK_DEFAULT_DOMAIN);
+            BLYNK_LOG("Can't connect to %s", domain);
             return false;
         }
 
         struct timeval tv;
         tv.tv_sec = 1;
         tv.tv_usec = 0;
-        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,sizeof(struct timeval));
+        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv, sizeof(struct timeval));
 
         int one = 1;
         setsockopt(sockfd, SOL_TCP, TCP_NODELAY, &one, sizeof(one));
@@ -86,7 +86,16 @@ public:
     }
 
     size_t read(void* buf, size_t len) {
-        return ::read(sockfd, buf, len);
+        ssize_t rlen = ::read(sockfd, buf, len);
+        if (rlen == -1) {
+            //BLYNK_LOG("Read error %d: %s", errno, strerror(errno));
+            if (errno == ETIMEDOUT || errno == EWOULDBLOCK || errno == EAGAIN) {
+                return 0;
+            }
+            disconnect();
+            return -1;
+        }
+        return rlen;
     }
 
     size_t write(const void* buf, size_t len) {

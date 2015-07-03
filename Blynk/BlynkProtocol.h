@@ -44,7 +44,7 @@ public:
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
 
 private:
-    bool readHeader(BlynkHeader& hdr);
+    int readHeader(BlynkHeader& hdr);
     uint16_t getNextMsgId();
 
 protected:
@@ -85,7 +85,7 @@ bool BlynkProtocol<Transp>::connect()
 #endif
 
     BlynkHeader hdr;
-    if (!readHeader(hdr)) {
+    if (readHeader(hdr) == 0) {
         hdr.length = BLYNK_TIMEOUT;
     }
 
@@ -136,8 +136,9 @@ bool BlynkProtocol<Transp>::run(bool avail)
     if (avail || conn.available() > 0) {
         //BLYNK_LOG("Available: %d", conn.available());
         //const unsigned long t = micros();
-        if (!processInput())
+        if (!processInput()) {
             return false;
+        }
         //BLYNK_LOG("Proc time: %d", micros() - t);
     }
 
@@ -171,15 +172,18 @@ BLYNK_FORCE_INLINE
 bool BlynkProtocol<Transp>::processInput(void)
 {
     BlynkHeader hdr;
-    if (!readHeader(hdr))
-        return false;
+    const int ret = readHeader(hdr);
 
-    if (hdr.msg_id == 0) {
+    if (ret == 0) {
+        return true; // Considered OK (no data on input)
+    }
+
+    if (ret < 0 || hdr.msg_id == 0) {
 #ifdef BLYNK_DEBUG
-        BLYNK_LOG("Got msg id 0");
+        BLYNK_LOG("Wrong header on input");
 #endif
         conn.disconnect();
-	return false;
+        return false;
     }
 
     switch (hdr.type)
@@ -228,17 +232,22 @@ bool BlynkProtocol<Transp>::processInput(void)
 }
 
 template <class Transp>
-bool BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
+int BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 {
-    if (sizeof(hdr) != conn.read(&hdr, sizeof(hdr))) {
-        return false;
+    size_t rlen = conn.read(&hdr, sizeof(hdr));
+    if (rlen == 0) {
+        return 0;
+    }
+
+    if (sizeof(hdr) != rlen) {
+    	return -1;
     }
     hdr.msg_id = ntohs(hdr.msg_id);
     hdr.length = ntohs(hdr.length);
 #ifdef BLYNK_DEBUG
     BLYNK_LOG(">msg %d,%u,%u", hdr.type, hdr.msg_id, hdr.length);
 #endif
-    return true;
+    return rlen;
 }
 
 template <class Transp>
