@@ -8,7 +8,7 @@
 
 CC = g++
 CFLAGS  = -I ../ -I ./ -DLINUX
-LDFLAGS =
+LDFLAGS = -lrt -lpthread
 
 ifeq ($(build),debug)
 	CFLAGS += -c -g2 -O0 \
@@ -46,7 +46,7 @@ endif
 
 ifeq ($(target),raspberry)
 	CFLAGS += -DRASPBERRY
-	LDFLAGS += -lwiringPi -lpthread
+	LDFLAGS += -lwiringPi
 endif
 
 SOURCES=main.cpp \
