@@ -11,6 +11,7 @@ cloc:
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
+	-rm -rf ./linux
 ifdef PLATFORMIO_CI_BOARDS_ARGS
 	platformio ci --lib="." $(PLATFORMIO_CI_BOARDS_ARGS)
 else
