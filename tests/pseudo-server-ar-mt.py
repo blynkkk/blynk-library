@@ -35,7 +35,7 @@ SNDBUF = 0      # No SNDBUF override
 RCVBUF = 0      # No RCVBUF override
 MSG_QTY = 10    # Amount of messages
 SLEEP = 1.0     # Wait some time between IO
-HW_PIN = 14     # Pin #
+HW_PIN = "A0"   # Pin #
 DUMP = 0
 
 for o, v in opts:
