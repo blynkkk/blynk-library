@@ -23,6 +23,7 @@ This document hints how to write a custom library.
 * Serialize/deserialize Blynk protocol
 * Handle direct pin operations
 * Should be portable across similar devices (or same technology/programming language), if possible
+* Should detect and notify the user about [troubles](./Troubleshooting.md) where possible (especially Flood)
 
 ### Adding new HW board to the Blynk mobile app
 
