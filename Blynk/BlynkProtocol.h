@@ -152,15 +152,12 @@ bool BlynkProtocol<Transp>::run(bool avail)
 #endif
         conn.disconnect();
         return false;
-    } else if ((t - lastActivityIn > 1000UL * BLYNK_HEARTBEAT ||
-               t - lastActivityOut > 1000UL * BLYNK_HEARTBEAT) &&
-               t - lastHeartbeat     > BLYNK_TIMEOUT_MS)
+    } else if ((t - lastActivityIn  > 1000UL * BLYNK_HEARTBEAT ||
+                t - lastActivityOut > 1000UL * BLYNK_HEARTBEAT) &&
+                t - lastHeartbeat   > BLYNK_TIMEOUT_MS)
     {
-        // Send ping if we didn't both send and receive something for BLYNK_HEARTBEAT seconds
-#ifdef BLYNK_DEBUG
-        BLYNK_LOG("Heartbeat");
-#endif
-
+        // Send ping if we didn't either send or receive something
+    	// for BLYNK_HEARTBEAT seconds
         sendCmd(BLYNK_CMD_PING);
         lastHeartbeat = t;
     }
