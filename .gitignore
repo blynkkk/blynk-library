@@ -1,0 +1,8 @@
+linux/blynk
+linux/wiringPi
+tests/ble/bluepy
+*.pyc
+*.o
+.cproject
+.project
+.settings
