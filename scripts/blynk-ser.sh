@@ -159,7 +159,7 @@ while true; do
 done
 
 # Construct command
-GEN_ATTR="-d -d -T 15"
+GEN_ATTR="-d -d"
 
 TCP_ATTR="nodelay" #,nonblock=1,rcvtimeo=1,sndtimeo=1
 SER_ATTR="raw,echo=0,clocal=1,cs8,nonblock=1"
