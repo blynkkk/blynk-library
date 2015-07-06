@@ -81,7 +81,7 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <stdio.h>
         #include <stdarg.h>
 
-        #define BLYNK_DBG_DUMP(msg, addr, len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
+        #define BLYNK_DBG_DUMP(msg, addr, len) if (len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
 #if defined(__SAM3X8E__)
         #define BLYNK_LOG(msg, ...)  blynk_dbg_print(msg, ##__VA_ARGS__)
@@ -116,7 +116,7 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <errno.h>
         #include <signal.h>
 
-        #define BLYNK_DBG_DUMP(msg, addr, len) { fprintf(BLYNK_PRINT, msg); fwrite(addr, len, 1, BLYNK_PRINT); fputc('\n', BLYNK_PRINT); }
+        #define BLYNK_DBG_DUMP(msg, addr, len) if (len) { fprintf(BLYNK_PRINT, msg); fwrite(addr, len, 1, BLYNK_PRINT); fputc('\n', BLYNK_PRINT); }
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_LOG(msg, ...)  { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", millis(), ##__VA_ARGS__); }
         #define BLYNK_ASSERT(expr)   assert(expr)
