@@ -11,20 +11,41 @@
 #ifndef BlynkConfig_h
 #define BlynkConfig_h
 
-// TODO: Document each setting
+/***************************************************
+ * Change these settings to match your need
+ ***************************************************/
 
-// Change these settings to match your need
 #define BLYNK_DEFAULT_DOMAIN "cloud.blynk.cc"
 #define BLYNK_DEFAULT_PORT   8442
-#define BLYNK_MAX_READBYTES  255
 
-// Professional settings
+/***************************************************
+ * Professional settings
+ ***************************************************/
+// Library version.
 #define BLYNK_VERSION        "0.2.4"
+
+// Heartbeat period in seconds.
 #define BLYNK_HEARTBEAT      10
+
+// Network timeout in milliseconds.
 #define BLYNK_TIMEOUT_MS     1500
+
+// Limit the amount of outgoing commands.
 #define BLYNK_MSG_LIMIT      20
-#define BLYNK_BUILTIN
+
+// Limit the incoming command length.
+#define BLYNK_MAX_READBYTES  256
+
+// Uncomment to disable built-in analog and digital operations.
+//#define BLYNK_NO_BUILTIN
+
+// Uncomment to disable providing info about device to the server.
+//#define BLYNK_NO_INFO
+
+// Uncomment to enable debug prints.
 //#define BLYNK_DEBUG
+
+// Uncomment to enable experimental functions.
 //#define BLYNK_EXPERIMENTAL
 
 #endif

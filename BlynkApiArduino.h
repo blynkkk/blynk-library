@@ -48,7 +48,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (it >= param.end())
         return;
     const char* cmd = it.asStr();
-
+#ifndef BLYNK_NO_INFO
     if (!strcmp(cmd, "info")) {
         static const char profile[] BLYNK_PROGMEM =
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
@@ -75,6 +75,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #endif
         return;
     }
+#endif
 
     if (++it >= param.end())
         return;
@@ -82,13 +83,12 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #if defined(analogInputToDigitalPin)
 	if (pin == 0 && it.asStr()[0] == 'A') {
 		pin = analogInputToDigitalPin(atoi(it.asStr()+1));
-		BLYNK_LOG("Convert %s -> %d", it.asStr(), pin);
 	}
 #else
 	#warning "analogInputToDigitalPin not defined => Named analog pins will not work"
 #endif
 
-#ifdef BLYNK_BUILTIN
+#ifndef BLYNK_NO_BUILTIN
 
     if (!strcmp(cmd, "dr")) {
         char mem[16];
@@ -126,7 +126,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             return;
         }
 
-#ifdef BLYNK_BUILTIN
+#ifndef BLYNK_NO_BUILTIN
 
         if (!strcmp(cmd, "pm")) {
             while (it < param.end()) {
