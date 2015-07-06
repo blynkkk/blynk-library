@@ -19,6 +19,8 @@
 #define BLYNK_INFO_CONNECTION  "CC3000"
 #endif
 
+#define BLYNK_ATOMIC_SEND
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <IPAddress.h>
