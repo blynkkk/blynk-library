@@ -30,7 +30,8 @@ public:
         Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    void digitalWrite(int pin, int val) {
+    template <typename T>
+    void digitalWrite(const T& pin, int val) {
         char mem[64];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(mPin);
@@ -40,7 +41,8 @@ public:
         Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    void analogWrite(int pin, int val) {
+    template <typename T>
+    void analogWrite(const T& pin, int val) {
         char mem[64];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(mPin);
@@ -62,7 +64,7 @@ public:
     }
 
     void virtualWrite(int pin, const void* buff, size_t len) {
-        char mem[16];
+        char mem[8];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(mPin);
         cmd.add("vw");
