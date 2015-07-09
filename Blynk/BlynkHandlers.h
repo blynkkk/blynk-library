@@ -41,9 +41,11 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
     BLYNK_WRITE(pin) { name = param.asLong(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 
+#ifndef BLYNK_NO_FLOAT
 #define BLYNK_VAR_DOUBLE(name, pin)	double name;  \
     BLYNK_WRITE(pin) { name = param.asDouble(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
+#endif
 
 #ifdef ARDUINO
 #define BLYNK_VAR_STRING(name, pin)	String name;  \

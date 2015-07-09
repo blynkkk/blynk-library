@@ -54,4 +54,7 @@
 // Uncomment to enable experimental functions.
 //#define BLYNK_EXPERIMENTAL
 
+// Uncomment to disable all float/double usage
+//#define BLYNK_NO_FLOAT
+
 #endif

@@ -32,7 +32,9 @@ public:
         const char* asStr() const       { return ptr; }
         int         asInt() const       { return atoi(ptr); }
         long        asLong() const      { return atol(ptr); }
+#ifndef BLYNK_NO_FLOAT
         double      asDouble() const    { return atof(ptr); }
+#endif
         bool isValid() const            { return ptr != NULL; }
 
         bool operator <  (const iterator& it) const { return ptr < it.ptr; }
@@ -60,7 +62,9 @@ public:
     const char* asStr() const       { return buff; }
     int         asInt() const       { return atoi(buff); }
     long        asLong() const      { return atol(buff); }
+#ifndef BLYNK_NO_FLOAT
     double      asDouble() const    { return atof(buff); }
+#endif
 
     iterator begin() const { return iterator(buff); }
     iterator end() const   { return iterator(buff+len); }
@@ -76,8 +80,10 @@ public:
     void add(unsigned int value);
     void add(long value);
     void add(unsigned long value);
+#ifndef BLYNK_NO_FLOAT
     void add(float value);
     void add(double value);
+#endif
     void add(const char* str);
     void add(const void* b, size_t l);
 #if defined(ARDUINO) || defined(SPARK)
@@ -184,6 +190,8 @@ void BlynkParam::add(const String& str)
         add(str);
     }
 
+#ifndef BLYNK_NO_FLOAT
+
 	inline
     void BlynkParam::add(float value)
     {
@@ -199,6 +207,7 @@ void BlynkParam::add(const String& str)
         dtostrf(value, 5, 3, str);
         add(str);
     }
+#endif
 
 #else
 
@@ -228,6 +237,30 @@ void BlynkParam::add(const String& str)
         len += snprintf(buff+len, buff_size-len, "%lu", value)+1;
     }
 
+#ifndef BLYNK_NO_FLOAT
+
+#if defined(ESP8266)
+
+	extern char* dtostrf_internal(double number, signed char width, unsigned char prec, char *s);
+
+	inline
+    void BlynkParam::add(float value)
+    {
+        char str[33];
+        dtostrf_internal(value, 5, 3, str);
+        add(str);
+    }
+
+	inline
+    void BlynkParam::add(double value)
+    {
+        char str[33];
+        dtostrf_internal(value, 5, 3, str);
+        add(str);
+    }
+
+#else
+
 	inline
     void BlynkParam::add(float value)
     {
@@ -239,6 +272,10 @@ void BlynkParam::add(const String& str)
     {
         len += snprintf(buff+len, buff_size-len, "%2.3f", value)+1;
     }
+
+#endif
+
+#endif
 
 #endif
 
