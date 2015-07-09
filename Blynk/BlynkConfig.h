@@ -28,13 +28,19 @@
 #define BLYNK_HEARTBEAT      10
 
 // Network timeout in milliseconds.
-#define BLYNK_TIMEOUT_MS     1500
+#ifndef BLYNK_TIMEOUT_MS
+#define BLYNK_TIMEOUT_MS     2000UL
+#endif
 
 // Limit the amount of outgoing commands.
+#ifndef BLYNK_MSG_LIMIT
 #define BLYNK_MSG_LIMIT      20
+#endif
 
 // Limit the incoming command length.
+#ifndef BLYNK_MAX_READBYTES
 #define BLYNK_MAX_READBYTES  256
+#endif
 
 // Uncomment to disable built-in analog and digital operations.
 //#define BLYNK_NO_BUILTIN

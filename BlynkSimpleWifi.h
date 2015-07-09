@@ -15,6 +15,9 @@
 #define BLYNK_INFO_CONNECTION  "HDG204"
 #endif
 
+// Fix for WiFi shield (it has a crazy ping duration)
+#define BLYNK_TIMEOUT_MS 6000UL
+
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
 #include <WiFi.h>
@@ -51,7 +54,6 @@ public:
                  ::delay(5000);
              }
          }
-         BLYNK_LOG("Connected to WiFi");
     }
 
     void begin(const char* auth,

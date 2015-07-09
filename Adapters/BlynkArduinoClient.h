@@ -27,7 +27,7 @@ public:
     BlynkArduinoClient(Client& client)
         : client(client), domain(NULL), port(0)
     {
-        client.setTimeout(3000);
+        client.setTimeout(BLYNK_TIMEOUT_MS);
     }
 
     void begin(IPAddress a, uint16_t p) {
