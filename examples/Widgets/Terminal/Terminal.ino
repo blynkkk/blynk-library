@@ -39,7 +39,7 @@ void setup()
 
   Blynk.connect();
 
-  terminal.println(_F("Blynk v" BLYNK_VERSION ": Device started"));
+  terminal.println(F("Blynk v" BLYNK_VERSION ": Device started"));
   terminal.flush();
 }
 
