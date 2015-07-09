@@ -25,8 +25,10 @@ const T& BlynkMax(const T& a, const T& b)
 
 template <unsigned N, typename T>
 void BlynkAverageSample (T& avg, const T& input) {
-    avg -= avg/N;
-    avg += input/N;
+	avg -= avg/N;
+	const T add = input/N;
+	// Fix for shorter delays
+	avg += (add > 0) ? add : -1;
 }
 
 #endif

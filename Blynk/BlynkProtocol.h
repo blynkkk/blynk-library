@@ -77,6 +77,10 @@ bool BlynkProtocol<Transp>::connect()
         return false;
     }
 
+#ifdef BLYNK_MSG_LIMIT
+    deltaCmd = 1000;
+#endif
+
     uint16_t id = getNextMsgId();
     sendCmd(BLYNK_CMD_LOGIN, id, authkey, strlen(authkey));
 
@@ -113,9 +117,6 @@ bool BlynkProtocol<Transp>::connect()
     }
 
     lastHeartbeat = lastActivityIn = lastActivityOut = millis();
-#ifdef BLYNK_MSG_LIMIT
-    deltaCmd = 1000;
-#endif
     BLYNK_LOG("Ready!");
 #ifdef BLYNK_DEBUG
     BLYNK_LOG("Roundtrip: %dms", lastActivityIn-t);
@@ -335,9 +336,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 
 #endif
 
-    const uint32_t ts = millis();
 #ifdef BLYNK_MSG_LIMIT
-    BlynkAverageSample<64>(deltaCmd, ts - lastActivityOut);
+    const uint32_t ts = millis();
+    BlynkAverageSample<32>(deltaCmd, ts - lastActivityOut);
     lastActivityOut = ts;
     //BLYNK_LOG("Delta: %u", deltaCmd);
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
@@ -346,7 +347,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         ::delay(5000);
     }
 #else
-    lastActivityOut = ts;
+    lastActivityOut = millis();
 #endif
 
 }
