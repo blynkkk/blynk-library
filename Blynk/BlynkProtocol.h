@@ -337,7 +337,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 
     const uint32_t ts = millis();
 #ifdef BLYNK_MSG_LIMIT
-    BlynkAverageSample<32>(deltaCmd, ts - lastActivityOut);
+    BlynkAverageSample<64>(deltaCmd, ts - lastActivityOut);
     lastActivityOut = ts;
     //BLYNK_LOG("Delta: %u", deltaCmd);
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
