@@ -36,6 +36,11 @@ void setup()
 {
   Serial.begin(9600);
   Blynk.begin(auth);
+
+  Blynk.connect();
+
+  terminal.println(_F("Blynk v" BLYNK_VERSION ": Device started"));
+  terminal.flush();
 }
 
 BLYNK_WRITE(1)
