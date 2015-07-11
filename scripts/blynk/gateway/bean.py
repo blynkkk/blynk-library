@@ -1,14 +1,16 @@
 from __future__ import print_function
 
-#sudo hciconfig hci0 reset
-#sudo hciconfig hci0 up
-
-
-from .bluepy.btle import UUID, Peripheral, DefaultDelegate
 import threading
 import struct
 import os, sys, time, getopt
-#from threading import Thread
+import binascii
+
+from .bluepy.btle import UUID, Peripheral, DefaultDelegate
+
+try:
+    from intelhex import IntelHex
+except:
+    pass
 
 __author__    = "Volodymyr Shymanskyy"
 __copyright__ = "Copyright (c) 2015 Volodymyr Shymanskyy"
@@ -42,7 +44,7 @@ else:
             msb = (lsb ^ (x >> 3) ^ (x << 4)) & 255
             lsb = (x ^ (x << 5)) & 255
         return (msb << 8) + lsb
-    
+
 def chunkstring(string, length):
     return (string[0+i:length+i] for i in range(0, len(string), length))
 
@@ -109,12 +111,13 @@ class BlynkLightBlueBean(DefaultDelegate):
             self.buffin = [None]*10
             self.got1 = False
             self.serialin = b''
-            
+
             self.service = self.conn.getServiceByUUID(_LBN_UUID(0x10))
             self.serial = self.service.getCharacteristics(_LBN_UUID(0x11)) [0]
             
             # Turn on notificiations
             self.conn.writeCharacteristic(0x2f, b'\x01\x00', False)
+            # Connection workaround
             self.conn.waitForNotifications(20)
       
     def close(self):
@@ -200,8 +203,40 @@ class BlynkLightBlueBean(DefaultDelegate):
             if crc == crc_:
                 if cmd == BlynkLightBlueBean.MSG_ID_SERIAL_DATA:
                     self.serialin += self.buffin[4:-2]
+                elif cmd == BlynkLightBlueBean.MSG_ID_BL_STATUS:
+                    self.got_upload_satus = True
+
             else:
                 print("CRC check failure")
             
             self.buffin = [None]*10
             self.got1 = False
+
+    def uploadHex(self, hex_file):
+        data = IntelHex(hex_file).tobinstr()
+        print('Hex size:', len(data))
+        chunks = list(chunkstring(data, 64))
+        chunks_qty = len(chunks)
+        print('Chunks:', len(chunks))
+
+        name = "Hooray"
+        
+        while len(name) < 20:
+            name += " "
+        
+        self.got_upload_satus = False
+        #size:32, crc:32, time:32, namelen:8, name
+        self.sendCmd(BlynkLightBlueBean.MSG_ID_BL_CMD_START, struct.pack("<LLLB",
+            len(data),
+            binascii.crc32(data) & 0xFFFFFFFF,
+            int(time.time()),
+            len(name)
+        ) + name.encode('ascii'))
+        
+        while not self.got_upload_satus:
+            self.conn.waitForNotifications(1)
+        
+        for i in range(0, chunks_qty):
+            self.sendCmd(BlynkLightBlueBean.MSG_ID_BL_FW_BLOCK, chunks[i])
+            print('Upload:', (100 * i) // chunks_qty, '%', end='\r')
+            self.conn.waitForNotifications(0.1)
