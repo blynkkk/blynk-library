@@ -205,6 +205,8 @@ class BlynkLightBlueBean(DefaultDelegate):
                     self.serialin += self.buffin[4:-2]
                 elif cmd == BlynkLightBlueBean.MSG_ID_BL_STATUS:
                     self.got_upload_satus = True
+                else:
+                    print("cmd %d>" % cmd, hexdump(self.buffin[4:-2]))
 
             else:
                 print("CRC check failure")
