@@ -40,4 +40,6 @@ class BlynkSslClient(BlynkTcpClient):
         
         self.sock = ctx.wrap_socket(s)
         self.sock.connect((self.host, self.port))
+        
         print("Connected to SSL:%s:%d" % (self.host, self.port))
+        s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
