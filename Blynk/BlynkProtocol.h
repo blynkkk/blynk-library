@@ -52,7 +52,9 @@ public:
     	       (millis() - started < timeout))
     	{
     		run();
+#if defined(ARDUINO) && (ARDUINO >= 151)
     		yield();
+#endif
     	}
     	return state == CONNECTED;
     }
