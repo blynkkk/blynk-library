@@ -2,7 +2,7 @@ linux/blynk
 linux/wiringPi
 tests/ble/bluepy
 scripts/certs/client.*
-scripts/gateway/bluepy
+scripts/blynk/gateway/bluepy
 *.pyc
 *.o
 .cproject
