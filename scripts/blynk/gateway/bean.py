@@ -4,7 +4,7 @@ from __future__ import print_function
 #sudo hciconfig hci0 up
 
 
-from bluepy.btle import UUID, Peripheral, DefaultDelegate
+from .bluepy.btle import UUID, Peripheral, DefaultDelegate
 import threading
 import struct
 import os, sys, time, getopt
@@ -15,24 +15,41 @@ __copyright__ = "Copyright (c) 2015 Volodymyr Shymanskyy"
 __license__   = "MIT"
 __status__    = "Prototype"
 
-def hexdump(s):
-    return ":".join("{:02x}".format(ord(c)) for c in s)
+if (sys.version_info > (3, 0)):
+    def hexdump(s):
+        return ":".join("{:02x}".format(c) for c in s)
+      
+    def crc16(data, crc=0):
+        msb = crc >> 8
+        lsb = crc & 255
+        for c in data:
+            x = c ^ msb
+            x ^= (x >> 4)
+            msb = (lsb ^ (x >> 3) ^ (x << 4)) & 255
+            lsb = (x ^ (x << 5)) & 255
+        return (msb << 8) + lsb
 
+else:
+    def hexdump(s):
+        return ":".join("{:02x}".format(ord(c)) for c in s)
+      
+    def crc16(data, crc=0):
+        msb = crc >> 8
+        lsb = crc & 255
+        for c in data:
+            x = ord(c) ^ msb
+            x ^= (x >> 4)
+            msb = (lsb ^ (x >> 3) ^ (x << 4)) & 255
+            lsb = (x ^ (x << 5)) & 255
+        return (msb << 8) + lsb
+    
 def chunkstring(string, length):
     return (string[0+i:length+i] for i in range(0, len(string), length))
 
 def _LBN_UUID(val):
     return UUID("%08X-c5b1-4b44-b512-1370f02d74de" % (0xa495ff00+val))
 
-def crc16(data, crc=0):
-    msb = crc >> 8
-    lsb = crc & 255
-    for c in data:
-        x = ord(c) ^ msb
-        x ^= (x >> 4)
-        msb = (lsb ^ (x >> 3) ^ (x << 4)) & 255
-        lsb = (x ^ (x << 5)) & 255
-    return (msb << 8) + lsb
+
 
 class BlynkLightBlueBean(DefaultDelegate):
     # https://github.com/PunchThrough/bean-documentation/blob/master/app_message_types.md
@@ -55,7 +72,7 @@ class BlynkLightBlueBean(DefaultDelegate):
     MSG_ID_BT_END_GATE           = 0x0550
     MSG_ID_BL_CMD_START          = 0x1000
     MSG_ID_BL_FW_BLOCK           = 0x1001
-    MSG_ID_BL_STATUS             = 0x1002
+    MSG_ID_BL_STATUS             = 0x1082
     MSG_ID_BL_GET_META           = 0x1003
     MSG_ID_CC_LED_WRITE          = 0x2000
     MSG_ID_CC_LED_WRITE_ALL      = 0x2001
@@ -91,13 +108,13 @@ class BlynkLightBlueBean(DefaultDelegate):
             self.count = 0
             self.buffin = [None]*10
             self.got1 = False
-            self.serialin = ''
+            self.serialin = b''
             
             self.service = self.conn.getServiceByUUID(_LBN_UUID(0x10))
             self.serial = self.service.getCharacteristics(_LBN_UUID(0x11)) [0]
             
             # Turn on notificiations
-            self.conn.writeCharacteristic(0x2f, '\x01\x00', False)
+            self.conn.writeCharacteristic(0x2f, b'\x01\x00', False)
             self.conn.waitForNotifications(20)
       
     def close(self):
@@ -132,14 +149,14 @@ class BlynkLightBlueBean(DefaultDelegate):
         crc = struct.pack("<H", crc16(gst, 0xFFFF))
         gst += crc
         
-        gt_qty = len(gst)/19
+        gt_qty = len(gst) // 19
         if len(gst) % 19 != 0:
             gt_qty += 1
         
         #amnt = len(gst) / gt_qty
         optimal_packet_size = 19
         
-        for ch in xrange(0, gt_qty):
+        for ch in range(0, gt_qty):
             data = gst[:optimal_packet_size]
             gst = gst[optimal_packet_size:]
             
@@ -158,11 +175,11 @@ class BlynkLightBlueBean(DefaultDelegate):
         self.count = (self.count + 1) % 4
 
     def writeRaw(self, data):
-        self.conn.writeCharacteristic(0x0b, data, False)
+        self.conn.writeCharacteristic(0x0b, data.encode('ascii'), False)
 
     def handleNotification(self, cHandle, data):
         #print(">", hexdump(data))
-        gt = struct.unpack("B", data[0]) [0]
+        gt = struct.unpack("B", data[:1]) [0]
         #gt_cntr = gt & 0x60
         gt_left = gt & 0x1F
         
@@ -175,7 +192,7 @@ class BlynkLightBlueBean(DefaultDelegate):
         if self.got1 and not self.buffin.count(None):
             #print("Got ", len(self.buffin), "packets")
             self.buffin.reverse()
-            self.buffin = ''.join(self.buffin)
+            self.buffin = b''.join(self.buffin)
             
             crc_ = crc16(self.buffin[:-2], 0xFFFF)
             dlen, cmd = struct.unpack("!BxH", self.buffin[:4])
