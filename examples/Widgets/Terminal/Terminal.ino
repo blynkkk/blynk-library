@@ -48,8 +48,11 @@ BLYNK_WRITE(1)
   BLYNK_LOG("Hey! I got a new message!");
 
   // Send it back
-  terminal.println("I got:");
+  terminal.print("I got:");
   terminal.write(param.getBuffer(), param.getLength());
+  terminal.println();
+  
+  // Ensure everything is sent
   terminal.flush();
 }
 
