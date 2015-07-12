@@ -135,7 +135,7 @@ class BlynkLightBlueBean(DefaultDelegate):
         if len(self.serialin) == 0:
             self.conn.waitForNotifications(0.1)
             waited = True
-                        
+
         if qty > len(self.serialin):
             qty = len(self.serialin)
         
@@ -241,4 +241,4 @@ class BlynkLightBlueBean(DefaultDelegate):
         for i in range(0, chunks_qty):
             self.sendCmd(BlynkLightBlueBean.MSG_ID_BL_FW_BLOCK, chunks[i])
             print('Upload:', (100 * i) // chunks_qty, '%', end='\r')
-            self.conn.waitForNotifications(0.1)
+            self.conn.waitForNotifications(0.05)
