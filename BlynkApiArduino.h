@@ -63,6 +63,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #ifdef BLYNK_INFO_CONNECTION
             BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
+            BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
         ;
         const size_t profile_len = sizeof(profile)-1;
 
@@ -136,8 +137,10 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                     pinMode(pin, INPUT);
                 } else if (!strcmp(it.asStr(), "out") || !strcmp(it.asStr(), "pwm")) {
                     pinMode(pin, OUTPUT);
+#ifdef INPUT_PULLUP
                 } else if (!strcmp(it.asStr(), "pu")) {
                     pinMode(pin, INPUT_PULLUP);
+#endif
                 } else {
 #ifdef BLYNK_DEBUG
                     BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
