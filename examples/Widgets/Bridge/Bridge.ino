@@ -49,9 +49,11 @@ void setup()
 {
   Blynk.begin(auth);
 
-  if (Blynk.connect()) {
-    bridge1.setAuthToken("OtherAuthToken");
+  while (!Blynk.connect()) {
+    // Wait until connected
   }
+
+  bridge1.setAuthToken("OtherAuthToken");
 
   // Call blynkAnotherDevice every second
   timer.setInterval(1000L, blynkAnotherDevice);
