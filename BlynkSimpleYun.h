@@ -30,24 +30,38 @@ public:
         : Base(transp)
     {}
 
-    void begin(const char* auth,
-               const char* domain = BLYNK_DEFAULT_DOMAIN,
-               uint16_t port      = BLYNK_DEFAULT_PORT)
+    void config(const char* auth,
+            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        BLYNK_LOG("Bridge init...");
-        Bridge.begin();
-        this->conn.begin(domain, port);
+    	Base::begin(auth);
+    	this->conn.begin(domain, port);
+    }
+
+    void config(const char* auth,
+            	IPAddress   ip,
+                uint16_t    port = BLYNK_DEFAULT_PORT)
+    {
+    	Base::begin(auth);
+    	this->conn.begin(ip, port);
     }
 
     void begin(const char* auth,
-               IPAddress ip,
-               uint16_t port)
+               const char* domain = BLYNK_DEFAULT_DOMAIN,
+               uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
         BLYNK_LOG("Bridge init...");
         Bridge.begin();
-        this->conn.begin(ip, port);
+    	config(auth, domain, port);
+    }
+
+    void begin(const char* auth,
+               IPAddress   ip,
+               uint16_t    port = BLYNK_DEFAULT_PORT)
+    {
+        BLYNK_LOG("Bridge init...");
+        Bridge.begin();
+    	config(auth, ip, port);
     }
 
 };

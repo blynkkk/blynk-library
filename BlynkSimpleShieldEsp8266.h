@@ -102,7 +102,7 @@ public:
         , wifi(NULL)
     {}
 
-    bool wifi_conn(const char* ssid, const char* pass)
+    bool connectWiFi(const char* ssid, const char* pass)
     {
         BLYNK_LOG("Connecting to %s", ssid);
         if (!wifi->setEcho(0)) {
@@ -126,6 +126,16 @@ public:
         return true;
     }
 
+    void config(ESP8266&    esp8266,
+                const char* auth,
+            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
+    {
+    	Base::begin(auth);
+    	wifi = &esp8266;
+    	this->conn.begin_domain(wifi, domain, port);
+    }
+
     void begin(const char* auth,
                ESP8266&    esp8266,
                const char* ssid,
@@ -133,10 +143,8 @@ public:
                const char* domain = BLYNK_DEFAULT_DOMAIN,
                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        wifi = &esp8266;
-        wifi_conn(ssid, pass);
-        this->conn.begin_domain(wifi, domain, port);
+    	config(esp8266, auth, domain, port);
+        connectWiFi(ssid, pass);
     }
 
 private:

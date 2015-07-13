@@ -30,6 +30,22 @@ public:
         : Base(transp)
     {}
 
+    void config(const char* auth,
+            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
+    {
+    	Base::begin(auth);
+    	this->conn.begin(domain, port);
+    }
+
+    void config(const char* auth,
+            	IPAddress   ip,
+                uint16_t    port = BLYNK_DEFAULT_PORT)
+    {
+    	Base::begin(auth);
+    	this->conn.begin(ip, port);
+    }
+
     // DHCP with domain
     void begin( const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,

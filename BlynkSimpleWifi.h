@@ -31,7 +31,7 @@ public:
         : Base(transp)
     {}
 
-    void wifi_conn(const char* ssid, const char* pass)
+    void connectWiFi(const char* ssid, const char* pass)
     {
         int status = WL_IDLE_STATUS;
          // check for the presence of the shield:
@@ -47,7 +47,11 @@ public:
          // attempt to connect to Wifi network:
          while (true) {
              BLYNK_LOG("Connecting to %s...", ssid);
-             status = WiFi.begin((char*)ssid, pass);
+             if (pass && strlen(pass)) {
+            	 status = WiFi.begin((char*)ssid, pass);
+             } else {
+            	 status = WiFi.begin((char*)ssid);
+             }
              if (status == WL_CONNECTED) {
                  break;
              } else {
@@ -56,26 +60,40 @@ public:
          }
     }
 
+    void config(const char* auth,
+            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
+    {
+    	Base::begin(auth);
+    	this->conn.begin(domain, port);
+    }
+
+    void config(const char* auth,
+            	IPAddress   ip,
+                uint16_t    port = BLYNK_DEFAULT_PORT)
+    {
+    	Base::begin(auth);
+    	this->conn.begin(ip, port);
+    }
+
     void begin(const char* auth,
                const char* ssid,
                const char* pass,
                const char* domain = BLYNK_DEFAULT_DOMAIN,
                uint16_t port      = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        wifi_conn(ssid, pass);
-        this->conn.begin(domain, port);
+        connectWiFi(ssid, pass);
+    	config(auth, domain, port);
     }
 
     void begin(const char* auth,
                const char* ssid,
                const char* pass,
-               IPAddress ip,
-               uint16_t port)
+               IPAddress   ip,
+               uint16_t    port = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        wifi_conn(ssid, pass);
-        this->conn.begin(ip, port);
+        connectWiFi(ssid, pass);
+    	config(auth, ip, port);
     }
 
 };

@@ -64,9 +64,9 @@ public:
         : Base(transp), cc3000(cc3000)
     {}
 
-    void wifi_begin (const char* ssid,
+    void connectWiFi(const char* ssid,
                      const char* pass,
-                     uint8_t secmode)
+                     uint8_t     secmode)
     {
         if (!cc3000.begin())
         {
@@ -82,6 +82,7 @@ public:
             }
         }
 #endif
+
         /*if (!cc3000.deleteProfiles())
         {
             BLYNK_FATAL("Fail deleting old profiles");
@@ -111,15 +112,11 @@ public:
 #endif
     }
 
-    void begin( const char* auth,
-                const char* ssid,
-                const char* pass,
-                uint8_t secmode,
-                const char* domain = BLYNK_DEFAULT_DOMAIN,
-                uint16_t port      = BLYNK_DEFAULT_PORT)
+    void config(const char* auth,
+            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);
-        wifi_begin(ssid, pass, secmode);
         uint32_t ip = 0;
         BLYNK_LOG("Looking for %s", domain);
         while (ip == 0) {
@@ -128,20 +125,37 @@ public:
                 ::delay(500);
             }
         }
-
         this->conn.begin(ip, port);
+    }
+
+    void config(const char* auth,
+            	IPAddress   ip,
+                uint16_t    port = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        this->conn.begin(cc3000.IP2U32(ip[0],ip[1],ip[2],ip[3]), port);
     }
 
     void begin( const char* auth,
                 const char* ssid,
                 const char* pass,
-                uint8_t secmode,
-                IPAddress addr,
-                uint16_t port)
+                uint8_t     secmode,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        wifi_begin(ssid, pass, secmode);
-        this->conn.begin(cc3000.IP2U32(addr[0],addr[1],addr[2],addr[3]), port);
+        connectWiFi(ssid, pass, secmode);
+        config(auth, domain, port);
+    }
+
+    void begin( const char* auth,
+                const char* ssid,
+                const char* pass,
+                uint8_t     secmode,
+                IPAddress   ip,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
+    {
+        connectWiFi(ssid, pass, secmode);
+        config(auth, ip, port);
     }
 private:
     Adafruit_CC3000& cc3000;

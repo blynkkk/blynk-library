@@ -26,36 +26,54 @@ public:
         : Base(transp)
     {}
 
-    void wifi_conn(const char* ssid, const char* pass)
+    void connectWiFi(const char* ssid, const char* pass)
     {
         BLYNK_LOG("Connecting to %s", ssid);
-        WiFi.begin(ssid, pass);
+        if (pass && strlen(pass)) {
+        	WiFi.begin(ssid, pass);
+        } else {
+        	WiFi.begin(ssid);
+        }
         while (WiFi.status() != WL_CONNECTED) {
             ::delay(500);
         }
         BLYNK_LOG("Connected to WiFi");
     }
 
-    void begin(const char* auth,
-               const char* ssid,
-               const char* pass,
-               const char* domain = BLYNK_DEFAULT_DOMAIN,
-               uint16_t port      = BLYNK_DEFAULT_PORT)
+    void config(const char* auth,
+            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        wifi_conn(ssid, pass);
-        this->conn.begin(domain, port);
+    	Base::begin(auth);
+    	this->conn.begin(domain, port);
+    }
+
+    void config(const char* auth,
+            	IPAddress   ip,
+                uint16_t    port = BLYNK_DEFAULT_PORT)
+    {
+    	Base::begin(auth);
+    	this->conn.begin(ip, port);
     }
 
     void begin(const char* auth,
                const char* ssid,
                const char* pass,
-               IPAddress ip,
-               uint16_t port)
+               const char* domain = BLYNK_DEFAULT_DOMAIN,
+               uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        wifi_conn(ssid, pass);
-        this->conn.begin(ip, port);
+        connectWiFi(ssid, pass);
+        config(auth, domain, port);
+    }
+
+    void begin(const char* auth,
+               const char* ssid,
+               const char* pass,
+               IPAddress   ip,
+               uint16_t    port   = BLYNK_DEFAULT_PORT)
+    {
+        connectWiFi(ssid, pass);
+        config(auth, ip, port);
     }
 
 };

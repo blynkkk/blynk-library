@@ -30,13 +30,13 @@ public:
     {}
 
     void begin_domain(WiFly* rnxv, const char* h,  uint16_t p) {
-    	wifly = rnxv;
+        wifly = rnxv;
         domain = h;
         port = p;
     }
 
     bool connect() {
-    	return wifly->open(domain, port);
+        return wifly->open(domain, port);
     }
     void disconnect() { wifly->close(); }
 
@@ -44,7 +44,7 @@ public:
         return wifly->readBytes((char*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
-    	wifly->write((const uint8_t*)buf, len);
+        wifly->write((const uint8_t*)buf, len);
         return len;
     }
 
@@ -67,22 +67,34 @@ public:
         , wifly(NULL)
     {}
 
-    void wifi_conn(const char* ssid, const char* pass) {
-		if (!wifly->isAssociated()) {
-			BLYNK_LOG("Connecting to %s", ssid);
-			wifly->setSSID(ssid);
-			wifly->setPassphrase(pass);
-			wifly->enableDHCP();
-			if (!wifly->join()) {
-				BLYNK_FATAL("Failed.");
-			}
-		} else {
-			BLYNK_LOG("Already connected to WiFi");
-		}
-		if (wifly->isConnected()) {
-			wifly->close();
-		}
-		wifly->setIpFlags(1 << 1);
+    void connectWiFi(const char* ssid, const char* pass) {
+        if (!wifly->isAssociated()) {
+            BLYNK_LOG("Connecting to %s", ssid);
+            wifly->setSSID(ssid);
+            if (pass && strlen(pass)) {
+                 wifly->setPassphrase(pass);
+            }
+            wifly->enableDHCP();
+            if (!wifly->join()) {
+                BLYNK_FATAL("Failed.");
+            }
+        } else {
+            BLYNK_LOG("Already connected to WiFi");
+        }
+        if (wifly->isConnected()) {
+            wifly->close();
+        }
+        wifly->setIpFlags(1 << 1);
+    }
+
+    void config(WiFly&      rnxv,
+                const char* auth,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        wifly = &rnxv;
+        this->conn.begin_domain(wifly, domain, port);
     }
 
     void begin( const char* auth,
@@ -92,10 +104,8 @@ public:
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
-        wifly = &rnxv;
-        wifi_conn(ssid, pass);
-        this->conn.begin_domain(wifly, domain, port);
+        connectWiFi(ssid, pass);
+        config(rnxv, auth, domain, port);
     }
 
 private:
