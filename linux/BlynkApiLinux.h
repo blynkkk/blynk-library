@@ -49,7 +49,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (it >= param.end())
         return;
     const char* cmd = it.asStr();
-
+#ifndef BLYNK_NO_INFO
     if (!strcmp(cmd, "info")) {
         static const char profile[] BLYNK_PROGMEM =
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
@@ -64,6 +64,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #ifdef BLYNK_INFO_CONNECTION
             BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
+            BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
         ;
         const size_t profile_len = sizeof(profile)-1;
 
@@ -74,10 +75,12 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
         return;
     }
-
+#endif
     if (++it >= param.end())
         return;
     unsigned pin = it.asInt();
+
+#ifndef BLYNK_NO_BUILTIN
 
     if (!strcmp(cmd, "dr")) {
         char mem[16];
@@ -93,7 +96,11 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add(pin);
         rsp.add(0); // TODO
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
-    } else if (!strcmp(cmd, "vr")) {
+    } else
+    
+#endif
+    
+    if (!strcmp(cmd, "vr")) {
         if (WidgetReadHandler handler = GetReadHandler(pin)) {
             BlynkReq req = { (uint8_t)pin };
             handler(req);
@@ -111,12 +118,13 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             return;
         }
 
+#ifndef BLYNK_NO_BUILTIN
+
         if (!strcmp(cmd, "pm")) {
             while (it < param.end()) {
                 ++it;
-                BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
 #ifdef BLYNK_DEBUG
-                    BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
+                BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
 #endif
 
                 ++it;
@@ -137,6 +145,9 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             BLYNK_LOG("Invalid HW cmd: %s", cmd);
             static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_ILLEGAL_COMMAND);
         }
+        
+#endif
+
     }
 }
 
