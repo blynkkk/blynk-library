@@ -88,6 +88,7 @@ public:
     void add(const void* b, size_t l);
 #if defined(ARDUINO) || defined(SPARK)
     void add(const String& str);
+    void add(String& str);
 #endif
 
     template <typename TV>
@@ -146,6 +147,15 @@ void BlynkParam::add(const char* str)
 #if defined(ARDUINO) || defined(SPARK)
 inline
 void BlynkParam::add(const String& str)
+{
+    size_t len = str.length()+1;
+    char buff[len];
+    str.toCharArray(buff, len);
+    BlynkParam::add(buff, len);
+}
+
+inline
+void BlynkParam::add(String& str)
 {
     size_t len = str.length()+1;
     char buff[len];
