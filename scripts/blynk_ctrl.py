@@ -1,66 +1,55 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 '''
- This script uses Bridge feature to control another device from the command line.
-
  Examples:
-   python blynk_ctrl.py --token=b168ccc8c8734fad98323247afbc1113 write D0 1
-   python blynk_ctrl.py --token=b168ccc8c8734fad98323247afbc1113 write A0 123
-   python blynk_ctrl.py --token=b168ccc8c8734fad98323247afbc1113 write V0 "some value"
+   python blynk_ctrl.py --token=b168... write D0 1
+   python blynk_ctrl.py --token=b168... write A0 123
+   python blynk_ctrl.py --token=b168... write V0 "some value"
    
-   Note: read is not supported yet
+ Note: read is not supported yet
 
  Author:   Volodymyr Shymanskyy
  License:  The MIT license
 '''
+import socket, struct
+import sys, time
+import optparse
 
-import select, socket, struct
-import os, sys, time, getopt # TODO: use optparse
+class MyParser(optparse.OptionParser):
+	def format_epilog(self, formatter):
+		return self.epilog
 
-# Parse command line options
-try:
-    opts, args = getopt.getopt(sys.argv[1:],
-        "hs:p:t:",
-        ["help", "server=", "port=", "token=", "dump", "target="])
-except getopt.GetoptError:
-    print >>sys.stderr, __doc__
-    sys.exit(2)
+parser = MyParser(
+	usage = '%prog [options] <command> <pin> [<value>...]',
+	description = 'This script uses Bridge feature to control another device from the command line.',
+	epilog = __doc__
+)
 
-# Default options
-TOKEN = "YourAuthToken"
+parser.add_option('-s', '--server', action='store',      dest='server',           help='server address or domain name')
+parser.add_option('-p', '--port',   action="store",      dest='port', type='int', help='server port')
+parser.add_option('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
+parser.add_option('--target',       action="store",      dest='target', metavar="TOKEN", help='auth token of the target device')
+parser.add_option('--dump',         action="store_true", dest='dump',             help='dump communication')
 
-SERVER = "cloud.blynk.cc"
-PORT = 8442
+parser.set_defaults(
+    server='cloud.blynk.cc',
+	port=8442,
+	dump=False,
+	nodelay=True,
+	bridge=64
+)
 
-# Expert options
-DUMP = 0
-NODELAY = 1     # TCP_NODELAY
-BRIDGE_PIN = 64
-TARGET = None
+options, arguments = parser.parse_args()
 
-for o, v in opts:
-    if o in ("-h", "--help"):
-        print __doc__
-        sys.exit()
-    elif o in ("-s", "--server"):
-        SERVER = v
-    elif o in ("-p", "--port"):
-        PORT = int(v)
-    elif o in ("--dump",):
-        DUMP = 1
-    elif o in ("-t", "--token"):
-        TOKEN = v
-        TARGET = v
-    elif o in ("--target",):
-        TARGET = v
-    else:
-        print __doc__
-        sys.exit(1)
+if not options.target and options.token:
+	options.target = options.token
 
-if not TARGET or len(args) < 2:
-    print __doc__
-    sys.exit(1)
-# Blynk protocol helpers
+if not options.token:
+    parser.error("token not specified!")
 
+if len(arguments) < 2:
+    parser.error("not enough arguments!")
+
+# Helpers
 hdr = struct.Struct("!BHH")
 
 class MsgType:
@@ -90,10 +79,10 @@ def genMsgId():
 
 start_time = time.time()
 def log(msg):
-    print "[{:7.3f}] {:}".format(float(time.time() - start_time), msg)
+    print >>sys.stderr, "[{:7.3f}] {:}".format(float(time.time() - start_time), msg)
 
 def dump(msg):
-    if DUMP:
+    if options.dump:
         log(msg)
 
 def receive(sock, length):
@@ -113,17 +102,17 @@ def receive(sock, length):
 
 # Main code
 try:
-    conn = socket.create_connection((SERVER, PORT), 3)
+    conn = socket.create_connection((options.server, options.port), 3)
 except:
-    log("Can't connect to %s:%d" % (SERVER, PORT))
+    log("Can't connect to %s:%d" % (options.server, options.port))
     sys.exit(1)
 
-if NODELAY != 0:
+if options.nodelay:
     conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     
 # Authenticate
-conn.sendall(hdr.pack(MsgType.LOGIN, 1, len(TOKEN)))
-conn.sendall(TOKEN)
+conn.sendall(hdr.pack(MsgType.LOGIN, 1, len(options.token)))
+conn.sendall(options.token)
 data = receive(conn, hdr.size)
 if not data:
     log("Login timeout")
@@ -134,28 +123,28 @@ if MsgType.RSP != 0 or msg_id != 1 or status != MsgStatus.OK:
     log("Login failed: {0}, {1}, {2}".format(msg_type, msg_id, status))
     sys.exit(1)
 
-conn.sendall(bridge(BRIDGE_PIN, "i", TARGET));
+conn.sendall(bridge(options.bridge, "i", options.target));
 
-op = args[0]
-pin = args[1]
+op = arguments[0]
+pin = arguments[1]
 
 if op == 'write' or op == 'set':
-    val = args[2]
+    val = arguments[2]
     if pin[0] == 'D' or pin[0] == 'd':
-        conn.sendall(bridge(BRIDGE_PIN, "dw", pin[1:], val));
+        conn.sendall(bridge(options.bridge, "dw", pin[1:], val));
     elif pin[0] == 'A' or pin[0] == 'a':
-        conn.sendall(bridge(BRIDGE_PIN, "aw", 'A'+pin[1:], val));
+        conn.sendall(bridge(options.bridge, "aw", 'A'+pin[1:], val));
     elif pin[0] == 'V' or pin[0] == 'v':
-        conn.sendall(bridge(BRIDGE_PIN, "vw", pin[1:], val));
+        conn.sendall(bridge(options.bridge, "vw", pin[1:], val));
     else:
         log("Invalid pin format")
 elif op == 'read' or op == 'get':
     if pin[0] == 'D' or pin[0] == 'd':
-        conn.sendall(bridge(BRIDGE_PIN, "dr", pin[1:]));
+        conn.sendall(bridge(options.bridge, "dr", pin[1:]));
     elif pin[0] == 'A' or pin[0] == 'a':
-        conn.sendall(bridge(BRIDGE_PIN, "ar", 'A'+pin[1:]));
+        conn.sendall(bridge(options.bridge, "ar", 'A'+pin[1:]));
     elif pin[0] == 'V' or pin[0] == 'v':
-        conn.sendall(bridge(BRIDGE_PIN, "vr", pin[1:]));
+        conn.sendall(bridge(options.bridge, "vr", pin[1:]));
     else:
         log("Invalid pin format")
 
