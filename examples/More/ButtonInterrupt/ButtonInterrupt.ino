@@ -38,7 +38,7 @@ void setup()
   // Make pin 2 HIGH by default
   pinMode(2, INPUT_PULLUP);
   // Attach INT to our handler
-  attachInterrupt(0, checkPin, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(2), checkPin, CHANGE);
 }
 
 void checkPin()
