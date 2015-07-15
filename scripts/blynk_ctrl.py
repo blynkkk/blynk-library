@@ -15,13 +15,13 @@ import sys, time
 import optparse
 
 class MyParser(optparse.OptionParser):
-	def format_epilog(self, formatter):
-		return self.epilog
+    def format_epilog(self, formatter):
+        return self.epilog
 
 parser = MyParser(
-	usage = '%prog [options] <command> <pin> [<value>...]',
-	description = 'This script uses Bridge feature to control another device from the command line.',
-	epilog = __doc__
+    usage = '%prog [options] <command> <pin> [<value>...]',
+    description = 'This script uses Bridge feature to control another device from the command line.',
+    epilog = __doc__
 )
 
 parser.add_option('-s', '--server', action='store',      dest='server',           help='server address or domain name')
@@ -32,16 +32,16 @@ parser.add_option('--dump',         action="store_true", dest='dump',           
 
 parser.set_defaults(
     server='cloud.blynk.cc',
-	port=8442,
-	dump=False,
-	nodelay=True,
-	bridge=64
+    port=8442,
+    dump=False,
+    nodelay=True,
+    bridge=64
 )
 
 options, arguments = parser.parse_args()
 
 if not options.target and options.token:
-	options.target = options.token
+    options.target = options.token
 
 if not options.token:
     parser.error("token not specified!")
