@@ -53,7 +53,7 @@ void setup()
   // Setup email button on pin 2
   pinMode(2, INPUT_PULLUP);
   // Attach pin 2 interrupt to our handler
-  attachInterrupt(0, emailOnButtonPress, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(2), emailOnButtonPress, CHANGE);
 }
 
 void emailUptime()
