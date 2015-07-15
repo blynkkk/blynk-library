@@ -1,10 +1,20 @@
 #!/usr/bin/python
 '''
 examples:
-  python blynk_ctrl.py --token=909fa1...1a9774 digitalWrite 10 1
-  python blynk_ctrl.py --token=909fa1...1a9774 digitalWrite A0 1
-  python blynk_ctrl.py --token=909fa1...1a9774  analogWrite 9 123
-  python blynk_ctrl.py --token=909fa1...1a9774 virtualWrite 5 "some value"
+
+  Simple operations:  
+    python blynk_ctrl.py --token=909fa1...1a9774 -dw 5 1
+    python blynk_ctrl.py --token=909fa1...1a9774 -aw 9 134
+    python blynk_ctrl.py --token=909fa1...1a9774 -vw 1 value
+
+  Using named pins (like A1):
+    python blynk_ctrl.py --token=909fa1...1a9774 -dw A1 1
+
+  Multiple operations at once:
+    python blynk_ctrl.py --token=909fa1...1a9774 -aw 9 100 -dw 8 123 -vw 9 hello
+
+  Sending arrays to virtual pins:
+    python blynk_ctrl.py --token=909fa1...1a9774 -vw 1 "value 1" "value 2"
 
 note:
   read is not supported yet
@@ -17,20 +27,28 @@ import sys, time
 import argparse
 import logging
 
+#from pprint import pprint
+
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
     description = 'This script uses Bridge feature to control another device from the command line.',
     epilog = __doc__
 )
 
+parser.add_argument('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
+
+parser.add_argument('-dw', '--digitalWrite', action='append', dest='dw', nargs=2, metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-aw', '--analogWrite',  action='append', dest='aw', nargs=2, metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-vw', '--virtualWrite', action='append', dest='vw', nargs='*', metavar=('PIN', 'VAL'), default=[])
+
+parser.add_argument('-dr', '--digitalRead',  action='append', dest='dr', nargs=1, metavar='PIN', default=[])
+parser.add_argument('-ar', '--analogRead',   action='append', dest='ar', nargs=1, metavar='PIN', default=[])
+parser.add_argument('-vr', '--virtualRead',  action='append', dest='vr', nargs=1, metavar='PIN', default=[])
+
 parser.add_argument('-s', '--server', action='store',      dest='server',           help='server address or domain name')
 parser.add_argument('-p', '--port',   action="store",      dest='port',   type=int, help='server port')
-parser.add_argument('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
 parser.add_argument('--target',       action="store",      dest='target', metavar="TOKEN", help='auth token of the target device')
 parser.add_argument('--dump',         action="store_true", dest='dump',             help='dump communication')
-parser.add_argument('command',                                                      help='operation to perform')
-parser.add_argument('pin',                                                          help='pin name')
-parser.add_argument('value',          nargs='*',                                    help='value')
 
 parser.set_defaults(
     server='cloud.blynk.cc',
@@ -41,6 +59,9 @@ parser.set_defaults(
 )
 
 args = parser.parse_args()
+
+#pprint(args)
+#sys.exit()
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("blynk_ctrl")
@@ -119,32 +140,25 @@ if msg_type != MsgType.RSP or msg_status != MsgStatus.OK:
     log.error("Login failed: %d,%d,%d", msg_type, msg_id, msg_status)
     sys.exit(1)
 
-conn.sendall(compose(MsgType.BRIDGE, args.bridge, "i", args.target));
+conn.sendall(compose(MsgType.BRIDGE, args.bridge, "i", args.target))
 
-if args.command.endswith('Write'):
-    if not args.value:
-        parser.error("value not specified!")
+# Write
 
-cmd = None
-if args.command == 'digitalWrite':
-    cmd = compose(MsgType.BRIDGE, args.bridge, "dw", args.pin, *args.value)
-elif args.command == 'analogWrite':
-    cmd = compose(MsgType.BRIDGE, args.bridge, "aw", args.pin, *args.value)
-elif args.command == 'virtualWrite':
-    cmd = compose(MsgType.BRIDGE, args.bridge, "vw", args.pin, *args.value)
-elif args.command == 'digitalRead':
-    cmd = compose(MsgType.BRIDGE, args.bridge, "dr", args.pin)
-elif args.command == 'analogRead':
-    cmd = compose(MsgType.BRIDGE, args.bridge, "ar", args.pin)
-elif args.command == 'virtualRead':
-    cmd = compose(MsgType.BRIDGE, args.bridge, "vr", args.pin)
+for op in args.dw:
+    conn.sendall(compose(MsgType.BRIDGE, args.bridge, "dw", op[0], op[1]))
 
-if not cmd:
-    parser.error("command not recognized!")
+for op in args.aw:
+    conn.sendall(compose(MsgType.BRIDGE, args.bridge, "aw", op[0], op[1]))
 
-conn.sendall(cmd)
+for op in args.vw:
+    if len(op) < 2:
+        parser.error("virtualWrite needs at least pin and 1 value!")
+    conn.sendall(compose(MsgType.BRIDGE, args.bridge, "vw", op[0], *op[1:]))
 
-if args.command.endswith('Read'):
+# Read
+
+def do_read(cmd, pin):
+    conn.sendall(compose(MsgType.BRIDGE, args.bridge, cmd, pin))
     while True:
         data = receive(conn, hdr.size)
         if not data:
@@ -152,10 +166,24 @@ if args.command.endswith('Read'):
             sys.exit(1)
 
         msg_type, msg_id, msg_len = hdr.unpack(data)
-        if (msg_type == MsgType.RSP):
+        if msg_type == MsgType.RSP:
             log.debug("> %2d,%2d    : status %2d", msg_type, msg_id, msg_len)
-        else:
-            data = receive(conn, msg_len)
-            log.debug("> %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join(data.split("\0")))
+        elif msg_type == MsgType.HW or msg_type == MsgType.BRIDGE:
+            data = receive(conn, msg_len).split("\0")
+            log.debug("> %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join())
+            if data[0] == cmd[0]+'w' and data[1] == pin:
+                print data[2:]
+                break
+
+for op in args.dr:
+    do_read('dr', op[0])
+
+for op in args.ar:
+    do_read('ar', op[0])
+
+for op in args.vr:
+    do_read('vr', op[0])
+
+# Finished
 
 conn.close()
