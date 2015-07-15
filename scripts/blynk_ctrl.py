@@ -60,12 +60,13 @@ class MsgType:
 class MsgStatus:
     OK     = 200
 
-def bridge(*args):
+def compose(msg_type, *args):
     # Convert params to string and join using \0
     data = "\0".join(map(str, args))
-    dump("< " + "=".join(map(str, args)))
-    # Prepend BRIDGE command header
-    return hdr.pack(MsgType.BRIDGE, genMsgId(), len(data)) + data
+    msg_id = genMsgId()
+    msg_len = len(data)
+    dump("< %2d,%2d,%2d : " % (msg_type, msg_id, msg_len) + "=".join(map(str, args)))
+    return hdr.pack(msg_type, msg_id, msg_len) + data
 
 static_msg_id = 1
 def genMsgId():
@@ -109,46 +110,54 @@ if args.nodelay:
     conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     
 # Authenticate
-conn.sendall(hdr.pack(MsgType.LOGIN, 1, len(args.token)))
-conn.sendall(args.token)
-
+conn.sendall(compose(MsgType.LOGIN, args.token))
 data = receive(conn, hdr.size)
 if not data:
     log("Login timeout")
     sys.exit(1)
 
-msg_type, msg_id, status = hdr.unpack(data)
-if MsgType.RSP != 0 or msg_id != 1 or status != MsgStatus.OK:
-    log("Login failed: {0}, {1}, {2}".format(msg_type, msg_id, status))
+msg_type, msg_id, msg_status = hdr.unpack(data)
+if msg_type != MsgType.RSP or msg_status != MsgStatus.OK:
+    log("Login failed: {0}, {1}, {2}".format(msg_type, msg_id, msg_status))
     sys.exit(1)
 
-conn.sendall(bridge(args.bridge, "i", args.target));
+conn.sendall(compose(MsgType.BRIDGE, args.bridge, "i", args.target));
 
 if args.command.endswith('Write'):
     if not args.value:
         parser.error("value not specified!")
 
-    if args.command == 'digitalWrite':
-        conn.sendall(bridge(args.bridge, "dw", args.pin, *args.value));
-    elif args.command == 'analogWrite':
-        conn.sendall(bridge(args.bridge, "aw", args.pin, *args.value));
-    elif args.command == 'virtualWrite':
-        conn.sendall(bridge(args.bridge, "vw", args.pin, *args.value));
-elif args.command.endswith('Read'):
-    if args.command == 'digitalRead':
-        conn.sendall(bridge(args.bridge, "dr", args.pin));
-    elif args.command == 'analogRead':
-        conn.sendall(bridge(args.bridge, "ar", args.pin));
-    elif args.command == 'virtualRead':
-        conn.sendall(bridge(args.bridge, "vr", args.pin));
+cmd = None
+if args.command == 'digitalWrite':
+    cmd = compose(MsgType.BRIDGE, args.bridge, "dw", args.pin, *args.value)
+elif args.command == 'analogWrite':
+    cmd = compose(MsgType.BRIDGE, args.bridge, "aw", args.pin, *args.value)
+elif args.command == 'virtualWrite':
+    cmd = compose(MsgType.BRIDGE, args.bridge, "vw", args.pin, *args.value)
+elif args.command == 'digitalRead':
+    cmd = compose(MsgType.BRIDGE, args.bridge, "dr", args.pin)
+elif args.command == 'analogRead':
+    cmd = compose(MsgType.BRIDGE, args.bridge, "ar", args.pin)
+elif args.command == 'virtualRead':
+    cmd = compose(MsgType.BRIDGE, args.bridge, "vr", args.pin)
 
+if not cmd:
+    parser.error("command not recognized!")
+
+conn.sendall(cmd)
+
+if args.command.endswith('Read'):
     while True:
         data = receive(conn, hdr.size)
         if not data:
             log("Data read timeout")
             sys.exit(1)
 
-        msg_type, msg_id, status = hdr.unpack(data)
-        dump("Got: {0}, {1}, {2}".format(msg_type, msg_id, status))
+        msg_type, msg_id, msg_len = hdr.unpack(data)
+        if (msg_type == MsgType.RSP):
+            dump("> %2d,%2d    : status %2d" % (msg_type, msg_id, msg_len))
+        else:
+            data = receive(conn, msg_len)
+            dump("> %2d,%2d,%2d : " % (msg_type, msg_id, msg_len) + "=".join(data.split("\0")))
 
 conn.close()
