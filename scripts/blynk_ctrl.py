@@ -33,15 +33,28 @@ parser = argparse.ArgumentParser(
     epilog = __doc__
 )
 
+import copy
+
+def opAction(op):
+    class _action(argparse.Action):
+        def __call__(self, parser, namespace, values, option_string=None):
+            if getattr(namespace, self.dest, None) is None:
+                setattr(namespace, self.dest, [])
+            items = copy.copy(getattr(namespace, self.dest))
+            items.append([op]+values)
+            setattr(namespace, self.dest, items)
+            
+    return _action
+
 parser.add_argument('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
 
-parser.add_argument('-dw', '--digitalWrite', action='append', dest='dw', nargs=2,   metavar=('PIN', 'VAL'), default=[])
-parser.add_argument('-aw', '--analogWrite',  action='append', dest='aw', nargs=2,   metavar=('PIN', 'VAL'), default=[])
-parser.add_argument('-vw', '--virtualWrite', action='append', dest='vw', nargs='*', metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-dw', '--digitalWrite', action=opAction('dw'), dest='ops', nargs=2,   metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-aw', '--analogWrite',  action=opAction('aw'), dest='ops', nargs=2,   metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-vw', '--virtualWrite', action=opAction('vw'), dest='ops', nargs='*', metavar=('PIN', 'VAL'), default=[])
 
-parser.add_argument('-dr', '--digitalRead',  action='append', dest='dr', nargs=1,   metavar='PIN', default=[])
-parser.add_argument('-ar', '--analogRead',   action='append', dest='ar', nargs=1,   metavar='PIN', default=[])
-parser.add_argument('-vr', '--virtualRead',  action='append', dest='vr', nargs=1,   metavar='PIN', default=[])
+parser.add_argument('-dr', '--digitalRead',  action=opAction('dr'), dest='ops', nargs=1,   metavar='PIN', default=[])
+parser.add_argument('-ar', '--analogRead',   action=opAction('ar'), dest='ops', nargs=1,   metavar='PIN', default=[])
+parser.add_argument('-vr', '--virtualRead',  action=opAction('vr'), dest='ops', nargs=1,   metavar='PIN', default=[])
 
 parser.add_argument('-s', '--server', action='store',      dest='server',           help='server address or domain name')
 parser.add_argument('-p', '--port',   action="store",      dest='port',   type=int, help='server port')
@@ -57,6 +70,10 @@ parser.set_defaults(
 )
 
 args = parser.parse_args()
+
+#import pprint
+#pprint.pprint(args)
+#sys.exit()
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("blynk_ctrl")
@@ -137,21 +154,6 @@ if msg_type != MsgType.RSP or msg_status != MsgStatus.OK:
 
 conn.sendall(compose(MsgType.BRIDGE, args.bridge, "i", args.target))
 
-# Write
-
-for op in args.dw:
-    conn.sendall(compose(MsgType.BRIDGE, args.bridge, "dw", op[0], op[1]))
-
-for op in args.aw:
-    conn.sendall(compose(MsgType.BRIDGE, args.bridge, "aw", op[0], op[1]))
-
-for op in args.vw:
-    if len(op) < 2:
-        parser.error("virtualWrite needs at least pin and 1 value!")
-    conn.sendall(compose(MsgType.BRIDGE, args.bridge, "vw", op[0], *op[1:]))
-
-# Read
-
 def do_read(cmd, pin):
     conn.sendall(compose(MsgType.BRIDGE, args.bridge, cmd, pin))
     while True:
@@ -170,14 +172,21 @@ def do_read(cmd, pin):
                 print data[2:]
                 break
 
-for op in args.dr:
-    do_read('dr', op[0])
-
-for op in args.ar:
-    do_read('ar', op[0])
-
-for op in args.vr:
-    do_read('vr', op[0])
+for op in args.ops:
+    cmd = op[0]
+    op = op[1:]
+    if cmd == 'dw':
+        conn.sendall(compose(MsgType.BRIDGE, args.bridge, "dw", op[0], op[1]))
+    elif cmd == 'aw':
+        conn.sendall(compose(MsgType.BRIDGE, args.bridge, "aw", op[0], op[1]))
+    elif cmd == 'vw':
+        if len(op) < 2:
+            parser.error("virtualWrite needs at least pin and 1 value!")
+        conn.sendall(compose(MsgType.BRIDGE, args.bridge, "vw", op[0], *op[1:]))
+    elif cmd == 'dr' or cmd == 'ar' or cmd == 'vr':
+        do_read(cmd, op[0])
+    else:
+        log.warning("Wrong command:", cmd)
 
 # Finished
 
