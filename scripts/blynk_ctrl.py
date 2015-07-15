@@ -7,7 +7,7 @@ examples:
     python blynk_ctrl.py --token=909fa1...1a9774 -aw 9 134
     python blynk_ctrl.py --token=909fa1...1a9774 -vw 1 value
 
-  Using named pins (like A1):
+  Using named pins (like A1, supported by some boards):
     python blynk_ctrl.py --token=909fa1...1a9774 -dw A1 1
 
   Multiple operations at once:
@@ -17,7 +17,7 @@ examples:
     python blynk_ctrl.py --token=909fa1...1a9774 -vw 1 "value 1" "value 2"
 
 note:
-  read is not supported yet
+  Read is not supported yet
 
  Author:   Volodymyr Shymanskyy
  License:  The MIT license
@@ -27,8 +27,6 @@ import sys, time
 import argparse
 import logging
 
-#from pprint import pprint
-
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
     description = 'This script uses Bridge feature to control another device from the command line.',
@@ -37,13 +35,13 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
 
-parser.add_argument('-dw', '--digitalWrite', action='append', dest='dw', nargs=2, metavar=('PIN', 'VAL'), default=[])
-parser.add_argument('-aw', '--analogWrite',  action='append', dest='aw', nargs=2, metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-dw', '--digitalWrite', action='append', dest='dw', nargs=2,   metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-aw', '--analogWrite',  action='append', dest='aw', nargs=2,   metavar=('PIN', 'VAL'), default=[])
 parser.add_argument('-vw', '--virtualWrite', action='append', dest='vw', nargs='*', metavar=('PIN', 'VAL'), default=[])
 
-parser.add_argument('-dr', '--digitalRead',  action='append', dest='dr', nargs=1, metavar='PIN', default=[])
-parser.add_argument('-ar', '--analogRead',   action='append', dest='ar', nargs=1, metavar='PIN', default=[])
-parser.add_argument('-vr', '--virtualRead',  action='append', dest='vr', nargs=1, metavar='PIN', default=[])
+parser.add_argument('-dr', '--digitalRead',  action='append', dest='dr', nargs=1,   metavar='PIN', default=[])
+parser.add_argument('-ar', '--analogRead',   action='append', dest='ar', nargs=1,   metavar='PIN', default=[])
+parser.add_argument('-vr', '--virtualRead',  action='append', dest='vr', nargs=1,   metavar='PIN', default=[])
 
 parser.add_argument('-s', '--server', action='store',      dest='server',           help='server address or domain name')
 parser.add_argument('-p', '--port',   action="store",      dest='port',   type=int, help='server port')
@@ -59,9 +57,6 @@ parser.set_defaults(
 )
 
 args = parser.parse_args()
-
-#pprint(args)
-#sys.exit()
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("blynk_ctrl")
