@@ -19,7 +19,9 @@
  *
  * You can also use SoftwareSerial (for UNO, Nano, Mini, ...).
  *
- * For this example you need a modified ITEAD WeeESP8266 library:
+ * ATTENTION!
+ * 
+ * FOR THIS EXAMPLE YOU NEED A MODIFIED ITEAD WeeESP8266 LIBRARY!
  *   https://github.com/vshymanskyy/ITEADLIB_Arduino_WeeESP8266
  *
  * Please adjust the settings in the ESP8266.h:
