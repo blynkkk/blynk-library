@@ -12,23 +12,22 @@
 '''
 import socket, struct
 import sys, time
-import optparse
+import argparse
 
-class MyParser(optparse.OptionParser):
-    def format_epilog(self, formatter):
-        return self.epilog
-
-parser = MyParser(
-    usage = '%prog [options] <command> <pin> [<value>...]',
+parser = argparse.ArgumentParser(
+    #usage = '%prog [args] <command> <pin> [<value>...]',
     description = 'This script uses Bridge feature to control another device from the command line.',
     epilog = __doc__
 )
 
-parser.add_option('-s', '--server', action='store',      dest='server',           help='server address or domain name')
-parser.add_option('-p', '--port',   action="store",      dest='port', type='int', help='server port')
-parser.add_option('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
-parser.add_option('--target',       action="store",      dest='target', metavar="TOKEN", help='auth token of the target device')
-parser.add_option('--dump',         action="store_true", dest='dump',             help='dump communication')
+parser.add_argument('-s', '--server', action='store',      dest='server',           help='server address or domain name')
+parser.add_argument('-p', '--port',   action="store",      dest='port', type=int, help='server port')
+parser.add_argument('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
+parser.add_argument('--target',       action="store",      dest='target', metavar="TOKEN", help='auth token of the target device')
+parser.add_argument('--dump',         action="store_true", dest='dump',             help='dump communication')
+parser.add_argument('command',        help='operation to perform')
+parser.add_argument('pin',            help='pin name')
+parser.add_argument('value',          nargs='*', help='value')
 
 parser.set_defaults(
     server='cloud.blynk.cc',
@@ -38,16 +37,13 @@ parser.set_defaults(
     bridge=64
 )
 
-options, arguments = parser.parse_args()
+args = parser.parse_args()
 
-if not options.target and options.token:
-    options.target = options.token
+if not args.target and args.token:
+    args.target = args.token
 
-if not options.token:
+if not args.token:
     parser.error("token not specified!")
-
-if len(arguments) < 2:
-    parser.error("not enough arguments!")
 
 # Helpers
 hdr = struct.Struct("!BHH")
@@ -65,7 +61,7 @@ class MsgStatus:
 def bridge(*args):
     # Convert params to string and join using \0
     data = "\0".join(map(str, args))
-    dump("< " + " ".join(map(str, args)))
+    dump("< " + "=".join(map(str, args)))
     # Prepend BRIDGE command header
     return hdr.pack(MsgType.BRIDGE, genMsgId(), len(data)) + data
 
@@ -82,7 +78,7 @@ def log(msg):
     print >>sys.stderr, "[{:7.3f}] {:}".format(float(time.time() - start_time), msg)
 
 def dump(msg):
-    if options.dump:
+    if args.dump:
         log(msg)
 
 def receive(sock, length):
@@ -102,17 +98,17 @@ def receive(sock, length):
 
 # Main code
 try:
-    conn = socket.create_connection((options.server, options.port), 3)
+    conn = socket.create_connection((args.server, args.port), 3)
 except:
-    log("Can't connect to %s:%d" % (options.server, options.port))
+    log("Can't connect to %s:%d" % (args.server, args.port))
     sys.exit(1)
 
-if options.nodelay:
+if args.nodelay:
     conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
     
 # Authenticate
-conn.sendall(hdr.pack(MsgType.LOGIN, 1, len(options.token)))
-conn.sendall(options.token)
+conn.sendall(hdr.pack(MsgType.LOGIN, 1, len(args.token)))
+conn.sendall(args.token)
 data = receive(conn, hdr.size)
 if not data:
     log("Login timeout")
@@ -123,28 +119,29 @@ if MsgType.RSP != 0 or msg_id != 1 or status != MsgStatus.OK:
     log("Login failed: {0}, {1}, {2}".format(msg_type, msg_id, status))
     sys.exit(1)
 
-conn.sendall(bridge(options.bridge, "i", options.target));
+conn.sendall(bridge(args.bridge, "i", args.target));
 
-op = arguments[0]
-pin = arguments[1]
+pin = args.pin
 
-if op == 'write' or op == 'set':
-    val = arguments[2]
+if args.command == 'write' or args.command == 'set':
+    if not args.value:
+        parser.error("value not specified!")
+    val = args.value
     if pin[0] == 'D' or pin[0] == 'd':
-        conn.sendall(bridge(options.bridge, "dw", pin[1:], val));
+        conn.sendall(bridge(args.bridge, "dw", pin[1:], *val));
     elif pin[0] == 'A' or pin[0] == 'a':
-        conn.sendall(bridge(options.bridge, "aw", 'A'+pin[1:], val));
+        conn.sendall(bridge(args.bridge, "aw", 'A'+pin[1:], *val));
     elif pin[0] == 'V' or pin[0] == 'v':
-        conn.sendall(bridge(options.bridge, "vw", pin[1:], val));
+        conn.sendall(bridge(args.bridge, "vw", pin[1:], *val));
     else:
         log("Invalid pin format")
-elif op == 'read' or op == 'get':
+elif args.command == 'read' or args.command == 'get':
     if pin[0] == 'D' or pin[0] == 'd':
-        conn.sendall(bridge(options.bridge, "dr", pin[1:]));
+        conn.sendall(bridge(args.bridge, "dr", pin[1:]));
     elif pin[0] == 'A' or pin[0] == 'a':
-        conn.sendall(bridge(options.bridge, "ar", 'A'+pin[1:]));
+        conn.sendall(bridge(args.bridge, "ar", 'A'+pin[1:]));
     elif pin[0] == 'V' or pin[0] == 'v':
-        conn.sendall(bridge(options.bridge, "vr", pin[1:]));
+        conn.sendall(bridge(args.bridge, "vr", pin[1:]));
     else:
         log("Invalid pin format")
 
