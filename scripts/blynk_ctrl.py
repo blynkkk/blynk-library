@@ -15,6 +15,7 @@ note:
 import socket, struct
 import sys, time
 import argparse
+import logging
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawTextHelpFormatter,
@@ -41,13 +42,20 @@ parser.set_defaults(
 
 args = parser.parse_args()
 
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger("blynk_ctrl")
+
 if not args.target and args.token:
     args.target = args.token
 
 if not args.token:
     parser.error("token not specified!")
+    
+if args.dump:
+    log.setLevel(logging.DEBUG)
 
 # Helpers
+
 hdr = struct.Struct("!BHH")
 
 class MsgType:
@@ -65,7 +73,7 @@ def compose(msg_type, *args):
     data = "\0".join(map(str, args))
     msg_id = genMsgId()
     msg_len = len(data)
-    dump("< %2d,%2d,%2d : " % (msg_type, msg_id, msg_len) + "=".join(map(str, args)))
+    log.debug("< %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join(map(str, args)))
     return hdr.pack(msg_type, msg_id, msg_len) + data
 
 static_msg_id = 1
@@ -73,16 +81,6 @@ def genMsgId():
     global static_msg_id
     static_msg_id += 1
     return static_msg_id
-
-# Other utilities
-
-start_time = time.time()
-def log(msg):
-    print >>sys.stderr, "[{:7.3f}] {:}".format(float(time.time() - start_time), msg)
-
-def dump(msg):
-    if args.dump:
-        log(msg)
 
 def receive(sock, length):
     d = []
@@ -103,7 +101,7 @@ def receive(sock, length):
 try:
     conn = socket.create_connection((args.server, args.port), 3)
 except:
-    log("Can't connect to %s:%d" % (args.server, args.port))
+    log.error("Can't connect to %s:%d", args.server, args.port)
     sys.exit(1)
 
 if args.nodelay:
@@ -113,12 +111,12 @@ if args.nodelay:
 conn.sendall(compose(MsgType.LOGIN, args.token))
 data = receive(conn, hdr.size)
 if not data:
-    log("Login timeout")
+    log.error("Login timeout")
     sys.exit(1)
 
 msg_type, msg_id, msg_status = hdr.unpack(data)
 if msg_type != MsgType.RSP or msg_status != MsgStatus.OK:
-    log("Login failed: {0}, {1}, {2}".format(msg_type, msg_id, msg_status))
+    log.error("Login failed: %d,%d,%d", msg_type, msg_id, msg_status)
     sys.exit(1)
 
 conn.sendall(compose(MsgType.BRIDGE, args.bridge, "i", args.target));
@@ -150,14 +148,14 @@ if args.command.endswith('Read'):
     while True:
         data = receive(conn, hdr.size)
         if not data:
-            log("Data read timeout")
+            log.warning("Data read timeout")
             sys.exit(1)
 
         msg_type, msg_id, msg_len = hdr.unpack(data)
         if (msg_type == MsgType.RSP):
-            dump("> %2d,%2d    : status %2d" % (msg_type, msg_id, msg_len))
+            log.debug("> %2d,%2d    : status %2d", msg_type, msg_id, msg_len)
         else:
             data = receive(conn, msg_len)
-            dump("> %2d,%2d,%2d : " % (msg_type, msg_id, msg_len) + "=".join(data.split("\0")))
+            log.debug("> %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join(data.split("\0")))
 
 conn.close()
