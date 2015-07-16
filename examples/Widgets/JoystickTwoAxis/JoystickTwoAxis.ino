@@ -40,14 +40,11 @@ BLYNK_WRITE(1) {
   int x = param[0].asInt();
   int y = param[1].asInt();
 
-  //do something with x and y
-
-  //for instance you could output them back to application via terminal
-  //terminal2.print("X = ");
-  //terminal2.print(x);
-  //terminal2.print("; Y = ");
-  //terminal2.println(y);
-  //terminal2.flush();
+  // Do something with x and y
+  Serial.print("X = ");
+  Serial.print(x);
+  Serial.print("; Y = ");
+  Serial.println(y);
 }
 
 void loop()

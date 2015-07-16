@@ -38,12 +38,9 @@ void setup()
 BLYNK_WRITE(1) {
   int x = param.asInt();
 
-  //do something with x
-
-  //for instance you could output them back to application via terminal
-  //terminal1.print("X = ");
-  //terminal1.println(x);
-  //terminal1.flush();
+  // Do something with x
+  Serial.print("X = ");
+  Serial.println(x);
 }
 
 void loop()
