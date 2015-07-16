@@ -3,18 +3,21 @@
 examples:
 
   Simple operations:  
-    python blynk_ctrl.py --token=909fa1...1a9774 -dw 5 1
-    python blynk_ctrl.py --token=909fa1...1a9774 -aw 9 134
-    python blynk_ctrl.py --token=909fa1...1a9774 -vw 1 value
+    python blynk_ctrl.py --token=909fa1... -dw 5 1
+    python blynk_ctrl.py --token=909fa1... -aw 9 134
+    python blynk_ctrl.py --token=909fa1... -vw 1 value
 
   Using named pins (like A1, supported by some boards):
-    python blynk_ctrl.py --token=909fa1...1a9774 -dw A1 1
+    python blynk_ctrl.py --token=909fa1... -dw A1 1
 
   Multiple operations at once:
-    python blynk_ctrl.py --token=909fa1...1a9774 -aw 9 100 -dw 8 123 -vw 9 hello
+    python blynk_ctrl.py --token=909fa1... -aw 9 100 -dw 8 123 -vw 9 hello
 
   Sending arrays to virtual pins:
-    python blynk_ctrl.py --token=909fa1...1a9774 -vw 1 "value 1" "value 2"
+    python blynk_ctrl.py --token=909fa1... -vw 1 "value 1" "value 2"
+
+  Do simple animations (delay commands):
+    python blynk_ctrl.py --token=909fa1... --delayAll=0.2 -aw 9 0 -aw 9 50 -aw 9 100 -aw 9 150 -aw 9 200 -aw 9 255
 
 note:
   Read is not supported yet
@@ -33,28 +36,28 @@ parser = argparse.ArgumentParser(
     epilog = __doc__
 )
 
-import copy
-
-def opAction(op):
+def opAction(op, minvalues=1):
     class _action(argparse.Action):
         def __call__(self, parser, namespace, values, option_string=None):
-            if getattr(namespace, self.dest, None) is None:
-                setattr(namespace, self.dest, [])
-            items = copy.copy(getattr(namespace, self.dest))
-            items.append([op]+values)
-            setattr(namespace, self.dest, items)
-            
+            if len(values) < minvalues:
+                raise argparse.ArgumentError(self, "not enough parameters")
+            namespace.ops.append([op]+values)
+
     return _action
 
 parser.add_argument('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
 
-parser.add_argument('-dw', '--digitalWrite', action=opAction('dw'), dest='ops', nargs=2,   metavar=('PIN', 'VAL'), default=[])
-parser.add_argument('-aw', '--analogWrite',  action=opAction('aw'), dest='ops', nargs=2,   metavar=('PIN', 'VAL'), default=[])
-parser.add_argument('-vw', '--virtualWrite', action=opAction('vw'), dest='ops', nargs='*', metavar=('PIN', 'VAL'), default=[])
+parser.add_argument('-dw', '--digitalWrite', action=opAction('dw'), nargs=2,   metavar=('PIN', 'VAL'))
+parser.add_argument('-aw', '--analogWrite',  action=opAction('aw'), nargs=2,   metavar=('PIN', 'VAL'))
+parser.add_argument('-vw', '--virtualWrite', action=opAction('vw', minvalues=2), nargs='*', metavar=('PIN', 'VAL'))
 
-parser.add_argument('-dr', '--digitalRead',  action=opAction('dr'), dest='ops', nargs=1,   metavar='PIN', default=[])
-parser.add_argument('-ar', '--analogRead',   action=opAction('ar'), dest='ops', nargs=1,   metavar='PIN', default=[])
-parser.add_argument('-vr', '--virtualRead',  action=opAction('vr'), dest='ops', nargs=1,   metavar='PIN', default=[])
+parser.add_argument('-dr', '--digitalRead',  action=opAction('dr'), nargs=1,   metavar='PIN')
+parser.add_argument('-ar', '--analogRead',   action=opAction('ar'), nargs=1,   metavar='PIN')
+parser.add_argument('-vr', '--virtualRead',  action=opAction('vr'), nargs=1,   metavar='PIN')
+
+parser.add_argument('--delay',               action=opAction('delay'), nargs=1, type=float, metavar='SECs')
+
+parser.add_argument('--delayAll',     action="store",      dest='delayAll', type=float, metavar='SECs', help='delay between all operations')
 
 parser.add_argument('-s', '--server', action='store',      dest='server',           help='server address or domain name')
 parser.add_argument('-p', '--port',   action="store",      dest='port',   type=int, help='server port')
@@ -66,7 +69,8 @@ parser.set_defaults(
     port=8442,
     dump=False,
     nodelay=True,
-    bridge=64
+    bridge=64,
+    ops = []
 )
 
 args = parser.parse_args()
@@ -180,13 +184,16 @@ for op in args.ops:
     elif cmd == 'aw':
         conn.sendall(compose(MsgType.BRIDGE, args.bridge, "aw", op[0], op[1]))
     elif cmd == 'vw':
-        if len(op) < 2:
-            parser.error("virtualWrite needs at least pin and 1 value!")
         conn.sendall(compose(MsgType.BRIDGE, args.bridge, "vw", op[0], *op[1:]))
     elif cmd == 'dr' or cmd == 'ar' or cmd == 'vr':
         do_read(cmd, op[0])
+    elif cmd == 'delay':
+        time.sleep(op[0])
     else:
         log.warning("Wrong command:", cmd)
+
+    if args.delayAll:
+        time.sleep(args.delayAll)
 
 # Finished
 
