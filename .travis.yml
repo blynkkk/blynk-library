@@ -25,16 +25,14 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
     - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
-    - PLATFORMIO_CI_SRC=examples/Widgets/OneAxisJoystick
-    - PLATFORMIO_CI_SRC=examples/Widgets/TwoAxisJoystick
+    - PLATFORMIO_CI_SRC=examples/Widgets/JoystickOneAxis
+    - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
     - PLATFORMIO_CI_SRC=examples/Widgets/LCD
     - PLATFORMIO_CI_SRC=examples/Widgets/LED
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
     - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
-    - PLATFORMIO_CI_SRC=examples/Widgets/JoystickOneAxis
-    - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
     - LINUX_SRC=linux
 
 install:
