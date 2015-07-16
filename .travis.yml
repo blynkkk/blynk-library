@@ -33,6 +33,8 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
     - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
+    - PLATFORMIO_CI_SRC=examples/Widgets/JoystickOneAxis
+    - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
     - LINUX_SRC=linux
 
 install:

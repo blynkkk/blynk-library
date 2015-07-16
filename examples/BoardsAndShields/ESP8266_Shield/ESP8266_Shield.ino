@@ -20,7 +20,7 @@
  * You can also use SoftwareSerial (for UNO, Nano, Mini, ...).
  *
  * ATTENTION!
- * 
+ *
  * FOR THIS EXAMPLE YOU NEED A MODIFIED ITEAD WeeESP8266 LIBRARY!
  *   https://github.com/vshymanskyy/ITEADLIB_Arduino_WeeESP8266
  *
