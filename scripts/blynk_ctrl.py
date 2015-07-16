@@ -36,20 +36,26 @@ parser = argparse.ArgumentParser(
     epilog = __doc__
 )
 
-def opAction(op, minvalues=1):
+def opAction(op, expand=False):
     class _action(argparse.Action):
         def __call__(self, parser, namespace, values, option_string=None):
-            if len(values) < minvalues:
+            if len(values) < 2:
                 raise argparse.ArgumentError(self, "not enough parameters")
-            namespace.ops.append([op]+values)
+            
+            if expand:
+                pin = values[0]
+                for v in values[1:]:
+                    namespace.ops.append([op, pin, v])
+            else:
+                namespace.ops.append([op]+values)
 
     return _action
 
 parser.add_argument('-t', '--token',  action="store",      dest='token',            help='auth token of the controller')
 
-parser.add_argument('-dw', '--digitalWrite', action=opAction('dw'), nargs=2,   metavar=('PIN', 'VAL'))
-parser.add_argument('-aw', '--analogWrite',  action=opAction('aw'), nargs=2,   metavar=('PIN', 'VAL'))
-parser.add_argument('-vw', '--virtualWrite', action=opAction('vw', minvalues=2), nargs='*', metavar=('PIN', 'VAL'))
+parser.add_argument('-dw', '--digitalWrite', action=opAction('dw', True),  nargs='*', metavar=('PIN', 'VAL'))
+parser.add_argument('-aw', '--analogWrite',  action=opAction('aw', True),  nargs='*', metavar=('PIN', 'VAL'))
+parser.add_argument('-vw', '--virtualWrite', action=opAction('vw', False), nargs='*', metavar=('PIN', 'VAL'))
 
 parser.add_argument('-dr', '--digitalRead',  action=opAction('dr'), nargs=1,   metavar='PIN')
 parser.add_argument('-ar', '--analogRead',   action=opAction('ar'), nargs=1,   metavar='PIN')
@@ -171,7 +177,7 @@ def do_read(cmd, pin):
             log.debug("> %2d,%2d    : status %2d", msg_type, msg_id, msg_len)
         elif msg_type == MsgType.HW or msg_type == MsgType.BRIDGE:
             data = receive(conn, msg_len).split("\0")
-            log.debug("> %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join())
+            log.debug("> %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join(data))
             if data[0] == cmd[0]+'w' and data[1] == pin:
                 print data[2:]
                 break
