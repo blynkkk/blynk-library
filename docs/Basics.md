@@ -14,6 +14,58 @@
 * Sending emails, tweets etc.
 * ... there will be more!
 
+### Configuration
+
+The simplest way to configure Blynk is to call Blynk.begin():
+```cpp
+Blynk.begin(auth, ...);
+```
+begin() can have different parameters for different boards, so follow the example for your board/type of connection.
+
+A more advanced way is to setup the shield (WiFi, Ethernet) manually, and then call blynk.config(...):
+```cpp
+Blynk.config(auth);
+```
+```cpp
+Blynk.config(auth, server, port);
+```
+
+For WiFi connections, we also provided a connectWiFi (just for convenience).
+```cpp
+Blynk.connectWiFi(ssid, pass)
+```
+To connect to Open WiFi networks, set pass to an empty string ("").
+
+### Connection management
+
+There are several functions to help with connection management:
+```cpp
+# This will try connecting to Blynk server. Default timeout is 30 seconds
+bool result = Blynk.connect();
+bool result = Blynk.connect(timeout);
+```
+```cpp
+# This will disconnect from Blynk server
+Blynk.disconnect();
+```
+```cpp
+# This returns if we're currently connected
+bool result = Blynk.connected();
+```
+
+**Note:** Just after Blynk.begin(...) or Blynk.config(...), Blynk is not yet connected to the server.
+It will try to connect when it hits first Blynk.run() or Blynk.connect() call.
+
+If you want to skip connecting to the server, just call disconnect() right after configuration.
+
+If your shield/connection type is not supported yet - you can craft it easily! [Here is an example](https://github.com/blynkkk/blynk-library/blob/master/examples/BoardsAndShields/User_Defined_Connection/User_Defined_Connection.ino).
+
+### Blynk.run()
+This function should be called frequently to process incoming commands and perform housekeeping of Blynk connection.
+It is usually called in loop() {}.
+You can call it in other places, unless you run out of heap memory (in the cascaded functions with local memory).
+For example, it is not recommended to call Blynk.run() inside of the BLYNK_READ and BLYNK_WRITE functions on low-RAM devices.
+
 ### Digital & Analog pins
 
 The library can perform basic pin IO (input-output) operations out-of-the-box:
