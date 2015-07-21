@@ -11,6 +11,9 @@
 #ifndef BlynkSimpleUserManaged_h
 #define BlynkSimpleUserManaged_h
 
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION "custom"
+#endif
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>

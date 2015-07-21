@@ -11,6 +11,9 @@
 #ifndef BlynkSimpleEsp8266_h
 #define BlynkSimpleEsp8266_h
 
+#ifndef BLYNK_INFO_DEVICE
+#define BLYNK_INFO_DEVICE  "ESP8266"
+#endif
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
@@ -41,19 +44,19 @@ public:
     }
 
     void config(const char* auth,
-            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-    	Base::begin(auth);
-    	this->conn.begin(domain, port);
+        Base::begin(auth);
+        this->conn.begin(domain, port);
     }
 
     void config(const char* auth,
             	IPAddress   ip,
                 uint16_t    port = BLYNK_DEFAULT_PORT)
     {
-    	Base::begin(auth);
-    	this->conn.begin(ip, port);
+        Base::begin(auth);
+        this->conn.begin(ip, port);
     }
 
     void begin(const char* auth,

@@ -11,6 +11,9 @@
 #ifndef BlynkSimpleShieldEsp8266_h
 #define BlynkSimpleShieldEsp8266_h
 
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION  "ESP8266"
+#endif
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
