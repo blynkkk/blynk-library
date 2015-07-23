@@ -1,9 +1,9 @@
 ///
 /// @file		BlynkSimpleCC3200.h
 /// @brief		Header
-/// @details	LaunchPad CC3200 Adapter for Blink
+/// @details	LaunchPad CC3200 Adapter for Blynk
 /// @n
-/// @n @b		Project Blink_CC3200
+/// @n @b		Project Blynk_CC3200
 /// @n          Extension for Blink by Volodymyr Shymanskyy
 /// @see        http://www.blynk.cc
 /// @n @a		Developed with [embedXcode+](http://embedXcode.weebly.com)
