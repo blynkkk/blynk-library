@@ -73,7 +73,6 @@
 #endif // end IDE
 
 // Include application, user and local libraries
-#include "LocalLibrary.h"
 
 
 // Prototypes
