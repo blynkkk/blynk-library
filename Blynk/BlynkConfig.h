@@ -57,4 +57,7 @@
 // Uncomment to disable all float/double usage
 //#define BLYNK_NO_FLOAT
 
+// Uncomment to switch to direct-connect mode
+//#define BLYNK_USE_DIRECT_CONNECT
+
 #endif
