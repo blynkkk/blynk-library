@@ -51,11 +51,11 @@ char profile[] = R"raw({"dashBoards":[
 // Virtual handlers for our widgets...
 
 BLYNK_WRITE(1) {
-// do something...
+  // do something...
 }
 
 BLYNK_READ(9) {
-Blynk.virtualWrite(9, millis() / 1000);
+  Blynk.virtualWrite(9, millis() / 1000);
 }
 
 // Next goes the hard stuff: connection management, etc...
@@ -66,69 +66,69 @@ WiFiClient client;
 // This function is used by Blynk to receive data
 size_t BlynkStreamRead(void* buf, size_t len)
 {
-return client.readBytes((byte*)buf, len);
+  return client.readBytes((byte*)buf, len);
 }
 
 // This function is used by Blynk to send data
 size_t BlynkStreamWrite(const void* buf, size_t len)
 {
-return client.write((byte*)buf, len);
+  return client.write((byte*)buf, len);
 }
 
 void setup()
 {
-delay(1000);
-// Setup your connection here.
-Serial.begin(9600);
-Serial.println();
+  delay(1000);
+  // Setup your connection here.
+  Serial.begin(9600);
+  Serial.println();
 
 #ifdef WIFI_MODE_AP
-BLYNK_LOG("Configuring WiFi access point: %s", ssid);
-WiFi.softAP(ssid, password);
-Serial.print("AP IP address: ");
-Serial.println(WiFi.softAPIP());
+  BLYNK_LOG("Configuring WiFi access point: %s", ssid);
+  WiFi.softAP(ssid, password);
+  Serial.print("AP IP address: ");
+  Serial.println(WiFi.softAPIP());
 #else
-BLYNK_LOG("Connecting to WiFi %s", ssid);
-WiFi.begin(ssid, password);
-while (WiFi.status() != WL_CONNECTED) {
-delay(500);
-Serial.print(".");
-}
-Serial.println();
-Serial.print("STA IP address: ");
-Serial.println(WiFi.localIP());
+  BLYNK_LOG("Connecting to WiFi %s", ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("STA IP address: ");
+  Serial.println(WiFi.localIP());
 #endif
 
-server.begin();
-BLYNK_LOG("Listening on port: %d", port);
+  server.begin();
+  BLYNK_LOG("Listening on port: %d", port);
 
-Blynk.begin(auth);
-Blynk.setProfile(profile);
+  Blynk.begin(auth);
+  Blynk.setProfile(profile);
 }
 
 void loop()
 {
-client = server.available();
-// Make sure that Blynk.run() is called
-// only when the connection is established
-if (client) {
-Serial.print("Client connected from ");
-Serial.print(client.remoteIP());
-Serial.print(":");
-Serial.println(client.remotePort());
+  client = server.available();
+  // Make sure that Blynk.run() is called
+  // only when the connection is established
+  if (client) {
+    Serial.print("Client connected from ");
+    Serial.print(client.remoteIP());
+    Serial.print(":");
+    Serial.println(client.remotePort());
 
-Blynk.startSession();
-while (client.connected()) {
-// Okay, handle Blynk protocol
-bool hasIncomingData = (client.available() > 0);
-// Tell Blynk if it has incoming data
-// (this allows to skip unneeded BlynkStreamRead calls)
-if (!Blynk.run(hasIncomingData)) {
-Serial.print("Error happened or disconnected.");
-break;
-}
-}
-client.stop();
-Serial.print("Client disconnected.");
-}
+    Blynk.startSession();
+    while (client.connected()) {
+      // Okay, handle Blynk protocol
+      bool hasIncomingData = (client.available() > 0);
+      // Tell Blynk if it has incoming data
+      // (this allows to skip unneeded BlynkStreamRead calls)
+      if (!Blynk.run(hasIncomingData)) {
+        Serial.print("Error happened or disconnected.");
+        break;
+      }
+    }
+    client.stop();
+    Serial.print("Client disconnected.");
+  }
 }
