@@ -32,6 +32,9 @@ public:
 
     BlynkProtocol(Transp& transp)
         : conn(transp), authkey(NULL)
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        , profile(NULL)
+#endif
         , lastActivityIn(0)
         , lastActivityOut(0)
         , lastHeartbeat(0)
@@ -52,9 +55,6 @@ public:
     	       (millis() - started < timeout))
     	{
     		run();
-#if defined(ARDUINO) && (ARDUINO >= 151)
-    		yield();
-#endif
     	}
     	return state == CONNECTED;
     }
@@ -66,6 +66,21 @@ public:
     }
 
     bool run(bool avail = false);
+
+#ifdef BLYNK_USE_DIRECT_CONNECT
+    void setProfile(const char* json) {
+    	profile = json;
+    }
+
+    void startSession() {
+    	state = CONNECTING;
+#ifdef BLYNK_MSG_LIMIT
+        deltaCmd = 1000;
+#endif
+    	currentMsgId = 0;
+    	lastHeartbeat = lastActivityIn = lastActivityOut = millis();
+    }
+#endif
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
 
@@ -84,6 +99,9 @@ protected:
 
 private:
     const char* authkey;
+#ifdef BLYNK_USE_DIRECT_CONNECT
+    const char* profile;
+#endif
     uint32_t lastActivityIn;
     uint32_t lastActivityOut;
     uint32_t lastHeartbeat;
@@ -97,6 +115,10 @@ private:
 template <class Transp>
 bool BlynkProtocol<Transp>::run(bool avail)
 {
+#if defined(ARDUINO) && (ARDUINO >= 151)
+    yield();
+#endif
+
     if (state == DISCONNECTED) {
         return false;
     }
@@ -109,6 +131,10 @@ bool BlynkProtocol<Transp>::run(bool avail)
             //const unsigned long t = micros();
             if (!processInput()) {
                 conn.disconnect();
+// TODO: Only when in direct mode?
+#ifdef BLYNK_USE_DIRECT_CONNECT
+                state = CONNECTING;
+#endif
                 return false;
             }
             //BLYNK_LOG("Proc time: %d", micros() - t);
@@ -131,6 +157,9 @@ bool BlynkProtocol<Transp>::run(bool avail)
             BLYNK_LOG("Heartbeat timeout");
     #endif
             conn.disconnect();
+#ifdef BLYNK_USE_DIRECT_CONNECT
+            state = CONNECTING;
+#endif
             return false;
         } else if ((t - lastActivityIn  > 1000UL * BLYNK_HEARTBEAT ||
                     t - lastActivityOut > 1000UL * BLYNK_HEARTBEAT) &&
@@ -142,6 +171,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
             lastHeartbeat = t;
         }
     } else if (state == CONNECTING) {
+#ifndef BLYNK_USE_DIRECT_CONNECT
         if (tconn && (t - lastHeartbeat > BLYNK_TIMEOUT_MS)) {
             BLYNK_LOG("Login timeout");
             conn.disconnect();
@@ -160,6 +190,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
             lastHeartbeat = lastActivityOut;
             return true;
         }
+#endif
     }
     return true;
 }
@@ -185,6 +216,7 @@ bool BlynkProtocol<Transp>::processInput(void)
     if (hdr.type == BLYNK_CMD_RESPONSE) {
         lastActivityIn = millis();
 
+#ifndef BLYNK_USE_DIRECT_CONNECT
         if (state == CONNECTING && (1 == hdr.msg_id)) {
             switch (hdr.length) {
             case BLYNK_SUCCESS:
@@ -211,6 +243,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         if (BLYNK_NOT_AUTHENTICATED == hdr.length) {
             return false;
         }
+#endif
         // TODO: return code may indicate App presence
         return true;
     }
@@ -239,6 +272,23 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     switch (hdr.type)
     {
+#ifdef BLYNK_USE_DIRECT_CONNECT
+    case BLYNK_CMD_REGISTER:
+    case BLYNK_CMD_SAVE_PROF:
+    case BLYNK_CMD_ACTIVATE:
+    case BLYNK_CMD_DEACTIVATE:
+    case BLYNK_CMD_REFRESH:
+    	break; // those make no sense in direct mode
+    case BLYNK_CMD_LOAD_PROF: {
+    	sendCmd(BLYNK_CMD_LOAD_PROF, hdr.msg_id, profile, strlen(profile));
+    } break;
+    case BLYNK_CMD_GET_TOKEN: {
+    	sendCmd(BLYNK_CMD_GET_TOKEN, hdr.msg_id, authkey, strlen(authkey));
+    } break;
+    case BLYNK_CMD_LOGIN:
+    	state = CONNECTED;
+    	// Fall-through
+#endif
     case BLYNK_CMD_PING: {
         sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
     } break;
@@ -322,6 +372,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         BLYNK_LOG("Sent %u/%u", wlen, len2s);
 #endif
         conn.disconnect();
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        state = CONNECTING;
+#endif
         return;
     }
 #else
@@ -352,6 +405,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
             BLYNK_LOG("Sent %u/%u", wlen, sizeof(hdr)+length+length2);
 #endif
             conn.disconnect();
+#ifdef BLYNK_USE_DIRECT_CONNECT
+            state = CONNECTING;
+#endif
             return;
         }
     }
@@ -366,6 +422,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
         BLYNK_LOG_TROUBLE("flood");
         conn.disconnect();
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        state = CONNECTING;
+#endif
     }
 #else
     lastActivityOut = millis();
