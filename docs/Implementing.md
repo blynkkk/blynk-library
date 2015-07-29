@@ -131,7 +131,9 @@ TODO
 TODO
 
 ### Example implementations
+Use these to play with the protocol and understand the basics:
 
-* [Pseudo-library in Python](https://github.com/blynkkk/blynk-library/blob/master/tests/pseudo-library.py) - use this to play with the protocol and understand the basics
+* [Pseudo-library in Python](https://github.com/blynkkk/blynk-library/blob/master/tests/pseudo-library.py) 
+* [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
 * [Arduino](https://github.com/blynkkk/blynk-library)
 * [Spark Core](https://github.com/vshymanskyy/blynk-library-spark)
