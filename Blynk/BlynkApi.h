@@ -28,6 +28,40 @@ public:
         Init();
     }
 
+#ifdef DOXYGEN // These API here are only for the documentation
+
+    /**
+     * Connects to the server.
+     * Blocks until connected or timeout happens.
+     * May take less or more then timeout value.
+     *
+     * @param timeout    Connection timeout
+     * @returns          True if connected to the server
+     */
+    bool connect(unsigned long timeout = BLYNK_TIMEOUT_MS*3);
+
+    /**
+     * Disconnects from the server.
+     * It will not try to reconnect, until connect() is called
+     */
+    void disconnect();
+
+    /**
+     * @returns          True if connected to the server
+     */
+    bool connected();
+
+    /**
+     * Performs Blynk-related housekeeping
+     * and processes incoming commands
+     *
+     * @param available  True if there is incoming data to process
+     *                   Only used when user manages connection manually.
+     */
+    bool run(bool available = false);
+
+#endif // DOXYGEN
+
     /**
      * Sends value to a Virtual Pin
      *
@@ -75,10 +109,10 @@ public:
      * @param msg Text of the message
      */
     template<typename T>
-    void tweet(const T& data) {
+    void tweet(const T& msg) {
         char mem[128];
         BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(data);
+        cmd.add(msg);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
@@ -88,10 +122,10 @@ public:
      * @param msg Text of the message
      */
     template<typename T>
-    void notify(const T& data) {
+    void notify(const T& msg) {
         char mem[128];
         BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(data);
+        cmd.add(msg);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
