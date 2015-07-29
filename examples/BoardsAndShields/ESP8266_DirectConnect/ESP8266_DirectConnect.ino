@@ -13,11 +13,14 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to monitor a button state
- * using polling mechanism.
+ * This example shows how to connect to ESP8266 directly
+ * without using intermediate server.
  *
- * App dashboard setup:
- *   LED widget on V1
+ * Please note: this example is for experienced users.
+ *
+ * !!!
+ * NOTE: Blynk Apps currently do not support direct TCP connection.
+ * Wait for new updates!
  *
  **************************************************************/
 
