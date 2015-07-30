@@ -3,6 +3,7 @@ python:
     - "2.7"
 
 env:
+    - LINUX_SRC=linux
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet_Manual
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Serial_USB
@@ -12,9 +13,14 @@ env:
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/CC3000
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ENC28J60
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Standalone PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_DirectConnect PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/RN_XV_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/WildFire PLATFORMIO_CI_BOARDS_ARGS="--board=wildfirev3"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/User_Defined_Connection
+    # PLATFORMIO_CI_SRC=examples/BoardsAndShields/LinkItONE
+    # PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Shield
+    # PLATFORMIO_CI_SRC=examples/BoardsAndShields/Seeed_EthernetV2_0
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushDataOnRequest
@@ -24,16 +30,15 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/NeoPixel
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
-    - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
+    - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickOneAxis
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
     - PLATFORMIO_CI_SRC=examples/Widgets/LCD
     - PLATFORMIO_CI_SRC=examples/Widgets/LED
-    - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
-    - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
-    - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
-    - LINUX_SRC=linux
+    - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
+    - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
+    - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
 
 install:
     - python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
