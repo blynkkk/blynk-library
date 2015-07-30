@@ -48,7 +48,7 @@ public:
          while (true) {
              BLYNK_LOG("Connecting to %s...", ssid);
              if (pass && strlen(pass)) {
-            	 status = WiFi.begin((char*)ssid, pass);
+            	 status = WiFi.begin((char*)ssid, (char*)pass);
              } else {
             	 status = WiFi.begin((char*)ssid);
              }
