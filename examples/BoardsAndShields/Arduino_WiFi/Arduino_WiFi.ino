@@ -15,6 +15,7 @@
  **************************************************************
  * This example shows how to use Arduino WiFi shield
  * to connect your project to Blynk.
+ *
  * Feel free to apply it to any other example. It's simple!
  *
  **************************************************************/

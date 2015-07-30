@@ -19,13 +19,6 @@
 #define BLYNK_INFO_CONNECTION  "CC3200"
 #endif
 
-#include <WiFi.h>
-#include <Adapters/BlynkWiFiCommon.h>
-
-static WiFiClient _blynkWifiClient;
-static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
-BlynkWifiCommon Blynk(_blynkTransport);
-
-#include <BlynkWidgets.h>
+#include <BlynkSimpleEnergiaWiFi.h>
 
 #endif
