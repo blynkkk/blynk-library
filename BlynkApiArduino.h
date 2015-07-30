@@ -31,7 +31,13 @@
 #endif
 
 #ifndef BLYNK_INFO_DEVICE
-    #define BLYNK_INFO_DEVICE  "Arduino"
+    #if defined(ENERGIA)
+        #define BLYNK_INFO_DEVICE  "Energia"
+    #elif defined(SPARK) || defined(PARTICLE)
+        #define BLYNK_INFO_DEVICE  "Particle"
+    #else
+        #define BLYNK_INFO_DEVICE  "Arduino"
+    #endif
 #endif
 
 template<class Proto>
@@ -82,11 +88,11 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         return;
     unsigned pin = it.asInt();
 #if defined(analogInputToDigitalPin)
-	if (pin == 0 && it.asStr()[0] == 'A') {
-		pin = analogInputToDigitalPin(atoi(it.asStr()+1));
-	}
+    if (pin == 0 && it.asStr()[0] == 'A') {
+        pin = analogInputToDigitalPin(atoi(it.asStr()+1));
+    }
 #else
-	#warning "analogInputToDigitalPin not defined => Named analog pins will not work"
+    #warning "analogInputToDigitalPin not defined => Named analog pins will not work"
 #endif
 
 #ifndef BLYNK_NO_BUILTIN

@@ -1,5 +1,5 @@
 /**
- * @file       BlynkSimpleWifi.h
+ * @file       BlynkSimpleRBL_CC3200.h
  * @author     Volodymyr Shymanskyy
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
@@ -8,15 +8,16 @@
  *
  */
 
-#ifndef BlynkSimpleWifi_h
-#define BlynkSimpleWifi_h
+#ifndef BlynkSimpleRBL_CC3200_h
+#define BlynkSimpleRBL_CC3200_h
 
-#ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "HDG204"
+#ifndef BLYNK_INFO_DEVICE
+#define BLYNK_INFO_DEVICE  "RBL_CC3200"
 #endif
 
-// Fix for WiFi shield (it has a crazy ping duration)
-#define BLYNK_TIMEOUT_MS 6000UL
+#ifndef BLYNK_INFO_CONNECTION
+#define BLYNK_INFO_CONNECTION  "CC3200"
+#endif
 
 #include <WiFi.h>
 #include <Adapters/BlynkWiFiCommon.h>

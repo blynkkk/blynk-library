@@ -23,7 +23,7 @@
     #include <inttypes.h>
 #endif
 
-#if defined(SPARK)
+#if defined(SPARK) || defined(PARTICLE)
     #include "application.h"
 #endif
 

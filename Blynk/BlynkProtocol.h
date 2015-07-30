@@ -345,7 +345,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
 #endif
 
-#if defined(ESP8266) || defined(SPARK) || defined(BLYNK_ATOMIC_SEND)
+#if defined(BLYNK_ATOMIC_SEND)|| defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...
 
     static uint8_t buff[BLYNK_MAX_READBYTES];

@@ -86,7 +86,7 @@ public:
 #endif
     void add(const char* str);
     void add(const void* b, size_t l);
-#if defined(ARDUINO) || defined(SPARK)
+#if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
     void add(const String& str);
     void add(String& str);
 #endif
@@ -144,7 +144,7 @@ void BlynkParam::add(const char* str)
     add(str, strlen(str)+1);
 }
 
-#if defined(ARDUINO) || defined(SPARK)
+#if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
 inline
 void BlynkParam::add(const String& str)
 {
