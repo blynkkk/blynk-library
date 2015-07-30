@@ -13,8 +13,9 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to use Arduino WiFi shield
- * to connect your project to Blynk.
+ *
+ * This is an example for RedBearLab CC3200 WiFi board.
+ *
  * Feel free to apply it to any other example. It's simple!
  *
  **************************************************************/
@@ -22,7 +23,7 @@
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <SPI.h>
 #include <WiFi.h>
-#include <BlynkSimpleWifi.h>
+#include <BlynkSimpleRBL_CC3200.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
