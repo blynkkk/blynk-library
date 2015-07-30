@@ -1,7 +1,7 @@
 {
   "name": "Blynk",
   "keywords": "iot, smartphone, mobile, app, widgets, wifi, wi-fi, web, server",
-  "description": "Build a smartphone app for your Spark Core project in minutes. http://blynk.cc",
+  "description": "Build a smartphone app for your project in minutes. http://blynk.cc",
   "authors":
   {
     "name":  "Volodymyr Shymanskyy",
