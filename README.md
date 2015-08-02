@@ -1,4 +1,9 @@
 [![Build Status](https://travis-ci.org/blynkkk/blynk-library.svg)](https://travis-ci.org/blynkkk/blynk-library)
+
+Implementations for other platforms:
+* [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
+* [Particle Core](https://github.com/vshymanskyy/blynk-library-spark)
+
 __________
 
 # What is Blynk?
