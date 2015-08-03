@@ -45,7 +45,7 @@ void setup()
   terminal.flush();
 }
 
-BLYNK_WRITE(1)
+BLYNK_WRITE(V1)
 {
   BLYNK_LOG("Hey! I got a new message!");
 

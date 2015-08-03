@@ -45,7 +45,7 @@ void setup()
   strip.show();
 }
 
-BLYNK_WRITE(1)
+BLYNK_WRITE(V1)
 {
   int shift = param.asInt();
   for (int i = 0; i < strip.numPixels(); i++)

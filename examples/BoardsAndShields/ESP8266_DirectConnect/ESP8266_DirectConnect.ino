@@ -53,11 +53,11 @@ char profile[] = R"raw({"dashBoards":[
 
 // Virtual handlers for our widgets...
 
-BLYNK_WRITE(1) {
+BLYNK_WRITE(V1) {
   // do something...
 }
 
-BLYNK_READ(9) {
+BLYNK_READ(V9) {
   Blynk.virtualWrite(9, millis() / 1000);
 }
 

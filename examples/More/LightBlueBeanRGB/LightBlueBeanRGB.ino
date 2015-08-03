@@ -48,17 +48,17 @@ void updateHSV() {
 }
 
 // Attach a Slider widget to the Virtual pin 2 - and control the built-in RGB led!
-BLYNK_WRITE(2) {
+BLYNK_WRITE(V2) {
   hue = param.asDouble()/255;
   updateHSV();
 }
 
-BLYNK_WRITE(3) {
+BLYNK_WRITE(V3) {
   sat = param.asDouble()/255;
   updateHSV();
 }
 
-BLYNK_WRITE(4) {
+BLYNK_WRITE(V4) {
   val = param.asDouble()/255;
   updateHSV();
 }
@@ -67,7 +67,7 @@ BLYNK_WRITE(4) {
 
 WidgetTerminal terminal(1);
 
-BLYNK_WRITE(1) {
+BLYNK_WRITE(V1) {
   terminal.print("I got:");
   terminal.write(param.getBuffer(), param.getLength());
   terminal.println();

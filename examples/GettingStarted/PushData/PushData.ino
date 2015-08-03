@@ -55,7 +55,7 @@ void sendUptime()
 {
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
-  Blynk.virtualWrite(5, millis() / 1000);
+  Blynk.virtualWrite(V5, millis() / 1000);
 }
 
 void loop()

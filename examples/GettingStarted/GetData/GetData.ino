@@ -38,7 +38,7 @@ void setup()
 
 // This function will be called every time
 // when App writes value to Virtual Pin 1
-BLYNK_WRITE(1)
+BLYNK_WRITE(V1)
 {
   BLYNK_LOG("Got a value: %s", param.asStr());
   // You can also use: asInt() and asDouble()
