@@ -24,11 +24,50 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 
 // Helper macro
 
+#define V0  0
+#define V1  1
+#define V2  2
+#define V3  3
+#define V4  4
+#define V5  5
+#define V6  6
+#define V7  7
+#define V8  8
+#define V9  9
+#define V10 10
+#define V11 11
+#define V12 12
+#define V13 13
+#define V14 14
+#define V15 15
+#define V16 16
+#define V17 17
+#define V18 18
+#define V19 19
+#define V20 20
+#define V21 21
+#define V22 22
+#define V23 23
+#define V24 24
+#define V25 25
+#define V26 26
+#define V27 27
+#define V28 28
+#define V29 29
+#define V30 30
+#define V31 31
+
 #define BLYNK_WRITE_DEF(pin) \
     void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& param)
 
-#define BLYNK_READ_DEF(pin) \
-    void BlynkWidgetRead ## pin (BlynkReq& request)
+#define BLYNK_READ_DEF(pin)  \
+    void BlynkWidgetRead ## pin  (BlynkReq& request)
+
+#define BLYNK_WRITE_OTHER() \
+    void BlynkWidgetWrite (BlynkReq& request, const BlynkParam& param)
+
+#define BLYNK_READ_OTHER()  \
+    void BlynkWidgetRead  (BlynkReq& request, const BlynkParam& param)
 
 #define BLYNK_WRITE(pin) BLYNK_WRITE_DEF(pin)
 #define BLYNK_READ(pin)  BLYNK_READ_DEF(pin)
