@@ -31,30 +31,25 @@ public:
     void connectWiFi(const char* ssid, const char* pass)
     {
         int status = WL_IDLE_STATUS;
-         // check for the presence of the shield:
-         if (WiFi.status() == WL_NO_SHIELD) {
-             BLYNK_FATAL("WiFi shield not present");
-         }
+        // check for the presence of the shield:
+        if (WiFi.status() == WL_NO_SHIELD) {
+            BLYNK_FATAL("WiFi shield not present");
+        }
 
-         String fv = WiFi.firmwareVersion();
-         if (fv != "1.1.0") {
-             BLYNK_LOG("Please upgrade the firmware");
-         }
-
-         // attempt to connect to Wifi network:
-         while (true) {
-             BLYNK_LOG("Connecting to %s...", ssid);
-             if (pass && strlen(pass)) {
-            	 status = WiFi.begin((char*)ssid, (char*)pass);
-             } else {
-            	 status = WiFi.begin((char*)ssid);
-             }
-             if (status == WL_CONNECTED) {
-                 break;
-             } else {
-                 ::delay(5000);
-             }
-         }
+        // attempt to connect to Wifi network:
+        while (true) {
+            BLYNK_LOG("Connecting to %s...", ssid);
+            if (pass && strlen(pass)) {
+                status = WiFi.begin((char*)ssid, (char*)pass);
+            } else {
+                status = WiFi.begin((char*)ssid);
+            }
+            if (status == WL_CONNECTED) {
+                break;
+            } else {
+                ::delay(5000);
+            }
+        }
     }
 
     void config(const char* auth,
