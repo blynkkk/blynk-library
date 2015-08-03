@@ -91,6 +91,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (pin == 0 && it.asStr()[0] == 'A') {
         pin = analogInputToDigitalPin(atoi(it.asStr()+1));
     }
+    #pragma message("Good! Analog pins can be referenced on this device by name.")
 #else
     #warning "analogInputToDigitalPin not defined => Named analog pins will not work"
 #endif
@@ -146,6 +147,10 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #ifdef INPUT_PULLUP
                 } else if (!strcmp(it.asStr(), "pu")) {
                     pinMode(pin, INPUT_PULLUP);
+#endif
+#ifdef INPUT_PULLDOWN
+                } else if (!strcmp(it.asStr(), "pd")) {
+                    pinMode(pin, INPUT_PULLDOWN);
 #endif
                 } else {
 #ifdef BLYNK_DEBUG
