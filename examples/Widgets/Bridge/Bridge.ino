@@ -49,7 +49,7 @@ void setup()
 {
   Blynk.begin(auth);
 
-  while (!Blynk.connect()) {
+  while (Blynk.connect() == false) {
     // Wait until connected
   }
 

@@ -37,7 +37,7 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
-  while (!Blynk.connect()) {
+  while (Blynk.connect() == false) {
     // Wait until connected
   }
 
