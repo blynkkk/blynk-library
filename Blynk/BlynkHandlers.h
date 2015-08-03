@@ -24,11 +24,14 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 
 // Helper macro
 
-#define BLYNK_WRITE(pin) \
+#define BLYNK_WRITE_DEF(pin) \
     void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& param)
 
-#define BLYNK_READ(pin) \
+#define BLYNK_READ_DEF(pin) \
     void BlynkWidgetRead ## pin (BlynkReq& request)
+
+#define BLYNK_WRITE(pin) BLYNK_WRITE_DEF(pin)
+#define BLYNK_READ(pin)  BLYNK_READ_DEF(pin)
 
 #define BLYNK_ATTACH_WIDGET(widget, pin)	\
     BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
