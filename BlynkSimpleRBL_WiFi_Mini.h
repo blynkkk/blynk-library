@@ -19,6 +19,8 @@
 #define BLYNK_INFO_CONNECTION  "CC3200"
 #endif
 
+#define BLYNK_SEND_CHUNK 64
+
 #include <BlynkSimpleEnergiaWiFi.h>
 
 #endif
