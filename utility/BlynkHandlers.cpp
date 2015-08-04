@@ -11,13 +11,11 @@
 #include <Blynk/BlynkHandlers.h>
 #include <Blynk/BlynkDebug.h>
 
-__attribute__((weak))
 void BlynkWidgetRead(BlynkReq& request)
 {
     BLYNK_LOG("No handler for reading from pin %d", request.pin);
 }
 
-__attribute__((weak))
 void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param)
 {
     BLYNK_LOG("No handler for writing to pin %d", request.pin);
@@ -28,6 +26,9 @@ void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param)
 
 #define BLYNK_ON_WRITE_IMPL(pin) void BlynkWidgetWrite ## pin (BlynkReq& req, const BlynkParam& param) \
           __attribute__((weak, alias("_Z16BlynkWidgetWriteR8BlynkReqRK10BlynkParam")))
+
+BLYNK_ON_READ_IMPL(Default);
+BLYNK_ON_WRITE_IMPL(Default);
 
 BLYNK_ON_READ_IMPL(0 );
 BLYNK_ON_READ_IMPL(1 );

@@ -57,20 +57,17 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 #define V30 30
 #define V31 31
 
-#define BLYNK_WRITE_DEF(pin) \
+#define BLYNK_WRITE_2(pin) \
     void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& param)
 
-#define BLYNK_READ_DEF(pin)  \
+#define BLYNK_READ_2(pin)  \
     void BlynkWidgetRead ## pin  (BlynkReq& request)
 
-#define BLYNK_WRITE_OTHER() \
-    void BlynkWidgetWrite (BlynkReq& request, const BlynkParam& param)
+#define BLYNK_WRITE_DEFAULT() BLYNK_WRITE_2(Default)
+#define BLYNK_READ_DEFAULT()  BLYNK_READ_2(Default)
 
-#define BLYNK_READ_OTHER()  \
-    void BlynkWidgetRead  (BlynkReq& request, const BlynkParam& param)
-
-#define BLYNK_WRITE(pin) BLYNK_WRITE_DEF(pin)
-#define BLYNK_READ(pin)  BLYNK_READ_DEF(pin)
+#define BLYNK_WRITE(pin)      BLYNK_WRITE_2(pin)
+#define BLYNK_READ(pin)       BLYNK_READ_2(pin)
 
 #define BLYNK_ATTACH_WIDGET(widget, pin)	\
     BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
@@ -101,6 +98,9 @@ void BlynkWidgetRead(BlynkReq& request);
 void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param);
 
 // Declare all pin handlers (you can redefine them in your code)
+
+BLYNK_READ_DEFAULT();
+BLYNK_WRITE_DEFAULT();
 
 BLYNK_READ(0 );
 BLYNK_READ(1 );

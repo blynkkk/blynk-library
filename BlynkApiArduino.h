@@ -117,19 +117,29 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #endif
 
     if (!strcmp(cmd, "vr")) {
-        if (WidgetReadHandler handler = GetReadHandler(pin)) {
-            BlynkReq req = { (uint8_t)pin };
+        BlynkReq req = { (uint8_t)pin };
+        WidgetReadHandler handler;
+        if ((handler = GetReadHandler(pin)) &&
+            (handler != BlynkWidgetRead))
+        {
             handler(req);
+        } else {
+            BlynkWidgetReadDefault(req);
         }
     } else {
 
         if (!strcmp(cmd, "vw")) {
             ++it;
-            if (WidgetWriteHandler handler = GetWriteHandler(pin)) {
-                BlynkReq req = { (uint8_t)pin };
-                char* start = (char*)it.asStr();
-                BlynkParam param2(start, len - (start - (char*)buff));
+            char* start = (char*)it.asStr();
+            BlynkParam param2(start, len - (start - (char*)buff));
+            BlynkReq req = { (uint8_t)pin };
+            WidgetWriteHandler handler;
+            if ((handler = GetWriteHandler(pin)) &&
+                (handler != BlynkWidgetWrite))
+            {
                 handler(req, param2);
+            } else {
+                BlynkWidgetWriteDefault(req, param2);
             }
             return;
         }
