@@ -43,12 +43,8 @@
 #define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
 #define BLYNK_NORETURN __attribute__ ((noreturn))
 
-#if defined(__AVR__)
-    // Causes problems on some platforms
-    #define BLYNK_FORCE_INLINE
-#else
-    #define BLYNK_FORCE_INLINE __attribute__((always_inline))
-#endif
+// Causes problems on some platforms
+#define BLYNK_FORCE_INLINE // __attribute__((always_inline))
 
 #if defined(__AVR__)
     #include <avr/pgmspace.h>
