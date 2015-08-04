@@ -126,7 +126,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
     bool tconn = conn.connected();
 
     if (tconn) {
-        if (avail || conn.available() > 0) {
+        while (avail || conn.available() > 0) {
             //BLYNK_LOG("Available: %d", conn.available());
             //const unsigned long t = micros();
             if (!processInput()) {
@@ -138,6 +138,10 @@ bool BlynkProtocol<Transp>::run(bool avail)
                 return false;
             }
             //BLYNK_LOG("Proc time: %d", micros() - t);
+            avail = false;
+#if defined(ARDUINO) && (ARDUINO >= 151)
+            yield();
+#endif
         }
     }
 
@@ -345,10 +349,10 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
 #endif
 
-#if defined(BLYNK_ATOMIC_SEND)|| defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
+#if defined(BLYNK_SEND_ATOMIC)|| defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...
 
-    static uint8_t buff[BLYNK_MAX_READBYTES];
+    uint8_t buff[BLYNK_MAX_READBYTES];
     BlynkHeader* hdr = (BlynkHeader*)buff;
     hdr->type = cmd;
     hdr->msg_id = htons(id);
@@ -366,7 +370,20 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #ifdef BLYNK_DEBUG
     BLYNK_DBG_DUMP("<", buff+5, len2s-5);
 #endif
-    size_t wlen = conn.write(buff, len2s);
+    size_t wlen = 0;
+
+#ifndef BLYNK_SEND_CHUNK
+#define BLYNK_SEND_CHUNK 1024 // Just a big number
+#endif
+
+    while (wlen < len2s) {
+        const size_t chunk = BlynkMin(size_t(BLYNK_SEND_CHUNK), len2s - wlen);
+        wlen += conn.write(buff + wlen, chunk);
+#ifdef BLYNK_SEND_THROTTLE
+        delay(BLYNK_SEND_THROTTLE);
+#endif
+    }
+
     if (wlen != len2s) {
 #ifdef BLYNK_DEBUG
         BLYNK_LOG("Sent %u/%u", wlen, len2s);

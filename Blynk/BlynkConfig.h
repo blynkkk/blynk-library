@@ -60,4 +60,14 @@
 // Uncomment to switch to direct-connect mode
 //#define BLYNK_USE_DIRECT_CONNECT
 
+
+// Uncomment to append command body to header (uses more RAM)
+//#define BLYNK_SEND_ATOMIC
+
+// Split whole command into chunks (in bytes)
+//#define BLYNK_SEND_CHUNK 64
+
+// Wait after sending each chunk (in milliseconds)
+//#define BLYNK_SEND_THROTTLE 10
+
 #endif
