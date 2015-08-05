@@ -12,7 +12,7 @@
 #define BlynkSimpleRBL_WiFi_Mini_h
 
 #ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "RBL_WiFi_Mini"
+#define BLYNK_INFO_DEVICE  "RBL WiFi Mini"
 #endif
 
 #ifndef BLYNK_INFO_CONNECTION

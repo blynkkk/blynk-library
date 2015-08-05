@@ -12,7 +12,7 @@
 #define BlynkSimpleRBL_CC3200_h
 
 #ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "RBL_CC3200"
+#define BLYNK_INFO_DEVICE  "RBL CC3200"
 #endif
 
 #ifndef BLYNK_INFO_CONNECTION

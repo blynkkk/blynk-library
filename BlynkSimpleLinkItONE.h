@@ -12,7 +12,7 @@
 #define BlynkSimpleLinkItONE_h
 
 #ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "LinkItONE"
+#define BLYNK_INFO_DEVICE  "LinkIt ONE"
 #endif
 
 #include <BlynkApiArduino.h>
