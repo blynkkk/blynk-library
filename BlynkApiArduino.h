@@ -177,14 +177,19 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
         if (!strcmp(cmd, "dw")) {
             //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
-            pinMode(pin, OUTPUT);
 #ifdef ESP8266
             // Disable PWM...
             analogWrite(pin, 0);
 #endif
+#ifndef BLYNK_MINIMIZE_PINMODE_USAGE
+            pinMode(pin, OUTPUT);
+#endif
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
         } else if (!strcmp(cmd, "aw")) {
             //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
+#ifndef BLYNK_MINIMIZE_PINMODE_USAGE
+            pinMode(pin, OUTPUT);
+#endif
             analogWrite(pin, it.asInt());
         } else {
             BLYNK_LOG("Invalid HW cmd: %s", cmd);
