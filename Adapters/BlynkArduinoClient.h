@@ -25,7 +25,7 @@ class BlynkArduinoClient
 {
 public:
     BlynkArduinoClient(Client& client)
-        : client(client), domain(NULL), port(0)
+        : client(client), domain(NULL), port(0), isConn(false)
     {
         client.setTimeout(BLYNK_TIMEOUT_MS);
     }
@@ -44,15 +44,17 @@ public:
     bool connect() {
         if (domain) {
             BLYNK_LOG("Connecting to %s:%d", domain, port);
-            return (1 == client.connect(domain, port));
+            isConn = (1 == client.connect(domain, port));
+            return isConn;
         } else { //if (uint32_t(addr) != 0) {
             BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", addr[0], addr[1], addr[2], addr[3], port);
-            return (1 == client.connect(addr, port));
+            isConn = (1 == client.connect(addr, port));
+            return isConn;
         }
         return 0;
     }
 
-    void disconnect() { client.stop(); }
+    void disconnect() { isConn = false; client.stop(); }
 
 #ifdef BLYNK_ENC28J60_FIX
     size_t read(void* buf, size_t len) {
@@ -93,7 +95,7 @@ public:
     }
 #endif
 
-    bool connected() { YIELD_FIX(); return client.connected(); }
+    bool connected() { YIELD_FIX(); return isConn && client.connected(); }
     int available() {  YIELD_FIX(); return client.available(); }
 
 private:
@@ -101,6 +103,7 @@ private:
     IPAddress   addr;
     const char* domain;
     uint16_t    port;
+    bool        isConn;
 };
 
 #endif

@@ -161,9 +161,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
             BLYNK_LOG("Heartbeat timeout");
     #endif
             conn.disconnect();
-#ifdef BLYNK_USE_DIRECT_CONNECT
             state = CONNECTING;
-#endif
             return false;
         } else if ((t - lastActivityIn  > 1000UL * BLYNK_HEARTBEAT ||
                     t - lastActivityOut > 1000UL * BLYNK_HEARTBEAT) &&
@@ -179,6 +177,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
         if (tconn && (t - lastHeartbeat > BLYNK_TIMEOUT_MS)) {
             BLYNK_LOG("Login timeout");
             conn.disconnect();
+            state = CONNECTING;
             return false;
         } else if (!tconn && (t - lastHeartbeat > 5000UL)) {
             conn.disconnect();
@@ -389,9 +388,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         BLYNK_LOG("Sent %u/%u", wlen, len2s);
 #endif
         conn.disconnect();
-#ifdef BLYNK_USE_DIRECT_CONNECT
         state = CONNECTING;
-#endif
         return;
     }
 #else
@@ -422,9 +419,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
             BLYNK_LOG("Sent %u/%u", wlen, sizeof(hdr)+length+length2);
 #endif
             conn.disconnect();
-#ifdef BLYNK_USE_DIRECT_CONNECT
             state = CONNECTING;
-#endif
             return;
         }
     }
@@ -439,9 +434,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
         BLYNK_LOG_TROUBLE("flood");
         conn.disconnect();
-#ifdef BLYNK_USE_DIRECT_CONNECT
         state = CONNECTING;
-#endif
     }
 #else
     lastActivityOut = millis();
