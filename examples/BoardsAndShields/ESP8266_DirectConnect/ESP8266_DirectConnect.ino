@@ -34,8 +34,8 @@
 //#define WIFI_MODE_AP
 
 // Set these to your credentials.
-const char ssid[]     = "Blynk";    // WiFi name
-const char password[] = "123456";   // WiFi password
+const char ssid[]     = "Blynk-AP";    // WiFi name
+const char password[] = "12345678";   // WiFi password
 
 // Set port of the server
 const int port = 8442;
@@ -46,16 +46,11 @@ char auth[] = "";
 // Description of the dashboard
 char profile[] = R"raw({"dashBoards":[
   {"id":1,"name":"Direct connect","boardType":"ESP8266","widgets":[
-    {"id":1,"type":"BUTTON","pinType":"VIRTUAL","pin":1,"value":"1","x":1,"y":1,"pushMode":false},
     {"id":2,"type":"DIGIT4_DISPLAY","pinType":"VIRTUAL","pin":9,"x":5,"y":1,"frequency":1000}
   ]}
 ]})raw";
 
 // Virtual handlers for our widgets...
-
-BLYNK_WRITE(V1) {
-  // do something...
-}
 
 BLYNK_READ(V9) {
   Blynk.virtualWrite(9, millis() / 1000);
@@ -85,6 +80,9 @@ void setup()
   Serial.begin(9600);
   Serial.println();
 
+  Blynk.begin(auth);
+  Blynk.setProfile(profile);
+
 #ifdef WIFI_MODE_AP
   BLYNK_LOG("Configuring WiFi access point: %s", ssid);
   WiFi.softAP(ssid, password);
@@ -104,9 +102,6 @@ void setup()
 
   server.begin();
   BLYNK_LOG("Listening on port: %d", port);
-
-  Blynk.begin(auth);
-  Blynk.setProfile(profile);
 }
 
 void loop()
@@ -120,6 +115,13 @@ void loop()
     Serial.print(":");
     Serial.println(client.remotePort());
 
+    // Wait for connection
+    unsigned long start = millis();
+    while (!client.connected() && (millis() - start < 1000)) {
+      delay(5);
+    }
+
+    // Go!!!
     Blynk.startSession();
     while (client.connected()) {
       // Okay, handle Blynk protocol
@@ -132,6 +134,6 @@ void loop()
       }
     }
     client.stop();
-    Serial.print("Client disconnected.");
+    Serial.println("Client disconnected.");
   }
 }
