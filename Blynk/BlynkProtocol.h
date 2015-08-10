@@ -126,7 +126,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
     bool tconn = conn.connected();
 
     if (tconn) {
-        while (avail || conn.available() > 0) {
+        if (avail || conn.available() > 0) {
             //BLYNK_LOG("Available: %d", conn.available());
             //const unsigned long t = micros();
             if (!processInput()) {
@@ -138,10 +138,6 @@ bool BlynkProtocol<Transp>::run(bool avail)
                 return false;
             }
             //BLYNK_LOG("Proc time: %d", micros() - t);
-            avail = false;
-#if defined(ARDUINO) && (ARDUINO >= 151)
-            yield();
-#endif
         }
     }
 
