@@ -50,6 +50,9 @@ public:
                 ::delay(5000);
             }
         }
+
+        IPAddress myip = WiFi.localIP();
+        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
     }
 
     void config(const char* auth,
