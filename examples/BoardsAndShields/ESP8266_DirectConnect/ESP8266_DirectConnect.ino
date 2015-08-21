@@ -17,7 +17,9 @@
  * without using intermediate server.
  *
  * Please note: this example is for experienced users.
- *
+ * Use this wiring for improved stability:
+ *   https://github.com/esp8266/Arduino/blob/esp8266/docs/ESP_improved_stability.png
+ * 
  * !!!
  * NOTE: Blynk Apps currently do not support direct TCP connection.
  * Wait for new updates!
@@ -31,7 +33,7 @@
 #include <BlynkSimpleUserDefined.h>
 
 // Uncomment this to set WiFi to Access Point mode
-//#define WIFI_MODE_AP
+#define WIFI_MODE_AP
 
 // Set these to your credentials.
 const char ssid[]     = "Blynk-AP";    // WiFi name
@@ -46,7 +48,8 @@ char auth[] = "";
 // Description of the dashboard
 char profile[] = R"raw({"dashBoards":[
   {"id":1,"name":"Direct connect","boardType":"ESP8266","widgets":[
-    {"id":2,"type":"DIGIT4_DISPLAY","pinType":"VIRTUAL","pin":9,"x":5,"y":1,"frequency":1000}
+    {"id":2,"type":"DIGIT4_DISPLAY","pinType":"VIRTUAL","pin":9,"x":5,"y":1,"frequency":1000},
+    {"id":3,"type":"BUTTON","pinType":"VIRTUAL","pin":1,"x":2,"y":1}
   ]}
 ]})raw";
 
@@ -54,6 +57,10 @@ char profile[] = R"raw({"dashBoards":[
 
 BLYNK_READ(V9) {
   Blynk.virtualWrite(9, millis() / 1000);
+}
+
+BLYNK_WRITE(V1) {
+  BLYNK_LOG("Button event");
 }
 
 // Next goes the hard stuff: connection management, etc...
@@ -137,3 +144,4 @@ void loop()
     Serial.println("Client disconnected.");
   }
 }
+
