@@ -22,10 +22,10 @@ void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param)
 }
 
 #define BLYNK_ON_READ_IMPL(pin)  void BlynkWidgetRead  ## pin (BlynkReq& req) \
-          __attribute__((weak, alias("_Z15BlynkWidgetReadR8BlynkReq")))
+          __attribute__((weak, alias("BlynkWidgetRead")))
 
 #define BLYNK_ON_WRITE_IMPL(pin) void BlynkWidgetWrite ## pin (BlynkReq& req, const BlynkParam& param) \
-          __attribute__((weak, alias("_Z16BlynkWidgetWriteR8BlynkReqRK10BlynkParam")))
+          __attribute__((weak, alias("BlynkWidgetWrite")))
 
 BLYNK_ON_READ_IMPL(Default);
 BLYNK_ON_WRITE_IMPL(Default);

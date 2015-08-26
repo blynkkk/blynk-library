@@ -93,6 +93,9 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 #endif
 
 // Default read/write handlers (you can redefine them in your code)
+#ifdef __cplusplus 
+extern "C" {
+#endif
 
 void BlynkWidgetRead(BlynkReq& request);
 void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param);
@@ -170,5 +173,9 @@ BLYNK_WRITE(31);
 
 WidgetReadHandler GetReadHandler(unsigned pin);
 WidgetWriteHandler GetWriteHandler(unsigned pin);
+
+#ifdef __cplusplus 
+}
+#endif
 
 #endif

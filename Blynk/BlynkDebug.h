@@ -104,7 +104,7 @@ void BlynkFatal() BLYNK_NORETURN;
             va_end(ap);
         }
 
-    #elif defined(LINUX)
+    #elif defined(LINUX) || defined(MBED_LIBRARY_VERSION)
 
         #include <assert.h>
         #include <stdio.h>
