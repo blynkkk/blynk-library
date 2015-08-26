@@ -46,12 +46,36 @@ const int port = 8442;
 char auth[] = "";
 
 // Description of the dashboard
-char profile[] = R"raw({"dashBoards":[
-  {"id":1,"name":"Direct connect","boardType":"ESP8266","widgets":[
-    {"id":2,"type":"DIGIT4_DISPLAY","pinType":"VIRTUAL","pin":9,"x":5,"y":1,"frequency":1000},
-    {"id":3,"type":"BUTTON","pinType":"VIRTUAL","pin":1,"x":2,"y":1}
-  ]}
-]})raw";
+char profile[] = R"json(
+  {
+    "dashBoards": [
+      {
+        "id": 1,
+        "name": "Direct connect",
+        "boardType": "ESP8266",
+        "widgets": [
+          {
+            "id": 2,
+            "type": "DIGIT4_DISPLAY",
+            "pinType": "VIRTUAL",
+            "pin": 9,
+            "x": 5,
+            "y": 1,
+            "frequency": 1000
+          },
+          {
+            "id": 3,
+            "type": "BUTTON",
+            "pinType": "VIRTUAL",
+            "pin": 1,
+            "x": 2,
+            "y": 1
+          }
+        ]
+      }
+    ]
+  }
+)json";
 
 // Virtual handlers for our widgets...
 
