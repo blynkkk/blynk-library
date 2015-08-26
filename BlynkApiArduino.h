@@ -88,10 +88,10 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         return;
     unsigned pin = it.asInt();
 #if defined(analogInputToDigitalPin)
+    // Good! Analog pins can be referenced on this device by name.
     if (pin == 0 && it.asStr()[0] == 'A') {
         pin = analogInputToDigitalPin(atoi(it.asStr()+1));
     }
-    #pragma message("Good! Analog pins can be referenced on this device by name.")
 #else
     #warning "analogInputToDigitalPin not defined => Named analog pins will not work"
 #endif
