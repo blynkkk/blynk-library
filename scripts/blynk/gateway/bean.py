@@ -118,7 +118,9 @@ class BlynkLightBlueBean(DefaultDelegate):
             # Turn on notificiations
             self.conn.writeCharacteristic(0x2f, b'\x01\x00', False)
             # Connection workaround
-            self.conn.waitForNotifications(20)
+            #self.conn.waitForNotifications(20)
+            
+            self.sendCmd(BlynkLightBlueBean.MSG_ID_BT_END_GATE)
       
     def close(self):
         self.conn.disconnect()
@@ -241,4 +243,4 @@ class BlynkLightBlueBean(DefaultDelegate):
         for i in range(0, chunks_qty):
             self.sendCmd(BlynkLightBlueBean.MSG_ID_BL_FW_BLOCK, chunks[i])
             print('Upload:', (100 * i) // chunks_qty, '%', end='\r')
-            self.conn.waitForNotifications(0.05)
+            self.conn.waitForNotifications(0.1)
