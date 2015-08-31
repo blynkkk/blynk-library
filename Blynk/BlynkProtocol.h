@@ -347,7 +347,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #if defined(BLYNK_SEND_ATOMIC)|| defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...
 
-    uint8_t buff[BLYNK_MAX_READBYTES];
+    uint8_t buff[BLYNK_MAX_READBYTES]; // TODO: Eliminate constant
     BlynkHeader* hdr = (BlynkHeader*)buff;
     hdr->type = cmd;
     hdr->msg_id = htons(id);
@@ -373,7 +373,16 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 
     while (wlen < len2s) {
         const size_t chunk = BlynkMin(size_t(BLYNK_SEND_CHUNK), len2s - wlen);
-        wlen += conn.write(buff + wlen, chunk);
+        const size_t wlentmp = conn.write(buff + wlen, chunk);
+    	if (wlentmp == 0) {
+#ifdef BLYNK_DEBUG
+            BLYNK_LOG("Cmd not sent");
+#endif
+            conn.disconnect();
+            state = CONNECTING;
+            return;
+    	}
+        wlen += wlentmp;
 #ifdef BLYNK_SEND_THROTTLE
         delay(BLYNK_SEND_THROTTLE);
 #endif
