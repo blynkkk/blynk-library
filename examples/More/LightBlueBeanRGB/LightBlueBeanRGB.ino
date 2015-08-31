@@ -38,61 +38,25 @@ void loop()
   }
 }
 
-
-double hue = 0, sat = 1, val = 1;
-
-void updateHSV() {
-  byte rgb[3];
-  HsvToRgb(hue, sat, val, rgb);
-  Bean.setLed(rgb[0], rgb[1], rgb[2]);
+BLYNK_READ(V0) {
+    Blynk.virtualWrite(V0, millis()/1000);
 }
 
-// Attach a Slider widget to the Virtual pin 2 - and control the built-in RGB led!
+// Attach a ZeRGBa widget to the Virtual pin 2 - and control the built-in RGB led!
 BLYNK_WRITE(V2) {
-  hue = param.asDouble()/255;
-  updateHSV();
+  Bean.setLed(
+    param[0].asInt(),
+    param[1].asInt(),
+    param[2].asInt()
+  );
 }
+
+WidgetTerminal terminal(V3);
 
 BLYNK_WRITE(V3) {
-  sat = param.asDouble()/255;
-  updateHSV();
-}
-
-BLYNK_WRITE(V4) {
-  val = param.asDouble()/255;
-  updateHSV();
-}
-
-
-
-WidgetTerminal terminal(1);
-
-BLYNK_WRITE(V1) {
-  terminal.print("I got:");
+  terminal.print("Bean got:");
   terminal.write(param.getBuffer(), param.getLength());
   terminal.println();
   terminal.flush();
 }
 
-void HsvToRgb(double h, double s, double v, byte rgb[]) {
-    double r, g, b;
-
-    int i = int(h * 6);
-    double f = h * 6 - i;
-    double p = v * (1 - s);
-    double q = v * (1 - f * s);
-    double t = v * (1 - (1 - f) * s);
-
-    switch(i % 6){
-        case 0: r = v, g = t, b = p; break;
-        case 1: r = q, g = v, b = p; break;
-        case 2: r = p, g = v, b = t; break;
-        case 3: r = p, g = q, b = v; break;
-        case 4: r = t, g = p, b = v; break;
-        case 5: r = v, g = p, b = q; break;
-    }
-
-    rgb[0] = r * 255;
-    rgb[1] = g * 255;
-    rgb[2] = b * 255;
-}
