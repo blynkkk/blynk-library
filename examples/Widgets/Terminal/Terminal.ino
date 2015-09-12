@@ -54,6 +54,11 @@ BLYNK_WRITE(V1)
   terminal.write(param.getBuffer(), param.getLength());
   terminal.println();
 
+  // print "received 'repeat' text" string back if we got "repeat" string
+  if (String("repeat") == param.asStr()) {
+      terminal.println("received 'repeat' text") ;
+  }
+
   // Ensure everything is sent
   terminal.flush();
 }
