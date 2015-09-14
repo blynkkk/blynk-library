@@ -13,13 +13,15 @@
  * This example code is in public domain.
  *
  **************************************************************
- * Simple email example
+ * Simple e-mail example
  *
  * App dashboard setup:
- *   Email widget
+ *   E-mail Widget
  *
- * Connect a button to pin 2 and GND...
- * Pressing this button will also email a message! ;)
+ * Connect a button to digital pin 2 and GND
+ * Pressing this button will send an e-mail
+ *  
+ * WARNING: You are limited to send ONLY ONE E-MAIL PER MINUTE!
  *
  **************************************************************/
 //#define BLYNK_DEBUG
@@ -27,13 +29,11 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-SimpleTimer timer;
 
 void setup()
 {
@@ -43,44 +43,36 @@ void setup()
   while (Blynk.connect() == false) {
     // Wait until connected
   }
+  
+  // Send e-mail when your hardware gets connected to Blynk Server
+  // Just put the recepient's "e-mail address", "Subject" and the "message body"
+  Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online."); 
 
-  // Send email immediately on startup
-  Blynk.email("my_email@example.com", "Title", "Body");
-
-  // Setup a function to be called every 10 minutes
-  timer.setInterval(10L * 60000L, emailUptime);
-
-  // Setup email button on pin 2
+  // Setting the button
   pinMode(2, INPUT_PULLUP);
   // Attach pin 2 interrupt to our handler
   attachInterrupt(digitalPinToInterrupt(2), emailOnButtonPress, CHANGE);
 }
 
-void emailUptime()
-{
-  long uptime = millis() / 60000L;
-  BLYNK_LOG("Sending email every 10 minutes ;)");
-
-  // Actually send the message.
-  // Note:
-  //   We allow 1 email per minute for now.
-  Blynk.email("my_email@example.com", "Title", "Body");
-}
-
 void emailOnButtonPress()
 {
-  // Invert state, since button is "Active LOW"
-  int isButtonPressed = !digitalRead(2);
-  if (isButtonPressed) {
-    BLYNK_LOG("Button is pressed.");
-
-    Blynk.email("my_email@example.com", "Title", "Body");
+  // *** WARNING: You are limited to send ONLY ONE E-MAIL PER MINUTE! ***
+  
+  // Let's send an e-mail when you press the button 
+  // connected to digital pin 2 on your Arduino
+  
+  int isButtonPressed = !digitalRead(2); // Invert state, since button is "Active LOW"
+  
+  if (isButtonPressed) // You can write any condition to trigger e-mail sending
+  {
+    BLYNK_LOG("Button is pressed."); // This can be seen in the Serial Monitor
+    Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
+    
   }
 }
 
 void loop()
 {
   Blynk.run();
-  timer.run();
 }
 
