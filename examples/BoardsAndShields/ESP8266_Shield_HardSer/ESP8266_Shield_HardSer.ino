@@ -19,6 +19,8 @@
  *
  * Note: Ensure a stable serial connection to ESP8266!
  *       Firmware version 1.0.0 (AT v0.22) or later is needed.
+ *       You can change ESP baud rate. Connect to AT console and call:
+ *           AT+UART_DEF=115200,8,1,0,0
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
@@ -40,9 +42,11 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
-  Serial.begin(9600);     // Set console baud rate
+  // Set console baud rate
+  Serial.begin(9600);
   delay(10);
-  EspSerial.begin(9600);  // Set ESP8266 baud rate
+  // Set ESP8266 baud rate
+  EspSerial.begin(115200);
   delay(10);
 
   Blynk.begin(auth, wifi, "ssid", "pass");
