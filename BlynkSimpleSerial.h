@@ -13,7 +13,10 @@
 
 #include <Adapters/BlynkSerial.h>
 
-#if defined(__SAM3X8E__)
+#if defined(__SAMD21G18A__)
+    // For Arduino Zero (M0)
+    typedef BlynkTransportSerialChecked<Uart> ArduinoHwSerial;
+#elif defined(__SAM3X8E__)
     // For Arduino Due
     typedef BlynkTransportSerialChecked<UARTClass> ArduinoHwSerial;
 #elif defined(USBCON)
