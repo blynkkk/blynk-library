@@ -1,0 +1,29 @@
+{
+    "name": "Digistump Digispark",
+    "map": {
+        "digital": {
+            "pins": {
+                "P0":  0,  "P1":  1,  "P2":  2,  "P3":  3, "P4": 4
+            },
+            "ops": [ "dr", "dw" ]
+        },
+        "analog": {
+            "pins": {
+                "A1": 14, "A2": 15, "A3": 16
+            },
+            "ops": [ "dr", "dw", "ar" ],
+            "arRange": [ 0, 1023 ]
+        },
+        "pwm": {
+            "pins": [
+                "P0", "P1"
+            ],
+            "ops": [ "aw" ],
+            "awRange": [ 0, 255 ]
+        },
+        "virtual":  {
+            "pinsRange": [ 0, 31 ],
+            "ops": [ "vr", "vw" ]
+        }
+    }
+}
