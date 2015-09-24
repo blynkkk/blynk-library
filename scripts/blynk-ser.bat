@@ -33,8 +33,17 @@ if "x!PORTS:%COMM_PORT%=!"=="x%PORTS%" (
     set /p COMM_PORT="Select serial port [ %PORTS% ]: "
 )
 
+rem Create exe
+if not exist com2tcp.exe (
+    copy com2tcp.bin com2tcp.exe
+)
+
 rem Do the job
 echo Connecting device at %COMM_PORT% to %SERV_ADDR%:%SERV_PORT%...
+
+rem Try resetting board
+rem mode %COMM_PORT%:%COMM_BAUD%,N,8,1 >nul
+
 :restart
   com2tcp --baud %COMM_BAUD% --ignore-dsr \\.\%COMM_PORT% %SERV_ADDR% %SERV_PORT%
   echo Reconnecting in 3s...
