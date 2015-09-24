@@ -107,6 +107,7 @@ public:
 
     bool connectWiFi(const char* ssid, const char* pass)
     {
+        delay(500);
         BLYNK_LOG("Connecting to %s", ssid);
         if (!wifi->setEcho(0)) {
             BLYNK_LOG("Failed to disable Echo");
@@ -131,12 +132,12 @@ public:
 
     void config(ESP8266&    esp8266,
                 const char* auth,
-            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-    	Base::begin(auth);
-    	wifi = &esp8266;
-    	this->conn.begin_domain(wifi, domain, port);
+        Base::begin(auth);
+        wifi = &esp8266;
+        this->conn.begin_domain(wifi, domain, port);
     }
 
     void begin(const char* auth,
@@ -146,7 +147,7 @@ public:
                const char* domain = BLYNK_DEFAULT_DOMAIN,
                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-    	config(esp8266, auth, domain, port);
+        config(esp8266, auth, domain, port);
         connectWiFi(ssid, pass);
     }
 
