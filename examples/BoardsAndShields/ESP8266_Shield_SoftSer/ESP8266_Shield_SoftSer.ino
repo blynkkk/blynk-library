@@ -21,6 +21,8 @@
  *       Firmware version 1.0.0 (AT v0.22) or later is needed.
  *       Set ESP baud rate to 9600. Connect to AT console and call:
  *           AT+UART_DEF=9600,8,1,0,0
+ *       In general, Soft Serial is unstable.
+ *       It is highly recommended to switch to Hard Serial.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
