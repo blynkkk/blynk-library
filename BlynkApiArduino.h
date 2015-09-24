@@ -55,7 +55,9 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         return;
     const char* cmd = it.asStr();
     const uint16_t cmd16 = *(uint16_t*)cmd;
+
 #ifndef BLYNK_NO_INFO
+
     if (cmd16 == BLYNK_HW_IN) {
         static const char profile[] BLYNK_PROGMEM =
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
@@ -83,42 +85,97 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #endif
         return;
     }
+
 #endif
 
     if (++it >= param.end())
         return;
-    unsigned pin = it.asInt();
+
 #if defined(analogInputToDigitalPin)
     // Good! Analog pins can be referenced on this device by name.
-    if (pin == 0 && it.asStr()[0] == 'A') {
-        pin = analogInputToDigitalPin(atoi(it.asStr()+1));
-    }
+    const uint8_t pin = (it.asStr()[0] == 'A') ?
+			 analogInputToDigitalPin(atoi(it.asStr()+1)) :
+                         it.asInt();
 #else
     #warning "analogInputToDigitalPin not defined => Named analog pins will not work"
+    const uint8_t pin = it.asInt();
 #endif
+
+    switch(cmd16) {
 
 #ifndef BLYNK_NO_BUILTIN
 
-    if (cmd16 == BLYNK_HW_DR) {
+    case BLYNK_HW_PM: {
+        while (it < param.end()) {
+            ++it;
+            //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
+            if (!strcmp(it.asStr(), "in")) {
+                pinMode(pin, INPUT);
+            } else if (!strcmp(it.asStr(), "out") || !strcmp(it.asStr(), "pwm")) {
+                pinMode(pin, OUTPUT);
+#ifdef INPUT_PULLUP
+            } else if (!strcmp(it.asStr(), "pu")) {
+                pinMode(pin, INPUT_PULLUP);
+#endif
+#ifdef INPUT_PULLDOWN
+            } else if (!strcmp(it.asStr(), "pd")) {
+                pinMode(pin, INPUT_PULLDOWN);
+#endif
+            } else {
+#ifdef BLYNK_DEBUG
+                BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
+#endif
+            }
+            ++it;
+        }
+    } break;
+    case BLYNK_HW_DR: {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("dw");
         rsp.add(pin);
         rsp.add(digitalRead(pin));
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
-    } else if (cmd16 == BLYNK_HW_AR) {
+    } break;
+    case BLYNK_HW_DW: {
+        // Should be 1 parameter (value)
+        if (++it >= param.end())
+            return;
+
+        //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
+#ifdef ESP8266
+        // Disable PWM...
+        analogWrite(pin, 0);
+#endif
+#ifndef BLYNK_MINIMIZE_PINMODE_USAGE
+        pinMode(pin, OUTPUT);
+#endif
+        digitalWrite(pin, it.asInt() ? HIGH : LOW);
+    } break;
+    case BLYNK_HW_AR: {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("aw");
         rsp.add(pin);
         rsp.add(analogRead(pin));
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
-    } else
+    } break;
+    case BLYNK_HW_AW: {
+        // Should be 1 parameter (value)
+        if (++it >= param.end())
+            return;
+
+        //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
+#ifndef BLYNK_MINIMIZE_PINMODE_USAGE
+        pinMode(pin, OUTPUT);
+#endif
+        analogWrite(pin, it.asInt());
+    } break;
 
 #endif
 
-    if (cmd16 == BLYNK_HW_VR) {
-        BlynkReq req = { (uint8_t)pin };
+    case BLYNK_HW_VR: {
+        BlynkReq req = { pin };
         WidgetReadHandler handler;
         if ((handler = GetReadHandler(pin)) &&
             (handler != BlynkWidgetRead))
@@ -127,78 +184,24 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         } else {
             BlynkWidgetReadDefault(req);
         }
-    } else {
-
-    	if (cmd16 == BLYNK_HW_VW) {
-            ++it;
-            char* start = (char*)it.asStr();
-            BlynkParam param2(start, len - (start - (char*)buff));
-            BlynkReq req = { (uint8_t)pin };
-            WidgetWriteHandler handler;
-            if ((handler = GetWriteHandler(pin)) &&
-                (handler != BlynkWidgetWrite))
-            {
-                handler(req, param2);
-            } else {
-                BlynkWidgetWriteDefault(req, param2);
-            }
-            return;
-        }
-
-#ifndef BLYNK_NO_BUILTIN
-
-    	if (cmd16 == BLYNK_HW_PM) {
-            while (it < param.end()) {
-                ++it;
-                //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
-                if (!strcmp(it.asStr(), "in")) {
-                    pinMode(pin, INPUT);
-                } else if (!strcmp(it.asStr(), "out") || !strcmp(it.asStr(), "pwm")) {
-                    pinMode(pin, OUTPUT);
-#ifdef INPUT_PULLUP
-                } else if (!strcmp(it.asStr(), "pu")) {
-                    pinMode(pin, INPUT_PULLUP);
-#endif
-#ifdef INPUT_PULLDOWN
-                } else if (!strcmp(it.asStr(), "pd")) {
-                    pinMode(pin, INPUT_PULLDOWN);
-#endif
-                } else {
-#ifdef BLYNK_DEBUG
-                    BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
-#endif
-                }
-                ++it;
-            }
-        }
-
-        // Should be 1 parameter (value)
-        if (++it >= param.end())
-            return;
-
-        if (cmd16 == BLYNK_HW_DW) {
-            //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
-#ifdef ESP8266
-            // Disable PWM...
-            analogWrite(pin, 0);
-#endif
-#ifndef BLYNK_MINIMIZE_PINMODE_USAGE
-            pinMode(pin, OUTPUT);
-#endif
-            digitalWrite(pin, it.asInt() ? HIGH : LOW);
-        } else if (cmd16 == BLYNK_HW_AW) {
-            //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
-#ifndef BLYNK_MINIMIZE_PINMODE_USAGE
-            pinMode(pin, OUTPUT);
-#endif
-            analogWrite(pin, it.asInt());
+    } break;
+    case BLYNK_HW_VW: {
+        ++it;
+        char* start = (char*)it.asStr();
+        BlynkParam param2(start, len - (start - (char*)buff));
+        BlynkReq req = { pin };
+        WidgetWriteHandler handler;
+        if ((handler = GetWriteHandler(pin)) &&
+            (handler != BlynkWidgetWrite))
+        {
+            handler(req, param2);
         } else {
-            BLYNK_LOG("Invalid HW cmd: %s", cmd);
-            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_ILLEGAL_COMMAND);
+            BlynkWidgetWriteDefault(req, param2);
         }
-
-#endif
-
+    } break;
+    default:
+        BLYNK_LOG("Invalid HW cmd: %s", cmd);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_ILLEGAL_COMMAND);
     }
 }
 
