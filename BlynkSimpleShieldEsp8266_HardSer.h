@@ -15,6 +15,8 @@
 #define BLYNK_INFO_CONNECTION  "ESP8266"
 #endif
 
+#define BLYNK_SEND_ATOMIC
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <utility/BlynkFifo.h>
@@ -27,6 +29,7 @@ class BlynkTransportShieldEsp8266
     }
 
     void onData(uint8_t mux_id, uint32_t len) {
+        //BLYNK_LOG("Got %d..", len);
         while (len) {
             if (client->getUart()->available()) {
                 uint8_t b = client->getUart()->read();
@@ -68,6 +71,7 @@ public:
 
     size_t read(void* buf, size_t len) {
         uint32_t start = millis();
+        //BLYNK_LOG("Waiting: %d, Occuied: %d", len, buffer.getOccupied());
         while ((buffer.getOccupied() < len) && (millis() - start < 1500)) {
             client->run();
         }
@@ -84,13 +88,14 @@ public:
 
     int available() {
         client->run();
+	//BLYNK_LOG("Still: %d", buffer.getOccupied());
         return buffer.getOccupied();
     }
 
 private:
     ESP8266* client;
     bool status;
-    BlynkFifo<uint8_t,128> buffer;
+    BlynkFifo<uint8_t,256> buffer;
     const char* domain;
     uint16_t    port;
 };
@@ -107,8 +112,11 @@ public:
 
     bool connectWiFi(const char* ssid, const char* pass)
     {
-        delay(500);
         BLYNK_LOG("Connecting to %s", ssid);
+        if (!wifi->restart()) {
+            BLYNK_LOG("Failed to restart");
+            return false;
+        }
         if (!wifi->setEcho(0)) {
             BLYNK_LOG("Failed to disable Echo");
             return false;
