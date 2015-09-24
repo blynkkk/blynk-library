@@ -112,11 +112,12 @@ public:
 
     bool connectWiFi(const char* ssid, const char* pass)
     {
+        delay(500);
         BLYNK_LOG("Connecting to %s", ssid);
-        if (!wifi->restart()) {
+        /*if (!wifi->restart()) {
             BLYNK_LOG("Failed to restart");
             return false;
-        }
+        }*/
         if (!wifi->setEcho(0)) {
             BLYNK_LOG("Failed to disable Echo");
             return false;
