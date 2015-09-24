@@ -54,8 +54,9 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (it >= param.end())
         return;
     const char* cmd = it.asStr();
+    const uint16_t cmd16 = *(uint16_t*)cmd;
 #ifndef BLYNK_NO_INFO
-    if (!strcmp(cmd, "info")) {
+    if (cmd16 == BLYNK_HW_IN) {
         static const char profile[] BLYNK_PROGMEM =
             BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
             BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
@@ -98,14 +99,14 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
 #ifndef BLYNK_NO_BUILTIN
 
-    if (!strcmp(cmd, "dr")) {
+    if (cmd16 == BLYNK_HW_DR) {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("dw");
         rsp.add(pin);
         rsp.add(digitalRead(pin));
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
-    } else if (!strcmp(cmd, "ar")) {
+    } else if (cmd16 == BLYNK_HW_AR) {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
         rsp.add("aw");
@@ -116,7 +117,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
 #endif
 
-    if (!strcmp(cmd, "vr")) {
+    if (cmd16 == BLYNK_HW_VR) {
         BlynkReq req = { (uint8_t)pin };
         WidgetReadHandler handler;
         if ((handler = GetReadHandler(pin)) &&
@@ -128,7 +129,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         }
     } else {
 
-        if (!strcmp(cmd, "vw")) {
+    	if (cmd16 == BLYNK_HW_VW) {
             ++it;
             char* start = (char*)it.asStr();
             BlynkParam param2(start, len - (start - (char*)buff));
@@ -146,7 +147,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
 #ifndef BLYNK_NO_BUILTIN
 
-        if (!strcmp(cmd, "pm")) {
+    	if (cmd16 == BLYNK_HW_PM) {
             while (it < param.end()) {
                 ++it;
                 //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
@@ -175,7 +176,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         if (++it >= param.end())
             return;
 
-        if (!strcmp(cmd, "dw")) {
+        if (cmd16 == BLYNK_HW_DW) {
             //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
 #ifdef ESP8266
             // Disable PWM...
@@ -185,7 +186,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
             pinMode(pin, OUTPUT);
 #endif
             digitalWrite(pin, it.asInt() ? HIGH : LOW);
-        } else if (!strcmp(cmd, "aw")) {
+        } else if (cmd16 == BLYNK_HW_AW) {
             //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
 #ifndef BLYNK_MINIMIZE_PINMODE_USAGE
             pinMode(pin, OUTPUT);
