@@ -57,6 +57,7 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 #define V30 30
 #define V31 31
 
+// Initial syntax:
 #define BLYNK_WRITE_2(pin) \
     void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& param)
 
@@ -69,6 +70,20 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 #define BLYNK_WRITE(pin)      BLYNK_WRITE_2(pin)
 #define BLYNK_READ(pin)       BLYNK_READ_2(pin)
 
+// New, more readable syntax:
+#define BLYNK_IN_2(pin)  \
+    void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& getValue)
+
+#define BLYNK_OUT_2(pin) \
+    void BlynkWidgetRead ## pin  (BlynkReq& request)
+
+#define BLYNK_IN_DEFAULT()   BLYNK_IN_2(Default)
+#define BLYNK_OUT_DEFAULT()  BLYNK_OUT_2(Default)
+
+#define BLYNK_IN(pin)        BLYNK_IN_2(pin)
+#define BLYNK_OUT(pin)       BLYNK_OUT_2(pin)
+
+// Advanced functions
 #define BLYNK_ATTACH_WIDGET(widget, pin)	\
     BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
 
@@ -93,7 +108,7 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 #endif
 
 // Default read/write handlers (you can redefine them in your code)
-#ifdef __cplusplus 
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -171,10 +186,10 @@ BLYNK_WRITE(29);
 BLYNK_WRITE(30);
 BLYNK_WRITE(31);
 
-WidgetReadHandler GetReadHandler(unsigned pin);
-WidgetWriteHandler GetWriteHandler(unsigned pin);
+WidgetReadHandler GetReadHandler(uint8_t pin);
+WidgetWriteHandler GetWriteHandler(uint8_t pin);
 
-#ifdef __cplusplus 
+#ifdef __cplusplus
 }
 #endif
 

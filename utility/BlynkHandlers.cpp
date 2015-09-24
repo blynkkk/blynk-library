@@ -118,7 +118,7 @@ static const WidgetWriteHandler BlynkWriteHandlerVector[32] BLYNK_PROGMEM = {
     BlynkWidgetWrite28, BlynkWidgetWrite29, BlynkWidgetWrite30, BlynkWidgetWrite31,
 };
 
-WidgetReadHandler GetReadHandler(unsigned pin)
+WidgetReadHandler GetReadHandler(uint8_t pin)
 {
     if (pin >= COUNT_OF(BlynkReadHandlerVector))
         return NULL;
@@ -129,7 +129,7 @@ WidgetReadHandler GetReadHandler(unsigned pin)
 #endif
 }
 
-WidgetWriteHandler GetWriteHandler(unsigned pin)
+WidgetWriteHandler GetWriteHandler(uint8_t pin)
 {
     if (pin >= COUNT_OF(BlynkWriteHandlerVector))
         return NULL;
