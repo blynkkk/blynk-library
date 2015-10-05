@@ -35,6 +35,10 @@
     #endif
 #endif
 
+#if !defined(ARDUINO) || (ARDUINO < 151)
+    #define BLYNK_NO_YIELD
+#endif
+
 // General defines
 
 #define STRINGIFY(x) #x

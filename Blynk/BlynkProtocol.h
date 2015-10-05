@@ -115,7 +115,7 @@ private:
 template <class Transp>
 bool BlynkProtocol<Transp>::run(bool avail)
 {
-#if defined(ARDUINO) && (ARDUINO >= 151)
+#if !defined(BLYNK_NO_YIELD)
     yield();
 #endif
 

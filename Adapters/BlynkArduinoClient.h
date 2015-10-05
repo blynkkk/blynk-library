@@ -15,7 +15,7 @@
 #include <Client.h>
 #include <Blynk/BlynkDebug.h>
 
-#if defined(ESP8266) && defined(ARDUINO) && (ARDUINO >= 151)
+#if defined(ESP8266) && !defined(BLYNK_NO_YIELD)
 	#define YIELD_FIX() yield();
 #else
 	#define YIELD_FIX()
