@@ -32,7 +32,7 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
   // Or specify server using one of those commands:
-  //Blynk.begin(auth, "server.org", 8442);
+  //Blynk.begin(auth, "cloud.blynk.cc", 8442);
   //Blynk.begin(auth, server_ip, port);
 }
 
