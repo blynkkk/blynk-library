@@ -36,7 +36,7 @@ void setup()
   Blynk.begin(auth);
 }
 
-BLYNK_WRITE(1) {
+BLYNK_WRITE(V1) {
   int x = param[0].asInt();
   int y = param[1].asInt();
 

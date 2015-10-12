@@ -11,23 +11,24 @@
 #include <Blynk/BlynkHandlers.h>
 #include <Blynk/BlynkDebug.h>
 
-__attribute__((weak))
 void BlynkWidgetRead(BlynkReq& request)
 {
     BLYNK_LOG("No handler for reading from pin %d", request.pin);
 }
 
-__attribute__((weak))
 void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param)
 {
     BLYNK_LOG("No handler for writing to pin %d", request.pin);
 }
 
 #define BLYNK_ON_READ_IMPL(pin)  void BlynkWidgetRead  ## pin (BlynkReq& req) \
-          __attribute__((weak, alias("_Z15BlynkWidgetReadR8BlynkReq")))
+          __attribute__((weak, alias("BlynkWidgetRead")))
 
 #define BLYNK_ON_WRITE_IMPL(pin) void BlynkWidgetWrite ## pin (BlynkReq& req, const BlynkParam& param) \
-          __attribute__((weak, alias("_Z16BlynkWidgetWriteR8BlynkReqRK10BlynkParam")))
+          __attribute__((weak, alias("BlynkWidgetWrite")))
+
+BLYNK_ON_READ_IMPL(Default);
+BLYNK_ON_WRITE_IMPL(Default);
 
 BLYNK_ON_READ_IMPL(0 );
 BLYNK_ON_READ_IMPL(1 );
@@ -117,7 +118,7 @@ static const WidgetWriteHandler BlynkWriteHandlerVector[32] BLYNK_PROGMEM = {
     BlynkWidgetWrite28, BlynkWidgetWrite29, BlynkWidgetWrite30, BlynkWidgetWrite31,
 };
 
-WidgetReadHandler GetReadHandler(unsigned pin)
+WidgetReadHandler GetReadHandler(uint8_t pin)
 {
     if (pin >= COUNT_OF(BlynkReadHandlerVector))
         return NULL;
@@ -128,7 +129,7 @@ WidgetReadHandler GetReadHandler(unsigned pin)
 #endif
 }
 
-WidgetWriteHandler GetWriteHandler(unsigned pin)
+WidgetWriteHandler GetWriteHandler(uint8_t pin)
 {
     if (pin >= COUNT_OF(BlynkWriteHandlerVector))
         return NULL;

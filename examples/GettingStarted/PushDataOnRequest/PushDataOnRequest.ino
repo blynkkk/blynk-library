@@ -32,6 +32,9 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Use Virtual pin 5 for uptime display
+#define PIN_UPTIME V5
+
 void setup()
 {
   Serial.begin(9600);
@@ -40,10 +43,10 @@ void setup()
 
 // This function tells Arduino what to do if there is a Widget
 // which is requesting data for Virtual Pin (5)
-BLYNK_READ(5)
+BLYNK_READ(PIN_UPTIME)
 {
   // This command writes Arduino's uptime in seconds to Virtual Pin (5)
-  Blynk.virtualWrite(5, millis() / 1000);
+  Blynk.virtualWrite(PIN_UPTIME, millis() / 1000);
 }
 
 void loop()

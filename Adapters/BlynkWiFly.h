@@ -12,7 +12,7 @@
 #define BlynkWiFly_h
 
 #ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION "WiFly"
+#define BLYNK_INFO_CONNECTION "RN-XV"
 #endif
 
 #include <BlynkApiArduino.h>

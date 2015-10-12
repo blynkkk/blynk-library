@@ -18,8 +18,9 @@
  * Bridge is initialized with the token of any (Blynk-enabled) device.
  * After that, use the familiar functions to control it:
  *   bridge.digitalWrite(8, HIGH)
+ *   bridge.digitalWrite("A0", LOW) // <- target needs to support "Named pins"
  *   bridge.analogWrite(3, 123)
- *   bridge.virtualWrite(1, "hello")
+ *   bridge.virtualWrite(V1, "hello")
  *
  * WARNING :
  * For this example you'll need SimpleTimer library:
@@ -40,7 +41,7 @@
 char auth[] = "YourAuthToken";
 
 // Bridge widget on virtual pin 1
-WidgetBridge bridge1(1);
+WidgetBridge bridge1(V1);
 
 // Timer for blynking
 SimpleTimer timer;
@@ -49,7 +50,7 @@ void setup()
 {
   Blynk.begin(auth);
 
-  while (!Blynk.connect()) {
+  while (Blynk.connect() == false) {
     // Wait until connected
   }
 

@@ -45,7 +45,7 @@ void checkPin()
 {
   // Invert state, since button is "Active LOW"
   int state = !digitalRead(2);
-  Blynk.virtualWrite(1, state);
+  Blynk.virtualWrite(V1, state);
 }
 
 void loop()

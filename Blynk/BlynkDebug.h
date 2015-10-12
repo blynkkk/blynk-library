@@ -23,7 +23,7 @@
     #include <inttypes.h>
 #endif
 
-#if defined(SPARK)
+#if defined(SPARK) || defined(PARTICLE)
     #include "application.h"
 #endif
 
@@ -35,6 +35,10 @@
     #endif
 #endif
 
+#if !defined(ARDUINO) || (ARDUINO < 151)
+    #define BLYNK_NO_YIELD
+#endif
+
 // General defines
 
 #define STRINGIFY(x) #x
@@ -43,12 +47,8 @@
 #define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
 #define BLYNK_NORETURN __attribute__ ((noreturn))
 
-#if defined(__AVR__)
-    // Causes problems on some platforms
-    #define BLYNK_FORCE_INLINE
-#else
-    #define BLYNK_FORCE_INLINE __attribute__((always_inline))
-#endif
+// Causes problems on some platforms
+#define BLYNK_FORCE_INLINE // __attribute__((always_inline))
 
 #if defined(__AVR__)
     #include <avr/pgmspace.h>
@@ -108,7 +108,7 @@ void BlynkFatal() BLYNK_NORETURN;
             va_end(ap);
         }
 
-    #elif defined(LINUX)
+    #elif defined(LINUX) || defined(MBED_LIBRARY_VERSION)
 
         #include <assert.h>
         #include <stdio.h>

@@ -19,6 +19,15 @@
  *
  * For this example you need UIPEthernet library:
  *   https://github.com/ntruchsess/arduino_uip
+ * 
+ * Typical wiring would be:
+ *  VCC -- 5V
+ *  GND -- GND
+ *  CS  -- D10
+ *  SI  -- D11
+ *  SCK -- D13
+ *  SO  -- D12
+ *  INT -- D2
  *
  * Feel free to apply it to any other example. It's simple!
  *
@@ -38,7 +47,7 @@ void setup()
   Blynk.begin(auth);
   // You can also specify server.
   // For more options, see BoardsAndShields/Arduino_Ethernet_Manual example
-  //Blynk.begin(auth, "server.org", 8442);
+  //Blynk.begin(auth, "cloud.blynk.cc", 8442);
   //Blynk.begin(auth, IPAddress(192,168,1,100), 8888);
 }
 

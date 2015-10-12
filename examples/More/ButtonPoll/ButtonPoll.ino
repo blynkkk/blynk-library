@@ -56,7 +56,7 @@ void checkPin()
   if (t - lastChangeTime > 50) {
     if (state != currState) {
       currState = state;
-      Blynk.virtualWrite(1, state);
+      Blynk.virtualWrite(V1, state);
     }
   }
   prevState = state;

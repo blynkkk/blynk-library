@@ -15,6 +15,10 @@
  **************************************************************
  * This example shows how to use Arduino WiFi shield
  * to connect your project to Blynk.
+ * 
+ * Please update your shield firmware:
+ *   https://www.arduino.cc/en/Hacking/WiFiShieldFirmwareUpgrading
+ *
  * Feel free to apply it to any other example. It's simple!
  *
  **************************************************************/
@@ -28,13 +32,17 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Your WiFi credentials
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";        // Set to "" for open networks
+
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth, "yourNetwork", "yourPassword");
+  Blynk.begin(auth, ssid, pass);
   // Or specify server using one of those commands:
-  //Blynk.begin(auth, "yourNetwork", "yourPassword", "server.org", 8442);
-  //Blynk.begin(auth, "yourNetwork", "yourPassword", server_ip, port);
+  //Blynk.begin(auth, ssid, pass, "cloud.blynk.cc", 8442);
+  //Blynk.begin(auth, ssid, pass, server_ip, port);
 }
 
 void loop()

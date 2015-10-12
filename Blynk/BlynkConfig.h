@@ -22,7 +22,7 @@
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "0.2.5-beta"
+#define BLYNK_VERSION        "0.3.1"
 
 // Heartbeat period in seconds.
 #define BLYNK_HEARTBEAT      10
@@ -56,5 +56,18 @@
 
 // Uncomment to disable all float/double usage
 //#define BLYNK_NO_FLOAT
+
+// Uncomment to switch to direct-connect mode
+//#define BLYNK_USE_DIRECT_CONNECT
+
+
+// Uncomment to append command body to header (uses more RAM)
+//#define BLYNK_SEND_ATOMIC
+
+// Split whole command into chunks (in bytes)
+//#define BLYNK_SEND_CHUNK 64
+
+// Wait after sending each chunk (in milliseconds)
+//#define BLYNK_SEND_THROTTLE 10
 
 #endif

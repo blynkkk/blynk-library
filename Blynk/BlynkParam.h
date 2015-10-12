@@ -30,6 +30,7 @@ public:
         operator const char* () const   { return asStr(); }
         operator int () const           { return asInt(); }
         const char* asStr() const       { return ptr; }
+        const char* asString() const    { return ptr; }
         int         asInt() const       { return atoi(ptr); }
         long        asLong() const      { return atol(ptr); }
 #ifndef BLYNK_NO_FLOAT
@@ -60,6 +61,7 @@ public:
     {}
 
     const char* asStr() const       { return buff; }
+    const char* asString() const    { return buff; }
     int         asInt() const       { return atoi(buff); }
     long        asLong() const      { return atol(buff); }
 #ifndef BLYNK_NO_FLOAT
@@ -86,7 +88,7 @@ public:
 #endif
     void add(const char* str);
     void add(const void* b, size_t l);
-#if defined(ARDUINO) || defined(SPARK)
+#if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
     void add(const String& str);
     void add(String& str);
 #endif
@@ -144,7 +146,7 @@ void BlynkParam::add(const char* str)
     add(str, strlen(str)+1);
 }
 
-#if defined(ARDUINO) || defined(SPARK)
+#if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
 inline
 void BlynkParam::add(const String& str)
 {

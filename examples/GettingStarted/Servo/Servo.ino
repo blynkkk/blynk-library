@@ -39,7 +39,7 @@ void setup()
   servo.attach(9);
 }
 
-BLYNK_WRITE(3)
+BLYNK_WRITE(V3)
 {
   servo.write(param.asInt());
 }

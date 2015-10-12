@@ -20,7 +20,7 @@
 static BlynkTransportSocket _blynkTransport;
 BlynkSocket Blynk(_blynkTransport);
 
-BLYNK_WRITE(1)
+BLYNK_WRITE(V1)
 {
   BLYNK_LOG("Got a value: %s", param[0].asStr());
 }

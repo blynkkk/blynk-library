@@ -14,23 +14,15 @@
  *
  **************************************************************
  *
- * This example shows how to use ESP8266 Shield via Hardware Serial
- * (on Mega, Leonardo, Micro...) to connect your project to Blynk.
- *
- * You can also use SoftwareSerial (for UNO, Nano, Mini, ...).
- *
- * ATTENTION!
- *
- * FOR THIS EXAMPLE YOU NEED A MODIFIED ITEAD WeeESP8266 LIBRARY!
- *   https://github.com/vshymanskyy/ITEADLIB_Arduino_WeeESP8266
- *
- * Please adjust the settings in the ESP8266.h:
- *   Set ESP8266_USE_SOFTWARE_SERIAL, if needed
- *   Set USER_SEL_VERSION to the AT version of your module
+ * This example shows how to use ESP8266 Shield via Software Serial
+ * (on Uno, Nano...) to connect your project to Blynk.
  *
  * Note: Ensure a stable serial connection to ESP8266!
- *       Hardware serial is preferred.
- *       Firmware version 1.0.0 (AT v0.22) or later is preferred.
+ *       Firmware version 1.0.0 (AT v0.22) or later is needed.
+ *       Set ESP baud rate to 9600. Connect to AT console and call:
+ *           AT+UART_DEF=9600,8,1,0,0
+ *       In general, Soft Serial is unstable.
+ *       It is highly recommended to switch to Hard Serial.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
@@ -38,14 +30,12 @@
  **************************************************************/
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
-#include <ESP8266.h>
-#include <BlynkSimpleShieldEsp8266.h>
+#include <ESP8266_SoftSer.h>
+#include <BlynkSimpleShieldEsp8266_SoftSer.h>
 
 // Set ESP8266 Serial object
-#define EspSerial Serial1
-// This can be a SoftwareSerial object (remember to also edit ESP8266.h):
-//#include <SoftwareSerial.h>
-//SoftwareSerial EspSerial(2, 3); // RX, TX
+#include <SoftwareSerial.h>
+SoftwareSerial EspSerial(2, 3); // RX, TX
 
 ESP8266 wifi(EspSerial);
 
@@ -55,9 +45,12 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
-  Serial.begin(9600);     // Set console baud rate
+  // Set console baud rate
+  Serial.begin(9600);
   delay(10);
-  EspSerial.begin(9600);  // Set ESP8266 baud rate
+  // Set ESP8266 baud rate
+  // 9600 is recommended for Software Serial
+  EspSerial.begin(9600);
   delay(10);
 
   Blynk.begin(auth, wifi, "ssid", "pass");

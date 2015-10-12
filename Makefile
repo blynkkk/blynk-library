@@ -4,7 +4,7 @@ docs:
 	doxygen doxygen.config
 
 format-examples:
-	find examples tests -name '*.ino' -exec astyle --options=/data/formatter.conf {} \;
+	find examples tests -name '*.ino' -exec astyle --options=formatter.conf {} \;
 
 cloc:
 	cloc

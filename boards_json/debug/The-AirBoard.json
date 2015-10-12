@@ -1,0 +1,31 @@
+{
+    "name": "The AirBoard",
+    "map": {
+        "digital": {
+            "pins": {
+                                                 "D3":   3,
+                "R":  9,   "G":  5,   "B":   6,
+                "D10": 10, "D11": 11, "D12": 12, "D13": 13
+            },
+            "ops": [ "dr", "dw" ]
+        },
+        "analog": {
+            "pins": {
+                "A4": 18, "A5": 19
+            },
+            "ops": [ "dr", "dw", "ar" ],
+            "arRange": [ 0, 1023 ]
+        },
+        "pwm": {
+            "pins": [
+                "D3", "R", "G", "B", "D10", "D11"
+            ],
+            "ops": [ "aw" ],
+            "awRange": [ 0, 255 ]
+        },
+        "virtual":  {
+            "pinsRange": [ 0, 31 ],
+            "ops": [ "vr", "vw" ]
+        }
+    }
+}
