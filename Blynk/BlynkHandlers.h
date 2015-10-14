@@ -14,14 +14,6 @@
 #include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkParam.h>
 
-struct BlynkReq
-{
-    uint8_t pin;
-};
-
-typedef void (*WidgetReadHandler)(BlynkReq& request);
-typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
-
 // Helper macro
 
 #define V0  0
@@ -111,6 +103,14 @@ typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+struct BlynkReq
+{
+    uint8_t pin;
+};
+
+typedef void (*WidgetReadHandler)(BlynkReq& request);
+typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 
 void BlynkWidgetRead(BlynkReq& request);
 void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param);
