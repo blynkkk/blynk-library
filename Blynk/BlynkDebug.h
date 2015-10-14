@@ -77,7 +77,7 @@ void BlynkFatal() BLYNK_NORETURN;
 
 #ifdef BLYNK_PRINT
 
-    #if defined(ARDUINO) || defined(SPARK)
+    #if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
         #include <stdio.h>
         #include <stdarg.h>
 

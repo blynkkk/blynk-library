@@ -22,7 +22,7 @@
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "0.3.1"
+#define BLYNK_VERSION        "0.3.2"
 
 // Heartbeat period in seconds.
 #define BLYNK_HEARTBEAT      10
