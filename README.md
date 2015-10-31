@@ -2,7 +2,8 @@
 
 Implementations for other platforms:
 * [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
-* [Particle Core](https://github.com/vshymanskyy/blynk-library-spark)
+* [Particle](https://github.com/vshymanskyy/blynk-library-spark)
+* [MicroPython WiPy](https://github.com/wipy/wipy/tree/master/lib/blynk)
 
 __________
 
