@@ -437,7 +437,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     lastActivityOut = ts;
     //BLYNK_LOG("Delta: %u", deltaCmd);
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
-        BLYNK_LOG_TROUBLE("flood");
+        BLYNK_LOG_TROUBLE("flood-error");
         conn.disconnect();
         state = CONNECTING;
     }
