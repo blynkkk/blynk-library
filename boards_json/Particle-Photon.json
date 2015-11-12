@@ -1,5 +1,6 @@
 {
     "name": "Particle Photon",
+    "based_on": "https://github.com/spark/firmware/blob/develop/hal/inc/pinmap_hal.h",
     "map": {
         "digital": {
             "pins": {
