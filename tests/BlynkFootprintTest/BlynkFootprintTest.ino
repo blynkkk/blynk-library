@@ -9,6 +9,7 @@
  **************************************************************/
 
 //#define ENABLE_MINIMIZATION
+#define ENABLE_HANDLERS
 
 #ifdef ENABLE_MINIMIZATION
 
@@ -52,6 +53,8 @@ void setup()
   Blynk.connect();
 }
 
+#ifdef ENABLE_HANDLERS
+
 BLYNK_CONNECTED()
 {
   test = 1;
@@ -71,6 +74,8 @@ BLYNK_READ(V3)
 {
   Blynk.virtualWrite(V3, test);
 }
+
+#endif /* ENABLE_HANDLERS */
 
 void loop()
 {
