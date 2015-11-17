@@ -20,7 +20,7 @@
 #endif
 
 #define BLYNK_MINIMIZE_PINMODE_USAGE
-void yield() { delay(0); }
+#define BLYNK_NO_YIELD
 
 #include <BlynkSimpleWifi.h>
 

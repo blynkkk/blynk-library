@@ -39,8 +39,11 @@ void setup()
     // Wait until connected
   }
 
-  lcd.clear();
-  lcd.print(0, 1, "Wow! :)");
+  lcd.clear(); //Use it to clear the LCD Widget
+  lcd.print(4, 0, "Hello"); // use: (position X: 0-15, position Y: 0-1, "Message you want to print")
+  lcd.print(4, 1, "World"); 
+  // Please use timed events when LCD printintg in void loop to avoid sending too many commands
+  // It will cause a FLOOD Error, and connection will be dropped
 }
 
 void loop()

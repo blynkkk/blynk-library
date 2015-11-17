@@ -38,7 +38,7 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth, ssid, pass);
   // Or specify server using one of those commands:
-  //Blynk.begin(auth, ssid, pass, "server.org", 8442);
+  //Blynk.begin(auth, ssid, pass, "cloud.blynk.cc", 8442);
   //Blynk.begin(auth, ssid, pass, server_ip, port);
 }
 

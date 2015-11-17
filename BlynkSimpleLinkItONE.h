@@ -15,6 +15,9 @@
 #define BLYNK_INFO_DEVICE  "LinkIt ONE"
 #endif
 
+// cause this causes crashes...
+#define BLYNK_NO_YIELD
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>

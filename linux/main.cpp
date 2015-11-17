@@ -20,6 +20,8 @@
 static BlynkTransportSocket _blynkTransport;
 BlynkSocket Blynk(_blynkTransport);
 
+#include <BlynkWidgets.h>
+
 BLYNK_WRITE(V1)
 {
   BLYNK_LOG("Got a value: %s", param[0].asStr());

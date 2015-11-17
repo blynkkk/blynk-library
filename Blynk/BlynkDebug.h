@@ -35,6 +35,10 @@
     #endif
 #endif
 
+#if !defined(ARDUINO) || (ARDUINO < 151)
+    #define BLYNK_NO_YIELD
+#endif
+
 // General defines
 
 #define STRINGIFY(x) #x
@@ -69,11 +73,11 @@ void BlynkFatal() BLYNK_NORETURN;
 #define BLYNK_FATAL(msg, ...){ BLYNK_LOG(msg, ##__VA_ARGS__); BlynkFatal(); }
 #define BLYNK_LOG_RAM()      { BLYNK_LOG("Free RAM: %d", BlynkFreeRam()); }
 #define BLYNK_LOG_FN()       BLYNK_LOG("%s@%d", __FUNCTION__, __LINE__);
-#define BLYNK_LOG_TROUBLE(t) BLYNK_LOG("Trouble detected: http://tiny.cc/blynk-bug#%s", t)
+#define BLYNK_LOG_TROUBLE(t) BLYNK_LOG("Trouble detected: http://docs.blynk.cc/#troubleshooting-%s", t)
 
 #ifdef BLYNK_PRINT
 
-    #if defined(ARDUINO) || defined(SPARK)
+    #if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
         #include <stdio.h>
         #include <stdarg.h>
 

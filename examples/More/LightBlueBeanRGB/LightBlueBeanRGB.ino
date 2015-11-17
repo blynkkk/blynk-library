@@ -1,6 +1,5 @@
 
-// cause this is not defined for some reason...
-void yield() {}
+#define BLYNK_NO_YIELD
 
 #include <BlynkSimpleSerial.h>
 

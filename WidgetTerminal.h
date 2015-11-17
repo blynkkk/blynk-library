@@ -10,13 +10,23 @@
 #ifndef WidgetTerminal_h
 #define WidgetTerminal_h
 
+#if !defined(LINUX) && !defined(MBED)
+    #define BLYNK_USE_PRINT_CLASS
+#endif
+
 #include <Blynk/BlynkApi.h>
-#if !defined(SPARK) // On Spark this is auto-included
-#include <Print.h>
+
+#ifdef BLYNK_USE_PRINT_CLASS
+    #if !(defined(SPARK) || defined(PARTICLE))
+        // On Particle this is auto-included
+        #include <Print.h>
+    #endif
 #endif
 
 class WidgetTerminal
+#ifdef BLYNK_USE_PRINT_CLASS
     : public Print
+#endif
 {
 public:
     WidgetTerminal(int vPin)
@@ -38,7 +48,25 @@ public:
         }
     }
 
+#ifdef BLYNK_USE_PRINT_CLASS
+
     using Print::write;
+
+#else
+    
+    size_t write(const void* buff, size_t len) {
+        uint8_t* buf = (uint8_t*)buff;
+        while (len--) {
+            write(*buf++);
+        }
+        return len;
+    }
+
+    size_t write(const char* str) {
+        return write(str, strlen(str));
+    }
+
+#endif
 
 private:
     uint8_t mPin;
