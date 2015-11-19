@@ -1,5 +1,6 @@
 {
     "name": "RedBearLab CC3200/Mini",
+    "based_on": "https://github.com/energia/Energia/blob/master/hardware/cc3200/variants/RedBearLab_WiFiMini/pins_energia.h",
     "map": {
         "digital": {
             "pins": {
