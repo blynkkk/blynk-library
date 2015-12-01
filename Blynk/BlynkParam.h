@@ -74,7 +74,7 @@ public:
     iterator operator[](int index) const;
     iterator operator[](const char* key) const;
 
-    uint8_t* getBuffer() const { return (uint8_t*)buff; }
+    void*  getBuffer() const { return (void*)buff; }
     size_t getLength() const { return len; }
 
     // Modification
