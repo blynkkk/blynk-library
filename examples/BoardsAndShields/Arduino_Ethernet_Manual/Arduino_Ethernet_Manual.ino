@@ -16,6 +16,9 @@
  * This example shows how to configure static IP with Ethernet.
  * Be sure to check ordinary Ethernet example first!!!
  *
+ * NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
+ *       DON'T use them in your sketch directly!
+ *
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
