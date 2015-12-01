@@ -56,7 +56,7 @@ void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
                     } else if (len < maxlen) {
                         mem[1] = 'l'; // Last chunk
                     }
-                    Blynk.virtualWrite(request.pin, mem, len + 3);
+                    Blynk.virtualWriteBinary(request.pin, mem, len + 3);
                 } while (len == maxlen);
             } else {
 

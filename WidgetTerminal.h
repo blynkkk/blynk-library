@@ -43,7 +43,7 @@ public:
 
     void flush() {
         if (mOutQty) {
-            Blynk.virtualWrite(mPin, mOutBuf, mOutQty);
+            Blynk.virtualWriteBinary(mPin, mOutBuf, mOutQty);
             mOutQty = 0;
         }
     }
@@ -52,8 +52,12 @@ public:
 
     using Print::write;
 
+    size_t write(const void* buff, size_t len) {
+    	write((char*)buff, len);
+    }
+
 #else
-    
+
     size_t write(const void* buff, size_t len) {
         uint8_t* buf = (uint8_t*)buff;
         while (len--) {
