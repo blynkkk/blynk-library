@@ -75,6 +75,10 @@
 #define BLYNK_IN(pin)        BLYNK_IN_2(pin)
 #define BLYNK_OUT(pin)       BLYNK_OUT_2(pin)
 
+// Additional handlers
+#define BLYNK_CONNECTED()    void BlynkOnConnected()
+#define BLYNK_DISCONNECTED() void BlynkOnDisconnected()
+
 // Advanced functions
 #define BLYNK_ATTACH_WIDGET(widget, pin)	\
     BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
@@ -112,10 +116,17 @@ struct BlynkReq
 typedef void (*WidgetReadHandler)(BlynkReq& request);
 typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
 
-void BlynkWidgetRead(BlynkReq& request);
-void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param);
+WidgetReadHandler GetReadHandler(uint8_t pin);
+WidgetWriteHandler GetWriteHandler(uint8_t pin);
+
+// Declare placeholders
+BLYNK_READ();
+BLYNK_WRITE();
+void BlynkNoOpCbk();
 
 // Declare all pin handlers (you can redefine them in your code)
+BLYNK_CONNECTED();
+BLYNK_DISCONNECTED();
 
 BLYNK_READ_DEFAULT();
 BLYNK_WRITE_DEFAULT();
@@ -185,9 +196,6 @@ BLYNK_WRITE(28);
 BLYNK_WRITE(29);
 BLYNK_WRITE(30);
 BLYNK_WRITE(31);
-
-WidgetReadHandler GetReadHandler(uint8_t pin);
-WidgetWriteHandler GetWriteHandler(uint8_t pin);
 
 #ifdef __cplusplus
 }
