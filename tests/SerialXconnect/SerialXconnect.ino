@@ -1,7 +1,7 @@
 /*
  * This utility allows you to cross-connect
  * 2 different serials.
- * 
+ *
  * This is usefull for checking wiring
  * or to convert baud rate, etc.
  */
@@ -15,7 +15,7 @@ SoftwareSerial SerialSw(2, 3);
 
 void setup() {
   ser1.begin(9600);
-  while(!ser1);
+  while (!ser1);
   delay(10);
   ser2.begin(9600);
   delay(10);

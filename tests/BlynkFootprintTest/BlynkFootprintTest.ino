@@ -2,10 +2,10 @@
  * This is just a test of Blynk library memory footprint.
  * It doesn't use serial, wifi, ethernet or any other library.
  * It uses a volatile variable to simulate server stream.
- * 
+ *
  *         You should NOT flash this program
  *         to your hardware or try to run it.
- * 
+ *
  **************************************************************/
 
 //#define ENABLE_MINIMIZATION
@@ -13,9 +13,9 @@
 
 #ifdef ENABLE_MINIMIZATION
 
-  #define BLYNK_NO_BUILTIN
-  #define BLYNK_NO_INFO
-  #define BLYNK_NO_FLOAT
+#define BLYNK_NO_BUILTIN
+#define BLYNK_NO_INFO
+#define BLYNK_NO_FLOAT
 
 #endif
 
@@ -30,7 +30,7 @@ size_t BlynkStreamRead(void* buf, size_t len)
 {
   uint8_t* byte_buff = (uint8_t*)buf;
   size_t res = len;
-  while(len--) {
+  while (len--) {
     *byte_buff++ = test;
   }
   return res;
@@ -41,7 +41,7 @@ size_t BlynkStreamWrite(const void* buf, size_t len)
 {
   uint8_t* byte_buff = (uint8_t*)buf;
   size_t res = len;
-  while(len--) {
+  while (len--) {
     test = *byte_buff++;
   }
   return res;
