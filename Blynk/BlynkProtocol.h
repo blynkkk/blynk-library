@@ -135,6 +135,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
 #ifdef BLYNK_USE_DIRECT_CONNECT
                 state = CONNECTING;
 #endif
+                //BlynkOnDisconnected();
                 return false;
             }
             //BLYNK_LOG("Proc time: %d", micros() - t);
@@ -147,6 +148,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
         if (!tconn) {
             state = CONNECTING;
             lastHeartbeat = t;
+            //BlynkOnDisconnected();
             return false;
         }
 
@@ -158,6 +160,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
     #endif
             conn.disconnect();
             state = CONNECTING;
+            //BlynkOnDisconnected();
             return false;
         } else if ((t - lastActivityIn  > 1000UL * BLYNK_HEARTBEAT ||
                     t - lastActivityOut > 1000UL * BLYNK_HEARTBEAT) &&
@@ -223,6 +226,8 @@ bool BlynkProtocol<Transp>::processInput(void)
                 BLYNK_LOG("Ready (ping: %dms).", lastActivityIn-lastHeartbeat);
                 lastHeartbeat = lastActivityIn;
                 state = CONNECTED;
+                this->sendInfo();
+                BlynkOnConnected();
                 return true;
             case BLYNK_INVALID_TOKEN:
                 BLYNK_LOG("Invalid auth token");
@@ -329,7 +334,7 @@ int BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
-    if (!conn.connected()) {
+    if (!conn.connected() || (cmd != BLYNK_CMD_LOGIN && state != CONNECTED) ) {
 #ifdef BLYNK_DEBUG
         BLYNK_LOG("Cmd not sent");
 #endif
@@ -380,6 +385,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #endif
             conn.disconnect();
             state = CONNECTING;
+            //BlynkOnDisconnected();
             return;
     	}
         wlen += wlentmp;
@@ -394,6 +400,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #endif
         conn.disconnect();
         state = CONNECTING;
+        //BlynkOnDisconnected();
         return;
     }
 #else
@@ -425,6 +432,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #endif
             conn.disconnect();
             state = CONNECTING;
+            //BlynkOnDisconnected();
             return;
         }
     }
@@ -440,6 +448,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         BLYNK_LOG_TROUBLE("flood-error");
         conn.disconnect();
         state = CONNECTING;
+        //BlynkOnDisconnected();
     }
 #else
     lastActivityOut = millis();

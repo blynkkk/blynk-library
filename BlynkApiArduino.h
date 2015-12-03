@@ -45,6 +45,48 @@ void BlynkApi<Proto>::Init()
 {
 }
 
+#ifdef BLYNK_NO_INFO
+
+template<class Proto>
+BLYNK_FORCE_INLINE
+void BlynkApi<Proto>::sendInfo() {}
+
+#else
+
+template<class Proto>
+BLYNK_FORCE_INLINE
+void BlynkApi<Proto>::sendInfo()
+{
+	static const char profile[] BLYNK_PROGMEM =
+		BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
+		BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
+		BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
+#ifdef BLYNK_INFO_DEVICE
+		BLYNK_PARAM_KV("dev"    , BLYNK_INFO_DEVICE)
+#endif
+#ifdef BLYNK_INFO_CPU
+		BLYNK_PARAM_KV("cpu"    , BLYNK_INFO_CPU)
+#endif
+#ifdef BLYNK_INFO_CONNECTION
+		BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
+#endif
+		BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
+	;
+	const size_t profile_len = sizeof(profile)-1;
+
+#ifdef BLYNK_HAS_PROGMEM
+	char mem[profile_len];
+	memcpy_P(mem, profile, profile_len);
+	static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_INFO, 0, mem, profile_len);
+#else
+	static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_INFO, 0, profile, profile_len);
+#endif
+	return;
+}
+
+#endif
+
+
 template<class Proto>
 BLYNK_FORCE_INLINE
 void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
@@ -55,38 +97,6 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         return;
     const char* cmd = it.asStr();
     const uint16_t cmd16 = *(uint16_t*)cmd;
-
-#ifndef BLYNK_NO_INFO
-
-    if (cmd16 == BLYNK_HW_IN) {
-        static const char profile[] BLYNK_PROGMEM =
-            BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
-            BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
-            BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
-#ifdef BLYNK_INFO_DEVICE
-            BLYNK_PARAM_KV("dev"    , BLYNK_INFO_DEVICE)
-#endif
-#ifdef BLYNK_INFO_CPU
-            BLYNK_PARAM_KV("cpu"    , BLYNK_INFO_CPU)
-#endif
-#ifdef BLYNK_INFO_CONNECTION
-            BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
-#endif
-            BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
-        ;
-        const size_t profile_len = sizeof(profile)-1;
-
-#ifdef BLYNK_HAS_PROGMEM
-        char mem[profile_len];
-        memcpy_P(mem, profile, profile_len);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, mem, profile_len);
-#else
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, profile, profile_len);
-#endif
-        return;
-    }
-
-#endif
 
     if (++it >= param.end())
         return;

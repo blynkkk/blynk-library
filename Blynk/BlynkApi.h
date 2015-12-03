@@ -129,6 +129,10 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength(), buff, len);
     }
 
+    void syncFromServer() {
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_SYNC);
+    }
+
     /**
      * Sends BlynkParam to a Virtual Pin
      *
@@ -280,6 +284,7 @@ public:
 protected:
     void Init();
     void processCmd(const void* buff, size_t len);
+    void sendInfo();
 
 };
 
