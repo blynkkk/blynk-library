@@ -41,8 +41,8 @@ void setup()
 BLYNK_WRITE(V1)
 {
   BLYNK_LOG("Got a value: %s", param.asStr());
-  // You can also use: 
-  // int i = param.asInt() or 
+  // You can also use:
+  // int i = param.asInt() or
   // double d = param.asDouble()
 }
 

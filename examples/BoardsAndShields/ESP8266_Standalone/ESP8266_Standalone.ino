@@ -17,7 +17,7 @@
  *
  * You need to install this for ESP8266 development:
  *   https://github.com/esp8266/Arduino
- * 
+ *
  * Please be sure to select hte right ESP8266 module
  * in the Tools -> Board menu!
  *

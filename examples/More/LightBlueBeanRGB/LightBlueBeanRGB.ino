@@ -24,7 +24,7 @@ void loop()
     // Indicate connection
     Bean.setLed(0, 0, 32);
 
-    for (int i=0; i<6; i++) {
+    for (int i = 0; i < 6; i++) {
       if (!Bean.getConnectionState() || Blynk.connect()) {
         break;
       }
@@ -38,7 +38,7 @@ void loop()
 }
 
 BLYNK_READ(V0) {
-    Blynk.virtualWrite(V0, millis()/1000);
+  Blynk.virtualWrite(V0, millis() / 1000);
 }
 
 // Attach a ZeRGBa widget to the Virtual pin 2 - and control the built-in RGB led!

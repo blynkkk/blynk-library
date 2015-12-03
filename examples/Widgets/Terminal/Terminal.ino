@@ -50,20 +50,20 @@ void setup()
 }
 
 // You can send commands from Terminal to your hardware. Just use
-// the same Virtual Pin as your Terminal Widget 
-BLYNK_WRITE(V1) 
+// the same Virtual Pin as your Terminal Widget
+BLYNK_WRITE(V1)
 {
 
   // if you type "Marco" into Terminal Widget - it will respond: "Polo:"
   if (String("Marco") == param.asStr()) {
-      terminal.println("You said: 'Marco'") ;
-      terminal.println("I said: 'Polo'") ;
+    terminal.println("You said: 'Marco'") ;
+    terminal.println("I said: 'Polo'") ;
   } else {
 
-  // Send it back
-  terminal.print("You said:");
-  terminal.write(param.getBuffer(), param.getLength());
-  terminal.println();
+    // Send it back
+    terminal.print("You said:");
+    terminal.write(param.getBuffer(), param.getLength());
+    terminal.println();
   }
 
   // Ensure everything is sent

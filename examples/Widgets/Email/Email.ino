@@ -20,7 +20,7 @@
  *
  * Connect a button to digital pin 2 and GND
  * Pressing this button will send an e-mail
- *  
+ *
  * WARNING: You are limited to send ONLY ONE E-MAIL PER MINUTE!
  *
  **************************************************************/
@@ -43,10 +43,10 @@ void setup()
   while (Blynk.connect() == false) {
     // Wait until connected
   }
-  
+
   // Send e-mail when your hardware gets connected to Blynk Server
   // Just put the recepient's "e-mail address", "Subject" and the "message body"
-  Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online."); 
+  Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online.");
 
   // Setting the button
   pinMode(2, INPUT_PULLUP);
@@ -57,17 +57,17 @@ void setup()
 void emailOnButtonPress()
 {
   // *** WARNING: You are limited to send ONLY ONE E-MAIL PER MINUTE! ***
-  
-  // Let's send an e-mail when you press the button 
+
+  // Let's send an e-mail when you press the button
   // connected to digital pin 2 on your Arduino
-  
+
   int isButtonPressed = !digitalRead(2); // Invert state, since button is "Active LOW"
-  
+
   if (isButtonPressed) // You can write any condition to trigger e-mail sending
   {
     BLYNK_LOG("Button is pressed."); // This can be seen in the Serial Monitor
     Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
-    
+
   }
 }
 

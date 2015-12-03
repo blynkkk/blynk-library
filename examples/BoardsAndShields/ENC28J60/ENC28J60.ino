@@ -19,7 +19,7 @@
  *
  * For this example you need UIPEthernet library:
  *   https://github.com/ntruchsess/arduino_uip
- * 
+ *
  * Typical wiring would be:
  *  VCC -- 5V
  *  GND -- GND

@@ -13,7 +13,8 @@
  * This example code is in public domain.
  *
  **************************************************************
- * You can synchronize
+ * You can synchronize the state of widgets with hardware,
+ * event if hardware resets or looses connection temporarily
  *
  * App dashboard setup:
  *   Slider widget (0...100) on V0
@@ -46,10 +47,10 @@ BLYNK_CONNECTED() {
     Blynk.syncFromServer();
     isFirstConnect = false;
   }
-  
+
   // You can also update some virtual pin
   // I'll push uptime, just for this example
-  int value = millis()/1000;
+  int value = millis() / 1000;
   Blynk.virtualWrite(V2, value);
 }
 
