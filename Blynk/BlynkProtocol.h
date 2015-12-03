@@ -227,6 +227,9 @@ bool BlynkProtocol<Transp>::processInput(void)
                 lastHeartbeat = lastActivityIn;
                 state = CONNECTED;
                 this->sendInfo();
+#if !defined(BLYNK_NO_YIELD)
+                yield();
+#endif
                 BlynkOnConnected();
                 return true;
             case BLYNK_INVALID_TOKEN:
@@ -234,13 +237,6 @@ bool BlynkProtocol<Transp>::processInput(void)
                 break;
             default:
                 BLYNK_LOG("Connect failed (code: %d)", hdr.length);
-                // Send some invalid headers to server for disconnection
-                hdr.type = 255;
-                hdr.msg_id = 0;
-                hdr.length = 0;
-                for (int i=0; i<10; i++) {
-                    conn.write(&hdr, sizeof(hdr));
-                }
             }
             return false;
         }
@@ -334,13 +330,6 @@ int BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
-    if (!conn.connected() || (cmd != BLYNK_CMD_LOGIN && state != CONNECTED) ) {
-#ifdef BLYNK_DEBUG
-        BLYNK_LOG("Cmd not sent");
-#endif
-        return;
-    }
-
     if (0 == id) {
         id = getNextMsgId();
     }
@@ -348,6 +337,14 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #ifdef BLYNK_DEBUG
     BLYNK_LOG("<msg %d,%u,%u", cmd, id, length+length2);
 #endif
+
+    if (!conn.connected() || (cmd != BLYNK_CMD_LOGIN && state != CONNECTED) ) {
+#ifdef BLYNK_DEBUG
+        BLYNK_LOG("Cmd skipped");
+#endif
+        return;
+    }
+
 
 #if defined(BLYNK_SEND_ATOMIC)|| defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...
@@ -381,7 +378,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         const size_t wlentmp = conn.write(buff + wlen, chunk);
     	if (wlentmp == 0) {
 #ifdef BLYNK_DEBUG
-            BLYNK_LOG("Cmd not sent");
+            BLYNK_LOG("Cmd error");
 #endif
             conn.disconnect();
             state = CONNECTING;
