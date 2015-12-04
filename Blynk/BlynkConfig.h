@@ -25,7 +25,9 @@
 #define BLYNK_VERSION        "0.3.2-beta"
 
 // Heartbeat period in seconds.
+#ifndef BLYNK_HEARTBEAT
 #define BLYNK_HEARTBEAT      10
+#endif
 
 // Network timeout in milliseconds.
 #ifndef BLYNK_TIMEOUT_MS
