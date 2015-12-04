@@ -44,7 +44,7 @@ bool isFirstConnect = true;
 // This function will run every time Blynk connection is established
 BLYNK_CONNECTED() {
   if (isFirstConnect) {
-    Blynk.syncFromServer();
+    Blynk.syncAll();
     isFirstConnect = false;
   }
 

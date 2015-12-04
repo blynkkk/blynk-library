@@ -129,10 +129,6 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength(), buff, len);
     }
 
-    void syncFromServer() {
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_SYNC);
-    }
-
     /**
      * Sends BlynkParam to a Virtual Pin
      *
@@ -141,6 +137,27 @@ public:
      */
     void virtualWrite(int pin, const BlynkParam& param) {
         virtualWriteBinary(pin, param.getBuffer(), param.getLength());
+    }
+
+    /**
+     * Requests Server to re-send current values for all widgets.
+     */
+    void syncAll() {
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_SYNC);
+    }
+
+    /**
+     * Requests App or Server to re-send current value of a Virtual Pin.
+     * This will probably cause user-defined BLYNK_WRITE handler to be called.
+     *
+     * @param pin Virtual Pin number
+     */
+    void syncVirtual(int pin) {
+        char mem[8];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add("vr");
+        cmd.add(pin);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_SYNC, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -203,58 +220,6 @@ public:
             BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
             handler(req);
         }
-    }
-
-    /**
-     * Requests App or Server to re-send a value of a Virtual Pin.
-     * This will probably cause user-define BLYNK_WRITE handler to be called.
-     *
-     * @experimental
-     *
-     * @param pin Virtual Pin number
-     */
-    void virtualRead(int pin) {
-        char mem[8];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add("vr");
-        cmd.add(pin);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
-     * digitalWrite + update widget state
-     *
-     * @experimental
-     *
-     * @param pin Digital pin number
-     * @param val Value to set
-     */
-    void digitalWrite(uint8_t pin, uint8_t val) {
-        ::digitalWrite(pin, val);
-        char mem[8];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add("dw");
-        cmd.add(pin);
-        cmd.add(val);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
-     * analogWrite + update widget state
-     *
-     * @experimental
-     *
-     * @param pin PWM pin number
-     * @param val Value to set
-     */
-    void analogWrite(uint8_t pin, int val) {
-        ::analogWrite(pin, val);
-        char mem[12];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add("aw");
-        cmd.add(pin);
-        cmd.add(val);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**

@@ -75,7 +75,7 @@ BLYNK_WRITE(V5)
 // This is called by Time library when it needs time sync
 time_t requestTimeSync()
 {
-  Blynk.virtualRead(V5); // Request RTC widget (V5) update from the server
+  Blynk.syncVirtual(V5); // Request RTC widget (V5) update from the server
   return 0;              // Tell the Time library that we'll set it later
 }
 
