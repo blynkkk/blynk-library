@@ -82,6 +82,8 @@ time_t requestTimeSync()
 // Digital clock display of the time
 void clockDisplay()
 {
+  // You can call hour(), minute(), ... at any time
+  // Please see Time library examples for details
   BLYNK_LOG("Current time: %02d:%02d:%02d %02d %02d %d",
             hour(), minute(), second(),
             day(), month(), year()
