@@ -21,6 +21,7 @@
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <Bridge.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleYun.h>
 
 // You should get Auth Token in the Blynk App.

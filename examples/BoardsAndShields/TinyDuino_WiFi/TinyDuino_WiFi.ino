@@ -26,6 +26,7 @@
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <SPI.h>
 #include <Adafruit_CC3000.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleTinyDuino.h>
 
 // You should get Auth Token in the Blynk App.

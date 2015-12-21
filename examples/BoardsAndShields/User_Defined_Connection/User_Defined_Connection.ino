@@ -29,6 +29,7 @@
  *
  **************************************************************/
 
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleUserDefined.h>
 
 // You should get Auth Token in the Blynk App.

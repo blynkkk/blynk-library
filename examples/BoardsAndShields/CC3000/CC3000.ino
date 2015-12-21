@@ -37,6 +37,7 @@
 
 #include <SPI.h>
 #include <Adafruit_CC3000.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleCC3000.h>
 
 // You should get Auth Token in the Blynk App.

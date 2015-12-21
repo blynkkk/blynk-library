@@ -22,6 +22,7 @@
  **************************************************************/
 #include <LWiFi.h>
 #include <LWiFiClient.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleLinkItONE.h>
 
 // You should get Auth Token in the Blynk App.

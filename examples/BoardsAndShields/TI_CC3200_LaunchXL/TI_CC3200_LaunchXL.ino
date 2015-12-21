@@ -23,6 +23,7 @@
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <SPI.h>
 #include <WiFi.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleTI_CC3200_LaunchXL.h>
 
 // You should get Auth Token in the Blynk App.

@@ -31,6 +31,7 @@
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <ESP8266_SoftSer.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleShieldEsp8266_SoftSer.h>
 
 // Set ESP8266 Serial object

@@ -30,6 +30,7 @@
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <SPI.h>
 #include <EthernetV2_0.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleEthernetV2_0.h>
 
 #define W5200_CS  10

@@ -30,6 +30,7 @@
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <ESP8266WiFi.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleUserDefined.h>
 
 // Uncomment this to set WiFi to Access Point mode
