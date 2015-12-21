@@ -1,6 +1,7 @@
 
 #define BLYNK_NO_YIELD
 
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleSerial.h>
 
 // You should get Auth Token in the Blynk App.

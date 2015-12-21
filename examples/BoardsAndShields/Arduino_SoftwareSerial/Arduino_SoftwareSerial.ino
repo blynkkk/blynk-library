@@ -21,6 +21,7 @@
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <SoftwareSerial.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkApiArduino.h>
 #include <Adapters/BlynkSerial.h>
 

@@ -32,6 +32,7 @@
 #include <SPI.h>
 #include <WildFire.h>
 #include <WildFire_CC3000.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleWildFire.h>
 
 WildFire wildfire;

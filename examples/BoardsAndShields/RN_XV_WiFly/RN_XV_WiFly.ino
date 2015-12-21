@@ -30,6 +30,7 @@
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <WiFlyHQ.h>
+#include <BlynkSimpleEthernet.h>
 #include <BlynkSimpleWiFly.h>
 
 // You should get Auth Token in the Blynk App.

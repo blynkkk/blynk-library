@@ -58,6 +58,7 @@
 SoftwareSerial SwSerial(2, 3); // RX, TX
 #define BLYNK_PRINT SwSerial
 #include <BlynkSimpleSerial.h>
+#include <BlynkSimpleEthernet.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
