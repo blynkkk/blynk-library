@@ -32,8 +32,7 @@ Look at the examples [here](https://github.com/blynkkk/blynk-library/tree/master
 You can send us your own board description file for review and App integration.
 
 There may be a problem that you want to start testing your implementation, but your board is not listed int the Blynk App.
-On Android, we now have a "Generic Board" specially for such purposes.
-Unfortunately iOS does not have it yet.
+We now have a "Generic Board" specially for such purposes.
 
 Basically you can select UNO board and check how it works using just virtual pins.
 Most digital pins will also work.
