@@ -65,7 +65,7 @@ if ! hash socat 2>/dev/null; then
     if [[ "$OSTYPE" == "linux-gnu" ]]; then
         echo "  Try installing it using: sudo apt-get install socat"
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo "  Try installing it using this guide: http://www.xappsoftware.com/wordpress/2013/10/10/how-to-run-socat-on-mac-os-x/"
+        echo "  Try installing it using: brew install socat"
     fi
     exit 1
 fi
