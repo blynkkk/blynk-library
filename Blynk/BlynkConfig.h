@@ -44,6 +44,11 @@
 #define BLYNK_MAX_READBYTES  256
 #endif
 
+// Limit the outgoing command length.
+#ifndef BLYNK_MAX_SENDBYTES
+#define BLYNK_MAX_SENDBYTES  128
+#endif
+
 // Uncomment to disable built-in analog and digital operations.
 //#define BLYNK_NO_BUILTIN
 

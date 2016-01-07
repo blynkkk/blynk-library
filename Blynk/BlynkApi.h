@@ -70,7 +70,7 @@ public:
      */
     template <typename T>
     void virtualWrite(int pin, const T& data) {
-        char mem[64];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vw");
         cmd.add(pin);
@@ -80,7 +80,7 @@ public:
 
     template <typename T1, typename T2>
     void virtualWrite(int pin, const T1& data1, const T2& data2) {
-        char mem[64];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vw");
         cmd.add(pin);
@@ -91,7 +91,7 @@ public:
 
     template <typename T1, typename T2, typename T3>
     void virtualWrite(int pin, const T1& data1, const T2& data2, const T3& data3) {
-        char mem[64];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vw");
         cmd.add(pin);
@@ -103,7 +103,7 @@ public:
 
     template <typename T1, typename T2, typename T3, typename T4>
     void virtualWrite(int pin, const T1& data1, const T2& data2, const T3& data3, const T4& data4) {
-        char mem[64];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vw");
         cmd.add(pin);
@@ -167,7 +167,7 @@ public:
      */
     template<typename T>
     void tweet(const T& msg) {
-        char mem[128];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(msg);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
@@ -180,7 +180,7 @@ public:
      */
     template<typename T>
     void notify(const T& msg) {
-        char mem[128];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(msg);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
@@ -195,7 +195,7 @@ public:
      */
     template <typename T1, typename T2>
     void email(const char* email, const T1& subject, const T2& msg) {
-        char mem[128];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(email);
         cmd.add(subject);
