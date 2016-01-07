@@ -12,6 +12,7 @@ WidgetTerminal	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 begin	KEYWORD2
+config	KEYWORD2
 run	KEYWORD2
 connect	KEYWORD2
 connected	KEYWORD2
@@ -43,6 +44,7 @@ BLYNK_EXPERIMENTAL	KEYWORD2
 BLYNK_NO_BUILTIN	KEYWORD2
 BLYNK_NO_FLOAT	KEYWORD2
 BLYNK_USE_DIRECT_CONNECT	KEYWORD2
+BLYNK_MAX_SENDBYTES	KEYWORD2
 
 #######################################
 # Literals (LITERAL1)

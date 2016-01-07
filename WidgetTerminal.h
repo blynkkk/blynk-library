@@ -19,7 +19,7 @@
 #ifdef BLYNK_USE_PRINT_CLASS
     #if !(defined(SPARK) || defined(PARTICLE))
         // On Particle this is auto-included
-        #include <Print.h>
+        #include <Print.h> // TODO: RBL Duo
     #endif
 #endif
 
