@@ -54,10 +54,12 @@ void setup()
     // Wait until connected
   }
 
-  bridge1.setAuthToken("OtherAuthToken");
-
   // Call blynkAnotherDevice every second
   timer.setInterval(1000L, blynkAnotherDevice);
+}
+
+BLYNK_CONNECTED() {
+  bridge1.setAuthToken("OtherAuthToken");
 }
 
 static bool value = true;
