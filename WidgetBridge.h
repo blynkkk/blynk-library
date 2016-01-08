@@ -112,7 +112,7 @@ public:
     }
 
     void virtualWrite(int pin, const BlynkParam& param) {
-    	virtualWriteBinary(pin, param.getBuffer(), param.getLength()-1);
+        virtualWriteBinary(pin, param.getBuffer(), param.getLength()-1);
     }
 
 private:

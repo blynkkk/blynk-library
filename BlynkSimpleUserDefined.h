@@ -24,7 +24,9 @@ extern size_t BlynkStreamWrite(const void* buf, size_t len);
 class BlynkTransportUserDefined
 {
 public:
-    BlynkTransportUserDefined(){}
+    BlynkTransportUserDefined()
+        : mConn (false)
+    {}
 
     bool connect() {
         return mConn = true;
