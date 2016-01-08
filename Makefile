@@ -7,7 +7,7 @@ format-examples:
 	find examples tests -name '*.ino' -exec astyle --options=formatter.conf {} \;
 
 cloc:
-	cloc
+	cloc ./
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
