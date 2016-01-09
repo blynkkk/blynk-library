@@ -67,7 +67,6 @@ void blinkLedWidget()
   }
 }
 
-//WARNING Led fading is not yes supported on iOS app.
 void fadeLedWidget()
 {
   static int value = 0;
