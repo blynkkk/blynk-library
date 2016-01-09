@@ -28,7 +28,7 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-WidgetLCD lcd(1);
+WidgetLCD lcd(V1);
 
 void setup()
 {
