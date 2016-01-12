@@ -38,8 +38,8 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-WidgetLED led1(1);
-WidgetLED led2(2);
+WidgetLED led1(V1);
+WidgetLED led2(V2);
 
 SimpleTimer timer;
 
@@ -67,7 +67,6 @@ void blinkLedWidget()
   }
 }
 
-//WARNING Led fading is not yes supported on iOS app.
 void fadeLedWidget()
 {
   static int value = 0;
