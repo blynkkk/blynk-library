@@ -226,7 +226,7 @@ bool BlynkProtocol<Transp>::processInput(void)
                 BLYNK_LOG("Ready (ping: %dms).", lastActivityIn-lastHeartbeat);
                 lastHeartbeat = lastActivityIn;
                 state = CONNECTED;
-                //TODO: this->sendInfo();
+                this->sendInfo();
 #if !defined(BLYNK_NO_YIELD)
                 yield();
 #endif
