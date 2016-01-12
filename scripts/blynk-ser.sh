@@ -74,7 +74,7 @@ fi
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     ARGS=$(getopt -o hf:c:b:l:t:s:p: -l "help,from:,comm:,baud:,listen:,to:,server:,port:,cert:" -n "blynk-gateway.sh" -- "$@");
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    ARGS=$(getopt hf:c:b:l:t:s:p: $@);
+    ARGS=$(getopt hf:c:b:l:t:s:p: $*);
 fi
 
 # Bad arguments
