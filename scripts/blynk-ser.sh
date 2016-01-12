@@ -70,14 +70,12 @@ if ! hash socat 2>/dev/null; then
     exit 1
 fi
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    GETOPT=getopt -o
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    GETOPT=getopt
-fi
-
 # Execute getopt
-ARGS=$($GETOPT hf:c:b:l:t:s:p: -l "help,from:,comm:,baud:,listen:,to:,server:,port:,cert:" -n "blynk-gateway.sh" -- "$@");
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    ARGS=$(getopt -o hf:c:b:l:t:s:p: -l "help,from:,comm:,baud:,listen:,to:,server:,port:,cert:" -n "blynk-gateway.sh" -- "$@");
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    ARGS=$(getopt hf:c:b:l:t:s:p: $@);
+fi
 
 # Bad arguments
 if [ $? -ne 0 ];
