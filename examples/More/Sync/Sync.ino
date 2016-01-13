@@ -19,7 +19,7 @@
  * App dashboard setup:
  *   Slider widget (0...100) on V0
  *   Slider widget (0...100) on V2
- *   Button widget on digital pin (conneced to an LED)
+ *   Button widget on digital pin (connected to an LED)
  *
  **************************************************************/
 
