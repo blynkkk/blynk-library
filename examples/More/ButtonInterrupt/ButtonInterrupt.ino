@@ -30,6 +30,8 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+WidgetLED led1(V1);
+
 void setup()
 {
   Serial.begin(9600);
@@ -44,8 +46,11 @@ void setup()
 void checkPin()
 {
   // Invert state, since button is "Active LOW"
-  int state = !digitalRead(2);
-  Blynk.virtualWrite(V1, state);
+  if (digitalRead(2)) {
+      led1.off();
+  } else {
+      led1.on();
+  }
 }
 
 void loop()
