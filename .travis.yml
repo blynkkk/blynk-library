@@ -38,6 +38,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
     - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
+    - PLATFORMIO_CI_SRC=examples/Widgets/Timer
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
 
 install:
