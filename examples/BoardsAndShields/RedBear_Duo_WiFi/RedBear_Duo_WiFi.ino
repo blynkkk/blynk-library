@@ -13,18 +13,14 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to use Arduino WiFi shield
+ * This example shows how to use RedBear Duo
  * to connect your project to Blynk.
- *
- * Please update your shield firmware:
- *   https://www.arduino.cc/en/Hacking/WiFiShieldFirmwareUpgrading
  *
  * Feel free to apply it to any other example. It's simple!
  *
  **************************************************************/
 
 #define BLYNK_DEBUG
-#define BLYNK_NO_YIELD
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <BlynkSimpleRedBear_Duo.h>
 
