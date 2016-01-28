@@ -11,6 +11,10 @@
 #ifndef BlynkSimpleEsp8266_h
 #define BlynkSimpleEsp8266_h
 
+#ifndef ESP8266
+#error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
+#endif
+
 #ifndef BLYNK_INFO_DEVICE
 #define BLYNK_INFO_DEVICE  "ESP8266"
 #endif

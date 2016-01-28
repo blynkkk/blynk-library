@@ -11,6 +11,10 @@
 #ifndef BlynkSimpleShieldEsp8266_h
 #define BlynkSimpleShieldEsp8266_h
 
+#ifdef ESP8266
+#error This code is not intended to run on the ESP8266 platform! Please check your Tools->Board setting.
+#endif
+
 #ifndef BLYNK_INFO_CONNECTION
 #define BLYNK_INFO_CONNECTION  "ESP8266"
 #endif
