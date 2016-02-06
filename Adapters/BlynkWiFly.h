@@ -17,7 +17,6 @@
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
-#include <Adapters/BlynkArduinoClient.h>
 #include <WiFlyHQ.h>
 
 class BlynkTransportWiFly
