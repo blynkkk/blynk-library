@@ -17,9 +17,9 @@
 #include <Blynk/BlynkApi.h>
 
 #ifdef BLYNK_USE_PRINT_CLASS
-    #if !(defined(SPARK) || defined(PARTICLE))
+    #if !(defined(SPARK) || defined(PARTICLE) || (PLATFORM_ID==88)) // 88 -> RBL Duo
         // On Particle this is auto-included
-        #include <Print.h> // TODO: RBL Duo
+        #include <Print.h>
     #endif
 #endif
 
