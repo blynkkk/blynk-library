@@ -12,7 +12,6 @@
 #define BlynkArduinoClient_h
 
 #include <BlynkApiArduino.h>
-#include <Client.h>
 #include <Blynk/BlynkDebug.h>
 
 #if defined(ESP8266) && !defined(BLYNK_NO_YIELD)
@@ -21,10 +20,11 @@
 	#define YIELD_FIX()
 #endif
 
-class BlynkArduinoClient
+template <typename Client>
+class BlynkArduinoClientGen
 {
 public:
-    BlynkArduinoClient(Client& client)
+    BlynkArduinoClientGen(Client& client)
         : client(client), domain(NULL), port(0), isConn(false)
     {
         client.setTimeout(BLYNK_TIMEOUT_MS);
@@ -51,7 +51,7 @@ public:
             isConn = (1 == client.connect(addr, port));
             return isConn;
         }
-        return 0;
+        return false;
     }
 
     void disconnect() { isConn = false; client.stop(); }
@@ -98,12 +98,15 @@ public:
     bool connected() { YIELD_FIX(); return isConn && client.connected(); }
     int available() {  YIELD_FIX(); return client.available(); }
 
-private:
+protected:
     Client&     client;
     IPAddress   addr;
     const char* domain;
     uint16_t    port;
     bool        isConn;
 };
+
+#include <Client.h>
+typedef BlynkArduinoClientGen<Client> BlynkArduinoClient;
 
 #endif
