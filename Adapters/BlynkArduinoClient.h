@@ -13,6 +13,7 @@
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkDebug.h>
+#include <Client.h>
 
 #if defined(ESP8266) && !defined(BLYNK_NO_YIELD)
 	#define YIELD_FIX() yield();
@@ -106,7 +107,6 @@ protected:
     bool        isConn;
 };
 
-#include <Client.h>
 typedef BlynkArduinoClientGen<Client> BlynkArduinoClient;
 
 #endif
