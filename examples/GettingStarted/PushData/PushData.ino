@@ -39,15 +39,6 @@ char auth[] = "YourAuthToken";
 
 SimpleTimer timer;
 
-void setup()
-{
-  Serial.begin(9600); // See the connection status in Serial Monitor
-  Blynk.begin(auth);
-
-  // Setup a function to be called every second
-  timer.setInterval(1000L, sendUptime);
-}
-
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
 // that you define how often to send data to Blynk App.
@@ -56,6 +47,15 @@ void sendUptime()
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
   Blynk.virtualWrite(V5, millis() / 1000);
+}
+
+void setup()
+{
+  Serial.begin(9600); // See the connection status in Serial Monitor
+  Blynk.begin(auth);
+
+  // Setup a function to be called every second
+  timer.setInterval(1000L, sendUptime);
 }
 
 void loop()
