@@ -18,7 +18,7 @@
  * You need to install this for ESP8266 development:
  *   https://github.com/esp8266/Arduino
  *
- * Please be sure to select hte right ESP8266 module
+ * Please be sure to select the right ESP8266 module
  * in the Tools -> Board menu!
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
