@@ -48,7 +48,7 @@
 #define BLYNK_NORETURN __attribute__ ((noreturn))
 
 // Causes problems on some platforms
-#define BLYNK_FORCE_INLINE // __attribute__((always_inline))
+#define BLYNK_FORCE_INLINE inline //__attribute__((always_inline))
 
 #if defined(__AVR__)
     #include <avr/pgmspace.h>
