@@ -20,6 +20,8 @@ tweet	KEYWORD2
 notify	KEYWORD2
 email	KEYWORD2
 virtualWrite	KEYWORD2
+syncAll	KEYWORD2
+syncVirtual	KEYWORD2
 
 # Handler helpers
 BLYNK_READ	KEYWORD2
