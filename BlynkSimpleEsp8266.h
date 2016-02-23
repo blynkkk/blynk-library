@@ -36,6 +36,7 @@ public:
     void connectWiFi(const char* ssid, const char* pass)
     {
         BLYNK_LOG("Connecting to %s", ssid);
+        WiFi.mode(WIFI_STA);
         if (pass && strlen(pass)) {
         	WiFi.begin(ssid, pass);
         } else {
