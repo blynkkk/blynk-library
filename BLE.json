@@ -1,0 +1,30 @@
+{
+    "Nordic Serial": {
+        "type":     "ble raw",
+        "uuid_svc": "6e400001-b5a3-f393-e0a9-e50e24dcca9e",
+        "uuid_rx":  "6e400002-b5a3-f393-e0a9-e50e24dcca9e",
+        "uuid_tx":  "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
+    },
+    "MBED": {
+        "type":     "ble raw",
+        "uuid_svc": "713d0000-503e-4c75-ba94-3148f18d941e",
+        "uuid_rx":  "713d0002-503e-4c75-ba94-3148f18d941e",
+        "uuid_tx":  "713d0003-503e-4c75-ba94-3148f18d941e"
+    },
+    "LightBlue Bean": {
+        "type":     "ble lbb",
+        "uuid_svc": "a495ff10-c5b1-4b44-b512-1370f02d74de",
+        "uuid_rxtx":"a495ff11-c5b1-4b44-b512-1370f02d74de"
+    },
+    "HM-10": {
+        "type":     "ble raw",
+        "uuid_svc": "0000ffe0-0000-1000-8000-00805f9b34fb",
+        "uuid_rxtx":"0000ffe1-0000-1000-8000-00805f9b34fb"
+    },
+    "DFRobot BLE-Link": {
+        "type":     "ble dfrobot"
+    },
+    "HC-05": {
+        "type":     "bt serial"
+    }
+}
