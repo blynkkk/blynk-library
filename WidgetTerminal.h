@@ -53,7 +53,7 @@ public:
     using Print::write;
 
     size_t write(const void* buff, size_t len) {
-    	write((char*)buff, len);
+        return write((char*)buff, len);
     }
 
 #else
