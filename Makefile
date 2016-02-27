@@ -1,4 +1,4 @@
-.PHONY: docs format-examples cloc
+.PHONY: docs format-examples cloc travis-build examples
 
 docs:
 	doxygen doxygen.config
@@ -8,6 +8,9 @@ format-examples:
 
 cloc:
 	cloc ./
+
+examples:
+	python tests/build-examples.py
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
