@@ -12,16 +12,17 @@
 #define WidgetSD_h
 
 #include <Blynk/BlynkApi.h>
-#include <SD.h>
 
 class WidgetSD
 {
 public:
     WidgetSD() {}
+    void setVPin(int vPin) {}
     void onWrite(BlynkReq& request, const BlynkParam& param);
-
 private:
 };
+
+#include <SD.h>
 
 void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
 {
@@ -65,7 +66,7 @@ void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
             f.close();
         }
     } else {
-        BLYNK_LOG("Invalid SD command: %s", cmd);
+        //BLYNK_LOG("Invalid SD command: %s", cmd);
     }
 }
 

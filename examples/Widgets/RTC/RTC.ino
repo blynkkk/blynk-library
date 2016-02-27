@@ -37,12 +37,17 @@
 #include <BlynkSimpleEthernet.h>
 #include <SimpleTimer.h>
 #include <Time.h>
+#include <WidgetRTC.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
 SimpleTimer timer;
+
+WidgetRTC rtc;
+
+BLYNK_ATTACH_WIDGET(rtc, V5)
 
 void setup()
 {
@@ -53,29 +58,8 @@ void setup()
     // Wait until connected
   }
 
-  // Set function to call when time sync required
-  setSyncProvider(requestTimeSync);
-
   // Display digital clock every 10 seconds
   timer.setInterval(10000L, clockDisplay);
-}
-
-BLYNK_WRITE(V5)
-{
-  const unsigned long DEFAULT_TIME = 1357041600; // Jan 1 2013
-  unsigned long blynkTime = param.asLong();
-
-  if ( blynkTime >= DEFAULT_TIME) { // Check the integer is a valid time (greater than Jan 1 2013)
-    setTime(blynkTime);             // Sync Time library clock to the value received from Blynk
-    BLYNK_LOG("Time sync: OK");
-  }
-}
-
-// This is called by Time library when it needs time sync
-time_t requestTimeSync()
-{
-  Blynk.syncVirtual(V5); // Request RTC widget (V5) update from the server
-  return 0;              // Tell the Time library that we'll set it later
 }
 
 // Digital clock display of the time
@@ -85,8 +69,7 @@ void clockDisplay()
   // Please see Time library examples for details
   BLYNK_LOG("Current time: %02d:%02d:%02d %02d %02d %d",
             hour(), minute(), second(),
-            day(), month(), year()
-           );
+            day(), month(), year());
 }
 
 void loop()

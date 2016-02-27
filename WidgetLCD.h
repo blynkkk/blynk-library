@@ -16,6 +16,7 @@ class WidgetLCD
 {
 public:
     WidgetLCD(uint8_t pin) : mPin(pin) {}
+    void setVPin(int vPin) { mPin = vPin; }
 
     void clear() {
         Blynk.virtualWrite(mPin, "clr");

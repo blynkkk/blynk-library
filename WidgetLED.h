@@ -16,6 +16,7 @@ class WidgetLED
 {
 public:
 	WidgetLED(uint8_t pin) : mPin(pin) {}
+    void setVPin(int vPin) { mPin = vPin; }
 
 #ifdef BLYNK_EXPERIMENTAL
 
