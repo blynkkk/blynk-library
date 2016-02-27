@@ -20,7 +20,7 @@
  *
  * Please be sure to select the right ESP8266 module
  * in the Tools -> Board menu!
- * 
+ *
  * NOTE: SmartConfig might not work in your environment.
  *       Please try basic ESP8266 SmartConfig examples
  *       before using this sketch!

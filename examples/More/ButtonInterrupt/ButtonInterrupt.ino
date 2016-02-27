@@ -47,9 +47,9 @@ void checkPin()
 {
   // Invert state, since button is "Active LOW"
   if (digitalRead(2)) {
-      led1.off();
+    led1.off();
   } else {
-      led1.on();
+    led1.on();
   }
 }
 

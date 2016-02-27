@@ -44,7 +44,7 @@ SimpleTimer timer;
 void sendTemperature()
 {
   // Generate random temperature value 10.0 to 30.0 (for example)
-  float t = float(random(100, 300))/10;
+  float t = float(random(100, 300)) / 10;
 
   // Format: 1 decimal place, add ℃
   String str = String(t, 1) + "℃";
