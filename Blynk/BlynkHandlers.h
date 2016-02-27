@@ -49,6 +49,9 @@
 #define V30 30
 #define V31 31
 
+#define BLYNK_CONCAT(a, b) a ## b
+#define BLYNK_CONCAT2(a, b) BLYNK_CONCAT(a, b)
+
 // Initial syntax:
 #define BLYNK_WRITE_2(pin) \
     void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& param)
@@ -80,7 +83,17 @@
 #define BLYNK_DISCONNECTED() void BlynkOnDisconnected()
 
 // Advanced functions
+
+class BlynkAttachWidgetHelper {
+public:
+	template<class T>
+	BlynkAttachWidgetHelper(T& widget, uint8_t vPin) {
+		widget.setVPin(vPin);
+	}
+};
+
 #define BLYNK_ATTACH_WIDGET(widget, pin)	\
+	static BlynkAttachWidgetHelper BLYNK_CONCAT2(blnk_widget_helper_, __COUNTER__)((widget), (pin)); \
     BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
 
 #define BLYNK_VAR_INT(name, pin)	int name;  \
