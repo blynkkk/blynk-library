@@ -123,7 +123,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
         return false;
     }
 
-    bool tconn = conn.connected();
+    const bool tconn = conn.connected();
 
     if (tconn) {
         if (avail || conn.available() > 0) {
@@ -436,7 +436,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 
 #endif
 
-#ifdef BLYNK_MSG_LIMIT
+#if defined BLYNK_MSG_LIMIT && BLYNK_MSG_LIMIT > 0
     const uint32_t ts = millis();
     BlynkAverageSample<32>(deltaCmd, ts - lastActivityOut);
     lastActivityOut = ts;
