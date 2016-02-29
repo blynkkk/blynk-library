@@ -1,6 +1,6 @@
 {
     "Nordic Serial": {
-        "devices":  "nRF8001 BLE module, RedBearLab Blend Micro, ...",
+        "devices":  "Arduino 101, nRF8001 BLE module, RedBearLab Blend Micro, ...",
         "type":     "ble raw",
         "uuid_svc": "6e400001-b5a3-f393-e0a9-e50e24dcca9e",
         "uuid_rx":  "6e400002-b5a3-f393-e0a9-e50e24dcca9e",
