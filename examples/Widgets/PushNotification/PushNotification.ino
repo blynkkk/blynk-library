@@ -22,7 +22,7 @@
  * Pressing this button will also push a message! ;)
  *
  **************************************************************/
-//#define BLYNK_DEBUG
+
 #define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>

@@ -24,7 +24,7 @@
  * WARNING: You are limited to send ONLY ONE E-MAIL PER MINUTE!
  *
  **************************************************************/
-//#define BLYNK_DEBUG
+
 #define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>

@@ -20,7 +20,6 @@
  *
  **************************************************************/
 
-#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <BlynkSimpleRedBear_Duo.h>
 
