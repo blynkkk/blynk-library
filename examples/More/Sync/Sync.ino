@@ -16,7 +16,7 @@
  * You can synchronize the state of widgets with hardware,
  * event if hardware resets or looses connection temporarily
  *
- * App dashboard setup:
+ * Project setup in the Blynk app:
  *   Slider widget (0...100) on V0
  *   Slider widget (0...100) on V2
  *   Button widget on digital pin (connected to an LED)
