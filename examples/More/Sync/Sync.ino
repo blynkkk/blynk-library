@@ -13,8 +13,8 @@
  * This example code is in public domain.
  *
  **************************************************************
- * You can synchronize the state of widgets with hardware,
- * event if hardware resets or looses connection temporarily
+ * You can synchronize the state of widgets with hardware states,
+ * even if hardware resets or looses connection temporarily
  *
  * Project setup in the Blynk app:
  *   Slider widget (0...100) on V0
