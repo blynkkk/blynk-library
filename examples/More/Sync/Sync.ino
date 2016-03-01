@@ -48,8 +48,7 @@ BLYNK_CONNECTED() {
     isFirstConnect = false;
   }
 
-  // You can also update some virtual pin
-  // I'll push uptime, just for this example
+  // Let's write your hardware uptime to Virtual Pin 2
   int value = millis() / 1000;
   Blynk.virtualWrite(V2, value);
 }
