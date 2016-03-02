@@ -13,7 +13,7 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This sketch prints all virtual pin operations!
+ * This sketch prints all virtual pin's operations!
  *
  **************************************************************/
 
