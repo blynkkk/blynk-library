@@ -19,27 +19,30 @@ public:
     WidgetRTC() {}
     void setVPin(int vPin);
     void onWrite(BlynkReq& request, const BlynkParam& param);
-private:
-    static unsigned long requestTimeSync();
     static uint8_t mPin;
 };
 
 #ifndef WidgetRTC_h_NO_IMPL
 
-#include <Time.h>
+#include <TimeLib.h>
+
+namespace WidgetRTC_impl {
+
+// This is called by Time library when it needs time sync
+static
+time_t requestTimeSync()
+{
+    Blynk.syncVirtual(WidgetRTC::mPin); // Request RTC widget update from the server
+    return 0;                // Tell the Time library that we'll set it later
+}
+
+}
 
 inline
 void WidgetRTC::setVPin(int vPin)
 {
     mPin = vPin;
-    setSyncProvider(requestTimeSync);
-}
-
-// This is called by Time library when it needs time sync
-unsigned long WidgetRTC::requestTimeSync()
-{
-    Blynk.syncVirtual(mPin); // Request RTC widget update from the server
-    return 0;                // Tell the Time library that we'll set it later
+    setSyncProvider(WidgetRTC_impl::requestTimeSync);
 }
 
 inline

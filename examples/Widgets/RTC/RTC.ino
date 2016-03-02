@@ -36,7 +36,7 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 #include <SimpleTimer.h>
-#include <Time.h>
+#include <TimeLib.h>
 #include <WidgetRTC.h>
 
 // You should get Auth Token in the Blynk App.
