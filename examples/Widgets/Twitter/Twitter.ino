@@ -15,7 +15,7 @@
  **************************************************************
  * Simple tweet example
  *
- * App dashboard setup:
+ * App project setup:
  *   Twitter widget (connect it to your Twitter account!)
  *
  * Connect a button to pin 2 and GND...

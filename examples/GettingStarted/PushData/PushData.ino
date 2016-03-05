@@ -22,7 +22,7 @@
  * Visit this page for more information:
  *   http://playground.arduino.cc/Code/SimpleTimer
  *
- * App dashboard setup:
+ * App project setup:
  *   Value Display widget attached to V5
  *
  **************************************************************/

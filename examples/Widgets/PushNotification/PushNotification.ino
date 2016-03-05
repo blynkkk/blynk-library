@@ -15,7 +15,7 @@
  **************************************************************
  * Simple push notification example
  *
- * App dashboard setup:
+ * App project setup:
  *   Push widget
  *
  * Connect a button to pin 2 and GND...

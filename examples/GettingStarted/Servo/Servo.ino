@@ -15,7 +15,7 @@
  **************************************************************
  * Rotate a servo using a slider!
  *
- * App dashboard setup:
+ * App project setup:
  *   Slider widget (0...180) on V3
  *
  **************************************************************/

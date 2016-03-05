@@ -15,7 +15,7 @@
  **************************************************************
  * You can receive x and y coords for joystick movement within App.
  *
- * App dashboard setup:
+ * App project setup:
  *   Two Axis Joystick on V1 in MERGE output mode.
  *   MERGE mode means device will receive both x and y within 1 message
  *

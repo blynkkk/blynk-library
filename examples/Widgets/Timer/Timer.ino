@@ -20,8 +20,8 @@
  * In this case you don't need to write code.
  * Blynk handles that for you.
  *
- * App dashboard setup:
- *   Timer widget attached to V5 and running dashboard.
+ * App project setup:
+ *   Timer widget attached to V5 and running project.
  *
  **************************************************************/
 
@@ -40,10 +40,10 @@ void setup()
 
 BLYNK_WRITE(V5)
 {
-  //You'll get HIGH/1 at startTime and LOW/0 at stopTime.
-  //this method will be triggered every day
-  //until you remove widget or stop dashboard or
-  //clean stop/start fields of widget
+  // You'll get HIGH/1 at startTime and LOW/0 at stopTime.
+  // this method will be triggered every day
+  // until you remove widget or stop project or
+  // clean stop/start fields of widget
   BLYNK_LOG("Got a value: %s", param.asStr());
 }
 

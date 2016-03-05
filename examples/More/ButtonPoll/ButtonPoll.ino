@@ -16,7 +16,7 @@
  * This example shows how to monitor a button state
  * using polling mechanism.
  *
- * App dashboard setup:
+ * App project setup:
  *   LED widget on V1
  *
  **************************************************************/

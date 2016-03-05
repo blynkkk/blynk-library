@@ -18,7 +18,7 @@
  * For this example you need NeoPixel library:
  *   https://github.com/adafruit/Adafruit_NeoPixel
  *
- * App dashboard setup:
+ * App project setup:
  *   Slider widget (0...500) on V1
  *
  **************************************************************/

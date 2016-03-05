@@ -15,7 +15,7 @@
  **************************************************************
  * Simple e-mail example
  *
- * App dashboard setup:
+ * App project setup:
  *   E-mail Widget
  *
  * Connect a button to digital pin 2 and GND

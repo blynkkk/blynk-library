@@ -15,7 +15,7 @@
  **************************************************************
  * You can receive 1 coord for joystick movement within App.
  *
- * App dashboard setup:
+ * App project setup:
  *   One Axis Joystick on V1.
  *
  **************************************************************/

@@ -15,7 +15,7 @@
  **************************************************************
  * Browse SD card from phone App
  *
- * App dashboard setup:
+ * App project setup:
  *   SD widget on V1
  *
  **************************************************************/

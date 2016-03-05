@@ -24,7 +24,7 @@
  *   http://playground.arduino.cc/Code/SimpleTimer
  *
  *
- * App dashboard setup:
+ * App project setup:
  *   Button widget (Switch) on V1
  *   Slider widget (100...1000) on V2
  *

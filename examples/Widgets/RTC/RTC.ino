@@ -16,7 +16,7 @@
  * Blynk can provide your device with time data, like an RTC.
  * Please note that the accuracy of this method is up to several seconds.
  *
- * App dashboard setup:
+ * App project setup:
  *   RTC widget on V5
  *
  * WARNING :

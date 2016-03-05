@@ -15,7 +15,7 @@
  **************************************************************
  * Output any data on LCD widget!
  *
- * App dashboard setup:
+ * App project setup:
  *   LCD widget on V1
  *
  **************************************************************/

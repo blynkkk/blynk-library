@@ -15,7 +15,7 @@
  **************************************************************
  * Blynk using a LED widget on your phone!
  *
- * App dashboard setup:
+ * App project setup:
  *   LED widget on V1
  *   LED widget on V2
  *

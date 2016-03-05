@@ -15,7 +15,7 @@
  **************************************************************
  * You can send/receive any data using WidgetTerminal object.
  *
- * App dashboard setup:
+ * App project setup:
  *   Terminal widget attached to Virtual Pin V1
  *
  **************************************************************/
