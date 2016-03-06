@@ -1,7 +1,7 @@
 {
   "name": "Blynk",
-  "keywords": "iot, smartphone, mobile, app, widgets, wifi, wi-fi, web, server",
-  "description": "Build a smartphone app for your project in minutes. http://blynk.cc",
+  "keywords": "framework, iot, home, automation, esp8266, m2m, smartphone, mobile, app, web, cloud, widgets, wifi, ble, ethernet, usb, serial",
+  "description": "Build a smartphone app for your project in minutes. Works with Arduino, ESP8266, Raspberry Pi, Intel Edison/Galileo, LinkIt ONE, Particle Core/Photon, Banana Pro, LeMaker Guitar, Energia, MBED, LightBlue Bean, ...",
   "authors":
   {
     "name":  "Volodymyr Shymanskyy",
