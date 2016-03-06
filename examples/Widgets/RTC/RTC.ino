@@ -47,7 +47,7 @@ SimpleTimer timer;
 
 WidgetRTC rtc;
 
-BLYNK_ATTACH_WIDGET(rtc, V5)
+BLYNK_ATTACH_WIDGET(rtc, V5);
 
 void setup()
 {
@@ -57,6 +57,9 @@ void setup()
   while (Blynk.connect() == false) {
     // Wait until connected
   }
+
+  // Begin synchronizing time
+  rtc.begin();
 
   // Display digital clock every 10 seconds
   timer.setInterval(10000L, clockDisplay);

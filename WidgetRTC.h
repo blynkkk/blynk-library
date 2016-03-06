@@ -17,8 +17,9 @@ class WidgetRTC
 {
 public:
     WidgetRTC() {}
-    void setVPin(int vPin);
+    void setVPin(int vPin) { mPin = vPin; }
     void onWrite(BlynkReq& request, const BlynkParam& param);
+    void begin();
     static uint8_t mPin;
 };
 
@@ -39,9 +40,8 @@ time_t requestTimeSync()
 }
 
 inline
-void WidgetRTC::setVPin(int vPin)
+void WidgetRTC::begin()
 {
-    mPin = vPin;
     setSyncProvider(WidgetRTC_impl::requestTimeSync);
 }
 

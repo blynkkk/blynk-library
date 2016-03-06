@@ -86,12 +86,13 @@
 
 class BlynkAttachWidgetHelper {
 public:
-	template<class T>
-	BlynkAttachWidgetHelper(T& widget, uint8_t vPin) {
+	template<typename T>
+	explicit BlynkAttachWidgetHelper(T& widget, uint8_t vPin) {
 		widget.setVPin(vPin);
 	}
 };
 
+// Could use __attribute__ ((constructor)), but hope for better portability
 #define BLYNK_ATTACH_WIDGET(widget, pin)	\
 	static BlynkAttachWidgetHelper BLYNK_CONCAT2(blnk_widget_helper_, __COUNTER__)((widget), (pin)); \
     BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
