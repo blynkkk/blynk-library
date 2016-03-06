@@ -53,7 +53,8 @@ install:
     # http://platformio.org/#!/lib/show/419/SimpleTimer
     # http://platformio.org/#!/lib/show/420/WildFire-CC3000
     # http://platformio.org/#!/lib/show/65/WiFlyHQ
+    # http://platformio.org/#!/lib/show/44/Time
 
-    - platformio lib install 17 28 91 418 419 420 65
+    - platformio lib install 17 28 91 418 419 420 65 44
 
 script: make travis-build
