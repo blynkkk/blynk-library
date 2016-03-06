@@ -18,6 +18,9 @@
 // Fix for WiFi shield (it has a crazy ping duration)
 #define BLYNK_TIMEOUT_MS 6000UL
 
+// TODO: Remove this hotfix
+#define BLYNK_NO_INFO
+
 #include <WiFi.h>
 #include <Adapters/BlynkWiFiCommon.h>
 
