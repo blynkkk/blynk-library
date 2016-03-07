@@ -54,6 +54,8 @@ metadata = {
 examples = find_files('examples', '*.ino')
 abs_examples = map(lambda x: os.path.abspath(x), examples)
 
+logfile = open("./build.log","wb")
+
 os.chdir("/data/arduino-1.6.7/")
 '''
 builder = "./arduino-builder"
@@ -80,7 +82,14 @@ built = []
 
 for fn in abs_examples:
     path, ino = os.path.split(fn)
-    print 'Building example:', ino
+    print >>logfile, "\n\n", "================="
+    print >>logfile, "Building:", ino
+    print >>logfile, "=================", "\n"
+    logfile.flush()
+    
+    print "Building:", ino, "...", 
+    sys.stdout.flush()
+    
     if ino in metadata:
         m = metadata[ino]
         if "skip" in m:
@@ -94,16 +103,18 @@ for fn in abs_examples:
     #cmd = [builder] + builder_args + ["-fqbn", m["fqbn"]] + [fn]
     cmd = [
         "./arduino",
-        #"--verbose",
+        "--verbose",
         "--verify",
         "--board", m["fqbn"],
         fn
     ]
     #print cmd
-    rc = call(cmd)
+    rc = call(cmd, stdout=logfile, stderr=logfile)
     if rc:
+        print "Failed"
         failed.append(ino)
     else:
+        print "OK"
         built.append(ino)
 
 print "=================="
