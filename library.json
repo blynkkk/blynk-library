@@ -1,7 +1,7 @@
 {
   "name": "Blynk",
-  "keywords": "framework, iot, home, automation, esp8266, m2m, smartphone, mobile, app, web, cloud, widgets, wifi, ble, ethernet, usb, serial",
   "description": "Build a smartphone app for your project in minutes. Works with Arduino, ESP8266, Raspberry Pi, Intel Edison/Galileo, LinkIt ONE, Particle Core/Photon, Banana Pro, LeMaker Guitar, Energia, MBED, LightBlue Bean, ...",
+  "keywords": "framework, iot, home, automation, esp8266, m2m, smartphone, mobile, app, web, cloud, widgets, wifi, ble, ethernet, usb, serial",
   "authors":
   {
     "name":  "Volodymyr Shymanskyy",
@@ -13,8 +13,9 @@
     "type": "git",
     "url": "https://github.com/blynkkk/blynk-library.git"
   },
-  "examples": "examples/*/*/*.ino",
+  "url": "http://www.blynk.cc",
   "exclude": "linux",
-  "frameworks": "arduino",
-  "platforms": [ "atmelavr", "atmelsam" ]
+  "frameworks": [ "arduino", "energia", "mbed", "wiringpi" ],
+  "platforms": [ "atmelavr", "atmelsam", "espressif", "nordicnrf51", "titiva", "timsp430", "native" ],
+  "examples": "examples/*/*/*.ino"
 }
