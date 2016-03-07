@@ -7,7 +7,7 @@
 #
 
 CC = g++
-CFLAGS  = -I ../ -I ./ -DLINUX
+CFLAGS  = -I ../src/ -I ./ -DLINUX
 LDFLAGS = -lrt -lpthread
 
 ifeq ($(build),debug)
@@ -51,7 +51,7 @@ endif
 
 SOURCES=main.cpp \
 	BlynkDebug.cpp \
-	../utility/BlynkHandlers.cpp
+	../src/utility/BlynkHandlers.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=blynk
