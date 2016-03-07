@@ -29,6 +29,7 @@ metadata = {
   "ESP8266_Shield_SoftSer.ino"  : { },
   "ESP8266_DirectConnect.ino"   : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone.ino"      : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  "ESP8266_Standalone_SmartConfig.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "Intel_Edison_WiFi.ino"       : { "fqbn": "Intel:i686:izmir_ec" },
   "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
