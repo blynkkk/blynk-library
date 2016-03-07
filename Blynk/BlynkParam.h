@@ -166,7 +166,7 @@ void BlynkParam::add(String& str)
 }
 #endif
 
-#if defined(__AVR__)
+#if defined(__AVR__) || defined (ARDUINO_ARCH_ARC32)
 
     #include <stdlib.h>
 
