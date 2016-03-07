@@ -1,16 +1,16 @@
 .PHONY: docs format-examples cloc travis-build examples
 
 docs:
-	doxygen doxygen.config
+	doxygen extras/doxygen.config
 
 format-examples:
-	find examples tests -name '*.ino' -exec astyle --options=formatter.conf {} \;
+	find examples tests -name '*.ino' -exec astyle --options=extras/formatter.conf {} \;
 
 cloc:
 	cloc ./
 
 examples:
-	python tests/build-examples.py
+	python extras/build-examples.py
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
