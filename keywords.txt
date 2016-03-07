@@ -5,6 +5,7 @@ Blynk	KEYWORD3
 WidgetBridge	KEYWORD1
 WidgetLCD	KEYWORD1
 WidgetLED	KEYWORD1
+WidgetRTC	KEYWORD1
 WidgetSD	KEYWORD1
 WidgetTerminal	KEYWORD1
 
