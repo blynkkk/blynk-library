@@ -4,6 +4,7 @@ python:
 
 env:
     - LINUX_SRC=linux
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TI_TivaC_Connected PLATFORMIO_CI_BOARDS_ARGS="--board=lptm4c1294ncpdt"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet_Manual
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Serial_USB
