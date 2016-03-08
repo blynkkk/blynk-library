@@ -9,3 +9,4 @@ scripts/blynk/gateway/bluepy
 .cproject
 .project
 .settings
+.development
