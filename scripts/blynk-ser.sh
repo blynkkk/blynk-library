@@ -12,7 +12,7 @@ TO_TYPE="SSL"   # TCP, SSL
 COMM_PORT_LINUX=/dev/ttyUSB0
 COMM_PORT_OSX=/dev/tty.usbmodem
 COMM_BAUD=9600
-SERV_ADDR=cloud.blynk.cc
+SERV_ADDR=blynk-cloud.com
 SERV_PORT_SSL=8441
 SERV_PORT_TCP=8442
 SERV_PORT_2WAY=8443
@@ -38,7 +38,7 @@ usage="
                      COM1               (on Windows)
                      /dev/tty.usbserial (on OSX)
       -b,--baud      9600
-      -s,--server    cloud.blynk.cc
+      -s,--server    blynk-cloud.com
       -p,--port      8442
 
     If the specified serial port is not found, it will ask to enter another one.
