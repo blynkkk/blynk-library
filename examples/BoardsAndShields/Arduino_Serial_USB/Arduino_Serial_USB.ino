@@ -39,7 +39,7 @@
  *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
  *
  *    For instance :
- *      ./blynk-ser.sh -c /dev/ttyACM0 -b 9600 -s cloud.blynk.cc -p 8442
+ *      ./blynk-ser.sh -c /dev/ttyACM0 -b 9600 -s blynk-cloud.com -p 8442
  *
  *    Run blynk-ser.sh -h for more information
  *

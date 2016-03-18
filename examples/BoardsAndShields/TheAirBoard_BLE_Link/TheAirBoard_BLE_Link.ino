@@ -37,7 +37,7 @@
  *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
  *
  *    For instance :
- *      ./blynk-ser.sh -c /dev/tty.usbmodem621 -b 9600 -s cloud.blynk.cc -p 8442
+ *      ./blynk-ser.sh -c /dev/tty.usbmodem621 -b 9600 -s blynk-cloud.com -p 8442
  *
  *    Be sure to select the right serial port (there may be multiple) when prompted:
  *       Select serial port [  ]: <serial_port>

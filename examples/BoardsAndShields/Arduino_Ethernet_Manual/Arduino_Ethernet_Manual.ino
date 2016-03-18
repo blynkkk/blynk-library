@@ -44,7 +44,7 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth, server_ip, 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
   // Or like this:
-  //Blynk.begin(auth, "cloud.blynk.cc", 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
+  //Blynk.begin(auth, "blynk-cloud.com", 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
 }
 
 void loop()
