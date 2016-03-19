@@ -21,6 +21,9 @@
 
 #define BLYNK_SEND_ATOMIC
 
+// TODO: Remove this hotfix
+#define BLYNK_NO_INFO
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <utility/BlynkFifo.h>
