@@ -19,7 +19,7 @@
 #define BLYNK_INFO_DEVICE  "ESP8266"
 #endif
 
-#define BLYNK_DEFAULT_FINGERPRINT "A2 10 3C 79 7D 19 FB B2 50 0D 02 C6 39 8B 94 D0 02 B8 88 88"
+#define BLYNK_DEFAULT_FINGERPRINT "FD C0 7D 8D 47 97 F7 E3 07 05 D3 4E E3 BB 8E 3D C0 EA BE 1C"
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
@@ -41,12 +41,13 @@ public:
 
     bool connect() {
         if (BlynkArduinoClientGen<Client>::connect()) {
-		  if (fingerprint && !this->client.verify(fingerprint, this->domain)) {
+          // TODO: Enable when https://github.com/esp8266/Arduino/issues/1285 is closed
+		  /*if (fingerprint && !this->client.verify(fingerprint, this->domain)) {
 			  BLYNK_LOG("Certificate doesn't match");
 			  return false;
 		  } else {
 			  BLYNK_LOG("Certificate OK");
-		  }
+		  }*/
 		  return true;
         }
         return false;
