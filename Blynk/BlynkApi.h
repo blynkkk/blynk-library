@@ -187,6 +187,19 @@ public:
     }
 
     /**
+     * Sends an SMS
+     *
+     * @param msg Text of the message
+     */
+    template<typename T>
+    void sms(const T& msg) {
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_SMS, 0, cmd.getBuffer(), cmd.getLength()-1);
+    }
+
+    /**
      * Sends an email message
      *
      * @param email   Email to send to
