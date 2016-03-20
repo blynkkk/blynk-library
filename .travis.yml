@@ -14,7 +14,6 @@ env:
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/CC3000
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ENC28J60
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Standalone PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
-    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_DirectConnect PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/RN_XV_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/WildFire PLATFORMIO_CI_BOARDS_ARGS="--board=wildfirev3"
