@@ -16,7 +16,7 @@
  * Output any data on LCD widget!
  *
  * App project setup:
- *   LCD widget on V1
+ *   LCD widget, switch to ADVANCED mode, select pin V1
  *
  **************************************************************/
 #define BLYNK_PRINT Serial
