@@ -32,7 +32,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
     - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
-    - PLATFORMIO_CI_SRC=examples/Widgets/LCD
+    - PLATFORMIO_CI_SRC=examples/Widgets/LCD/LCD_AdvancedMode
     - PLATFORMIO_CI_SRC=examples/Widgets/LED
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
