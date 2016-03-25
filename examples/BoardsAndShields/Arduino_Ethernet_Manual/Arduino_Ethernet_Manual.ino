@@ -19,6 +19,10 @@
  * NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
  *       DON'T use them in your sketch directly!
  *
+ * WARNING: If you have an SD card, you may need to disable it
+ *       by setting pin 4 to HIGH. Read more here:
+ *       https://www.arduino.cc/en/Main/ArduinoEthernetShield
+ *
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
