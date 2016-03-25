@@ -21,11 +21,11 @@
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-const char auth[] = "65d486962570457dac8686f5b9bb9a85";
+const char auth[] = "YourAuthToken";
 
 // Network settings
-const char ssid[] = "WiCube";
-const char pass[] = "lebowski8";
+const char ssid[] = "YourWiFi";
+const char pass[] = "YourPassword";
 
 // Blynk cloud server
 const char* host = "blynk-cloud.com";
