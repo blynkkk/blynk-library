@@ -75,6 +75,10 @@ void BlynkFatal() BLYNK_NORETURN;
 #define BLYNK_LOG_FN()       BLYNK_LOG("%s@%d", __FUNCTION__, __LINE__);
 #define BLYNK_LOG_TROUBLE(t) BLYNK_LOG("Trouble detected: http://docs.blynk.cc/#troubleshooting-%s", t)
 
+#if defined(BLYNK_DEBUG) && !defined(BLYNK_PRINT)
+#undef BLYNK_DEBUG
+#endif
+
 #ifdef BLYNK_PRINT
 
     #if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
