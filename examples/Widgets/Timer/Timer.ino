@@ -30,12 +30,12 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h> // This part is for Ethernet stuff
 
-char auth[] = "YourAuthToken"; // Put your Auth Token here. (see Step 3 above)
+char auth[] = "YourAuthToken";
 
 void setup()
 {
   Serial.begin(9600); // See the connection status in Serial Monitor
-  Blynk.begin(auth);  // Here your Arduino connects to the Blynk Cloud.
+  Blynk.begin(auth);
 }
 
 BLYNK_WRITE(V5)
