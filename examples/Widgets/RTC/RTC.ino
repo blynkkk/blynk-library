@@ -60,6 +60,10 @@ void setup()
 
   // Begin synchronizing time
   rtc.begin();
+  
+  // Other Time library functions can be used, like:
+  //   timeStatus(), setSyncInterval(interval)...
+  // Read more: http://www.pjrc.com/teensy/td_libs_Time.html
 
   // Display digital clock every 10 seconds
   timer.setInterval(10000L, clockDisplay);
