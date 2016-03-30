@@ -29,8 +29,16 @@
  * 4. Run the script (script located in "scripts" folder of library root,
  *    e.g. 'blynk-library/scripts') for redirecting traffic to server:
  *
- *      for Windows:         scripts/blynk-ser.bat
- *      for Linux and OSX:   ./scripts/blynk-ser.sh (may need to run with sudo)
+ *      for Windows:
+ *                     1. Open cmd.exe
+ *                     2. Write (put your path to the blynk-ser.bat folder):
+ *                          cd C:\blynk-library\scripts
+ *                     3. Write (COM4 is port with your Arduino):
+ *                          blynk-ser.bat -c COM4
+ *                     4. And press "Enter", press "Enter" and press "Enter"
+ * 
+ *      for Linux and OSX:
+ *                     bash ./scripts/blynk-ser.sh (may need to run with sudo)
  *
  *    You can specify port, baud rate, and server endpoint like this
  *    (you may skip server parameters when running local):
