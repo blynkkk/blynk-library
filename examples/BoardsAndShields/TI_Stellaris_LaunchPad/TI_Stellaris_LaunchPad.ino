@@ -27,13 +27,15 @@
  *
  *      for Windows:
  *                     1. Open cmd.exe
- *                     2. write : (your way to blynk-ser.bat folder) example: "cd C:\blynk-library-0.3.1\blynk-library-0.3.1\scripts"
- *                     3. write : "blynk-ser.bat -c COM4" (where COM4 is port with your Arduino)
- *                     4. And press "Enter" , press "Enter" and press "Enter"
+ *                     2. Write (put your path to the blynk-ser.bat folder):
+ *                          cd C:\blynk-library\scripts
+ *                     3. Write (COM4 is port with your Arduino):
+ *                          blynk-ser.bat -c COM4
+ *                     4. And press "Enter", press "Enter" and press "Enter"
  *
  *      for Linux and OSX:
  *
- *                    ./blynk-ser.sh (may need to run with sudo)
+ *                    bash ./blynk-ser.sh (may need to run with sudo)
  *
  *    You can specify port, baud rate, and server endpoint like this:
  *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
