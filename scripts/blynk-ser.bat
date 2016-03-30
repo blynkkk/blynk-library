@@ -28,9 +28,12 @@ for /f "tokens=4 delims=: " %%A in ('mode^|findstr "COM[0-9]*:"') do IF not [%%A
 set PORTS=!PORTS:~1!
 
 rem Check port
-if "x!PORTS:%COMM_PORT%=!"=="x%PORTS%" (
-    echo %COMM_PORT% not found, or may be busy.
-    set /p COMM_PORT="Select serial port [ %PORTS% ]: "
+rem Skip check if no ports at all - Windows bug?
+if not "x%PORTS%"=="x~1" (
+    if "x!PORTS:%COMM_PORT%=!"=="x%PORTS%" (
+        echo %COMM_PORT% not found, or may be busy.
+        set /p COMM_PORT="Select serial port [ %PORTS% ]: "
+    )
 )
 
 rem Create exe
