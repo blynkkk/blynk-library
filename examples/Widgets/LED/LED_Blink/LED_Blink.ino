@@ -17,8 +17,6 @@
  *
  * App project setup:
  *   LED widget on V1
- *   LED widget on V2
- *   LED widget on V3
  *
  * WARNING :
  * For this example you'll need SimpleTimer library:
@@ -38,12 +36,7 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// Select your pin with physical button
-const int btnPin = 7;
-
 WidgetLED led1(V1);
-WidgetLED led2(V2);
-WidgetLED led3(V3);
 
 SimpleTimer timer;
 
@@ -52,16 +45,11 @@ void setup()
   Serial.begin(9600); // See the connection status in Serial Monitor
   Blynk.begin(auth);
 
-  // Setup physical button pin (active low)
-  pinMode(btnPin, INPUT_PULLUP);
-
   while (Blynk.connect() == false) {
     // Wait until connected
   }
 
   timer.setInterval(1000L, blinkLedWidget);
-  timer.setInterval(300L, fadeLedWidget);
-  timer.setInterval(500L, buttonLedWidget);
 }
 
 // V1 LED Widget is blinking
@@ -69,42 +57,10 @@ void blinkLedWidget()
 {
   if (led1.getValue()) {
     led1.off();
-    BLYNK_LOG("LED1: off");
+    BLYNK_LOG("LED on V1: off");
   } else {
     led1.on();
-    BLYNK_LOG("LED1: on");
-  }
-}
-
-// V2 LED Widget is fading
-void fadeLedWidget()
-{
-  static int value = 0;
-  static int delta = 30;
-  value += delta;
-  if (value > 255 || value < 0) {
-    delta = -delta;
-  } else {
-    BLYNK_LOG("LED2: %d", value);
-    led2.setValue(value);
-  }
-}
-
-// V3 LED Widget represents the physical button state
-boolean btnState = false;
-void buttonLedWidget()
-{
-  // Read button
-  boolean isPressed = (digitalRead(btnPin) == LOW);
-
-  // If state has changed...
-  if (isPressed != btnState) {
-    if (isPressed) {
-      led3.on();
-    } else {
-      led3.off();
-    }
-    btnState = isPressed;
+    BLYNK_LOG("LED on V1: on");
   }
 }
 
