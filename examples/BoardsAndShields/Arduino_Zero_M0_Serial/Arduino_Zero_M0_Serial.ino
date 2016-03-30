@@ -35,7 +35,7 @@
  *
  *      for Linux and OSX:
  *
- *                    ./blynk-ser.sh (may need to run with sudo)
+ *                    bash ./blynk-ser.sh (may need to run with sudo)
  *
  *    You can specify port, baud rate, and server endpoint like this:
  *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
