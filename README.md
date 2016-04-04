@@ -20,6 +20,7 @@ If you need more information, please follow these links:
 * [Google Play](https://play.google.com/store/apps/details?id=cc.blynk)
 * [Facebook](http://www.fb.com/blynkapp)
 * [Twitter](http://twitter.com/blynk_app)
+* [Blynk Server](https://github.com/blynkkk/blynk-server)
 * [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
 
 ![Dashboard settings](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash_settings.png)
