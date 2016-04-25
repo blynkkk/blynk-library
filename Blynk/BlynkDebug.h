@@ -85,6 +85,12 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <stdio.h>
         #include <stdarg.h>
 
+#if defined(ARDUINO_ARCH_ARC32)
+        extern "C" {
+          #include <utility/snprintf.h>
+        }
+#endif
+
         #define BLYNK_DBG_DUMP(msg, addr, len) if (len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
 #if defined(__SAM3X8E__)

@@ -71,6 +71,7 @@ public:
     void setProfile(const char* json) {
     	profile = json;
     }
+#endif
 
     void startSession() {
     	state = CONNECTING;
@@ -80,7 +81,6 @@ public:
     	currentMsgId = 0;
     	lastHeartbeat = lastActivityIn = lastActivityOut = millis();
     }
-#endif
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
 
@@ -154,7 +154,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
 
         if (t - lastActivityIn > (1000UL * BLYNK_HEARTBEAT + BLYNK_TIMEOUT_MS*3)) {
     #ifdef BLYNK_DEBUG
-            BLYNK_LOG("Heartbeat timeout (last in: %lu)", lastActivityIn);
+            BLYNK_LOG("Heartbeat timeout (last in: %lu, hb: %lu)", lastActivityIn, lastHeartbeat);
     #else
             BLYNK_LOG("Heartbeat timeout");
     #endif
