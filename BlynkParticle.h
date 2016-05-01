@@ -11,8 +11,6 @@
 #ifndef BlynkParticle_h
 #define BlynkParticle_h
 
-#define BLYNK_INFO_CONNECTION "CC3000"
-
 #include "BlynkApiParticle.h"
 #include "Blynk/BlynkProtocol.h"
 
@@ -36,10 +34,10 @@ public:
 
     bool connect() {
         if (domain) {
-            BLYNK_LOG("Connecting to %s:%d", domain, port);
+            BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', port);
             return (1 == client.connect(domain, port));
         } else {
-            BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", addr[0], addr[1], addr[2], addr[3], port);
+            BLYNK_LOG_IP("Connecting to ", addr);
             return (1 == client.connect(addr, port));
         }
         return 0;
