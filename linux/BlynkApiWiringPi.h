@@ -57,12 +57,11 @@ void BlynkApi<Proto>::sendInfo()
     BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
     profile_dyn.add_key("conn", "Socket");
 
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_INFO, 0, profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
     return;
 }
 
 #endif
-
 
 template<class Proto>
 BLYNK_FORCE_INLINE
@@ -87,7 +86,6 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     case BLYNK_HW_PM: {
         while (it < param.end()) {
             ++it;
-            //BLYNK_LOG("pinMode %u -> %s", pin, it.asStr());
             if (!strcmp(it.asStr(), "in")) {
                 pinMode(pin, INPUT);
                 pullUpDnControl(pin, PUD_OFF);
@@ -103,7 +101,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                 pinMode(pin, PWM_OUTPUT);
             } else {
 #ifdef BLYNK_DEBUG
-                BLYNK_LOG("Invalid pinMode %u -> %s", pin, it.asStr());
+                BLYNK_LOG4(BLYNK_F("Invalid pin "), pin, BLYNK_F(" mode "), it.asStr());
 #endif
             }
             ++it;
@@ -122,7 +120,6 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         if (++it >= param.end())
             return;
 
-        //BLYNK_LOG("digitalWrite %d -> %d", pin, it.asInt());
         pinMode(pin, OUTPUT);
         digitalWrite(pin, it.asInt() ? HIGH : LOW);
     } break;
@@ -131,7 +128,6 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         if (++it >= param.end())
             return;
 
-        //BLYNK_LOG("analogWrite %d -> %d", pin, it.asInt());
         pinMode(pin, PWM_OUTPUT);
         pwmWrite(pin, it.asInt());
     } break;
@@ -160,7 +156,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         }
     } break;
     default:
-        BLYNK_LOG("Invalid HW cmd: %s", cmd);
+        BLYNK_LOG2(BLYNK_F("Invalid HW cmd: "), cmd);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_ILLEGAL_COMMAND);
     }
 }
