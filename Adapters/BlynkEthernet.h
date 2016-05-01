@@ -53,15 +53,15 @@ public:
                 const byte mac[]   = _blynkEthernetMac)
     {
         Base::begin(auth);
-        BLYNK_LOG("Getting IP...");
+        BLYNK_LOG1(BLYNK_F("Getting IP..."));
         if (!Ethernet.begin((byte*)mac)) {
-            BLYNK_FATAL("DHCP Failed!");
+            BLYNK_FATAL(BLYNK_F("DHCP Failed!"));
         }
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP:", myip);
     }
 
     // Static IP with domain
@@ -73,13 +73,13 @@ public:
                 const byte mac[]= _blynkEthernetMac)
     {
         Base::begin(auth);
-        BLYNK_LOG("Using static IP");
+        BLYNK_LOG1(BLYNK_F("Using static IP"));
         Ethernet.begin((byte*)mac, local);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP:", myip);
     }
 
     // Static IP with domain, gateway, etc
@@ -93,13 +93,13 @@ public:
                 const byte mac[]= _blynkEthernetMac)
     {
         Base::begin(auth);
-        BLYNK_LOG("Using static IP");
+        BLYNK_LOG1(BLYNK_F("Using static IP"));
         Ethernet.begin((byte*)mac, local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(domain, port);
         IPAddress myip = Ethernet.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP:", myip);
     }
 
     // DHCP with server IP
@@ -109,15 +109,15 @@ public:
                 const byte mac[] = _blynkEthernetMac)
     {
         Base::begin(auth);
-        BLYNK_LOG("Getting IP...");
+        BLYNK_LOG1(BLYNK_F("Getting IP..."));
         if (!Ethernet.begin((byte*)mac)) {
-            BLYNK_FATAL("DHCP Failed!");
+            BLYNK_FATAL(BLYNK_F("DHCP Failed!"));
         }
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP:", myip);
     }
 
     // Static IP with server IP
@@ -127,14 +127,14 @@ public:
                 IPAddress local,
                 const byte mac[] = _blynkEthernetMac)
     {
-        BLYNK_LOG("Using static IP");
+        BLYNK_LOG1(BLYNK_F("Using static IP"));
         Base::begin(auth);
         Ethernet.begin((byte*)mac, local);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP:", myip);
     }
 
     // Static IP with server IP, DNS, gateway, etc
@@ -147,14 +147,14 @@ public:
                 IPAddress subnet,
                 const byte mac[] = _blynkEthernetMac)
     {
-        BLYNK_LOG("Using static IP");
+        BLYNK_LOG1(BLYNK_F("Using static IP"));
         Base::begin(auth);
         Ethernet.begin((byte*)mac, local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP:", myip);
     }
 
 };

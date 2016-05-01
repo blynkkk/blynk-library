@@ -44,11 +44,12 @@ public:
 
     bool connect() {
         if (domain) {
-            BLYNK_LOG("Connecting to %s:%d", domain, port);
+            BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', port);
+
             isConn = (1 == client.connect(domain, port));
             return isConn;
         } else { //if (uint32_t(addr) != 0) {
-            BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", addr[0], addr[1], addr[2], addr[3], port);
+            BLYNK_LOG_IP("Connecting to ", addr);
             isConn = (1 == client.connect(addr, port));
             return isConn;
         }
@@ -80,8 +81,14 @@ public:
                 sent += w;
             } else {
                 delay(50);
-#ifdef BLYNK_DEBUG
-                BLYNK_LOG("Retry %d send (%d/%d)", retry, sent, len);
+#if defined(BLYNK_DEBUG) && defined(BLYNK_PRINT)
+                BLYNK_PRINT_TIME();
+                BLYNK_PRINT.print(BLYNK_F("Retry "));
+                BLYNK_PRINT.print(retry);
+                BLYNK_PRINT.print(BLYNK_F(" send: "));
+                BLYNK_PRINT.print(sent);
+                BLYNK_PRINT.print('/');
+                BLYNK_PRINT.println(len);
 #endif
             }
         }
