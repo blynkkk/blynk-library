@@ -65,7 +65,7 @@ void emailOnButtonPress()
 
   if (isButtonPressed) // You can write any condition to trigger e-mail sending
   {
-    BLYNK_LOG("Button is pressed."); // This can be seen in the Serial Monitor
+    Serial.println("Button is pressed."); // This can be seen in the Serial Monitor
     Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
 
   }

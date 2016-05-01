@@ -34,10 +34,13 @@ void setup()
 
 // This is called for all virtual pins, that don't have BLYNK_WRITE handler
 BLYNK_WRITE_DEFAULT() {
-  BLYNK_LOG("V%d input: ", request.pin);
+  Serial.print("input V");
+  Serial.print(request.pin);
+  Serial.println(":");
   // Print all parameter values
   for (auto i = param.begin(); i < param.end(); ++i) {
-    BLYNK_LOG("* %s", i.asString());
+    Serial.print("* ");
+    Serial.println(i.asString());
   }
 }
 
@@ -45,7 +48,10 @@ BLYNK_WRITE_DEFAULT() {
 BLYNK_READ_DEFAULT() {
   // Generate random response
   int val = random(0, 100);
-  BLYNK_LOG("V%d output: %d", request.pin, val);
+  Serial.print("output V");
+  Serial.print(request.pin);
+  Serial.print(": ");
+  Serial.println(val);
   Blynk.virtualWrite(request.pin, val);
 }
 

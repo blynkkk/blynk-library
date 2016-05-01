@@ -49,6 +49,34 @@ WidgetRTC rtc;
 
 BLYNK_ATTACH_WIDGET(rtc, V5);
 
+// Utility function for digital clock display: prints preceding colon and leading 0
+void printDigits(int digits)
+{
+  Serial.print(":");
+  if(digits < 10) {
+    Serial.print('0');
+  }
+  Serial.print(digits);
+}
+
+// Digital clock display of the time
+void clockDisplay()
+{
+  // You can call hour(), minute(), ... at any time
+  // Please see Time library examples for details
+  Serial.print("Current time: ");
+  Serial.print(hour());
+  printDigits(minute());
+  printDigits(second());
+  Serial.print(" ");
+  Serial.print(day());
+  Serial.print(" ");
+  Serial.print(month());
+  Serial.print(" ");
+  Serial.print(year());
+  Serial.println();
+}
+
 void setup()
 {
   Serial.begin(9600); // See the connection status in Serial Monitor
@@ -60,23 +88,13 @@ void setup()
 
   // Begin synchronizing time
   rtc.begin();
-  
+
   // Other Time library functions can be used, like:
   //   timeStatus(), setSyncInterval(interval)...
   // Read more: http://www.pjrc.com/teensy/td_libs_Time.html
 
   // Display digital clock every 10 seconds
   timer.setInterval(10000L, clockDisplay);
-}
-
-// Digital clock display of the time
-void clockDisplay()
-{
-  // You can call hour(), minute(), ... at any time
-  // Please see Time library examples for details
-  BLYNK_LOG("Current time: %02d:%02d:%02d %02d %02d %d",
-            hour(), minute(), second(),
-            day(), month(), year());
 }
 
 void loop()

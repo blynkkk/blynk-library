@@ -55,11 +55,11 @@ void setup()
 }
 
 void sendSeconds() {
-    Blynk.virtualWrite(V0, millis() / 1000);
+  Blynk.virtualWrite(V0, millis() / 1000);
 }
 
 void sendMillis() {
-    Blynk.virtualWrite(V1, millis());
+  Blynk.virtualWrite(V1, millis());
 }
 
 void loop()

@@ -44,11 +44,11 @@ void setup()
 }
 
 BLYNK_READ(V0) {
-    Blynk.virtualWrite(V0, millis() / 1000);
+  Blynk.virtualWrite(V0, millis() / 1000);
 }
 
 BLYNK_READ(V1) {
-    Blynk.virtualWrite(V1, millis());
+  Blynk.virtualWrite(V1, millis());
 }
 
 void loop()

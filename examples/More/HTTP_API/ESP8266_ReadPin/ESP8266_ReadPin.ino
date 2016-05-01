@@ -39,12 +39,12 @@ void setup()
   delay(10);
   Serial.println();
   Serial.println();
-  
+
   // Start the WiFi connection
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, pass);
-  
+
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -66,9 +66,9 @@ void loop() {
     char pin[] = "V2";
 
     String getReq = String("GET /") + auth + "/pin/" + pin + " HTTP/1.1\r\n" +
-                 "Host: " + host + "\r\n" +
-                 "Connection: close\r\n" +
-                 "\r\n";
+                    "Host: " + host + "\r\n" +
+                    "Connection: close\r\n" +
+                    "\r\n";
 
     Serial.println("Sending GET request");
     client.print(getReq);
@@ -90,7 +90,7 @@ void loop() {
       String line = client.readStringUntil('\n');
       line.trim();
       if (line.startsWith("Content-Length:")) {
-        contentLength = line.substring(line.lastIndexOf(':')+1).toInt();
+        contentLength = line.substring(line.lastIndexOf(':') + 1).toInt();
       } else if (line.length() == 0) {
         break;
       }
@@ -109,8 +109,10 @@ void loop() {
 
     Serial.print("Read value: ");
     Serial.println(body);
-    
-    while(true) { delay(0); }
+
+    while (true) {
+      delay(0);
+    }
   } else {
     Serial.println("failed");
     delay(5000);

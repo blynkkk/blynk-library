@@ -44,7 +44,8 @@ BLYNK_WRITE(V5)
   // this method will be triggered every day
   // until you remove widget or stop project or
   // clean stop/start fields of widget
-  BLYNK_LOG("Got a value: %s", param.asStr());
+  Serial.print("Got a value: ");
+  Serial.println(param.asStr());
 }
 
 void loop()

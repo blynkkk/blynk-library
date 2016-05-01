@@ -40,7 +40,8 @@ void setup()
 // when App writes value to Virtual Pin 1
 BLYNK_WRITE(V1)
 {
-  BLYNK_LOG("Got a value: %s", param.asStr());
+  Serial.print("Got a value: ");
+  Serial.println(param.asStr());
   // You can also use:
   // int i = param.asInt() or
   // double d = param.asDouble()

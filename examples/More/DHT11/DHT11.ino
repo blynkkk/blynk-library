@@ -73,7 +73,7 @@ void setup()
   Blynk.begin(auth);
 
   dht.begin();
-  
+
   // Setup a function to be called every second
   timer.setInterval(1000L, sendSensor);
 }

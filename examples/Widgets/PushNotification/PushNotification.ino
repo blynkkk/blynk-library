@@ -71,7 +71,7 @@ void notifyOnButtonPress()
   // Invert state, since button is "Active LOW"
   int isButtonPressed = !digitalRead(2);
   if (isButtonPressed) {
-    BLYNK_LOG("Button is pressed.");
+    Serial.println("Button is pressed.");
 
     Blynk.notify("Yaaay... button is pressed!");
   }

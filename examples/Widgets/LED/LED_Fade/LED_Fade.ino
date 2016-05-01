@@ -61,7 +61,8 @@ void fadeLedWidget()
   if (value > 255 || value < 0) {
     delta = -delta;
   } else {
-    BLYNK_LOG("LED on V2: %d", value);
+    Serial.print("LED on V2: ");
+    Serial.println(value);
     led2.setValue(value);
   }
 }

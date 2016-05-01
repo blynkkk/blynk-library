@@ -13,7 +13,7 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to synchronize Button widget 
+ * This example shows how to synchronize Button widget
  * and physical button state.
  *
  * WARNING :
@@ -51,7 +51,7 @@ void setup()
   Blynk.begin(auth);
 
   pinMode(ledPin, OUTPUT);
-  pinMode(btnPin, INPUT_PULLUP); 
+  pinMode(btnPin, INPUT_PULLUP);
   digitalWrite(ledPin, ledState);
 
   // Setup a function to be called every 100 ms
@@ -78,7 +78,7 @@ void checkPhysicalButton()
   if (digitalRead(btnPin) == LOW) {
     // btnState is used to avoid sequential toggles
     if (btnState != LOW) {
-      
+
       // Toggle LED state
       ledState = !ledState;
       digitalWrite(ledPin, ledState);

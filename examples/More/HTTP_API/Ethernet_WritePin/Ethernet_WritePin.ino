@@ -41,12 +41,12 @@ void setup()
   while (!Serial) {}
   Serial.println();
   Serial.println();
-  
+
   // Start the Ethernet connection
   Serial.println("Starting Ethernet...");
   if (Ethernet.begin(mac) == 0) {
     Serial.println("Failed to configure Ethernet using DHCP");
-    while(true);
+    while (true);
   }
 
   // Give the Ethernet shield a second to initialize
@@ -65,15 +65,15 @@ void loop() {
 
     char pin[] = "V2";
     int value  = 123;
-    
+
     String putData = String("[\"") + value + "\"]";
     String putReq = String("PUT /") + auth + "/pin/" + pin + " HTTP/1.1\r\n" +
-                 "Host: " + host + "\r\n" +
-                 "Content-Type: application/json\r\n" +
-                 "Content-Length: " + putData.length() + "\r\n" +
-                 "Connection: close\r\n" +
-                 "\r\n" +
-                 putData;
+                    "Host: " + host + "\r\n" +
+                    "Content-Type: application/json\r\n" +
+                    "Content-Length: " + putData.length() + "\r\n" +
+                    "Connection: close\r\n" +
+                    "\r\n" +
+                    putData;
 
     Serial.println("Sending PUT request");
     client.print(putReq);
@@ -95,7 +95,7 @@ void loop() {
       String line = client.readStringUntil('\n');
       line.trim();
       if (line.startsWith("Content-Length:")) {
-        contentLength = line.substring(line.lastIndexOf(':')+1).toInt();
+        contentLength = line.substring(line.lastIndexOf(':') + 1).toInt();
       } else if (line.length() == 0) {
         break;
       }
@@ -106,8 +106,10 @@ void loop() {
     }
     client.stop();
     Serial.println("Done.");
-    
-    while(true) { delay(0); }
+
+    while (true) {
+      delay(0);
+    }
   } else {
     Serial.println("failed");
     delay(5000);

@@ -57,10 +57,10 @@ void blinkLedWidget()
 {
   if (led1.getValue()) {
     led1.off();
-    BLYNK_LOG("LED on V1: off");
+    Serial.println("LED on V1: off");
   } else {
     led1.on();
-    BLYNK_LOG("LED on V1: on");
+    Serial.println("LED on V1: on");
   }
 }
 
