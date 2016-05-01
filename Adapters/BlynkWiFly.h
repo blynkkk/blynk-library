@@ -68,7 +68,7 @@ public:
 
     void connectWiFi(const char* ssid, const char* pass) {
         if (!wifly->isAssociated()) {
-            BLYNK_LOG("Connecting to %s", ssid);
+            BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
             wifly->setSSID(ssid);
             if (pass && strlen(pass)) {
                  wifly->setPassphrase(pass);
@@ -78,7 +78,7 @@ public:
                 BLYNK_FATAL("Failed.");
             }
         } else {
-            BLYNK_LOG("Already connected to WiFi");
+            BLYNK_LOG1(BLYNK_F("Already connected to WiFi"));
         }
         if (wifly->isConnected()) {
             wifly->close();

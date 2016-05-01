@@ -40,7 +40,7 @@ public:
 
     bool connect() {
         uint8_t* a = (uint8_t*)&addr;
-        BLYNK_LOG("Connecting to %d.%d.%d.%d:%d", a[3], a[2], a[1], a[0], port);
+        BLYNK_LOG_IP_REV("Connecting to ", a);
         client = cc3000.connectTCP(addr, port);
         return client.connected();
     }
@@ -95,7 +95,7 @@ public:
         if(!cc3000.getFirmwareVersion(&major, &minor))
         {
             if(major != 0x1 || minor < 0x13) {
-                BLYNK_LOG("CC3000 upgrade needed?");
+                BLYNK_LOG1(BLYNK_F("CC3000 upgrade needed?"));
             }
         }
 #endif
@@ -104,12 +104,12 @@ public:
         {
             BLYNK_FATAL("Fail deleting old profiles");
         }*/
-        BLYNK_LOG("Connecting to %s...", ssid);
+        BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         if (!cc3000.connectToAP(ssid, pass, secmode))
         {
             BLYNK_FATAL("Failed to connect to AP");
         }
-        BLYNK_LOG("Getting IP address...");
+        BLYNK_LOG1(BLYNK_F("Getting IP address..."));
         while (!cc3000.checkDHCP())
         {
             ::delay(100);
@@ -121,11 +121,11 @@ public:
             BLYNK_FATAL("Unable to get the IP Address");
         }
         uint8_t* addr = (uint8_t*)&ipAddress;
-        BLYNK_LOG("IP:  %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
+        BLYNK_LOG_IP_REV("IP: ", addr);
         addr = (uint8_t*)&gateway;
-        BLYNK_LOG("GW:  %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
+        BLYNK_LOG_IP_REV("GW: ", addr);
         addr = (uint8_t*)&dnsserv;
-        BLYNK_LOG("DNS: %d.%d.%d.%d", addr[3], addr[2], addr[1], addr[0]);
+        BLYNK_LOG_IP_REV("DNS: ", addr);
 #endif
     }
 
@@ -135,10 +135,10 @@ public:
     {
         Base::begin(auth);
         uint32_t ip = 0;
-        BLYNK_LOG("Looking for %s", domain);
+        BLYNK_LOG2(BLYNK_F("Looking for "), domain);
         while (ip == 0) {
             if (!cc3000.getHostByName((char*)domain, &ip)) {
-                BLYNK_LOG("Couldn't locate server");
+                BLYNK_LOG1(BLYNK_F("Couldn't locate server"));
                 ::delay(500);
             }
         }

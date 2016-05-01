@@ -38,7 +38,7 @@ public:
 
         // attempt to connect to Wifi network:
         while (true) {
-            BLYNK_LOG("Connecting to %s...", ssid);
+            BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
             if (pass && strlen(pass)) {
                 status = WiFi.begin((char*)ssid, (char*)pass);
             } else {
@@ -52,7 +52,7 @@ public:
         }
 
         IPAddress myip = WiFi.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP: ", myip);
     }
 
     void config(const char* auth,

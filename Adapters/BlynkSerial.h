@@ -31,7 +31,7 @@ public:
     }
 
     bool connect() {
-        BLYNK_LOG("Connecting...");
+        BLYNK_LOG1(BLYNK_F("Connecting..."));
         return conn = true;
     }
     void disconnect() { conn = false; }
