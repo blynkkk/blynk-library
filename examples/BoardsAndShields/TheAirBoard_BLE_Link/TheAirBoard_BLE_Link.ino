@@ -36,7 +36,7 @@
  *                     3. Write (COM4 is port with your Arduino):
  *                          blynk-ser.bat -c COM4
  *                     4. And press "Enter", press "Enter" and press "Enter"
- * 
+ *
  *      for Linux and OSX:
  *                     bash ./scripts/blynk-ser.sh (may need to run with sudo)
  *
