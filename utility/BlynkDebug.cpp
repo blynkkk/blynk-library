@@ -30,14 +30,6 @@ void BlynkReset()
 
 void BlynkFatal()
 {
-    pinMode(LED_BUILTIN, OUTPUT);
-    const int rate = 250;
-    int i = 10000/rate;
-    while (i-- > 0) {
-        digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-        delay(rate);
-    }
-    BLYNK_LOG("Resetting");
-    delay(100);
+    delay(10000L);
     BlynkReset();
 }
