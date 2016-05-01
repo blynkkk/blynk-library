@@ -36,12 +36,12 @@ class BlynkTransportShieldEsp8266
     }
 
     void onData(uint8_t mux_id, uint32_t len) {
-        //BLYNK_LOG("Got %d..", len);
+        //BLYNK_LOG2("Got ", len);
         while (len) {
             if (client->getUart()->available()) {
                 uint8_t b = client->getUart()->read();
                 if(!buffer.push(b)) {
-                    BLYNK_LOG("Buffer overflow");
+                    BLYNK_LOG1(BLYNK_F("Buffer overflow"));
                 }
                 len--;
             }
@@ -78,7 +78,7 @@ public:
 
     size_t read(void* buf, size_t len) {
         uint32_t start = millis();
-        //BLYNK_LOG("Waiting: %d, Occuied: %d", len, buffer.getOccupied());
+        //BLYNK_LOG4("Waiting: ", len, " Occuied: ", buffer.getOccupied());
         while ((buffer.getOccupied() < len) && (millis() - start < 1500)) {
             client->run();
         }
@@ -95,7 +95,7 @@ public:
 
     int available() {
         client->run();
-	//BLYNK_LOG("Still: %d", buffer.getOccupied());
+        //BLYNK_LOG2("Still: ", buffer.getOccupied());
         return buffer.getOccupied();
     }
 
@@ -120,29 +120,29 @@ public:
     bool connectWiFi(const char* ssid, const char* pass)
     {
         delay(500);
-        BLYNK_LOG("Connecting to %s", ssid);
+        BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         /*if (!wifi->restart()) {
-            BLYNK_LOG("Failed to restart");
+            BLYNK_LOG1(BLYNK_F("Failed to restart"));
             return false;
         }*/
         if (!wifi->setEcho(0)) {
-            BLYNK_LOG("Failed to disable Echo");
+            BLYNK_LOG1(BLYNK_F("Failed to disable Echo"));
             return false;
         }
         if (!wifi->setOprToStation()) {
-            BLYNK_LOG("Failed to set STA mode");
+            BLYNK_LOG1(BLYNK_F("Failed to set STA mode"));
             return false;
         }
         if (wifi->joinAP(ssid, pass)) {
-            BLYNK_LOG("IP: %s", wifi->getLocalIP().c_str());
+            BLYNK_LOG2(BLYNK_F("IP: "), wifi->getLocalIP().c_str());
         } else {
-            BLYNK_LOG("Failed to connect WiFi");
+            BLYNK_LOG1(BLYNK_F("Failed to connect WiFi"));
             return false;
         }
         if (!wifi->disableMUX()) {
-            BLYNK_LOG("Failed to disable MUX");
+            BLYNK_LOG1(BLYNK_F("Failed to disable MUX"));
         }
-        BLYNK_LOG("Connected to WiFi");
+        BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
         return true;
     }
 

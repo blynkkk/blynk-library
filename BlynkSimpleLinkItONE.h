@@ -35,7 +35,7 @@ public:
 
     void connectWiFi(const char* ssid, const char* pass, int wifi_auth)
     {
-        BLYNK_LOG("Connecting to %s ...", ssid);
+        BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         LWiFi.begin();
         while(!LWiFi.connect(ssid, LWiFiLoginInfo((LWiFiEncryption)wifi_auth, pass))){
             ::delay(1000);

@@ -43,10 +43,10 @@ public:
         if (BlynkArduinoClientGen<Client>::connect()) {
           // TODO: Enable when https://github.com/esp8266/Arduino/issues/1285 is closed
 		  /*if (fingerprint && !this->client.verify(fingerprint, this->domain)) {
-			  BLYNK_LOG("Certificate doesn't match");
+			  BLYNK_LOG1(BLYNK_F("Certificate doesn't match"));
 			  return false;
 		  } else {
-			  BLYNK_LOG("Certificate OK");
+			  BLYNK_LOG1(BLYNK_F("Certificate OK"));
 		  }*/
 		  return true;
         }
@@ -69,7 +69,7 @@ public:
 
     void connectWiFi(const char* ssid, const char* pass)
     {
-        BLYNK_LOG("Connecting to %s", ssid);
+        BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         WiFi.mode(WIFI_STA);
         if (pass && strlen(pass)) {
         	WiFi.begin(ssid, pass);
@@ -79,10 +79,10 @@ public:
         while (WiFi.status() != WL_CONNECTED) {
             ::delay(500);
         }
-        BLYNK_LOG("Connected to WiFi");
+        BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
 
         IPAddress myip = WiFi.localIP();
-        BLYNK_LOG("My IP: %d.%d.%d.%d", myip[0], myip[1], myip[2], myip[3]);
+        BLYNK_LOG_IP("IP: ", myip);
     }
 
     void config(const char* auth,

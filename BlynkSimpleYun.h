@@ -50,7 +50,7 @@ public:
                const char* domain = BLYNK_DEFAULT_DOMAIN,
                uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-        BLYNK_LOG("Bridge init...");
+        BLYNK_LOG1(BLYNK_F("Bridge init..."));
         Bridge.begin();
     	config(auth, domain, port);
     }
@@ -59,7 +59,7 @@ public:
                IPAddress   ip,
                uint16_t    port = BLYNK_DEFAULT_PORT)
     {
-        BLYNK_LOG("Bridge init...");
+        BLYNK_LOG1(BLYNK_F("Bridge init..."));
         Bridge.begin();
     	config(auth, ip, port);
     }
