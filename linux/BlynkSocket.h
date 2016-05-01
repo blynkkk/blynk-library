@@ -38,7 +38,7 @@ public:
 
     bool connect()
     {
-        BLYNK_LOG("Connecting to %s:%s", domain, port);
+        BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', port);
 
         struct addrinfo hints;
         struct addrinfo *res;  // will point to the results
@@ -52,13 +52,13 @@ public:
 
         if ((sockfd = ::socket(res->ai_family, res->ai_socktype, res->ai_protocol)) < 0)
         {
-            BLYNK_LOG("Can't create socket");
+            BLYNK_LOG1(BLYNK_F("Can't create socket"));
             return false;
         }
 
         if (::connect(sockfd, res->ai_addr, res->ai_addrlen) < 0)
         {
-            BLYNK_LOG("Can't connect to %s", domain);
+            BLYNK_LOG2(BLYNK_F("Can't connect to "), domain);
             return false;
         }
 
@@ -88,7 +88,7 @@ public:
     size_t read(void* buf, size_t len) {
         ssize_t rlen = ::read(sockfd, buf, len);
         if (rlen == -1) {
-            //BLYNK_LOG("Read error %d: %s", errno, strerror(errno));
+            //BLYNK_LOG4("Read error ", errno, ": ", strerror(errno));
             if (errno == ETIMEDOUT || errno == EWOULDBLOCK || errno == EAGAIN) {
                 return 0;
             }

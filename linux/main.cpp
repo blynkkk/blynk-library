@@ -24,7 +24,7 @@ BlynkSocket Blynk(_blynkTransport);
 
 BLYNK_WRITE(V1)
 {
-  BLYNK_LOG("Got a value: %s", param[0].asStr());
+  printf("Got a value: %s\n", param[0].asStr());
 }
 
 int main(int argc, char* argv[])
