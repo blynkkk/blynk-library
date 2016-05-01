@@ -52,8 +52,8 @@ void setup()
       while (1) {
         delay(1000);
         if (WiFi.smartConfigDone()) {
-          Serial.println("");
-          BLYNK_LOG("SmartConfig: Success");
+          Serial.println();
+          Serial.println("SmartConfig: Success");
           break;
         }
         Serial.print("|");
