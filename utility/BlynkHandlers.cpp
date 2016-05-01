@@ -16,12 +16,12 @@ void BlynkNoOpCbk()
 
 void BlynkWidgetRead(BlynkReq& request)
 {
-    BLYNK_LOG("No handler for reading from pin %d", request.pin);
+    BLYNK_LOG2(BLYNK_F("No handler for reading from pin "), request.pin);
 }
 
 void BlynkWidgetWrite(BlynkReq& request, const BlynkParam& param)
 {
-    BLYNK_LOG("No handler for writing to pin %d", request.pin);
+    BLYNK_LOG2(BLYNK_F("No handler for writing to pin "), request.pin);
 }
 
 #define BLYNK_ON_READ_IMPL(pin)  void BlynkWidgetRead  ## pin (BlynkReq& req) \
@@ -102,7 +102,7 @@ BLYNK_ON_WRITE_IMPL(29);
 BLYNK_ON_WRITE_IMPL(30);
 BLYNK_ON_WRITE_IMPL(31);
 
-static const WidgetReadHandler BlynkReadHandlerVector[32] BLYNK_PROGMEM = {
+static const WidgetReadHandler BlynkReadHandlerVector[] BLYNK_PROGMEM = {
     BlynkWidgetRead0,   BlynkWidgetRead1,   BlynkWidgetRead2,   BlynkWidgetRead3,
     BlynkWidgetRead4,   BlynkWidgetRead5,   BlynkWidgetRead6,   BlynkWidgetRead7,
     BlynkWidgetRead8,   BlynkWidgetRead9,   BlynkWidgetRead10,  BlynkWidgetRead11,
@@ -113,7 +113,7 @@ static const WidgetReadHandler BlynkReadHandlerVector[32] BLYNK_PROGMEM = {
     BlynkWidgetRead28,  BlynkWidgetRead29,  BlynkWidgetRead30,  BlynkWidgetRead31,
 };
 
-static const WidgetWriteHandler BlynkWriteHandlerVector[32] BLYNK_PROGMEM = {
+static const WidgetWriteHandler BlynkWriteHandlerVector[] BLYNK_PROGMEM = {
     BlynkWidgetWrite0,  BlynkWidgetWrite1,  BlynkWidgetWrite2,  BlynkWidgetWrite3,
     BlynkWidgetWrite4,  BlynkWidgetWrite5,  BlynkWidgetWrite6,  BlynkWidgetWrite7,
     BlynkWidgetWrite8,  BlynkWidgetWrite9,  BlynkWidgetWrite10, BlynkWidgetWrite11,
