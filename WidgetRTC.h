@@ -53,7 +53,7 @@ void WidgetRTC::onWrite(BlynkReq& request, const BlynkParam& param)
 
     if ( blynkTime >= DEFAULT_TIME) {   // Check the integer is a valid time (greater than Jan 1 2013)
         setTime(blynkTime);             // Sync Time library clock to the value received from Blynk
-        BLYNK_LOG("Time sync: OK");
+        BLYNK_LOG1(BLYNK_F("Time sync: OK"));
     }
 }
 

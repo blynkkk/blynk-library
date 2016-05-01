@@ -66,7 +66,7 @@ void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
             f.close();
         }
     } else {
-        //BLYNK_LOG("Invalid SD command: %s", cmd);
+        //BLYNK_LOG2(BLYNK_F("Invalid SD command: "), cmd);
     }
 }
 
