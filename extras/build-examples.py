@@ -20,23 +20,42 @@ metadata = {
   "Arduino_SoftwareSerial.ino"  : { },
   "Arduino_WiFi.ino"            : { },
   "Arduino_WiFi_Shield_101.ino" : { },
-  "Arduino_WiFi_Shield_101_SSL.ino" : { },
+  #"Arduino_WiFi_Shield_101_SSL.ino" : { },
   "Arduino_Yun.ino"             : { "fqbn": "arduino:avr:yun" },
   "Arduino_Zero_M0_Serial.ino"  : { "fqbn": "arduino:samd:arduino_zero_native" },
   "CC3000.ino"                  : { },
   "ENC28J60.ino"                : { "fqbn": "arduino:avr:nano:cpu=atmega328" },
   "ESP8266_Shield_HardSer.ino"  : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },
   "ESP8266_Shield_SoftSer.ino"  : { },
+  "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
+
   "ESP8266_DirectConnect.ino"   : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone.ino"      : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SmartConfig.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  
+  "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-tiny" },
+  "Digistump_Digispark_Pro.ino" : { "fqbn": "digistump:avr:digispark-pro" },
+  "Digistump_Oak.ino"           : { "fqbn": "digistump:oak:oak1" },
+
   "Intel_Edison_WiFi.ino"       : { "fqbn": "Intel:i686:izmir_ec" },
-  "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
+  "Intel_Galileo.ino"           : { "fqbn": "Intel:i586:izmir_fg" },
+  "Arduino_101.ino"             : { "fqbn": "Intel:arc32:arduino_101" },
+  
   "RedBear_Duo_WiFi.ino"        : { "fqbn": "RedBear:STM32F2:RedBear_Duo" },
+  "RedBear_Duo_BLE.ino"         : { "fqbn": "RedBear:STM32F2:RedBear_Duo" },
+  "RedBearLab_BLE_Nano.ino"     : { "fqbn": "RedBearLab:nRF51822:nRF51822_NANO_32KB" },
+  "RedBearLab_BlendMicro"       : { "fqbn": "RedBearLab:avr:blendmicro8" },
+  
+  "Simblee_BLE.ino"             : { "fqbn": "Simblee:Simblee:Simblee" },
+  
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
   "User_Defined_Connection.ino" : { },
   "WildFire.ino"                : { "fqbn": "WickedDevice:avr:wildfireo3" },
+  
+  "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  "ESP8266_WritePin.ino"        : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  "ThingSpeak.ino"              : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
   # No linux support
   "LightBlueBeanRGB.ino"        : { "skip": True },
@@ -56,7 +75,7 @@ abs_examples = map(lambda x: os.path.abspath(x), examples)
 
 logfile = open("./build.log","wb")
 
-os.chdir("/data/arduino-1.6.7/")
+os.chdir("/data/arduino-1.6.8/")
 '''
 builder = "./arduino-builder"
 
@@ -79,9 +98,22 @@ builder_args = [
 
 failed = []
 built = []
+skipped = []
 
 for fn in abs_examples:
     path, ino = os.path.split(fn)
+    
+    if ino in metadata:
+        m = metadata[ino]
+        if "skip" in m:
+            skipped.append(ino)
+            continue
+        if not "fqbn" in m:
+            m["fqbn"] = "arduino:avr:uno"
+    else:
+        #continue
+        m = { "fqbn": "arduino:avr:uno" }
+
     print >>logfile, "\n\n", "================="
     print >>logfile, "Building:", ino
     print >>logfile, "=================", "\n"
@@ -89,16 +121,6 @@ for fn in abs_examples:
     
     print "Building:", ino, "...", 
     sys.stdout.flush()
-    
-    if ino in metadata:
-        m = metadata[ino]
-        if "skip" in m:
-            continue
-        if not "fqbn" in m:
-            m["fqbn"] = "arduino:avr:uno"
-    else:
-        #continue
-        m = { "fqbn": "arduino:avr:uno" }
     
     #cmd = [builder] + builder_args + ["-fqbn", m["fqbn"]] + [fn]
     cmd = [
