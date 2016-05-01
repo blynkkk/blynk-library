@@ -54,9 +54,11 @@
     #include <avr/pgmspace.h>
     #define BLYNK_HAS_PROGMEM
     #define BLYNK_PROGMEM PROGMEM
+    #define BLYNK_F(s) F(s)
     #define BLYNK_PSTR(s) PSTR(s)
 #else
     #define BLYNK_PROGMEM
+    #define BLYNK_F(s) s
     #define BLYNK_PSTR(s) s
 #endif
 
@@ -70,10 +72,10 @@ size_t BlynkFreeRam();
 void BlynkReset() BLYNK_NORETURN;
 void BlynkFatal() BLYNK_NORETURN;
 
-#define BLYNK_FATAL(msg, ...){ BLYNK_LOG(msg, ##__VA_ARGS__); BlynkFatal(); }
-#define BLYNK_LOG_RAM()      { BLYNK_LOG("Free RAM: %d", BlynkFreeRam()); }
-#define BLYNK_LOG_FN()       BLYNK_LOG("%s@%d", __FUNCTION__, __LINE__);
-#define BLYNK_LOG_TROUBLE(t) BLYNK_LOG("Trouble detected: http://docs.blynk.cc/#troubleshooting-%s", t)
+#define BLYNK_FATAL(msg)     { BLYNK_LOG1(msg); BlynkFatal(); }
+#define BLYNK_LOG_RAM()      { BLYNK_LOG2(BLYNK_F("Free RAM: "), BlynkFreeRam()); }
+#define BLYNK_LOG_FN()       BLYNK_LOG3(BLYNK_F(__FUNCTION__), '@', __LINE__);
+#define BLYNK_LOG_TROUBLE(t) BLYNK_LOG2(BLYNK_F("Trouble detected: http://docs.blynk.cc/#troubleshooting-"), t)
 
 #if defined(BLYNK_DEBUG) && !defined(BLYNK_PRINT)
 #undef BLYNK_DEBUG
@@ -82,23 +84,64 @@ void BlynkFatal() BLYNK_NORETURN;
 #ifdef BLYNK_PRINT
 
     #if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
-        #include <stdio.h>
-        #include <stdarg.h>
 
-#if defined(ARDUINO_ARCH_ARC32)
-        extern "C" {
-          #include <utility/snprintf.h>
-        }
-#endif
-
-        #define BLYNK_DBG_DUMP(msg, addr, len) if (len) { BLYNK_PRINT.print(msg); BLYNK_PRINT.write((uint8_t*)addr, len); BLYNK_PRINT.println(); }
         #define BLYNK_DBG_BREAK()    { for(;;); }
+        #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG2(BLYNK_F("Assertion failed: "), BLYNK_F(#expr)); BLYNK_DBG_BREAK() } }
+
 #if defined(__SAM3X8E__)
         #define BLYNK_LOG(msg, ...)  blynk_dbg_print(msg, ##__VA_ARGS__)
+#elif defined(ARDUINO_ARCH_ARC32)
+        #undef BLYNK_LOG
 #else
         #define BLYNK_LOG(msg, ...)  blynk_dbg_print(BLYNK_PSTR(msg), ##__VA_ARGS__)
 #endif
-        #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG("Assertion %s failed.", #expr); BLYNK_DBG_BREAK() } }
+
+        #define BLYNK_LOG1(p1)            { BLYNK_LOG_TIME(); BLYNK_PRINT.println(p1); }
+        #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG_TIME(); BLYNK_PRINT.print(p1); BLYNK_PRINT.println(p2); }
+        #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG_TIME(); BLYNK_PRINT.print(p1); BLYNK_PRINT.print(p2); BLYNK_PRINT.println(p3); }
+        #define BLYNK_LOG4(p1,p2,p3,p4)   { BLYNK_LOG_TIME(); BLYNK_PRINT.print(p1); BLYNK_PRINT.print(p2); BLYNK_PRINT.print(p3); BLYNK_PRINT.println(p4); }
+        #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6) { BLYNK_LOG_TIME(); BLYNK_PRINT.print(p1); BLYNK_PRINT.print(p2); BLYNK_PRINT.print(p3); BLYNK_PRINT.print(p4); BLYNK_PRINT.print(p5); BLYNK_PRINT.println(p6); }
+        #define BLYNK_LOG_IP(msg, ip)     { BLYNK_LOG_TIME(); BLYNK_PRINT.print(BLYNK_F(msg)); \
+                                                    BLYNK_PRINT.print(ip[0]); BLYNK_PRINT.print('.');  \
+                                                    BLYNK_PRINT.print(ip[1]); BLYNK_PRINT.print('.');  \
+                                                    BLYNK_PRINT.print(ip[2]); BLYNK_PRINT.print('.');  \
+                                                    BLYNK_PRINT.println(ip[3]); }
+        #define BLYNK_LOG_IP_REV(msg, ip) { BLYNK_LOG_TIME(); BLYNK_PRINT.print(BLYNK_F(msg)); \
+                                                    BLYNK_PRINT.print(ip[3]); BLYNK_PRINT.print('.');  \
+                                                    BLYNK_PRINT.print(ip[2]); BLYNK_PRINT.print('.');  \
+                                                    BLYNK_PRINT.print(ip[1]); BLYNK_PRINT.print('.');  \
+                                                    BLYNK_PRINT.println(ip[0]); }
+
+        #include <ctype.h>
+
+        static
+        void BLYNK_LOG_TIME() {
+            BLYNK_PRINT.print('[');
+            BLYNK_PRINT.print(millis());
+            BLYNK_PRINT.print(BLYNK_F("] "));
+        }
+
+        static
+        void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
+            if (len) {
+                BLYNK_PRINT.print(msg);
+                int l2 = len; char* octets = (char*)(addr);
+                while (l2--) {
+                    if (isprint(*octets)) {
+                        BLYNK_PRINT.print(*octets);
+                    } else {
+                        BLYNK_PRINT.print('|');
+                        BLYNK_PRINT.print(*octets, HEX);
+                    }
+                    octets++;
+                }
+                BLYNK_PRINT.println();
+            }
+        }
+
+        #if !defined(ARDUINO_ARCH_ARC32)
+        #include <stdio.h>
+        #include <stdarg.h>
 
         static
         void blynk_dbg_print(const char* BLYNK_PROGMEM fmt, ...)
@@ -117,6 +160,7 @@ void BlynkFatal() BLYNK_NORETURN;
             BLYNK_PRINT.println(buff);
             va_end(ap);
         }
+        #endif // ARDUINO_ARCH_ARC32
 
     #elif defined(LINUX) || defined(MBED_LIBRARY_VERSION)
 
@@ -130,6 +174,16 @@ void BlynkFatal() BLYNK_NORETURN;
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_LOG(msg, ...)  { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", millis(), ##__VA_ARGS__); }
         #define BLYNK_ASSERT(expr)   assert(expr)
+
+        #include <iostream>
+        using namespace std;
+        #define BLYNK_LOG1(p1)            { BLYNK_LOG_TIME(); cout << p1 << endl; }
+        #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG_TIME(); cout << p1 << p2 << endl; }
+        #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << endl; }
+        #define BLYNK_LOG4(p1,p2,p3,p4)   { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << p4 << endl; }
+        #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6)   { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << p4 << p5 << p6 << endl; }
+
+        #define BLYNK_LOG_TIME() cout << '[' << millis() << "] ";
 
     #elif defined(WINDOWS)
 
@@ -146,16 +200,33 @@ void BlynkFatal() BLYNK_NORETURN;
         #warning Could not detect platform
         #define BLYNK_DBG_DUMP(msg, addr, len)
         #define BLYNK_DBG_BREAK()    { *(char*)(NULL) = 0xFF; } // SEGV!!!
-        #define BLYNK_LOG(...)
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_DBG_BREAK() } }
+
+        #define BLYNK_LOG(...)
+        #define BLYNK_LOG1(p1)
+        #define BLYNK_LOG2(p1,p2)
+        #define BLYNK_LOG3(p1,p2,p3)
+        #define BLYNK_LOG4(p1,p2,p3,p4)
+        #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6)
+        #define BLYNK_LOG_IP(msg, ip)
+        #define BLYNK_LOG_IP_REV(msg, ip)
 
     #endif
 
 #else
 
+    #define BLYNK_DBG_DUMP(msg, addr, len)
     #define BLYNK_DBG_BREAK()
-    #define BLYNK_LOG(msg, ...)
     #define BLYNK_ASSERT(expr)
+
+    #define BLYNK_LOG(...)
+    #define BLYNK_LOG1(p1)
+    #define BLYNK_LOG2(p1,p2)
+    #define BLYNK_LOG3(p1,p2,p3)
+    #define BLYNK_LOG4(p1,p2,p3,p4)
+    #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6)
+    #define BLYNK_LOG_IP(msg, ip)
+    #define BLYNK_LOG_IP_REV(msg, ip)
 
 #endif
 
