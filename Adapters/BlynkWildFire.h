@@ -11,12 +11,8 @@
 #ifndef BlynkWildFire_h
 #define BlynkWildFire_h
 
-#ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "WildFire"
-#endif
-
 #ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "CC3000"
+#define BLYNK_INFO_CONNECTION "CC3000"
 #endif
 
 #define BLYNK_SEND_ATOMIC
@@ -109,17 +105,18 @@ public:
         {
             BLYNK_FATAL("Failed to connect to AP");
         }
-        BLYNK_LOG1(BLYNK_F("Getting IP address..."));
+        BLYNK_LOG1(BLYNK_F("Getting IP..."));
         while (!cc3000.checkDHCP())
         {
             ::delay(100);
         }
-#ifdef BLYNK_PRINT
+
         uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;
         if(!cc3000.getIPAddress(&ipAddress, &netmask, &gateway, &dhcpserv, &dnsserv))
         {
-            BLYNK_FATAL("Unable to get the IP Address");
+            BLYNK_FATAL("DHCP failed.");
         }
+#ifdef BLYNK_PRINT
         uint8_t* addr = (uint8_t*)&ipAddress;
         BLYNK_LOG_IP_REV("IP: ", addr);
         addr = (uint8_t*)&gateway;
