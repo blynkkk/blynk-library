@@ -1,9 +1,9 @@
 [![GitHub version](https://img.shields.io/github/release/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/releases/latest)
 [![GitHub download](https://img.shields.io/github/downloads/blynkkk/blynk-library/total.svg)](https://github.com/blynkkk/blynk-library/releases/latest)
- ![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg)
+[![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg)]()
 [![GitHub issues](https://img.shields.io/github/issues/blynkkk/blynk-library.svg)](https://github.com/vshymanskyy/blynk-library-js/issues)
 [![Build Status](https://img.shields.io/travis/blynkkk/blynk-library.svg)](https://travis-ci.org/blynkkk/blynk-library)
- ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)]()
 
 [Documentation](http://docs.blynk.cc/#blynk-firmware)
 
