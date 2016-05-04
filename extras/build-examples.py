@@ -11,55 +11,52 @@ def find_files(directory, pattern):
                 yield filename
 
 metadata = {
-  "Arduino_Ethernet.ino"        : { },
-  "Arduino_Ethernet_Manual.ino" : { },
-  "Arduino_Ethernet2.ino"       : { "skip": True }, # Arduino.org?
-  "Seeed_EthernetV2_0.ino"      : { "skip": True }, # TODO: Bug
-
-  "Arduino_Serial_USB.ino"      : { },
-  "Arduino_SoftwareSerial.ino"  : { },
-  "Arduino_WiFi.ino"            : { },
-  "Arduino_WiFi_Shield_101.ino" : { },
-  #"Arduino_WiFi_Shield_101_SSL.ino" : { },
   "Arduino_Yun.ino"             : { "fqbn": "arduino:avr:yun" },
   "Arduino_Zero_M0_Serial.ino"  : { "fqbn": "arduino:samd:arduino_zero_native" },
-  "CC3000.ino"                  : { },
+  "Arduino_Due.ino"             : { "fqbn": "arduino:sam:arduino_due_x" },
   "ENC28J60.ino"                : { "fqbn": "arduino:avr:nano:cpu=atmega328" },
   "ESP8266_Shield_HardSer.ino"  : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },
   "ESP8266_Shield_SoftSer.ino"  : { },
   "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
 
+  # ESP8266
   "ESP8266_DirectConnect.ino"   : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone.ino"      : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SmartConfig.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
-  
+
+  # Digistump
   "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-tiny" },
   "Digistump_Digispark_Pro.ino" : { "fqbn": "digistump:avr:digispark-pro" },
   "Digistump_Oak.ino"           : { "fqbn": "digistump:oak:oak1" },
 
+  # Intel
   "Intel_Edison_WiFi.ino"       : { "fqbn": "Intel:i686:izmir_ec" },
   "Intel_Galileo.ino"           : { "fqbn": "Intel:i586:izmir_fg" },
-  "Arduino_101.ino"             : { "fqbn": "Intel:arc32:arduino_101" },
-  
+  "Arduino_101_BLE.ino"         : { "fqbn": "Intel:arc32:arduino_101" },
+
+  # RBL
   "RedBear_Duo_WiFi.ino"        : { "fqbn": "RedBear:STM32F2:RedBear_Duo" },
   "RedBear_Duo_BLE.ino"         : { "fqbn": "RedBear:STM32F2:RedBear_Duo" },
   "RedBearLab_BLE_Nano.ino"     : { "fqbn": "RedBearLab:nRF51822:nRF51822_NANO_32KB" },
   "RedBearLab_BlendMicro"       : { "fqbn": "RedBearLab:avr:blendmicro8" },
-  
+
+  #Other
   "Simblee_BLE.ino"             : { "fqbn": "Simblee:Simblee:Simblee" },
-  
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
-  "User_Defined_Connection.ino" : { },
   "WildFire.ino"                : { "fqbn": "WickedDevice:avr:wildfireo3" },
   
+  # Special examples
   "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_WritePin.ino"        : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ThingSpeak.ino"              : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  "User_Defined_Connection.ino" : { },
 
   # No linux support
   "LightBlueBeanRGB.ino"        : { "skip": True },
   "LinkItONE.ino"               : { "skip": True },
+  "Arduino_Ethernet2.ino"       : { "skip": True }, # Arduino.org?
+  "Seeed_EthernetV2_0.ino"      : { "skip": True }, # TODO: Bug
 
   # Energia
   "Energia_WiFi.ino"            : { "skip": True },
@@ -102,7 +99,11 @@ skipped = []
 
 for fn in abs_examples:
     path, ino = os.path.split(fn)
-    
+
+    if len(sys.argv) > 1:
+        if ino != sys.argv[1]:
+            continue
+
     if ino in metadata:
         m = metadata[ino]
         if "skip" in m:
