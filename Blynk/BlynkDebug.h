@@ -77,7 +77,7 @@ void BlynkFatal() BLYNK_NORETURN;
 #define BLYNK_LOG_FN()       BLYNK_LOG3(BLYNK_F(__FUNCTION__), '@', __LINE__);
 #define BLYNK_LOG_TROUBLE(t) BLYNK_LOG2(BLYNK_F("Trouble detected: http://docs.blynk.cc/#troubleshooting-"), t)
 
-#if defined(BLYNK_DEBUG) && !defined(BLYNK_PRINT)
+#ifndef BLYNK_PRINT
 #undef BLYNK_DEBUG
 #endif
 
@@ -115,7 +115,7 @@ void BlynkFatal() BLYNK_NORETURN;
             BLYNK_PRINT.print(BLYNK_F("] "));
         }
 
-#ifdef DEBUG
+#ifdef BLYNK_DEBUG
 		#include <ctype.h>
         #define BLYNK_DBG_BREAK()    { for(;;); }
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG2(BLYNK_F("Assertion failed: "), BLYNK_F(#expr)); BLYNK_DBG_BREAK() } }
@@ -141,7 +141,7 @@ void BlynkFatal() BLYNK_NORETURN;
                         prev_print = false;
                     }
                 }
-                BLYNK_PRINT.println();
+                BLYNK_PRINT.println(prev_print?"":"]");
             }
         }
 #endif
@@ -188,11 +188,10 @@ void BlynkFatal() BLYNK_NORETURN;
 
         #define BLYNK_LOG_TIME() cout << '[' << millis() << "] ";
 
-#ifdef DEBUG
+#ifdef BLYNK_DEBUG
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_ASSERT(expr)   assert(expr)
         #define BLYNK_DBG_DUMP(msg, addr, len) if (len) { fprintf(BLYNK_PRINT, msg); fwrite(addr, len, 1, BLYNK_PRINT); fputc('\n', BLYNK_PRINT); }
-
 #endif
 
     #else
@@ -214,7 +213,7 @@ void BlynkFatal() BLYNK_NORETURN;
     #define BLYNK_LOG_IP_REV(msg, ip)
 #endif
 
-#ifndef BLYNK_DBG_DUMP
+#ifndef BLYNK_DBG_BREAK
     #define BLYNK_DBG_BREAK()
     #define BLYNK_ASSERT(expr)
     #define BLYNK_DBG_DUMP(msg, addr, len)
