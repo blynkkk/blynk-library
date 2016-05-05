@@ -205,7 +205,7 @@
         #define BLYNK_INFO_DEVICE  "Wildfire V4"
 
         /* Simblee */
-        #elif defined(ARDUINO_SIMBLEE)
+        #elif defined(__Simblee__) // TODO: ARDUINO_SIMBLEE bug?
         #define BLYNK_INFO_DEVICE  "Simblee"
 
         #else
