@@ -1,12 +1,12 @@
 {
-    "Nordic Serial": {
+    "Nordic UART": {
         "devices":  "Arduino 101, nRF8001 BLE module, RedBearLab Blend Micro, ...",
         "type":     "ble raw",
         "uuid_svc": "6e400001-b5a3-f393-e0a9-e50e24dcca9e",
         "uuid_rx":  "6e400002-b5a3-f393-e0a9-e50e24dcca9e",
         "uuid_tx":  "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
     },
-    "MBED": {
+    "RedBear UART": {
         "devices":  "nRF51822, RedBearLab BLE Nano, RedBearLab BLE Mini ...",
         "type":     "ble raw",
         "uuid_svc": "713d0000-503e-4c75-ba94-3148f18d941e",
@@ -20,7 +20,20 @@
         "uuid_rx":  "2d30c082-f39f-4ce6-923f-3484ea480596",
         "uuid_tx":  "2d30c083-f39f-4ce6-923f-3484ea480596"
     },
-    
+    "DFRobot BLE-Link": {
+        "devices":  "BLE-Link, Bluno, ...",
+        "type":     "ble raw",
+        "uuid_svc": "dfb0",
+        "uuid_rxtx":"dfb1"
+    },
+    "HM-10": {
+        "devices":  "HM-10",
+        "type":     "ble raw",
+        "uuid_svc": "0000ffe0-0000-1000-8000-00805f9b34fb",
+        "uuid_rxtx":"0000ffe1-0000-1000-8000-00805f9b34fb"
+    },
+
+
 
     "LightBlue Bean": {
         "devices":  "LightBlue Bean, Bean+",
@@ -28,20 +41,8 @@
         "uuid_svc": "a495ff10-c5b1-4b44-b512-1370f02d74de",
         "uuid_rxtx":"a495ff11-c5b1-4b44-b512-1370f02d74de"
     },
-    "HM-10": {
-        "devices":  "Arduino + HC-10",
-        "type":     "ble raw",
-        "uuid_svc": "0000ffe0-0000-1000-8000-00805f9b34fb",
-        "uuid_rxtx":"0000ffe1-0000-1000-8000-00805f9b34fb"
-    },
-
-
-    "DFRobot BLE-Link": {
-        "devices":  "AirBoard + BLE-Link, Bluno, ...",
-        "type":     "ble dfrobot"
-    },
     "HC-05": {
-        "devices":  "Arduino + HC-05,HC-06 or similar",
+        "devices":  "HC-05, HC-06, ...",
         "type":     "bt serial"
     }
 }
