@@ -7,11 +7,6 @@
 
 [Documentation](http://docs.blynk.cc/#blynk-firmware)
 
-Implementations for other platforms:
-* [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
-* [Particle](https://github.com/vshymanskyy/blynk-library-spark)
-* [MicroPython WiPy](https://github.com/wipy/wipy/tree/master/lib/blynk)
-
 __________
 
 # What is Blynk?
@@ -51,6 +46,12 @@ You can easily apply any type of board/connection to all examples.
 Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).  
 Please [see examples](examples/BoardsAndShields) for different connection types.
 
-### License
+__________
 
+### Implementations for other platforms
+* [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
+* [Particle](https://github.com/vshymanskyy/blynk-library-spark)
+* [MicroPython WiPy](https://github.com/wipy/wipy/tree/master/lib/blynk)
+
+### License
 This project is released under The MIT License (MIT)
