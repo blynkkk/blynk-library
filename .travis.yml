@@ -4,36 +4,54 @@ python:
 
 env:
     - LINUX_SRC=linux
-    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TI_TivaC_Connected PLATFORMIO_CI_BOARDS_ARGS="--board=lptm4c1294ncpdt"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Ethernet_Manual
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_MKR1000
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Serial_USB
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_SoftwareSerial
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_WiFi
-    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Yun
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_WiFi_Shield_101
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Yun PLATFORMIO_CI_BOARDS_ARGS="--board=yun"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Arduino_Zero_M0_Serial PLATFORMIO_CI_BOARDS_ARGS="--board=zero"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/CC3000
-    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ENC28J60
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ENC28J60 PLATFORMIO_CI_BOARDS_ARGS="--board=nanoatmega328"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Standalone PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Standalone_SSL PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/Energia_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=lptm4c1294ncpdt"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/RN_XV_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TI_Stellaris_LaunchPad PLATFORMIO_CI_BOARDS_ARGS="--board=lplm4f120h5qr"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TI_TivaC_Connected PLATFORMIO_CI_BOARDS_ARGS="--board=lptm4c1294ncpdt"
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TheAirBoard_BLE_Link
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
-    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/WildFire PLATFORMIO_CI_BOARDS_ARGS="--board=wildfirev3"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/User_Defined_Connection
-    # PLATFORMIO_CI_SRC=examples/BoardsAndShields/LinkItONE
-    # PLATFORMIO_CI_SRC=examples/BoardsAndShields/ESP8266_Shield
-    # PLATFORMIO_CI_SRC=examples/BoardsAndShields/Seeed_EthernetV2_0
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/WildFire_V3
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields_Bluetooth/Arduino_101_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=genuino101"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushDataOnRequest
     - PLATFORMIO_CI_SRC=examples/GettingStarted/Servo
     - PLATFORMIO_CI_SRC=examples/More/ButtonInterrupt
     - PLATFORMIO_CI_SRC=examples/More/ButtonPoll
+    - PLATFORMIO_CI_SRC=examples/More/DHT11
+    - PLATFORMIO_CI_SRC=examples/More/FormatString
+    - PLATFORMIO_CI_SRC=examples/More/HTTP_API/ESP8266_ReadPin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/More/HTTP_API/ESP8266_WritePin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/More/HTTP_API/Ethernet_ReadPin
+    - PLATFORMIO_CI_SRC=examples/More/HTTP_API/Ethernet_WritePin
+    - PLATFORMIO_CI_SRC=examples/More/LightBlueBeanRGB PLATFORMIO_CI_BOARDS_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/More/NeoPixel
+    - PLATFORMIO_CI_SRC=examples/More/PrintAllVirtual
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
+    - PLATFORMIO_CI_SRC=examples/More/Sync
+    - PLATFORMIO_CI_SRC=examples/More/SyncPhysicalButton
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
     - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
     - PLATFORMIO_CI_SRC=examples/Widgets/LCD/LCD_AdvancedMode
     - PLATFORMIO_CI_SRC=examples/Widgets/LED/LED_StatusOfButton
+    - PLATFORMIO_CI_SRC=examples/Widgets/Menu
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
@@ -46,15 +64,17 @@ install:
     #
     # Libraries from PlatformIO Library Registry:
     #
-    # http://platformio.org/#!/lib/show/17/Adafruit-CC3000
-    # http://platformio.org/#!/lib/show/28/SPI4Teensy3
-    # http://platformio.org/#!/lib/show/91/UIPEthernet
-    # http://platformio.org/#!/lib/show/418/WildFireCore
-    # http://platformio.org/#!/lib/show/419/SimpleTimer
-    # http://platformio.org/#!/lib/show/420/WildFire-CC3000
-    # http://platformio.org/#!/lib/show/65/WiFlyHQ
-    # http://platformio.org/#!/lib/show/44/Time
+    # http://platformio.org/lib/show/17/Adafruit-CC3000
+    # http://platformio.org/lib/show/28/SPI4Teensy3
+    # http://platformio.org/lib/show/91/UIPEthernet
+    # http://platformio.org/lib/show/418/WildFireCore
+    # http://platformio.org/lib/show/419/SimpleTimer
+    # http://platformio.org/lib/show/420/WildFire-CC3000
+    # http://platformio.org/lib/show/65/WiFlyHQ
+    # http://platformio.org/lib/show/44/Time
+    # http://platformio.org/lib/show/19/Adafruit-DHT
+    # http://platformio.org/lib/show/299/WiFi101
 
-    - platformio lib install 17 28 91 418 419 420 65 44
+    - platformio lib install 17 28 91 418 419 420 65 44 19 299
 
 script: make travis-build

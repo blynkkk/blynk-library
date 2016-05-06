@@ -1,4 +1,4 @@
-.PHONY: docs format-examples cloc travis-build examples
+.PHONY: docs format-examples cloc travis-build examples update-travis
 
 docs:
 	doxygen extras/doxygen.config
@@ -11,6 +11,10 @@ cloc:
 
 examples:
 	python extras/build-examples.py
+
+update-travis:
+	python extras/travis-generate.py > .travis.yml.new
+	meld .travis.yml .travis.yml.new
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
