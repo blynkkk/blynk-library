@@ -23,6 +23,12 @@
     #include <inttypes.h>
 #endif
 
+#if defined(ARDUINO_ARCH_ARC32)
+    typedef uint64_t millis_time_t;
+#else
+    typedef uint32_t millis_time_t;
+#endif
+
 #if defined(SPARK) || defined(PARTICLE)
     #include "application.h"
 #endif

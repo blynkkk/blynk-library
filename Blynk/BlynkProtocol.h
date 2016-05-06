@@ -48,9 +48,9 @@ public:
     bool connect(uint32_t timeout = BLYNK_TIMEOUT_MS*3) {
     	conn.disconnect();
     	state = CONNECTING;
-    	uint32_t started = millis();
+    	millis_time_t started = this->getMillis();
     	while ((state != CONNECTED) &&
-    	       (millis() - started < timeout))
+    	       (this->getMillis() - started < timeout))
     	{
     		run();
     	}
@@ -72,7 +72,7 @@ public:
         deltaCmd = 1000;
 #endif
     	currentMsgId = 0;
-    	lastHeartbeat = lastActivityIn = lastActivityOut = millis();
+    	lastHeartbeat = lastActivityIn = lastActivityOut = this->getMillis(); // TODO: - 5005UL
     }
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
@@ -92,11 +92,14 @@ protected:
 
 private:
     const char* authkey;
-    uint32_t lastActivityIn;
-    uint32_t lastActivityOut;
-    uint32_t lastHeartbeat;
+    millis_time_t lastActivityIn;
+    millis_time_t lastActivityOut;
+    union {
+    	millis_time_t lastHeartbeat;
+    	millis_time_t lastLogin;
+    };
 #ifdef BLYNK_MSG_LIMIT
-    uint32_t deltaCmd;
+    millis_time_t deltaCmd;
 #endif
     uint16_t currentMsgId;
     BlynkState state;
@@ -132,7 +135,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
         }
     }
 
-    const unsigned long t = millis();
+    const millis_time_t t = this->getMillis();
 
     if (state == CONNECTED) {
         if (!tconn) {
@@ -144,7 +147,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
 
         if (t - lastActivityIn > (1000UL * BLYNK_HEARTBEAT + BLYNK_TIMEOUT_MS*3)) {
 #ifdef BLYNK_DEBUG
-            BLYNK_LOG4(BLYNK_F("Heartbeat timeout: "), lastActivityIn, BLYNK_F(", "), lastHeartbeat);
+            BLYNK_LOG6(BLYNK_F("Heartbeat timeout: "), t, BLYNK_F(", "), lastActivityIn, BLYNK_F(", "), lastHeartbeat);
 #else
             BLYNK_LOG1(BLYNK_F("Heartbeat timeout"));
 #endif
@@ -161,17 +164,17 @@ bool BlynkProtocol<Transp>::run(bool avail)
             sendCmd(BLYNK_CMD_PING);
             lastHeartbeat = t;
         }
-    } else if (state == CONNECTING) {
 #ifndef BLYNK_USE_DIRECT_CONNECT
-        if (tconn && (t - lastHeartbeat > BLYNK_TIMEOUT_MS)) {
+    } else if (state == CONNECTING) {
+        if (tconn && (t - lastLogin > BLYNK_TIMEOUT_MS)) {
             BLYNK_LOG1(BLYNK_F("Login timeout"));
             conn.disconnect();
             state = CONNECTING;
             return false;
-        } else if (!tconn && (t - lastHeartbeat > 5000UL)) {
+        } else if (!tconn && (t - lastLogin > 5000UL)) {
             conn.disconnect();
             if (!conn.connect()) {
-                lastHeartbeat = t;
+                lastLogin = t;
                 return false;
             }
 
@@ -179,7 +182,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
             deltaCmd = 1000;
 #endif
             sendCmd(BLYNK_CMD_LOGIN, 1, authkey, strlen(authkey));
-            lastHeartbeat = lastActivityOut;
+            lastLogin = lastActivityOut;
             return true;
         }
 #endif
@@ -206,7 +209,7 @@ bool BlynkProtocol<Transp>::processInput(void)
     }
 
     if (hdr.type == BLYNK_CMD_RESPONSE) {
-        lastActivityIn = millis();
+        lastActivityIn = this->getMillis();
 
 #ifndef BLYNK_USE_DIRECT_CONNECT
         if (state == CONNECTING && (1 == hdr.msg_id)) {
@@ -256,7 +259,7 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     BLYNK_DBG_DUMP(">", inputBuffer, hdr.length);
 
-    lastActivityIn = millis();
+    lastActivityIn = this->getMillis();
 
     switch (hdr.type)
     {
@@ -408,7 +411,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     }
 
 #if defined BLYNK_MSG_LIMIT && BLYNK_MSG_LIMIT > 0
-    const uint32_t ts = millis();
+    const millis_time_t ts = this->getMillis();
     BlynkAverageSample<32>(deltaCmd, ts - lastActivityOut);
     lastActivityOut = ts;
     //BLYNK_LOG2(BLYNK_F("Delta: "), deltaCmd);
@@ -419,7 +422,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         //BlynkOnDisconnected();
     }
 #else
-    lastActivityOut = millis();
+    lastActivityOut = this->getMillis();
 #endif
 
 }

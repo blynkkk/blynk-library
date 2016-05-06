@@ -24,6 +24,13 @@ void BlynkApi<Proto>::Init()
     wiringPiSetupGpio();
 }
 
+template<class Proto>
+BLYNK_FORCE_INLINE
+millis_time_t BlynkApi<Proto>::getMillis()
+{
+    return millis();
+}
+
 #ifdef BLYNK_NO_INFO
 
 template<class Proto>

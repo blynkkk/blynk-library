@@ -261,6 +261,7 @@ public:
 
 protected:
     void Init();
+    static millis_time_t getMillis();
     void processCmd(const void* buff, size_t len);
     void sendInfo();
 
