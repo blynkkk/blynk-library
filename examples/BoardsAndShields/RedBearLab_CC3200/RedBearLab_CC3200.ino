@@ -13,8 +13,9 @@
  * This example code is in public domain.
  *
  **************************************************************
- *
  * This is an example for RedBearLab CC3200 WiFi board.
+ *
+ * Requires Energia IDE: http://energia.nu/download/
  *
  * Feel free to apply it to any other example. It's simple!
  *

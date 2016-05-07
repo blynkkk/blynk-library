@@ -13,7 +13,8 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This is an example for RedBearLab WiFi Mini board.
+ * This example shows how to use MSP430F5529 + CC3100
+ * to connect your project to Blynk.
  *
  * Requires Energia IDE: http://energia.nu/download/
  *
@@ -21,10 +22,12 @@
  *
  **************************************************************/
 
+#define BLYNK_NO_FLOAT        // MSP430F5529 has no float support
+
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <SPI.h>
 #include <WiFi.h>
-#include <BlynkSimpleRBL_WiFi_Mini.h>
+#include <BlynkSimpleEnergiaWiFi.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).

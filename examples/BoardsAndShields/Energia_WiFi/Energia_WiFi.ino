@@ -16,6 +16,8 @@
  * This example shows how to use Arduino WiFi shield
  * to connect your project to Blynk.
  *
+ * Requires Energia IDE: http://energia.nu/download/
+ *
  * Feel free to apply it to any other example. It's simple!
  *
  **************************************************************/
