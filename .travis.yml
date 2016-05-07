@@ -37,7 +37,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/User_Defined_Connection
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields/WildFire_V3
-    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/chipKIT_Uno32
+    - PLATFORMIO_CI_SRC=examples/BoardsAndShields/chipKIT_Uno32 PLATFORMIO_CI_BOARDS_ARGS="--board=uno_pic32"
     - PLATFORMIO_CI_SRC=examples/BoardsAndShields_Bluetooth/Arduino_101_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=genuino101"
     # - PLATFORMIO_CI_SRC=examples/BoardsAndShields_Bluetooth/RedBear_Duo_BLE
     # - PLATFORMIO_CI_SRC=examples/BoardsAndShields_Bluetooth/Simblee_BLE

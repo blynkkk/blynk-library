@@ -45,8 +45,8 @@ metadata = {
   "Simblee_BLE.ino"             : { "fqbn": "Simblee:Simblee:Simblee" },
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
   "WildFire.ino"                : { "fqbn": "WickedDevice:avr:wildfireo3" },
-  "picKIT_Uno32.ino"            : { "fqbn": "chipKIT:pic32:uno_pic32" },
-  
+  "chipKIT_Uno32.ino"           : { "fqbn": "chipKIT:pic32:uno_pic32" },
+
   # Special examples
   "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_WritePin.ino"        : { "fqbn": "esp8266:esp8266:nodemcuv2" },

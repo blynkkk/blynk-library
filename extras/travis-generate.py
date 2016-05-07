@@ -38,7 +38,7 @@ metadata = {
   "Simblee_BLE.ino"             : { "skip": True },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
   "WildFire.ino"                : { "board": "wildfirev3" },
-  "picKIT_Uno32.ino"            : { "board": "uno_pic32" },
+  "chipKIT_Uno32.ino"           : { "board": "uno_pic32" },
 
   # Special examples
   "ESP8266_ReadPin.ino"         : { "board": "nodemcuv2" },

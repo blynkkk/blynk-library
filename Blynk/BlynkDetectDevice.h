@@ -58,8 +58,12 @@
 #ifndef BLYNK_INFO_DEVICE
 
     #if   defined(ENERGIA)
-
         #define BLYNK_INFO_DEVICE  "Energia"
+
+        #if   defined(__MSP430F5529__)
+        #define BLYNK_INFO_CPU  "MSP430F5529"
+        #define BLYNK_NO_FLOAT
+        #endif
 
     #elif defined(LINUX)
 
