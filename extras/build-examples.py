@@ -45,12 +45,12 @@ metadata = {
   "Simblee_BLE.ino"             : { "fqbn": "Simblee:Simblee:Simblee" },
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
   "WildFire.ino"                : { "fqbn": "WickedDevice:avr:wildfireo3" },
+  "picKIT_Uno32.ino"            : { "fqbn": "chipKIT:pic32:uno_pic32" },
   
   # Special examples
   "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_WritePin.ino"        : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ThingSpeak.ino"              : { "fqbn": "esp8266:esp8266:nodemcuv2" },
-  "User_Defined_Connection.ino" : { },
 
   # No linux support
   "LightBlueBeanRGB.ino"        : { "skip": True },
@@ -60,6 +60,7 @@ metadata = {
 
   # Energia
   "Energia_WiFi.ino"            : { "skip": True },
+  "TI_MSP430F5529_CC3100.ino"   : { "skip": True },
   "RedBearLab_CC3200.ino"       : { "skip": True },
   "RedBearLab_WiFi_Mini.ino"    : { "skip": True },
   "TI_CC3200_LaunchXL.ino"      : { "skip": True },

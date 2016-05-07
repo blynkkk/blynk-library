@@ -92,6 +92,15 @@
 
         #define BLYNK_INFO_DEVICE  "MBED"
 
+    #elif defined(ARDUINO) && defined(MPIDE)
+        #define BLYNK_NO_YIELD
+
+        #if   defined(_BOARD_UNO_)
+        #define BLYNK_INFO_DEVICE  "chipKIT Uno32"
+        #else
+        #define BLYNK_INFO_DEVICE  "chipKIT"
+        #endif
+
     #elif defined(ARDUINO)
 
         /* Arduino AVR */

@@ -38,6 +38,7 @@ metadata = {
   "Simblee_BLE.ino"             : { "skip": True },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
   "WildFire.ino"                : { "board": "wildfirev3" },
+  "picKIT_Uno32.ino"            : { "board": "uno_pic32" },
 
   # Special examples
   "ESP8266_ReadPin.ino"         : { "board": "nodemcuv2" },
@@ -52,6 +53,7 @@ metadata = {
 
   # Energia
   "Energia_WiFi.ino"            : { "board": "lptm4c1294ncpdt" },
+  "TI_MSP430F5529_CC3100.ino"   : { "board": "lpmsp430f5529" },
   "RedBearLab_CC3200.ino"       : { "skip": True },
   "RedBearLab_WiFi_Mini.ino"    : { "skip": True },
   "TI_CC3200_LaunchXL.ino"      : { "skip": True },
@@ -72,11 +74,14 @@ for fn in examples:
 
     if ino in metadata:
         m = metadata[ino]
-        if 'skip' in m:
-            continue
         if 'board' in m:
             path = path + ' PLATFORMIO_CI_BOARDS_ARGS="--board=' + m['board'] + '"'
     else:
-        pass
+        m = {}
 
-    print "    - PLATFORMIO_CI_SRC=" + path
+    if 'skip' in m:
+        path = "    # - PLATFORMIO_CI_SRC=" + path
+    else:
+        path = "    - PLATFORMIO_CI_SRC=" + path
+
+    print path

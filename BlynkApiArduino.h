@@ -85,8 +85,12 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (it >= param.end())
         return;
     const char* cmd = it.asStr();
+#if defined(MPIDE)
+    uint16_t cmd16;
+    memcpy(&cmd16, cmd, sizeof(cmd16));
+#else
     const uint16_t cmd16 = *(uint16_t*)cmd;
-
+#endif
     if (++it >= param.end())
         return;
 
