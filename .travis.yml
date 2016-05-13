@@ -82,7 +82,6 @@ install:
     # http://platformio.org/lib/show/17/Adafruit-CC3000
     # http://platformio.org/lib/show/28/SPI4Teensy3
     # http://platformio.org/lib/show/91/UIPEthernet
-    # http://platformio.org/lib/show/261/Ethernet2
     # http://platformio.org/lib/show/418/WildFireCore
     # http://platformio.org/lib/show/420/WildFire-CC3000
     # http://platformio.org/lib/show/65/WiFlyHQ
@@ -90,6 +89,6 @@ install:
     # http://platformio.org/lib/show/299/WiFi101
     # http://platformio.org/lib/show/426/nRF8001
 
-    - platformio lib install 17 28 91 418 419 420 65 44 19 299 426 261
+    - platformio lib install 17 28 91 418 419 420 65 44 19 299 426
 
 script: make travis-build
