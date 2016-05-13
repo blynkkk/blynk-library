@@ -105,6 +105,20 @@
         #define BLYNK_INFO_DEVICE  "chipKIT"
         #endif
 
+    #elif defined(ARDUINO) && defined(TEENSYDUINO)
+
+        #if   defined(__MK20DX256__)
+        #define BLYNK_INFO_DEVICE  "Teensy 3.2/3.1"
+        #elif   defined(__MK20DX128__)
+        #define BLYNK_INFO_DEVICE  "Teensy 3.0"
+        #elif   defined(__MKL26Z64__)
+        #define BLYNK_INFO_DEVICE  "Teensy LC"
+        #elif   defined(ARDUINO_ARCH_AVR)
+        #define BLYNK_INFO_DEVICE  "Teensy 2.0"
+        #else
+        #define BLYNK_INFO_DEVICE  "Teensy"
+        #endif
+
     #elif defined(ARDUINO)
 
         /* Arduino AVR */

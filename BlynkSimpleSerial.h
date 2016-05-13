@@ -13,12 +13,17 @@
 
 #include <Adapters/BlynkSerial.h>
 
+// TODO: Find some elegant way around this?
+// BlynkTransportSerial(Stream *s=&Serial, uint8_t dtr=255);
+
 #if defined(__SAMD21G18A__)
     // For Arduino Zero (M0)
     typedef BlynkTransportSerialChecked<Uart> ArduinoHwSerial;
 #elif defined(__SAM3X8E__)
     // For Arduino Due
     typedef BlynkTransportSerialChecked<UARTClass> ArduinoHwSerial;
+#elif defined(TEENSYDUINO)
+    typedef BlynkTransportSerialChecked<usb_serial_class> ArduinoHwSerial;
 #elif defined(USBCON)
     // For versions with hw USB, like Micro
     typedef BlynkTransportSerialChecked<Serial_> ArduinoHwSerial;

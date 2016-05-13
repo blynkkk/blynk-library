@@ -15,9 +15,10 @@ metadata = {
   "Arduino_Zero_M0_Serial.ino"  : { "fqbn": "arduino:samd:arduino_zero_native" },
   "Arduino_Due.ino"             : { "fqbn": "arduino:sam:arduino_due_x" },
   "ENC28J60.ino"                : { "fqbn": "arduino:avr:nano:cpu=atmega328" },
-  "ESP8266_Shield_HardSer.ino"  : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },
+  "ESP8266_Shield_HardSer.ino"  : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },0
   "ESP8266_Shield_SoftSer.ino"  : { },
   "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
+  "Seeed_EthernetV2_0.ino"      : { "fqbn": "arduino:avr:uno" },
 
   # ESP8266
   "ESP8266_DirectConnect.ino"   : { "fqbn": "esp8266:esp8266:nodemcuv2" },
@@ -46,6 +47,8 @@ metadata = {
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
   "WildFire.ino"                : { "fqbn": "WickedDevice:avr:wildfireo3" },
   "chipKIT_Uno32.ino"           : { "fqbn": "chipKIT:pic32:uno_pic32" },
+  "LightBlueBean_BLE.ino"       : { "fqbn": "bean:avr:lightblue-bean" },
+  "Teensy3.ino"                 : { "fqbn": "teensy:avr:teensy31" },
 
   # Special examples
   "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
@@ -53,10 +56,8 @@ metadata = {
   "ThingSpeak.ino"              : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
   # No linux support
-  "LightBlueBeanRGB.ino"        : { "skip": True },
   "LinkItONE.ino"               : { "skip": True },
   "Arduino_Ethernet2.ino"       : { "skip": True }, # Arduino.org?
-  "Seeed_EthernetV2_0.ino"      : { "skip": True }, # TODO: Bug
 
   # Energia
   "Energia_WiFi.ino"            : { "skip": True },
@@ -73,7 +74,7 @@ abs_examples = map(lambda x: os.path.abspath(x), examples)
 
 logfile = open("./build.log","wb")
 
-os.chdir("/data/arduino-1.6.8/")
+os.chdir("/data2/arduino-1.6.8/")
 '''
 builder = "./arduino-builder"
 
