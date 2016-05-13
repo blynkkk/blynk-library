@@ -18,6 +18,8 @@
  *
  * App project setup:
  *   RTC widget on V5
+ *   Value Display widget on V1
+ *   Value Display widget on V2
  *
  * WARNING :
  * For this example you'll need SimpleTimer library:
@@ -64,17 +66,19 @@ void clockDisplay()
 {
   // You can call hour(), minute(), ... at any time
   // Please see Time library examples for details
+
+  String currentTime = String(hour()) + ":" + minute() + ":" + second();
+  String currentDate = String(day()) + " " + month() + " " + year();
   Serial.print("Current time: ");
-  Serial.print(hour());
-  printDigits(minute());
-  printDigits(second());
+  Serial.print(currentTime);
   Serial.print(" ");
-  Serial.print(day());
-  Serial.print(" ");
-  Serial.print(month());
-  Serial.print(" ");
-  Serial.print(year());
+  Serial.print(currentDate);
   Serial.println();
+
+  // Send time to the App
+  Blynk.virtualWrite(V1, currentTime);
+  // Send date to the App
+  Blynk.virtualWrite(V2, currentDate);
 }
 
 void setup()
