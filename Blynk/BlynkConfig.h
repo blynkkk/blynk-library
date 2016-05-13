@@ -61,6 +61,9 @@
 // Uncomment to enable debug prints.
 //#define BLYNK_DEBUG
 
+// Uncomment to force-enable 128 virtual pins
+//#define BLYNK_USE_128_VPINS
+
 // Uncomment to enable experimental functions.
 //#define BLYNK_EXPERIMENTAL
 

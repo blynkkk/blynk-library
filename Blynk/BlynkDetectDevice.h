@@ -68,8 +68,11 @@
     #elif defined(LINUX)
 
         #define BLYNK_INFO_DEVICE  "Linux"
+        #define BLYNK_USE_128_VPINS
 
     #elif defined(SPARK) || defined(PARTICLE)
+
+        #define BLYNK_USE_128_VPINS
 
         #if PLATFORM_ID==0
         #define BLYNK_INFO_DEVICE  "Particle Core"
@@ -109,8 +112,10 @@
 
         #if   defined(__MK20DX256__)
         #define BLYNK_INFO_DEVICE  "Teensy 3.2/3.1"
+        #define BLYNK_USE_128_VPINS
         #elif   defined(__MK20DX128__)
         #define BLYNK_INFO_DEVICE  "Teensy 3.0"
+        #define BLYNK_USE_128_VPINS
         #elif   defined(__MKL26Z64__)
         #define BLYNK_INFO_DEVICE  "Teensy LC"
         #elif   defined(ARDUINO_ARCH_AVR)
@@ -120,6 +125,10 @@
         #endif
 
     #elif defined(ARDUINO)
+
+        #ifdef ESP8266
+            #define BLYNK_USE_128_VPINS
+        #endif
 
         /* Arduino AVR */
         #if   defined(ARDUINO_AVR_NANO)
@@ -144,8 +153,10 @@
         #define BLYNK_INFO_DEVICE  "Arduino Gemma"
         #elif defined(ARDUINO_AVR_MEGA) || defined(ARDUINO_AVR_MEGA2560)
         #define BLYNK_INFO_DEVICE  "Arduino Mega"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_AVR_ADK)
         #define BLYNK_INFO_DEVICE  "Arduino Mega ADK"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_AVR_LEONARDO)
         #define BLYNK_INFO_DEVICE  "Arduino Leonardo"
         #elif defined(ARDUINO_AVR_MICRO)
@@ -164,20 +175,27 @@
         /* Arduino SAM/SAMD */
         #elif defined(ARDUINO_SAM_DUE)
         #define BLYNK_INFO_DEVICE  "Arduino Due"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_SAMD_ZERO)
         #define BLYNK_INFO_DEVICE  "Arduino Zero"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_SAMD_MKR1000)
         #define BLYNK_INFO_DEVICE  "Arduino MKR1000"
+        #define BLYNK_USE_128_VPINS
 
         /* Intel */
         #elif defined(ARDUINO_GALILEO)
         #define BLYNK_INFO_DEVICE  "Galileo"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_GALILEOGEN2)
         #define BLYNK_INFO_DEVICE  "Galileo Gen2"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_EDISON)
         #define BLYNK_INFO_DEVICE  "Edison"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_ARCH_ARC32) // TODO
         #define BLYNK_INFO_DEVICE  "Arduino 101"
+        #define BLYNK_USE_128_VPINS
 
         /* Konekt */
         #elif defined(ARDUINO_DASH)
@@ -210,10 +228,13 @@
         /* Digistump */
         #elif defined(ARDUINO_ESP8266_OAK)
         #define BLYNK_INFO_DEVICE  "Oak"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_AVR_DIGISPARK)
         #define BLYNK_INFO_DEVICE  "Digispark"
+        #define BLYNK_NO_INFO
         #elif defined(ARDUINO_AVR_DIGISPARKPRO)
         #define BLYNK_INFO_DEVICE  "Digispark Pro"
+        #define BLYNK_NO_INFO
 
         /* Microduino */
         #elif defined(ARDUINO_AVR_USB)
