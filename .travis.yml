@@ -8,7 +8,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlueBean_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/TheAirBoard_BLE_Link
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet
-    - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet2
+    # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet2
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet_Manual
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/ENC28J60 PLATFORMIO_CI_BOARDS_ARGS="--board=nanoatmega328"
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Intel_Galileo

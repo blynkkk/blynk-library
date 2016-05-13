@@ -39,6 +39,8 @@ metadata = {
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
   "WildFire.ino"                : { "board": "wildfirev3" },
   "chipKIT_Uno32.ino"           : { "board": "uno_pic32" },
+  "LightBlueBean_BLE.ino"       : { "board": "lightblue-bean" },
+  "Teensy3.ino"                 : { "board": "teensy31" },
 
   # Special examples
   "ESP8266_ReadPin.ino"         : { "board": "nodemcuv2" },
@@ -46,10 +48,11 @@ metadata = {
   "ThingSpeak.ino"              : { "board": "nodemcuv2" },
 
   # No linux support
-  "LightBlueBeanRGB.ino"        : { "board": "lightblue-bean" },
   "LinkItONE.ino"               : { "skip": True },
-  "Arduino_Ethernet2.ino"       : { "skip": True }, # Arduino.org?
-  "Seeed_EthernetV2_0.ino"      : { "skip": True }, # TODO: Bug
+
+  # These break whole build ;(
+  "Arduino_Ethernet2.ino"       : { "skip": True }, # Arduino.org
+  "Seeed_EthernetV2_0.ino"      : { "skip": True },
 
   # Energia
   "Energia_WiFi.ino"            : { "board": "lptm4c1294ncpdt" },
