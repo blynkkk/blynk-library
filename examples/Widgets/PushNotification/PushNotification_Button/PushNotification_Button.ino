@@ -27,44 +27,10 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
-
-SimpleTimer timer;
-
-void setup()
-{
-  Serial.begin(9600);
-  Blynk.begin(auth);
-
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
-  // Notify immediately on startup
-  Blynk.notify("Device started");
-
-  // Setup a function to be called every minute
-  timer.setInterval(60000L, notifyUptime);
-
-  // Setup notification button on pin 2
-  pinMode(2, INPUT_PULLUP);
-  // Attach pin 2 interrupt to our handler
-  attachInterrupt(digitalPinToInterrupt(2), notifyOnButtonPress, CHANGE);
-}
-
-void notifyUptime()
-{
-  long uptime = millis() / 60000L;
-
-  // Actually send the message.
-  // Note:
-  //   We allow 1 notification per minute for now.
-  Blynk.notify(String("Running for ") + uptime + " minutes.");
-}
 
 void notifyOnButtonPress()
 {
@@ -77,9 +43,23 @@ void notifyOnButtonPress()
   }
 }
 
+void setup()
+{
+  Serial.begin(9600);
+  Blynk.begin(auth);
+
+  while (Blynk.connect() == false) {
+    // Wait until connected
+  }
+
+  // Setup notification button on pin 2
+  pinMode(2, INPUT_PULLUP);
+  // Attach pin 2 interrupt to our handler
+  attachInterrupt(digitalPinToInterrupt(2), notifyOnButtonPress, CHANGE);
+}
+
 void loop()
 {
   Blynk.run();
-  timer.run();
 }
 
