@@ -26,6 +26,10 @@
  **************************************************************/
 
 #define BLYNK_PRINT Serial
+
+/* Set this to a bigger number, to enable sending longer messages */
+//#define BLYNK_MAX_SENDBYTES 128
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
