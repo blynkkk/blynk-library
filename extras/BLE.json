@@ -23,8 +23,8 @@
     "DFRobot BLE-Link": {
         "devices":  "BLE-Link, Bluno, ...",
         "type":     "ble raw",
-        "uuid_svc": "dfb0",
-        "uuid_rxtx":"dfb1"
+        "uuid_svc": "0000dfb0-0000-1000-8000-00805f9b34fb",
+        "uuid_rxtx":"0000dfb1-0000-1000-8000-00805f9b34fb"
     },
     "HM-10": {
         "devices":  "HM-10",
