@@ -14,31 +14,40 @@
  *
  **************************************************************
  *
- * This example shows how to use ESP8266 Shield via Hardware Serial
- * (on Mega, Leonardo, Micro...) to connect your project to Blynk.
+ * This example shows how to use ESP8266 Shield via  to connect your project to Blynk.
  *
  * Note: Ensure a stable serial connection to ESP8266!
- *       Firmware version 1.0.0 (AT v0.22) or later is needed.
+ *       Firmware version 1.0.0 (AT v0.22) is needed.
  *       You can change ESP baud rate. Connect to AT console and call:
- *           AT+UART_DEF=115200,8,1,0,0
+ *           AT+UART_DEF=9600,8,1,0,0
+ *       In general, Soft Serial may be unstable.
+ *       It is highly recommended to switch to Hard Serial.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
  *
  **************************************************************/
-//#define BLYNK_DEBUG
+
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
-#include <ESP8266_HardSer.h>
-#include <BlynkSimpleShieldEsp8266_HardSer.h>
-
-// Set ESP8266 Serial object
-#define EspSerial Serial1
-
-ESP8266 wifi(EspSerial);
+#include <ESP8266_Lib.h>
+#include <BlynkSimpleShieldEsp8266.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
+
+
+// Hardware Serial on Mega, Leonardo, Micro...
+#define EspSerial Serial1
+
+// or Software Serial on Uno, Nano...
+//#include <SoftwareSerial.h>
+//SoftwareSerial EspSerial(2, 3); // RX, TX
+
+// Your ESP8266 baud rate:
+#define ESP8266_BAUD 9600
+
+ESP8266 wifi(&EspSerial);
 
 void setup()
 {
@@ -46,7 +55,7 @@ void setup()
   Serial.begin(9600);
   delay(10);
   // Set ESP8266 baud rate
-  EspSerial.begin(115200);
+  EspSerial.begin(ESP8266_BAUD);
   delay(10);
 
   Blynk.begin(auth, wifi, "ssid", "pass");
