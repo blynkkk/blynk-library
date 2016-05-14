@@ -59,6 +59,7 @@
 
     #if   defined(ENERGIA)
         #define BLYNK_INFO_DEVICE  "Energia"
+        #define BLYNK_USE_128_VPINS
 
         #if   defined(__MSP430F5529__)
         #define BLYNK_INFO_CPU  "MSP430F5529"
@@ -98,6 +99,7 @@
     #elif defined(MBED_LIBRARY_VERSION)
 
         #define BLYNK_INFO_DEVICE  "MBED"
+        #define BLYNK_USE_128_VPINS
 
     #elif defined(ARDUINO) && defined(MPIDE)
         #define BLYNK_NO_YIELD
@@ -206,6 +208,7 @@
         /* Red Bear Lab */
         #elif defined(ARDUINO_RedBear_Duo)
         #define BLYNK_INFO_DEVICE  "RedBear Duo"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_BLEND)
         #define BLYNK_INFO_DEVICE  "Blend"
         #elif defined(ARDUINO_BLEND_MICRO_8MHZ) || defined(ARDUINO_BLEND_MICRO_16MHZ)
@@ -247,10 +250,13 @@
         /* Wildfire */
         #elif defined(ARDUINO_WILDFIRE_V2)
         #define BLYNK_INFO_DEVICE  "Wildfire V2"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_WILDFIRE_V3)
         #define BLYNK_INFO_DEVICE  "Wildfire V3"
+        #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_WILDFIRE_V4)
         #define BLYNK_INFO_DEVICE  "Wildfire V4"
+        #define BLYNK_USE_128_VPINS
 
         /* Simblee */
         #elif defined(__Simblee__) // TODO: ARDUINO_SIMBLEE bug?
