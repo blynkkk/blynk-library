@@ -65,8 +65,9 @@ public:
 
     bool run(bool avail = false);
 
+    // TODO: Fixme
     void startSession() {
-        //TODO: conn.connect();
+        conn.connect();
     	state = CONNECTING;
 #ifdef BLYNK_MSG_LIMIT
         deltaCmd = 1000;
@@ -203,7 +204,7 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     if (ret < 0 || hdr.msg_id == 0) {
 #ifdef BLYNK_DEBUG
-        BLYNK_LOG1(BLYNK_F("Wrong header on input"));
+        BLYNK_LOG2(BLYNK_F("Bad hdr len: "), ret);
 #endif
         return false;
     }
@@ -263,17 +264,24 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     switch (hdr.type)
     {
-#ifdef BLYNK_USE_DIRECT_CONNECT
     case BLYNK_CMD_LOGIN: {
+#ifdef BLYNK_USE_DIRECT_CONNECT
         if (!strncmp(authkey, (char*)inputBuffer, 32)) {
+            BLYNK_LOG1(BLYNK_F("Ready"));
             state = CONNECTED;
             sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
             this->sendInfo();
         } else {
+            BLYNK_LOG1(BLYNK_F("Invalid token"));
             sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_INVALID_TOKEN);
         }
-    } break;
+#else
+        BLYNK_LOG1(BLYNK_F("Ready"));
+		state = CONNECTED;
+		sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
+		this->sendInfo();
 #endif
+    } break;
     case BLYNK_CMD_PING: {
         sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
     } break;
@@ -304,10 +312,12 @@ int BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
     if (sizeof(hdr) != rlen) {
         return -1;
     }
+
+    BLYNK_DBG_DUMP(">", &hdr, sizeof(BlynkHeader));
+
     hdr.msg_id = ntohs(hdr.msg_id);
     hdr.length = ntohs(hdr.length);
 
-    BLYNK_DBG_DUMP(">", &hdr, sizeof(BlynkHeader));
     return rlen;
 }
 
