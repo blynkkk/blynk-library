@@ -40,7 +40,8 @@ public:
         return stream.readBytes((char*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
-        return stream.write((const uint8_t*)buf, len);
+        stream.write((const uint8_t*)buf, len);
+        return len;
     }
 
     bool connected() { return conn; }
