@@ -39,7 +39,7 @@ metadata = {
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
   "WildFire.ino"                : { "board": "wildfirev3" },
   "chipKIT_Uno32.ino"           : { "board": "uno_pic32" },
-  "LightBlueBean_BLE.ino"       : { "board": "lightblue-bean" },
+  "LightBlue_Bean.ino"          : { "board": "lightblue-bean" },
   "Teensy3.ino"                 : { "board": "teensy31" },
 
   # Special examples

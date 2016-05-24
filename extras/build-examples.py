@@ -47,7 +47,7 @@ metadata = {
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
   "WildFire.ino"                : { "fqbn": "WickedDevice:avr:wildfireo3" },
   "chipKIT_Uno32.ino"           : { "fqbn": "chipKIT:pic32:uno_pic32" },
-  "LightBlueBean_BLE.ino"       : { "fqbn": "bean:avr:lightblue-bean" },
+  "LightBlue_Bean.ino"          : { "fqbn": "bean:avr:lightblue-bean" },
   "Teensy3.ino"                 : { "fqbn": "teensy:avr:teensy31" },
 
   # Special examples

@@ -5,8 +5,7 @@ python:
 env:
     - LINUX_SRC=linux
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Arduino_101_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=genuino101"
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlueBean_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=lightblue-bean"
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/TheAirBoard_BLE_Link
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlue_Bean PLATFORMIO_CI_BOARDS_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet2
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet_Manual

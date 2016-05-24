@@ -103,6 +103,7 @@ private:
     millis_time_t deltaCmd;
 #endif
     uint16_t currentMsgId;
+protected:
     BlynkState state;
 };
 
@@ -186,6 +187,10 @@ bool BlynkProtocol<Transp>::run(bool avail)
             lastLogin = lastActivityOut;
             return true;
         }
+#else
+    } else if (state == CONNECTING) {
+    	if (!tconn)
+    		conn.connect();
 #endif
     }
     return true;
@@ -246,7 +251,9 @@ bool BlynkProtocol<Transp>::processInput(void)
 #ifdef BLYNK_DEBUG
         BLYNK_LOG2(BLYNK_F("Packet too big: "), hdr.length);
 #endif
-        return false;
+        // TODO: Flush
+        conn.connect();
+        return true;
     }
 
     uint8_t inputBuffer[hdr.length+1]; // Add 1 to zero-terminate
@@ -295,6 +302,8 @@ bool BlynkProtocol<Transp>::processInput(void)
 #ifdef BLYNK_DEBUG
         BLYNK_LOG2(BLYNK_F("Invalid header type: "), hdr.type);
 #endif
+        // TODO: Flush
+        conn.connect();
     } break;
     }
 
