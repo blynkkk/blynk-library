@@ -21,7 +21,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_BOARDS_ARGS="--board=teensy31"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/User_Defined_Connection
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_MKR1000
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield_101
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_BOARDS_ARGS="--board=yun"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
