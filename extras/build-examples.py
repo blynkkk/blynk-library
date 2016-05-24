@@ -18,6 +18,7 @@ metadata = {
   "ESP8266_Shield_HardSer.ino"  : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },0
   "ESP8266_Shield_SoftSer.ino"  : { },
   "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
+  "Serial_HM10_HC08.ino"        : { "fqbn": "arduino:avr:leonardo" },
   "Seeed_EthernetV2_0.ino"      : { "fqbn": "arduino:avr:uno" },
 
   # ESP8266

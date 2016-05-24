@@ -11,6 +11,7 @@ metadata = {
   "ESP8266_Shield_HardSer.ino"  : { "board": "megaatmega2560" },
   "ESP8266_Shield_SoftSer.ino"  : { "board": "uno" },
   "RN_XV_WiFly.ino"             : { "board": "leonardo" },
+  "Serial_HM10_HC08.ino"        : { "board": "leonardo" },
 
   # ESP8266
   "ESP8266_DirectConnect.ino"   : { "board": "nodemcuv2" },
