@@ -32,9 +32,9 @@ public:
     {}
 
     void begin(BLEPeripheral& per) {
-    	instance = this;
+        instance = this;
 
-    	blePeripheral = &per;
+        blePeripheral = &per;
         // Add service and characteristic
         blePeripheral->setAdvertisedServiceUuid(bleService.uuid());
         blePeripheral->addAttribute(bleService);
@@ -94,28 +94,30 @@ public:
 private:
     static BlynkTransportCurieBLE* instance;
 
-	static
-	void rxCharWritten(BLECentral& central, BLECharacteristic& ch) {
+    static
+    void rxCharWritten(BLECentral& central, BLECharacteristic& ch) {
+        if (!instance)
+            return;
         uint32_t key = interrupt_lock();
         const uint8_t* data = ch.value();
         uint32_t len = ch.valueLength();
         //BLYNK_DBG_DUMP(">> ", data, len);
         instance->mBuffRX.put(data, len);
         interrupt_unlock(key);
-	}
+    }
 
-	static
-	void txCharSubscribed(BLECentral& central, BLECharacteristic& ch);
+    static
+    void txCharSubscribed(BLECentral& central, BLECharacteristic& ch);
 
-	static
-	void blePeripheralDisconnectHandler(BLECentral& central);
+    static
+    void blePeripheralDisconnectHandler(BLECentral& central);
 
 private:
     bool mConn;
     BLEPeripheral*    blePeripheral = NULL;
     BLEService        bleService = BLEService       ("713D0000-503E-4C75-BA94-3148F18D941E");
-    BLECharacteristic rxChar     = BLECharacteristic("713D0003-503E-4C75-BA94-3148F18D941E", BLEWriteWithoutResponse, BLE_MAX_ATTR_DATA_LEN);
-    BLECharacteristic txChar     = BLECharacteristic("713D0002-503E-4C75-BA94-3148F18D941E", BLENotify,               BLE_MAX_ATTR_DATA_LEN);
+    BLECharacteristic rxChar     = BLECharacteristic("713D0003-503E-4C75-BA94-3148F18D941E", BLEWrite | BLEWriteWithoutResponse, BLE_MAX_ATTR_DATA_LEN);
+    BLECharacteristic txChar     = BLECharacteristic("713D0002-503E-4C75-BA94-3148F18D941E", BLERead  | BLENotify,               BLE_MAX_ATTR_DATA_LEN);
 
     BlynkFifo<uint8_t, BLYNK_MAX_READBYTES*2> mBuffRX;
 };
@@ -144,12 +146,12 @@ BlynkCurieBLE Blynk(_blynkTransport);
 
 inline
 void BlynkTransportCurieBLE::txCharSubscribed(BLECentral& central, BLECharacteristic& ch) {
-	Blynk.startSession();
+    Blynk.startSession();
 }
 
 inline
 void BlynkTransportCurieBLE::blePeripheralDisconnectHandler(BLECentral& central) {
-	Blynk.disconnect();
+    Blynk.disconnect();
 }
 
 #include <BlynkWidgets.h>
