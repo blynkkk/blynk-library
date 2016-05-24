@@ -27,8 +27,8 @@
 
 BLEPeripheral     blePeripheral;
 BLEService        bleService  ("713D0000-503E-4C75-BA94-3148F18D941E");
-BLECharacteristic rxChar      ("713D0003-503E-4C75-BA94-3148F18D941E", BLEWrite | BLEWriteWithoutResponse, BLE_MAX_ATTR_DATA_LEN);
-BLECharacteristic txChar      ("713D0002-503E-4C75-BA94-3148F18D941E", BLERead  | BLENotify, BLE_MAX_ATTR_DATA_LEN);
+BLECharacteristic rxChar      ("713D0003-503E-4C75-BA94-3148F18D941E", BLEWriteWithoutResponse, BLE_MAX_ATTR_DATA_LEN);
+BLECharacteristic txChar      ("713D0002-503E-4C75-BA94-3148F18D941E", BLENotify, BLE_MAX_ATTR_DATA_LEN);
 
 class BlynkTransportGenericBLE
 {
@@ -61,9 +61,9 @@ public:
                 break;
             }
         }
-        noInterrupts();
+        uint32_t key = interrupt_lock();
         size_t res = mBuffRX.get((uint8_t*)buf, len);
-        interrupts();
+        interrupt_unlock(key);
         return res;
     }
 
@@ -74,16 +74,16 @@ public:
     }
 
     void process(const void* data, size_t len) {
-        noInterrupts();
+        uint32_t key = interrupt_lock();
         //BLYNK_DBG_DUMP(">> ", data, len);
         mBuffRX.put((uint8_t*)data, len);
-        interrupts();
+        interrupt_unlock(key);
     }
 
     size_t available() {
-        noInterrupts();
+        uint32_t key = interrupt_lock();
         size_t rxSize = mBuffRX.size();
-        interrupts();
+        interrupt_unlock(key);
         return rxSize;
     }
 
