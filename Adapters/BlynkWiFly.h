@@ -103,6 +103,7 @@ public:
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
+        wifly = &rnxv;
         connectWiFi(ssid, pass);
         config(rnxv, auth, domain, port);
     }
