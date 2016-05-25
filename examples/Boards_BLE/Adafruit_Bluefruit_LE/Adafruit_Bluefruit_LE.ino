@@ -29,10 +29,10 @@
 
 #define BLYNK_USE_DIRECT_CONNECT
 
+#include <BlynkSimpleSerialBLE.h>
 #include <SPI.h>
 #include <BLEPeripheral.h>
 #include "BLESerial.h"
-#include <BlynkSimpleSerialBLE.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).

@@ -30,6 +30,7 @@
 #define BLYNK_USE_DIRECT_CONNECT
 
 #include <BlynkSimpleSerialBLE.h>
+#include <SPI.h>
 #include <BLEPeripheral.h>
 #include "BLESerial.h"
 
