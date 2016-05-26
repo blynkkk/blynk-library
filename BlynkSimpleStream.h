@@ -20,4 +20,6 @@
 BlynkTransportStream _blynkTransport;
 BlynkStream Blynk(_blynkTransport);
 
+#include <BlynkWidgets.h>
+
 #endif
