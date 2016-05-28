@@ -15,10 +15,6 @@
 #error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
 #endif
 
-#ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "ESP8266"
-#endif
-
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>

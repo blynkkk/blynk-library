@@ -11,10 +11,6 @@
 #ifndef BlynkSimpleIntelEdisonWiFi_h
 #define BlynkSimpleIntelEdisonWiFi_h
 
-#ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "Intel Edison"
-#endif
-
 #ifndef BLYNK_INFO_CONNECTION
 #define BLYNK_INFO_CONNECTION  "WiFi"
 #endif

@@ -11,10 +11,6 @@
 #ifndef BlynkSimpleMKR1000_h
 #define BlynkSimpleMKR1000_h
 
-#ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "MKR1000"
-#endif
-
 #ifndef BLYNK_INFO_CONNECTION
 #define BLYNK_INFO_CONNECTION  "WiFi"
 #endif

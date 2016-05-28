@@ -15,10 +15,6 @@
 #error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
 #endif
 
-#ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "ESP8266"
-#endif
-
 #define BLYNK_DEFAULT_FINGERPRINT "FD C0 7D 8D 47 97 F7 E3 07 05 D3 4E E3 BB 8E 3D C0 EA BE 1C"
 
 #include <BlynkApiArduino.h>

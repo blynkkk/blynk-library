@@ -11,10 +11,6 @@
 #ifndef BlynkSimpleYun_h
 #define BlynkSimpleYun_h
 
-#ifndef BLYNK_INFO_DEVICE
-#define BLYNK_INFO_DEVICE  "Arduino Yun"
-#endif
-
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
 #include <YunClient.h>
