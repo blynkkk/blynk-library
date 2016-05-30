@@ -72,7 +72,7 @@ public:
         cmd.add(pin);
         cmd.add(data1);
         cmd.add(data2);
-        Blynk.sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
+        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     template <typename T1, typename T2, typename T3>
@@ -85,7 +85,7 @@ public:
         cmd.add(data1);
         cmd.add(data2);
         cmd.add(data3);
-        Blynk.sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
+        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     template <typename T1, typename T2, typename T3, typename T4>
@@ -99,7 +99,7 @@ public:
         cmd.add(data2);
         cmd.add(data3);
         cmd.add(data4);
-        Blynk.sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
+        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     void virtualWriteBinary(int pin, const void* buff, size_t len) {
