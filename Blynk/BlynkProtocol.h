@@ -278,6 +278,7 @@ bool BlynkProtocol<Transp>::processInput(void)
             state = CONNECTED;
             sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
             this->sendInfo();
+            BlynkOnConnected();
         } else {
             BLYNK_LOG1(BLYNK_F("Invalid token"));
             sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_INVALID_TOKEN);
