@@ -55,7 +55,7 @@ BLYNK_ATTACH_WIDGET(rtc, V5);
 void printDigits(int digits)
 {
   Serial.print(":");
-  if(digits < 10) {
+  if (digits < 10) {
     Serial.print('0');
   }
   Serial.print(digits);

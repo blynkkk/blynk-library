@@ -38,12 +38,12 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// define pins (varies per shield/board)
+// Define pins (varies per shield/board)
 #define BLE_REQ   10
 #define BLE_RDY   2
 #define BLE_RST   9
 
-// create ble serial instance, see pinouts above
+// Create ble serial instance, see pinouts above
 BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
 
 void setup() {
