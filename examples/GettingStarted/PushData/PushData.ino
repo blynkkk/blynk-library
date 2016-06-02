@@ -42,7 +42,7 @@ SimpleTimer timer;
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
 // that you define how often to send data to Blynk App.
-void sendUptime()
+void myTimerEvent()
 {
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
@@ -55,7 +55,7 @@ void setup()
   Blynk.begin(auth);
 
   // Setup a function to be called every second
-  timer.setInterval(1000L, sendUptime);
+  timer.setInterval(1000L, myTimerEvent);
 }
 
 void loop()
