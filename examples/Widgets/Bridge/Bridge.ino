@@ -46,22 +46,6 @@ WidgetBridge bridge1(V1);
 // Timer for blynking
 SimpleTimer timer;
 
-void setup()
-{
-  Blynk.begin(auth);
-
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
-  // Call blynkAnotherDevice every second
-  timer.setInterval(1000L, blynkAnotherDevice);
-}
-
-BLYNK_CONNECTED() {
-  bridge1.setAuthToken("OtherAuthToken"); // Place the AuthToken of the second hardware here
-}
-
 static bool value = true;
 void blynkAnotherDevice() // Here we will send HIGH or LOW once per second
 {
@@ -69,7 +53,7 @@ void blynkAnotherDevice() // Here we will send HIGH or LOW once per second
   if (value) {
     bridge1.digitalWrite(9, HIGH);  // Digital Pin 9 on the second board will be set HIGH
     bridge1.virtualWrite(V5, 1); // Sends 1 value to BLYNK_WRITE(V5) handler on receiving side.
-  
+
   /////////////////////////////////////////////////////////////////////////////////////////
   // Keep in mind that when performing virtualWrite with Bridge,
   // second board will need to process the incoming command.
@@ -86,6 +70,22 @@ void blynkAnotherDevice() // Here we will send HIGH or LOW once per second
   }
   // Toggle value
   value = !value;
+}
+
+void setup()
+{
+  Blynk.begin(auth);
+
+  while (Blynk.connect() == false) {
+    // Wait until connected
+  }
+
+  // Call blynkAnotherDevice every second
+  timer.setInterval(1000L, blynkAnotherDevice);
+}
+
+BLYNK_CONNECTED() {
+  bridge1.setAuthToken("OtherAuthToken"); // Place the AuthToken of the second hardware here
 }
 
 void loop()
