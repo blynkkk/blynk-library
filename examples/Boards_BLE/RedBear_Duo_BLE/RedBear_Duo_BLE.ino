@@ -14,10 +14,8 @@
  *
  **************************************************************
  *
- * This example shows how to use Arduino 101 CurieBLE
+ * This example shows how to use RedBear Duo BLE
  * to connect your project to Blynk.
- *
- * For this example you need CurieBLE library from http://librarymanager
  *
  * NOTE: BLE support is in beta!
  *
@@ -53,6 +51,8 @@ void loop() {
   Blynk.run();
 }
 
+// Next functions are optional.
+// Add ZeRGBa Widget on V0 to control onboard LED.
 BLYNK_CONNECTED() {
   RGB.control(true);
 }
