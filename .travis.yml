@@ -59,6 +59,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
     - PLATFORMIO_CI_SRC=examples/More/Sync
     - PLATFORMIO_CI_SRC=examples/More/SyncPhysicalButton
+    - PLATFORMIO_CI_SRC=examples/Provisioning/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
     - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
