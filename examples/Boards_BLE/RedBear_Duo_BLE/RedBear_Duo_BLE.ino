@@ -43,8 +43,8 @@ void setup() {
   delay(5000);
 
   Blynk.begin(auth);
-  
-  Serial.println("BLE started advertising.");
+
+  Serial.println("Waiting for connections...");
 }
 
 void loop() {
