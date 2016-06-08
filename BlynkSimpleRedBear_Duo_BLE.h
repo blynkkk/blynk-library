@@ -222,7 +222,7 @@ private:
         if (!instance)
             return 0;
         noInterrupts();
-        BLYNK_DBG_DUMP(">> ", data, len);
+        //BLYNK_DBG_DUMP(">> ", data, len);
         instance->mBuffRX.put(data, len);
         interrupts();
         return 0;
@@ -265,7 +265,7 @@ BlynkRedBearDuoBLE Blynk(_blynkTransport);
 void BlynkTransportRedBearDuoBLE::deviceConnectedCallback(BLEStatus_t status, uint16_t handle) {
   switch (status) {
   case BLE_STATUS_OK:
-    Serial.println("Device connected!");
+    BLYNK_LOG1("Device connected");
     Blynk.startSession();
     break;
   default:
@@ -274,7 +274,7 @@ void BlynkTransportRedBearDuoBLE::deviceConnectedCallback(BLEStatus_t status, ui
 }
 
 void BlynkTransportRedBearDuoBLE::deviceDisconnectedCallback(uint16_t handle){
-	Serial.println("Disconnected.");
+	BLYNK_LOG1("Device disconnected");
     Blynk.disconnect();
 }
 
