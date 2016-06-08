@@ -54,16 +54,16 @@ void blynkAnotherDevice() // Here we will send HIGH or LOW once per second
     bridge1.digitalWrite(9, HIGH);  // Digital Pin 9 on the second board will be set HIGH
     bridge1.virtualWrite(V5, 1); // Sends 1 value to BLYNK_WRITE(V5) handler on receiving side.
 
-  /////////////////////////////////////////////////////////////////////////////////////////
-  // Keep in mind that when performing virtualWrite with Bridge,
-  // second board will need to process the incoming command.
-  // It can be done by using this handler on the second board:
-  //
-  //    BLYNK_WRITE(V5){
-  //    int pinData = param.asInt(); // pinData variable will store value that came via Bridge
-  //    }
-  //
-  /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
+    // Keep in mind that when performing virtualWrite with Bridge,
+    // second board will need to process the incoming command.
+    // It can be done by using this handler on the second board:
+    //
+    //    BLYNK_WRITE(V5){
+    //    int pinData = param.asInt(); // pinData variable will store value that came via Bridge
+    //    }
+    //
+    /////////////////////////////////////////////////////////////////////////////////////////
   } else {
     bridge1.digitalWrite(9, LOW); // Digital Pin 9 on the second board will be set LOW
     bridge1.virtualWrite(V5, 0); // Sends 0 value to BLYNK_WRITE(V5) handler on receiving side.
