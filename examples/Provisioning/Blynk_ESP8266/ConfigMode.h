@@ -1,9 +1,11 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
+#include <ESP8266HTTPUpdateServer.h>
 #include <DNSServer.h>
 
 ESP8266WebServer server(WIFI_AP_CONFIG_PORT);
+ESP8266HTTPUpdateServer httpUpdater;
 DNSServer dnsServer;
 const byte DNS_PORT = 53;
 
@@ -43,6 +45,8 @@ void enterConfigMode()
 #else
   dnsServer.start(DNS_PORT, BOARD_CONFIG_AP_URL, WiFi.softAPIP());
 #endif
+
+  httpUpdater.setup(&server);
 
   server.on("/", []() {
     server.send(200, "text/html", config_form);
@@ -109,7 +113,7 @@ void enterConfigMode()
   while(1) {
     dnsServer.processNextRequest();
     server.handleClient();
-    delay(0);
+    delay(1);
   }
 }
 

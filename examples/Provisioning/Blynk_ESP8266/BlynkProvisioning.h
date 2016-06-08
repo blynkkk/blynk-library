@@ -19,6 +19,7 @@ enum State {
 #include "ConfigMode.h"
 #include "ResetButton.h"
 #include "Indicator.h"
+#include "OTA.h"
 
 class Provisioning {
 
@@ -37,7 +38,7 @@ public:
     indicator_init();
     button_init();
     config_init();
-    
+
     if (digitalRead(BOARD_BUTTON_PIN) == LOW) {
       DEBUG_PRINT("Button pressed -> resetting config...");
       config_reset();
