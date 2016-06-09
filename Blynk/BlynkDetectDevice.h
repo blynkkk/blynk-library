@@ -234,10 +234,10 @@
         #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_AVR_DIGISPARK)
         #define BLYNK_INFO_DEVICE  "Digispark"
-        #define BLYNK_NO_INFO
+        #define BLYNK_NO_YIELD
         #elif defined(ARDUINO_AVR_DIGISPARKPRO)
         #define BLYNK_INFO_DEVICE  "Digispark Pro"
-        #define BLYNK_NO_INFO
+        #define BLYNK_NO_YIELD
 
         /* Microduino */
         #elif defined(ARDUINO_AVR_USB)
