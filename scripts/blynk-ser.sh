@@ -7,7 +7,7 @@ popd > /dev/null
 # === Edit default options to match your need ===
 
 FROM_TYPE="SER" # SER, TCP
-TO_TYPE="TCP"   # TCP, SSL. TODO Switch to SSL when socat supports SNI
+TO_TYPE="SSL"   # TCP, SSL
 
 COMM_PORT_LINUX=/dev/ttyUSB0
 COMM_PORT_OSX=/dev/tty.usbmodem
