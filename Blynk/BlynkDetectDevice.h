@@ -195,7 +195,7 @@
         #elif defined(ARDUINO_EDISON)
         #define BLYNK_INFO_DEVICE  "Edison"
         #define BLYNK_USE_128_VPINS
-        #elif defined(ARDUINO_ARCH_ARC32) // TODO
+        #elif defined(ARDUINO_ARCH_ARC32)
         #define BLYNK_INFO_DEVICE  "Arduino 101"
         #define BLYNK_USE_128_VPINS
 
@@ -259,8 +259,9 @@
         #define BLYNK_USE_128_VPINS
 
         /* Simblee */
-        #elif defined(__Simblee__) // TODO: ARDUINO_SIMBLEE bug?
+        #elif defined(__Simblee__)
         #define BLYNK_INFO_DEVICE  "Simblee"
+        #define BLYNK_USE_128_VPINS
 
         #else
         #warning "Cannot detect board type"
