@@ -36,6 +36,10 @@ public:
             BLYNK_FATAL("WiFi shield not present");
         }
 
+#ifdef BLYNK_DEBUG
+        BLYNK_LOG2(BLYNK_F("WiFi firmware: "), WiFi.firmwareVersion());
+#endif
+
         // attempt to connect to Wifi network:
         while (true) {
             BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
