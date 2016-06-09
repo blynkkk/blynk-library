@@ -37,13 +37,12 @@ public:
 
     bool connect() {
         if (BlynkArduinoClientGen<Client>::connect()) {
-          // TODO: Enable when https://github.com/esp8266/Arduino/issues/1285 is closed
-		  /*if (fingerprint && !this->client.verify(fingerprint, this->domain)) {
+		  if (fingerprint && !this->client.verify(fingerprint, this->domain)) {
 			  BLYNK_LOG1(BLYNK_F("Certificate doesn't match"));
 			  return false;
 		  } else {
 			  BLYNK_LOG1(BLYNK_F("Certificate OK"));
-		  }*/
+		  }
 		  return true;
         }
         return false;
