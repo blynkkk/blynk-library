@@ -1,5 +1,5 @@
 /**
- * @file       BlynkStream.h
+ * @file       BlynkSimpleStream.h
  * @author     Volodymyr Shymanskyy
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2016 Volodymyr Shymanskyy
@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef BlynkStream_h
-#define BlynkStream_h
+#ifndef BlynkSimpleStream_h
+#define BlynkSimpleStream_h
 
 #ifndef BLYNK_INFO_CONNECTION
 #define BLYNK_INFO_CONNECTION "Stream"
