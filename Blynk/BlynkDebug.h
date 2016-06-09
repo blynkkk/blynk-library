@@ -147,7 +147,9 @@ void BlynkFatal() BLYNK_NORETURN;
                         prev_print = false;
                     }
                 }
-                BLYNK_PRINT.println(prev_print?"":"]");
+                if (!prev_print)
+                	BLYNK_PRINT.print(']');
+                BLYNK_PRINT.println();
             }
         }
 #endif
