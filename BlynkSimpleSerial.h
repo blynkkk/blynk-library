@@ -13,8 +13,7 @@
 
 #include <Adapters/BlynkSerial.h>
 
-// TODO: Find some elegant way around this?
-// BlynkTransportSerial(Stream *s=&Serial, uint8_t dtr=255);
+#warning BlynkSimpleSerial is now deprecated. It will be removed soon. Check the latest USB/Serial examples.
 
 #if defined(__SAMD21G18A__)
     // For Arduino Zero (M0)
