@@ -64,10 +64,12 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
-  Serial1.begin(9600); // Debug prints on pins 39 (RX), 40 (TX)
-  Blynk.begin(auth);
-  // Default baud rate is 9600. You could specify it like this:
-  //Blynk.begin(auth, 57600);
+  // Debug prints on pins 39 (RX), 40 (TX)
+  Serial1.begin(9600);
+
+  // Blynk will work through Serial
+  Serial.begin(9600);
+  Blynk.begin(auth, Serial);
 }
 
 void loop()

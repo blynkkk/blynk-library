@@ -20,15 +20,10 @@
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+#include <BlynkSimpleStream.h>
+
 #include <SoftwareSerial.h>
-#include <BlynkApiArduino.h>
-#include <Adapters/BlynkSerial.h>
-
-typedef BlynkTransportSerial<SoftwareSerial> SwSerialConnection;
-
 SoftwareSerial SwSerial(2, 3); // RX, TX
-SwSerialConnection connection(SwSerial);
-BlynkSerial<SwSerialConnection> Blynk(connection);
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -36,8 +31,12 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
+  // Debug console
   Serial.begin(9600);
-  Blynk.begin(auth, 9600);
+
+  // Blynk will work through SoftwareSerial
+  SwSerial.begin(9600);
+  Blynk.begin(auth, SwSerial);
 }
 
 void loop()

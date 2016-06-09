@@ -56,7 +56,7 @@
  **************************************************************/
 
 #define BLYNK_PRINT SerialUSB
-#include <BlynkSimpleSerial.h>
+#include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -68,9 +68,8 @@ void setup()
   SerialUSB.begin(9600);
 
   // Blynk will work through Serial
-  Blynk.begin(auth);
-  // Default baud rate is 9600. You could specify it like this:
-  //Blynk.begin(auth, 57600);
+  Serial.begin(9600);
+  Blynk.begin(auth, Serial);
 }
 
 void loop()
