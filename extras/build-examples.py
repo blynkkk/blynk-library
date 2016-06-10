@@ -52,6 +52,7 @@ metadata = {
   "chipKIT_Uno32.ino"           : { "fqbn": "chipKIT:pic32:uno_pic32" },
   "LightBlue_Bean.ino"          : { "fqbn": "bean:avr:lightblue-bean" },
   "Teensy3.ino"                 : { "fqbn": "teensy:avr:teensy31" },
+  "ATtiny85.ino"                : { "fqbn": "attiny:avr:attiny:cpu=attiny85,clock=internal8" },
 
   # Special examples
   "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },

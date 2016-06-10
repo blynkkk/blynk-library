@@ -45,6 +45,7 @@ metadata = {
   "chipKIT_Uno32.ino"           : { "board": "uno_pic32" },
   "LightBlue_Bean.ino"          : { "board": "lightblue-bean" },
   "Teensy3.ino"                 : { "board": "teensy31" },
+  "ATtiny85.ino"                : { "board": "attiny85" },
 
   # Special examples
   "ESP8266_ReadPin.ino"         : { "board": "nodemcuv2" },
