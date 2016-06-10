@@ -24,7 +24,6 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Serial_USB
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_SoftwareSerial
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Zero_M0_Serial PLATFORMIO_CI_BOARDS_ARGS="--board=zero"
-    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Digistump_Digispark PLATFORMIO_CI_BOARDS_ARGS="--board=digispark-pro"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/TI_Stellaris_LaunchPad PLATFORMIO_CI_BOARDS_ARGS="--board=lplm4f120h5qr"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_BOARDS_ARGS="--board=teensy31"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/User_Defined_Connection
