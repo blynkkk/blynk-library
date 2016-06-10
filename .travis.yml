@@ -5,6 +5,7 @@ python:
 env:
     - LINUX_SRC=linux
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Adafruit_Bluefruit_LE
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/Adafruit_Feather_32u4_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=feather32u4"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Arduino_101_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=genuino101"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlue_Bean PLATFORMIO_CI_BOARDS_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Mini PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
@@ -97,7 +98,8 @@ install:
     # http://platformio.org/lib/show/19/Adafruit-DHT
     # http://platformio.org/lib/show/299/WiFi101
     # http://platformio.org/lib/show/259/BLEPeripheral
+    # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
 
-    - platformio lib install 17 28 91 418 419 420 65 44 19 299 259
+    - platformio lib install 17 28 91 418 419 420 65 44 19 299 259 177
 
 script: make travis-build

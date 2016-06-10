@@ -13,6 +13,8 @@ metadata = {
   "Serial_HM10_HC08.ino"        : { "board": "leonardo" },
   "TheAirBoard_WiFly.ino"       : { "board": "fio" },
   "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4" },
+  "Seeed_EthernetV2_0.ino"      : { "skip": True }, # Breaks build
+  "Arduino_Ethernet2.ino"       : { "skip": True }, # Breaks build, arduino.org
 
   # ESP8266
   "ESP8266_DirectConnect.ino"   : { "board": "nodemcuv2" },
@@ -51,10 +53,6 @@ metadata = {
 
   # No linux support
   "LinkItONE.ino"               : { "skip": True },
-
-  # These break whole build ;(
-  "Arduino_Ethernet2.ino"       : { "skip": True }, # Arduino.org
-  "Seeed_EthernetV2_0.ino"      : { "skip": True },
 
   # Energia
   "Energia_WiFi.ino"            : { "board": "lptm4c1294ncpdt" },

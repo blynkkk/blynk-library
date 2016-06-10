@@ -15,11 +15,13 @@ metadata = {
   "Arduino_Zero_M0_Serial.ino"  : { "fqbn": "arduino:samd:arduino_zero_native" },
   "Arduino_Due.ino"             : { "fqbn": "arduino:sam:arduino_due_x" },
   "ENC28J60.ino"                : { "fqbn": "arduino:avr:nano:cpu=atmega328" },
-  "ESP8266_Shield_HardSer.ino"  : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },0
-  "ESP8266_Shield_SoftSer.ino"  : { },
+  "ESP8266_Shield.ino"          : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },
   "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
   "Serial_HM10_HC08.ino"        : { "fqbn": "arduino:avr:leonardo" },
+  "TheAirBoard_WiFly.ino"       : { "fqbn": "arduino:avr:fio" },
+  "Adafruit_Feather_32u4_BLE.ino": { "fqbn": "adafruit:avr:feather32u4" },
   "Seeed_EthernetV2_0.ino"      : { "fqbn": "arduino:avr:uno" },
+  "Arduino_Ethernet2.ino"       : { "skip": True }, # arduino.org
 
   # ESP8266
   "ESP8266_DirectConnect.ino"   : { "fqbn": "esp8266:esp8266:nodemcuv2" },
@@ -28,8 +30,7 @@ metadata = {
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
   # Digistump
-  "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-tiny" },
-  "Digistump_Digispark_Pro.ino" : { "fqbn": "digistump:avr:digispark-pro" },
+  "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-pro" },
   "Digistump_Oak.ino"           : { "fqbn": "digistump:oak:oak1" },
 
   # Intel
@@ -42,6 +43,7 @@ metadata = {
   "RedBear_Duo_BLE.ino"         : { "fqbn": "RedBear:STM32F2:RedBear_Duo" },
   "RedBearLab_BLE_Nano.ino"     : { "fqbn": "RedBearLab:nRF51822:nRF51822_NANO_32KB" },
   "RedBearLab_BlendMicro"       : { "fqbn": "RedBearLab:avr:blendmicro8" },
+  "RedBearLab_BLE_Mini.ino"     : { "fqbn": "arduino:avr:leonardo" },
 
   #Other
   "Simblee_BLE.ino"             : { "fqbn": "Simblee:Simblee:Simblee" },
@@ -58,7 +60,6 @@ metadata = {
 
   # No linux support
   "LinkItONE.ino"               : { "skip": True },
-  "Arduino_Ethernet2.ino"       : { "skip": True }, # Arduino.org?
 
   # Energia
   "Energia_WiFi.ino"            : { "skip": True },
