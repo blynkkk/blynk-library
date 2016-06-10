@@ -8,10 +8,11 @@ metadata = {
   "Arduino_Zero_M0_Serial.ino"  : { "board": "zero" },
   "Arduino_Due.ino"             : { "board": "due" },
   "ENC28J60.ino"                : { "board": "nanoatmega328" },
-  "ESP8266_Shield_HardSer.ino"  : { "board": "megaatmega2560" },
-  "ESP8266_Shield_SoftSer.ino"  : { "board": "uno" },
+  "ESP8266_Shield.ino"          : { "board": "megaatmega2560" },
   "RN_XV_WiFly.ino"             : { "board": "leonardo" },
   "Serial_HM10_HC08.ino"        : { "board": "leonardo" },
+  "TheAirBoard_WiFly.ino"       : { "board": "fio" },
+  "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4" },
 
   # ESP8266
   "ESP8266_DirectConnect.ino"   : { "board": "nodemcuv2" },
@@ -20,8 +21,7 @@ metadata = {
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
 
   # Digistump
-  "Digistump_Digispark.ino"     : { "board": "digispark-tiny" },
-  "Digistump_Digispark_Pro.ino" : { "board": "digispark-pro" },
+  "Digistump_Digispark.ino"     : { "board": "digispark-pro" },
   "Digistump_Oak.ino"           : { "skip": True },
 
   # Intel
@@ -33,7 +33,8 @@ metadata = {
   "RedBear_Duo_WiFi.ino"        : { "skip": True },
   "RedBear_Duo_BLE.ino"         : { "skip": True },
   "RedBearLab_BLE_Nano.ino"     : { "board": "redBearLabBLENano" },
-  "RedBearLab_BlendMicro"       : { "board": "blendmicro8" },
+  "RedBearLab_BlendMicro.ino"   : { "board": "blendmicro8" },
+  "RedBearLab_BLE_Mini.ino"     : { "board": "leonardo" },
 
   #Other
   "Simblee_BLE.ino"             : { "skip": True },
@@ -63,6 +64,12 @@ metadata = {
   "TI_CC3200_LaunchXL.ino"      : { "skip": True },
   "TI_Stellaris_LaunchPad.ino"  : { "board": "lplm4f120h5qr" },
   "TI_TivaC_Connected.ino"      : { "board": "lptm4c1294ncpdt" },
+
+  #seeedTinyBLE
+  #nrf51_dk
+  #nucleo_f401re
+  #rfduino
+  #bbcmicrobit
 }
 
 examples = []

@@ -7,7 +7,13 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Adafruit_Bluefruit_LE
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Arduino_101_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=genuino101"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlue_Bean PLATFORMIO_CI_BOARDS_ARGS="--board=lightblue-bean"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Mini PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Nano PLATFORMIO_CI_BOARDS_ARGS="--board=redBearLabBLENano"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BlendMicro PLATFORMIO_CI_BOARDS_ARGS="--board=blendmicro8"
+    # - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBear_Duo_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Serial_HM10_HC08 PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
+    # - PLATFORMIO_CI_SRC=examples/Boards_BLE/Simblee_BLE
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/nRF8001
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet2
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet_Manual
@@ -18,6 +24,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Serial_USB
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_SoftwareSerial
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Zero_M0_Serial PLATFORMIO_CI_BOARDS_ARGS="--board=zero"
+    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Digistump_Digispark PLATFORMIO_CI_BOARDS_ARGS="--board=digispark-pro"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/TI_Stellaris_LaunchPad PLATFORMIO_CI_BOARDS_ARGS="--board=lplm4f120h5qr"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_BOARDS_ARGS="--board=teensy31"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/User_Defined_Connection
@@ -39,6 +46,7 @@ env:
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RedBear_Duo_WiFi
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TI_CC3200_LaunchXL
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TI_MSP430F5529_CC3100 PLATFORMIO_CI_BOARDS_ARGS="--board=lpmsp430f5529"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=fio"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_ReadPin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
@@ -59,7 +67,6 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
     - PLATFORMIO_CI_SRC=examples/More/Sync
     - PLATFORMIO_CI_SRC=examples/More/SyncPhysicalButton
-    - PLATFORMIO_CI_SRC=examples/Provisioning/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
     - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
