@@ -37,7 +37,16 @@ public:
     void disconnect() { conn = false; }
 
     size_t read(void* buf, size_t len) {
-        return stream->readBytes((char*)buf, len);
+        char* beg = (char*)buf;
+        char* end = beg + len;
+        millis_time_t startMillis = millis();
+        while ((beg < end) && (millis() - startMillis < BLYNK_TIMEOUT_MS)) {
+            int c = stream->read();
+            if (c < 0)
+                continue;
+            *beg++ = (char)c;
+        }
+        return beg-(char*)buf;
     }
     size_t write(const void* buf, size_t len) {
         stream->write((const uint8_t*)buf, len);
