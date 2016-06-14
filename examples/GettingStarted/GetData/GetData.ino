@@ -40,7 +40,7 @@ void setup()
 // in Blynk app writes values to the Virtual Pin 1
 BLYNK_WRITE(V1)
 {
-  pinValue = param.asInt(); // assigning incoming value from pin V1 to a variable
+  int pinValue = param.asInt(); // assigning incoming value from pin V1 to a variable
   // You can also use:
   // String i = param.asStr();
   // double d = param.asDouble();
