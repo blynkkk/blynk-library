@@ -20,6 +20,13 @@
         "uuid_tx":  "2d30c082-f39f-4ce6-923f-3484ea480596",
         "uuid_rx":  "2d30c083-f39f-4ce6-923f-3484ea480596"
     },
+    "RFDuino": {
+        "devices":  "RFDuino BLE",
+        "type":     "ble raw",
+        "uuid_svc": "00002220-0000-1000-8000-00805f9b34fb",
+        "uuid_tx":  "00002221-0000-1000-8000-00805f9b34fb",
+        "uuid_rx":  "00002222-0000-1000-8000-00805f9b34fb"
+    },
     "DFRobot BLE-Link": {
         "devices":  "BLE-Link, Bluno, ...",
         "type":     "ble raw",
