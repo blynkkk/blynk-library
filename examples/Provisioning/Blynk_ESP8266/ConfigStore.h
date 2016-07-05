@@ -1,3 +1,12 @@
+/**************************************************************
+ * This is a DEMO. You can use it only for development and testing.
+ *
+ * If you would like to add these features to your product,
+ * please contact Blynk for Business:
+ *
+ *                    http://tiny.cc/BlynkB2B
+ *
+ **************************************************************/
 
 struct ConfigStore {
   uint32_t  magic;
@@ -27,7 +36,8 @@ const ConfigStore configDefault = {
   "",
   
   "invalid token",
-  "blynk-cloud.com", 8442
+  "blynk-cloud.com", 8442,
+  0
 };
 
 #include <EEPROM.h>
@@ -41,14 +51,12 @@ void config_load()
     configStore = configDefault;
     return;
   }
-  DEBUG_PRINT("Config loaded.");
 }
 
 bool config_save()
 {
   EEPROM.put(EEPROM_CONFIG_START, configStore);
   EEPROM.commit();
-  DEBUG_PRINT("Config stored.");
   return true;
 }
 
@@ -61,8 +69,10 @@ bool config_init()
 
 void config_reset()
 {
+  DEBUG_PRINT("Resetting configuration!");
   configStore = configDefault;
   config_save();
+  BlynkState::set(MODE_WAIT_CONFIG);
 }
 
 template<typename T, int size>

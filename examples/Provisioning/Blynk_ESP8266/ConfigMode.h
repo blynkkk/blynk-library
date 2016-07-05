@@ -1,3 +1,13 @@
+/**************************************************************
+ * This is a DEMO. You can use it only for development and testing.
+ *
+ * If you would like to add these features to your product,
+ * please contact Blynk for Business:
+ *
+ *                    http://tiny.cc/BlynkB2B
+ *
+ **************************************************************/
+
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
@@ -24,16 +34,20 @@ const char* config_form = R"html(
 
 void enterConfigMode()
 {
+  WiFi.disconnect();
+  WiFi.enableSTA(false);
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(WIFI_AP_IP, WIFI_AP_IP, WIFI_AP_Subnet);
   WiFi.softAP(PRODUCT_WIFI_SSID);
+  delay(500);
   IPAddress myIP = WiFi.softAPIP();
-  DEBUG_PRINT(String("AP IP address: ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
-       
-  // BUG: ESP8266 IP may be 0 -- makes AP un-connectable
+  DEBUG_PRINT(String("AP SSID: ") + PRODUCT_WIFI_SSID);
+  DEBUG_PRINT(String("AP IP:   ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
+
   if (myIP == (uint32_t)0)
   {
-    DEBUG_PRINT("IP is zero ;(");
+    BlynkState::set(MODE_ERROR);
+    return;
   }
 
   // Set up DNS Server
@@ -44,6 +58,7 @@ void enterConfigMode()
   server.onNotFound(handleRoot);
 #else
   dnsServer.start(DNS_PORT, BOARD_CONFIG_AP_URL, WiFi.softAPIP());
+  DEBUG_PRINT(String("AP URL:  ") + BOARD_CONFIG_AP_URL);
 #endif
 
   httpUpdater.setup(&server);
@@ -62,34 +77,33 @@ void enterConfigMode()
     String host  = server.arg("host");
     String port  = server.arg("port");
 
-    CopyString(ssid, configStore.wifiSSID);
-    CopyString(pass, configStore.wifiPass);
-    CopyString(token, configStore.cloudToken);
-    if (host != "") {
-      CopyString(host,  configStore.cloudHost);
-    }
-    if (port != "") {
-      configStore.cloudPort = port.toInt();
-    }
-    configStore.flagConfig = true;
-
-    DEBUG_PRINT(String("WiFi SSID: ") + ssid + " Pass: " + pass);
-    DEBUG_PRINT(String("Cloud Auth: ") + token + " Host: " + host + " Port: " + port);
-
     String content;
     unsigned statusCode;
-    if (ssid.length() > 0 && pass.length() > 0) {
+    if (token.length() == 32 && ssid.length() > 0) {
+      CopyString(ssid, configStore.wifiSSID);
+      CopyString(pass, configStore.wifiPass);
+      CopyString(token, configStore.cloudToken);
+      if (host.length()) {
+        CopyString(host,  configStore.cloudHost);
+      }
+      if (port.length()) {
+        configStore.cloudPort = port.toInt();
+      }
+      configStore.flagConfig = true;
+  
+      DEBUG_PRINT(String("WiFi SSID: ") + configStore.wifiSSID + " Pass: " + configStore.wifiPass);
+      DEBUG_PRINT(String("Blynk cloud: ") + configStore.cloudToken + " @ " + configStore.cloudHost + ":" + configStore.cloudPort);
 
-      content = "{\"Success\":\"saved to eeprom... reset to boot into new wifi\"}";
+      content = R"json({"status":"ok","msg":"Configuration saved"})json";
       statusCode = 200;
       server.send(statusCode, "application/json", content);
+
       config_save();
-      delay(100);
-      ESP.restart();
+      BlynkState::set(MODE_CONNECTING_NET);
     } else {
-      content = "{\"Error\":\"404 not found\"}";
+      DEBUG_PRINT("Configuration invalid");
+      content = R"json({"status":"error","msg":"Configuration invalid"})json";
       statusCode = 404;
-      DEBUG_PRINT("Sending 404");
       server.send(statusCode, "application/json", content);
     }
   });
@@ -108,18 +122,88 @@ void enterConfigMode()
     config_reset();
     server.send(200, "application/json", "");
   });
+  server.on("/reboot", []() {
+    ESP.restart();
+  });
+  
   server.begin();
 
-  while(1) {
+  while (BlynkState::is(MODE_WAIT_CONFIG) || BlynkState::is(MODE_CONFIGURING)) {
     dnsServer.processNextRequest();
     server.handleClient();
-    delay(1);
+    if (BlynkState::is(MODE_WAIT_CONFIG) && WiFi.softAPgetStationNum() > 0) {
+      BlynkState::set(MODE_CONFIGURING);
+    } else if (BlynkState::is(MODE_CONFIGURING) && WiFi.softAPgetStationNum() == 0) {
+      BlynkState::set(MODE_WAIT_CONFIG);
+    }
+  }
+
+  server.stop();
+}
+
+void enterConnectNet() {
+  BlynkState::set(MODE_CONNECTING_NET);
+  DEBUG_PRINT(String("Connecting to WiFi: ") + configStore.wifiSSID);
+  
+  WiFi.disconnect();
+  WiFi.mode(WIFI_STA);
+  if (!WiFi.begin(configStore.wifiSSID, configStore.wifiPass))
+    return;
+    
+  unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
+  while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))
+  {
+    delay(100);
+    if (!BlynkState::is(MODE_CONNECTING_NET)) {
+      WiFi.disconnect();
+      return;
+    }
+  }
+  
+  if (WiFi.status() == WL_CONNECTED) {
+    BlynkState::set(MODE_CONNECTING_CLOUD);
+  } else {
+    BlynkState::set(MODE_ERROR);
   }
 }
 
+void enterConnectCloud() {
+  BlynkState::set(MODE_CONNECTING_CLOUD);
 
-bool wifiCheckForStations(void)
-{
-  return (WiFi.softAPgetStationNum() > 0);
+  Blynk.disconnect();
+  Blynk.config(configStore.cloudToken, configStore.cloudHost, configStore.cloudPort);
+  Blynk.connect(0);
+
+  unsigned long timeoutMs = millis() + WIFI_CLOUD_CONNECT_TIMEOUT;
+  while ((timeoutMs > millis()) &&
+        (Blynk.connected() == false))
+  {
+    Blynk.run();
+    if (!BlynkState::is(MODE_CONNECTING_CLOUD)) {
+      Blynk.disconnect();
+      return;
+    }
+  }
+  
+  if (Blynk.connected()) {
+    BlynkState::set(MODE_RUNNING);
+  } else {
+    BlynkState::set(MODE_ERROR);
+  }
+}
+
+void enterError() {
+  BlynkState::set(MODE_ERROR);
+  
+  unsigned long timeoutMs = millis() + 10000;
+  while (timeoutMs > millis())
+  {
+    delay(10);
+    if (!BlynkState::is(MODE_ERROR)) {
+      return;
+    }
+  }
+
+  ESP.restart();
 }
 

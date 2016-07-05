@@ -1,40 +1,39 @@
+/**************************************************************
+ * This is a DEMO. You can use it only for development and testing.
+ *
+ * If you would like to add these features to your product,
+ * please contact Blynk for Business:
+ *
+ *                    http://tiny.cc/BlynkB2B
+ *
+ **************************************************************/
 
+volatile bool     g_buttonPressed = false;
+volatile uint32_t g_buttonPressTime = -1;
+
+void button_action(void)
+{
+  config_reset();
+}
 
 void button_change(void)
 {
-  static unsigned long buttonPressTime = 0;
-  if (digitalRead(BOARD_BUTTON_PIN)) // Button rising - released
-  {
-    //runMode = previousMode; // Leave button press mode
-    //indicatorRestart();
-    DEBUG_PRINT("Button released");
-    
-
-      unsigned long buttonHoldTime = millis() - buttonPressTime;
-      if (buttonHoldTime >= BUTTON_HOLD_TIME_MIN)
-      {
-        // If the button has been held for minimum time (3s)
-        // execute the button release code:
-        //buttonRelease();
-      }
-  }
-  else // Button falling - pressed
-  {
-    DEBUG_PRINT("Button pressed");
-    /*buttonPressTime = millis(); // Log the press time
-    if ((runMode == MODE_WAIT_CONFIG) || (runMode == MODE_CONFIG) ||
-        (runMode == MODE_CONNECTING_WIFI) || (runMode == MODE_CONNECTING_BLYNK))
-    { // If in config, wait-for-config mode, or trying to connect
-      previousMode = runMode; // Store current mode
-      runMode = MODE_BUTTON_HOLD; // set to button-hold mode
-    }*/
+  g_buttonPressed = !digitalRead(BOARD_BUTTON_PIN);
+  if (g_buttonPressed) {
+    DEBUG_PRINT("Hold the button to reset configuration...");
+    g_buttonPressTime = millis();
+  } else {
+    uint32_t buttonHoldTime = millis() - g_buttonPressTime;
+    if (buttonHoldTime >= BUTTON_HOLD_TIME_MAX) {
+      button_action();
+    }
+    g_buttonPressTime = -1;
   }
 }
 
-// TODO: debounce
-void button_init(){
+void button_init()
+{
   pinMode(BOARD_BUTTON_PIN, INPUT_PULLUP);
   attachInterrupt(BOARD_BUTTON_PIN, button_change, CHANGE);
 }
-
 

@@ -1,3 +1,13 @@
+/**************************************************************
+ * This is a DEMO. You can use it only for development and testing.
+ *
+ * If you would like to add these features to your product,
+ * please contact Blynk for Business:
+ *
+ *                    http://tiny.cc/BlynkB2B
+ *
+ **************************************************************/
+
 #if BOARD_LED_IS_WS2812
   #include <Adafruit_NeoPixel.h>
   Adafruit_NeoPixel rgb = Adafruit_NeoPixel(1, BOARD_LED_PIN, NEO_GRB + NEO_KHZ800);
@@ -5,16 +15,19 @@
 
 void indicator_run();
 
+#define DIMM(x)    (((x)*(BOARD_RGB_BRIGHTNESS))/255)
+#define RGB(r,g,b) (DIMM(r) << 16 | DIMM(g) << 8 | DIMM(b) << 0)
+
 class Indicator {
 public:
 
   enum Colors {
-    COLOR_BLACK   = 0x000000,
-    COLOR_WHITE   = 0x151513,
-    COLOR_BLUE    = 0x010413,
-    COLOR_BLYNK   = 0x041610,
-    COLOR_RED     = 0x200201,
-    COLOR_MAGENTA = 0x150020,
+    COLOR_BLACK   = RGB(0x00, 0x00, 0x00),
+    COLOR_WHITE   = RGB(0xFF, 0xFF, 0xE7),
+    COLOR_BLUE    = RGB(0x0D, 0x36, 0xFF),
+    COLOR_BLYNK   = RGB(0x2E, 0xFF, 0xB9),
+    COLOR_RED     = RGB(0xFF, 0x10, 0x08),
+    COLOR_MAGENTA = RGB(0xA7, 0x00, 0xFF),
   };
   
   Indicator() {
@@ -23,13 +36,15 @@ public:
   }
 
   uint32_t run() {
-    switch (g_State) {
-    case MODE_WAIT_CONFIG:       return beatLED(COLOR_BLUE,    (int[]){ 500, 500 });
-    case MODE_BUTTON_HOLD:       return waveLED(COLOR_WHITE,   1000);
-    case MODE_BUTTON_DONE:       return beatLED(COLOR_WHITE,   (int[]){ 100 });
+    if (g_buttonPressed) {
+      if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_MAX) { return beatLED(COLOR_WHITE,   (int[]){ 100, 100 }); }
+      if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_MIN) { return waveLED(COLOR_WHITE,   1000); }
+    }
+    switch (BlynkState::get()) {
+    case MODE_WAIT_CONFIG:       return beatLED(COLOR_BLUE,    (int[]){ 50, 500 });
     case MODE_CONFIGURING:       return beatLED(COLOR_BLUE,    (int[]){ 200, 200 });
-    case MODE_CONNECTING_NET:    return beatLED(COLOR_BLYNK,   (int[]){ 100, 100 });
-    case MODE_CONNECTING_CLOUD:  return beatLED(COLOR_BLYNK,   (int[]){ 50, 50 });
+    case MODE_CONNECTING_NET:    return beatLED(COLOR_BLYNK,   (int[]){ 50, 500 });
+    case MODE_CONNECTING_CLOUD:  return beatLED(COLOR_BLYNK,   (int[]){ 100, 100 });
     case MODE_RUNNING:           return waveLED(COLOR_BLYNK,   5000);
     case MODE_OTA_UPGRADE:       return beatLED(COLOR_MAGENTA, (int[]){ 50, 50 });
     default:                     return beatLED(COLOR_RED,     (int[]){ 80, 100, 80, 1000 } );
@@ -171,10 +186,8 @@ Indicator indicator;
 
 #else
 
-// TODO: For MKR1000:
-// https://forum.arduino.cc/index.php?topic=332275.0
-// https://github.com/arduino-libraries/AudioFrequencyMeter/blob/master/src/AudioFrequencyMeter.h
-
+  #warning LED indicator needs a functional timer!
+  
   void indicator_init() {}
 
 #endif

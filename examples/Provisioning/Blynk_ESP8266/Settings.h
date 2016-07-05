@@ -1,8 +1,6 @@
 /*
  * General options
  */
- 
-#define DEBUG
 
 #define BOARD_FIRMWARE_VERSION      "1.0.1"
 #define BOARD_HARDWARE_VERSION      "1.0.0"
@@ -10,22 +8,22 @@
 #define BOARD_VENDOR                "My Company"
 #define BOARD_CONFIG_AP_URL         "my-product.cc"       // Config page will be available in a browser at 'http://my-product.cc/'
 
-#define PRODUCT_WIFI_SSID           "Test"
+#define PRODUCT_WIFI_SSID           "TestProduct"
 
-#define BOARD_BUTTON_PIN            0
-#define BOARD_LED_PIN               4
+#define BOARD_BUTTON_PIN            0                     // Pin where reset button is attached
+#define BOARD_LED_PIN               4                     // Pin where indicator LED is attached
 #define BOARD_LED_IS_WS2812         true
+#define BOARD_RGB_BRIGHTNESS        32                    // 0..255
+
 
 /*
  * Advanced options
  */
 
-#define BOARD_SERIAL_TERMINAL_BAUD  115200
+#define BUTTON_HOLD_TIME_MIN        3000
+#define BUTTON_HOLD_TIME_MAX        10000
 
-#define BUTTON_HOLD_TIME_MIN        1000
-#define BUTTON_HOLD_TIME_MAX        5000
-
-#define WIFI_STA_CONNECT_TIMEOUT    30000
+#define WIFI_NET_CONNECT_TIMEOUT    30000
 #define WIFI_CLOUD_CONNECT_TIMEOUT  15000
 #define WIFI_AP_CONFIG_PORT         80
 #define WIFI_AP_IP                  IPAddress(192, 168, 4, 1)
@@ -37,7 +35,7 @@
 //#define USE_TIMER_THREE
 
 #if defined(DEBUG)
-  #define DEBUG_PRINT(...) Serial.println(__VA_ARGS__)
+  #define DEBUG_PRINT(...) BLYNK_LOG1(__VA_ARGS__)
 #else
   #define DEBUG_PRINT(...)
 #endif

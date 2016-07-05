@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+# This is a DEMO. You can use it only for development and testing.
+#
+# If you would like to add these features to your product,
+# please contact Blynk for Business:
+#
+#                    http://tiny.cc/BlynkB2B
+#
+
 var express = require('express');
 var fs = require('fs');
 
