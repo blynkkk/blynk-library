@@ -55,7 +55,7 @@ void enterOTA() {
     break;
   case HTTP_UPDATE_OK:
     DEBUG_PRINT("Firmware updated.");
-    ESP.restart();
+    restartMCU();
     break;
   }
 }

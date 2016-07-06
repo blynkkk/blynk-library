@@ -32,6 +32,10 @@ const char* config_form = R"html(
 </html>
 )html";
 
+void restartMCU() {
+  ESP.restart();
+}
+
 void enterConfigMode()
 {
   WiFi.disconnect();
@@ -90,7 +94,7 @@ void enterConfigMode()
         configStore.cloudPort = port.toInt();
       }
       configStore.flagConfig = true;
-  
+
       DEBUG_PRINT(String("WiFi SSID: ") + configStore.wifiSSID + " Pass: " + configStore.wifiPass);
       DEBUG_PRINT(String("Blynk cloud: ") + configStore.cloudToken + " @ " + configStore.cloudHost + ":" + configStore.cloudPort);
 
@@ -120,12 +124,12 @@ void enterConfigMode()
   });
   server.on("/reset", []() {
     config_reset();
-    server.send(200, "application/json", "");
+    server.send(200, "application/json", R"json({"status":"ok","msg":"Configuration reset"})json");
   });
   server.on("/reboot", []() {
-    ESP.restart();
+    restartMCU();
   });
-  
+
   server.begin();
 
   while (BlynkState::is(MODE_WAIT_CONFIG) || BlynkState::is(MODE_CONFIGURING)) {
@@ -204,6 +208,6 @@ void enterError() {
     }
   }
 
-  ESP.restart();
+  restartMCU();
 }
 

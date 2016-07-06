@@ -33,9 +33,9 @@ public:
     DEBUG_PRINT("");
     DEBUG_PRINT("Hardware v" + String(BOARD_HARDWARE_VERSION));
     DEBUG_PRINT("Firmware v" + String(BOARD_FIRMWARE_VERSION));
-    
+
     randomSeed(ESP.getChipId());
-    
+
     indicator_init();
     button_init();
     config_init();

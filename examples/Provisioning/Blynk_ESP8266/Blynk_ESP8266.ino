@@ -9,7 +9,7 @@
  *                  
  **************************************************************/
 
-#define DEBUG // Comment this out to disable debug prints
+#define DEBUG        // Comment this out to disable debug prints
 
 #define BLYNK_PRINT Serial
 #include <BlynkSimpleEsp8266.h>

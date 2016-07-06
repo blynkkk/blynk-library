@@ -187,7 +187,8 @@ Indicator indicator;
 #else
 
   #warning LED indicator needs a functional timer!
-  
+
+  void indicator_run() {}
   void indicator_init() {}
 
 #endif
