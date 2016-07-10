@@ -117,7 +117,7 @@ public:
 
     bool connectWiFi(const char* ssid, const char* pass)
     {
-        delay(500);
+    	::delay(500);
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         /*if (!wifi->restart()) {
             BLYNK_LOG1(BLYNK_F("Failed to restart"));
@@ -127,12 +127,15 @@ public:
             BLYNK_LOG1(BLYNK_F("Failed to disable Echo"));
             return false;
         }
+        String ver = wifi->ESP8266::getVersion();
+        BLYNK_LOG1(ver);
         if (!wifi->setOprToStation()) {
             BLYNK_LOG1(BLYNK_F("Failed to set STA mode"));
             return false;
         }
         if (wifi->joinAP(ssid, pass)) {
-            BLYNK_LOG2(BLYNK_F("IP: "), wifi->getLocalIP().c_str());
+            String my_ip = wifi->getLocalIP();
+            BLYNK_LOG1(my_ip);
         } else {
             BLYNK_LOG1(BLYNK_F("Failed to connect WiFi"));
             return false;
