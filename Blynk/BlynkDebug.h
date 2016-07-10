@@ -122,12 +122,12 @@ void BlynkFatal() BLYNK_NORETURN;
         }
 
 #ifdef BLYNK_DEBUG
-		#include <ctype.h>
+        #include <ctype.h>
         #define BLYNK_DBG_BREAK()    { for(;;); }
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG2(BLYNK_F("Assertion failed: "), BLYNK_F(#expr)); BLYNK_DBG_BREAK() } }
 
         static
-		void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
+        void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
             if (len) {
                 BLYNK_LOG_TIME();
                 BLYNK_PRINT.print(msg);
