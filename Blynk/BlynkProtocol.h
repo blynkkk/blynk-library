@@ -381,7 +381,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         const size_t chunk = BlynkMin(size_t(BLYNK_SEND_CHUNK), full_length - wlen);
 		BLYNK_DBG_DUMP("<", buff + wlen, chunk);
         const size_t w = conn.write(buff + wlen, chunk);
-        delay(BLYNK_SEND_THROTTLE);
+        ::delay(BLYNK_SEND_THROTTLE);
     	if (w == 0) {
 #ifdef BLYNK_DEBUG
             BLYNK_LOG1(BLYNK_F("Cmd error"));
@@ -403,18 +403,18 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 
 	BLYNK_DBG_DUMP("<", &hdr, sizeof(hdr));
     size_t wlen = conn.write(&hdr, sizeof(hdr));
-    delay(BLYNK_SEND_THROTTLE);
+    ::delay(BLYNK_SEND_THROTTLE);
 
     if (cmd != BLYNK_CMD_RESPONSE) {
         if (length) {
             BLYNK_DBG_DUMP("<", data, length);
             wlen += conn.write(data, length);
-            delay(BLYNK_SEND_THROTTLE);
+            ::delay(BLYNK_SEND_THROTTLE);
         }
         if (length2) {
             BLYNK_DBG_DUMP("<", data2, length2);
             wlen += conn.write(data2, length2);
-            delay(BLYNK_SEND_THROTTLE);
+            ::delay(BLYNK_SEND_THROTTLE);
         }
     }
 
