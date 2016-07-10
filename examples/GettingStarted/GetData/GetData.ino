@@ -36,7 +36,7 @@ void setup()
   Blynk.begin(auth);
 }
 
-// This function will be called every time Slider Widget 
+// This function will be called every time Slider Widget
 // in Blynk app writes values to the Virtual Pin 1
 BLYNK_WRITE(V1)
 {
