@@ -26,8 +26,8 @@
  *
  **************************************************************/
 #include <SoftwareSerial.h>
-SoftwareSerial DebugSerial(1,2); // RX, TX
-SoftwareSerial SwSerial(3,4);
+SoftwareSerial DebugSerial(1, 2); // RX, TX
+SoftwareSerial SwSerial(3, 4);
 
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT DebugSerial    // Comment this out to disable prints and save space
@@ -44,7 +44,7 @@ void setup()
 {
   // Debug console
   DebugSerial.begin(9600);
-  
+
   // Blynk will work through SoftwareSerial
   SwSerial.begin(9600);
   Blynk.begin(auth, SwSerial);
