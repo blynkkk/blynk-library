@@ -12,7 +12,7 @@
 
 #define BOARD_BUTTON_PIN            0                     // Pin where reset button is attached
 #define BOARD_LED_PIN               4                     // Pin where indicator LED is attached
-#define BOARD_LED_IS_WS2812         true
+#define BOARD_LED_IS_WS2812         false
 #define BOARD_RGB_BRIGHTNESS        32                    // 0..255
 
 

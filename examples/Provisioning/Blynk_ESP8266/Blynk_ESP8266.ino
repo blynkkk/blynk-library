@@ -1,12 +1,12 @@
 /**************************************************************
  * This is a DEMO. You can use it for only development and testing.
  * You should open Setting.h and modify General options.
- * 
+ *
  * If you would like to add these features to your product,
  * please contact Blynk for Business:
  *
  *                  http://tiny.cc/BlynkB2B
- *                  
+ *
  **************************************************************/
 
 #define DEBUG        // Comment this out to disable debug prints

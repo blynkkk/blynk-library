@@ -8,8 +8,6 @@
  *
  **************************************************************/
 
-#include <Blynk/BlynkTemplates.h>
-
 enum State {
   MODE_WAIT_CONFIG,
   MODE_CONFIGURING,
