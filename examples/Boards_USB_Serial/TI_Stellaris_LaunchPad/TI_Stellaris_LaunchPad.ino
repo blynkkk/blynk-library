@@ -69,7 +69,7 @@ void setup()
 {
   // Debug console
   Serial1.begin(9600);
-  
+
   // Blynk will work through Serial
   Serial.begin(9600);
   Blynk.begin(auth, Serial);
