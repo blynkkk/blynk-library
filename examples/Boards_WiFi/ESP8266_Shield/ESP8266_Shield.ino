@@ -14,7 +14,8 @@
  *
  **************************************************************
  *
- * This example shows how to use ESP8266 Shield via  to connect your project to Blynk.
+ * This example shows how to use ESP8266 Shield (with AT commands)
+ * to connect your project to Blynk.
  *
  * Note: Ensure a stable serial connection to ESP8266!
  *       Firmware version 1.0.0 (AT v0.22) is needed.
