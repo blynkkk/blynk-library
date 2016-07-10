@@ -21,6 +21,7 @@
 #include <Blynk/BlynkProtocol.h>
 #include <IPAddress.h>
 #include <WildFire_CC3000.h>
+#include <utility/netapp.h>
 
 class BlynkTransportWildFire
 {
@@ -95,6 +96,16 @@ public:
             }
         }
 #endif
+
+        // Remove socket inactivity timeout
+        unsigned long aucDHCP       = 14400;
+        unsigned long aucARP        = 3600;
+        unsigned long aucKeepalive  = 30;
+        unsigned long aucInactivity = 0;
+        int iRet = netapp_timeout_values(&aucDHCP, &aucARP, &aucKeepalive, &aucInactivity);
+        if (iRet != 0) {
+        	BLYNK_FATAL("Cannot set netapp timeout!");
+        }
 
         /*if (!cc3000.deleteProfiles())
         {
