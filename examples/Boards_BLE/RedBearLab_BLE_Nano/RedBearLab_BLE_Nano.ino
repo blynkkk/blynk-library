@@ -43,11 +43,11 @@ void setup() {
 
   ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED);
   ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::SHORTENED_LOCAL_NAME,
-                                        device_name, sizeof(device_name) - 1);
-                                        
+                                         device_name, sizeof(device_name) - 1);
+
   ble.gap().setDeviceName(device_name);
   ble.gap().setTxPower(4);
-  
+
   // Add Blynk service...
   Blynk.begin(auth);
 
