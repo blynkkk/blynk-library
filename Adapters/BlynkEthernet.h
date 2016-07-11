@@ -19,8 +19,6 @@
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
 
-static const byte _blynkEthernetMac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
-
 class BlynkEthernet
     : public BlynkProtocol<BlynkArduinoClient>
 {
@@ -50,11 +48,11 @@ public:
     void begin( const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t port      = BLYNK_DEFAULT_PORT,
-                const byte mac[]   = _blynkEthernetMac)
+                const byte mac[]   = NULL)
     {
         Base::begin(auth);
         BLYNK_LOG1(BLYNK_F("Getting IP..."));
-        if (!Ethernet.begin((byte*)mac)) {
+        if (!Ethernet.begin(SelectMacAddress(auth, mac))) {
             BLYNK_FATAL(BLYNK_F("DHCP Failed!"));
         }
         // give the Ethernet shield a second to initialize:
@@ -70,11 +68,11 @@ public:
                 uint16_t port,
                 IPAddress local,
                 IPAddress dns,
-                const byte mac[]= _blynkEthernetMac)
+                const byte mac[] = NULL)
     {
         Base::begin(auth);
         BLYNK_LOG1(BLYNK_F("Using static IP"));
-        Ethernet.begin((byte*)mac, local);
+        Ethernet.begin(SelectMacAddress(auth, mac), local);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(domain, port);
@@ -90,11 +88,11 @@ public:
                 IPAddress dns,
                 IPAddress gateway,
                 IPAddress subnet,
-                const byte mac[]= _blynkEthernetMac)
+                const byte mac[] = NULL)
     {
         Base::begin(auth);
         BLYNK_LOG1(BLYNK_F("Using static IP"));
-        Ethernet.begin((byte*)mac, local, dns, gateway, subnet);
+        Ethernet.begin(SelectMacAddress(auth, mac), local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(domain, port);
@@ -106,11 +104,11 @@ public:
     void begin( const char* auth,
                 IPAddress addr,
                 uint16_t port    = BLYNK_DEFAULT_PORT,
-                const byte mac[] = _blynkEthernetMac)
+                const byte mac[] = NULL)
     {
         Base::begin(auth);
         BLYNK_LOG1(BLYNK_F("Getting IP..."));
-        if (!Ethernet.begin((byte*)mac)) {
+        if (!Ethernet.begin(SelectMacAddress(auth, mac))) {
             BLYNK_FATAL(BLYNK_F("DHCP Failed!"));
         }
         // give the Ethernet shield a second to initialize:
@@ -125,11 +123,11 @@ public:
                 IPAddress addr,
                 uint16_t port,
                 IPAddress local,
-                const byte mac[] = _blynkEthernetMac)
+                const byte mac[] = NULL)
     {
         BLYNK_LOG1(BLYNK_F("Using static IP"));
         Base::begin(auth);
-        Ethernet.begin((byte*)mac, local);
+        Ethernet.begin(SelectMacAddress(auth, mac), local);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(addr, port);
@@ -145,17 +143,48 @@ public:
                 IPAddress dns,
                 IPAddress gateway,
                 IPAddress subnet,
-                const byte mac[] = _blynkEthernetMac)
+                const byte mac[] = NULL)
     {
         BLYNK_LOG1(BLYNK_F("Using static IP"));
         Base::begin(auth);
-        Ethernet.begin((byte*)mac, local, dns, gateway, subnet);
+        Ethernet.begin(SelectMacAddress(auth, mac), local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         this->conn.begin(addr, port);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG_IP("IP:", myip);
     }
+
+    byte* SelectMacAddress(const char* token, const byte mac[])
+    {
+        if (mac != NULL) {
+            return (byte*)mac;
+        }
+
+        macAddress[0] = 0xFE;
+        macAddress[1] = 0xED;
+        macAddress[2] = 0xBA;
+        macAddress[3] = 0xFE;
+        macAddress[4] = 0xFE;
+        macAddress[5] = 0xED;
+
+        int len = strlen(token);
+        int mac_index = 1;
+        for (int i=0; i<len; i++) {
+            macAddress[mac_index++] ^= token[i];
+
+            if (mac_index > 5) { mac_index = 1; }
+        }
+        /* BLYNK_LOG("MAC: %02X-%02X-%02X-%02X-%02X-%02X",
+                  macAddress[0], macAddress[1],
+                  macAddress[2], macAddress[3],
+                  macAddress[4], macAddress[5]);
+        */
+        return macAddress;
+    }
+
+private:
+    byte macAddress[6];
 
 };
 
