@@ -33,6 +33,7 @@ enum BlynkCmd
     BLYNK_CMD_HARDWARE_SYNC  = 16,
     BLYNK_CMD_HARDWARE_INFO  = 17,
 	BLYNK_CMD_SMS            = 18,
+	BLYNK_CMD_PROPERTY       = 19,
     BLYNK_CMD_HARDWARE       = 20,
 
     BLYNK_CMD_CREATE_DASH    = 21,
