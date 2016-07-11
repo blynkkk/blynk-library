@@ -39,6 +39,11 @@ SoftwareSerial DebugSerial(10, 11); // RX, TX
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+
 #define WiFlySerial Serial
 WiFly wifly;
 
@@ -58,7 +63,7 @@ void setup()
   //wifly.setBaud(115200);
   //WiFlySerial.begin(115200);
 
-  Blynk.begin(auth, wifly, "ssid", "pass");
+  Blynk.begin(auth, wifly, ssid, pass);
 }
 
 void loop()

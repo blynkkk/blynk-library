@@ -35,6 +35,11 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+
 // Digital the pin that is used to reset/enable the ESP8266 module
 const int EspSwitch =  23;
 
@@ -56,7 +61,7 @@ void setup()
   digitalWrite(EspSwitch, HIGH);
 
   // Configure Blynk connection
-  Blynk.begin(auth, wifi, "ssid", "pass");
+  Blynk.begin(auth, wifi, ssid, pass);
 }
 
 void loop()
