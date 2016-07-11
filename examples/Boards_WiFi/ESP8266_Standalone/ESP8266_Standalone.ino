@@ -33,10 +33,15 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth, "ssid", "pass");
+  Blynk.begin(auth, ssid, pass);
 }
 
 void loop()

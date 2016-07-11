@@ -43,10 +43,16 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Your WiFi credentials.
+// Choose wifi_sec from WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+int wifi_sec = WLAN_SEC_WPA2;
+
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth, "ssid", "pass", WLAN_SEC_WPA2);
+  Blynk.begin(auth, ssid, pass, wifi_sec);
 }
 
 void loop()

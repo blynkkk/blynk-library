@@ -37,6 +37,10 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
 
 // Hardware Serial on Mega, Leonardo, Micro...
 #define EspSerial Serial1
@@ -59,7 +63,7 @@ void setup()
   EspSerial.begin(ESP8266_BAUD);
   delay(10);
 
-  Blynk.begin(auth, wifi, "ssid", "pass");
+  Blynk.begin(auth, wifi, ssid, pass);
 }
 
 void loop()

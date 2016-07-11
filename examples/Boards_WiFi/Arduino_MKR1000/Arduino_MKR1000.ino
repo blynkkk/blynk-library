@@ -32,9 +32,10 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// Your WiFi credentials
+// Your WiFi credentials.
+// Set password to "" for open networks.
 char ssid[] = "YourNetworkName";
-char pass[] = "YourPassword";        // Set to "" for open networks
+char pass[] = "YourPassword";
 
 void setup()
 {
