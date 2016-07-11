@@ -36,6 +36,11 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+
 #define WiFlySerial Serial1
 // This can be a SoftwareSerial object:
 //#include <SoftwareSerial.h>
@@ -59,7 +64,7 @@ void setup()
   //wifly.setBaud(115200);
   //WiFlySerial.begin(115200);
 
-  Blynk.begin(auth, wifly, "ssid", "pass");
+  Blynk.begin(auth, wifly, ssid, pass);
 }
 
 void loop()

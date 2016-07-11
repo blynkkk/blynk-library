@@ -28,14 +28,16 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-#define WIFI_SSID "YourSSID"     // Your network SSID (name)
-#define WIFI_PASS "YourPASS"     // Your network password (use for WPA, or use as key for WEP)
-#define WIFI_AUTH LWIFI_WPA      // choose from LWIFI_OPEN, LWIFI_WPA, or LWIFI_WEP
+// Your WiFi credentials.
+// Choose wifi_sec from LWIFI_OPEN, LWIFI_WPA, or LWIFI_WEP
+char ssid[] = "YourNetworkName";
+char pass[] = "YourPassword";
+int wifi_sec = LWIFI_WPA;
 
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth, WIFI_SSID, WIFI_PASS, WIFI_AUTH);
+  Blynk.begin(auth, ssid, pass, wifi_sec);
 }
 
 void loop()

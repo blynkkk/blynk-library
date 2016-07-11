@@ -27,9 +27,11 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// Your WiFi credentials
+// Your WiFi credentials.
+// Choose wifi_sec from WPA2, WPA, or WEP
 char ssid[] = "YourNetworkName";
-char pass[] = "YourPassword";        // Set to "" for open networks
+char pass[] = "YourPassword";
+int wifi_sec = WPA2;
 
 //SYSTEM_MODE(AUTOMATIC);
 SYSTEM_MODE(MANUAL);
@@ -41,7 +43,7 @@ void setup()
   delay(5000);
 
   WiFi.on();
-  WiFi.setCredentials(ssid, pass, WPA2);
+  WiFi.setCredentials(ssid, pass, wifi_sec);
   WiFi.connect();
 
   Blynk.begin(auth);
