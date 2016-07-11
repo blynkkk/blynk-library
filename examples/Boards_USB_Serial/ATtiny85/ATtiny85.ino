@@ -13,7 +13,7 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to use Software Serial
+ * This example shows how to use a tiny ATtiny85
  * to connect your project to Blynk.
  * Be sure to check ordinary Serial example first!!!
  *
@@ -24,6 +24,8 @@
  *            GND  4|    |5  PB0 (D 0) pwm0
  *                  +----+
  *
+ **************************************************************
+ *            USB HOWTO: http://tiny.cc/BlynkUSB
  **************************************************************/
 #include <SoftwareSerial.h>
 SoftwareSerial DebugSerial(1, 2); // RX, TX

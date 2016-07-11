@@ -17,6 +17,8 @@
  * There is an USB issue on Linux:
  *   https://github.com/digistump/DigistumpArduino/issues/16
  *
+ **************************************************************
+ *            USB HOWTO: http://tiny.cc/BlynkUSB
  **************************************************************/
 
 // Minimize size for non-Pro version

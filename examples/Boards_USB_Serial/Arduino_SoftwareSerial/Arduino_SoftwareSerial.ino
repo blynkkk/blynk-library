@@ -17,6 +17,8 @@
  * to connect your project to Blynk.
  * Be sure to check ordinary Serial example first!!!
  *
+ **************************************************************
+ *            USB HOWTO: http://tiny.cc/BlynkUSB
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
