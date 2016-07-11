@@ -35,6 +35,7 @@ public:
         long        asLong() const      { return atol(ptr); }
 #ifndef BLYNK_NO_FLOAT
         double      asDouble() const    { return atof(ptr); }
+        float       asFloat() const     { return atof(ptr); }
 #endif
         bool isValid() const            { return ptr != NULL; }
 
@@ -66,6 +67,7 @@ public:
     long        asLong() const      { return atol(buff); }
 #ifndef BLYNK_NO_FLOAT
     double      asDouble() const    { return atof(buff); }
+    float       asFloat() const     { return atof(buff); }
 #endif
 
     iterator begin() const { return iterator(buff); }
