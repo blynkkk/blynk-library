@@ -10,10 +10,39 @@
 
 #define PRODUCT_WIFI_SSID           "TestProduct"
 
-#define BOARD_BUTTON_PIN            0                     // Pin where reset button is attached
-#define BOARD_LED_PIN               4                     // Pin where indicator LED is attached
-#define BOARD_LED_IS_WS2812         false
+// Board configuration (see examples below).
+#define BOARD_BUTTON_PIN            0                     // Pin where user button is attached
+#define BOARD_LED_PIN               2                     // Set LED pin - if you have a simple LED attached
+//#define BOARD_LED_PIN_R           15                    // Set R,G,B pins - if your LED is PWM RGB 
+//#define BOARD_LED_PIN_G           12
+//#define BOARD_LED_PIN_B           13
+//#define BOARD_LED_PIN_WS2812      4                     // Set if your LED is WS2812 RGB
+#define BOARD_LED_INVERSE           false                 // true, if you need to inverse LED signal
+#define BOARD_RGB_BRIGHTNESS        32                    // 0..255 brightness control
+
+// Example configuration for NodeMCU v1.0 Board:
+/*
+#define BOARD_BUTTON_PIN            0
+#define BOARD_LED_PIN               16
+#define BOARD_LED_INVERSE           true
+*/
+
+// Example configuration for SparkFun Blynk Board:
+/*
+#define BOARD_BUTTON_PIN            0
+#define BOARD_LED_PIN_WS2812        4
+#define BOARD_RGB_BRIGHTNESS        32
+*/
+
+// Example configuration for Witty cloud Board:
+/*
+#define BOARD_BUTTON_PIN            4                     // Pin where user button is attached
+#define BOARD_LED_PIN_R             15
+#define BOARD_LED_PIN_G             12
+#define BOARD_LED_PIN_B             13
+#define BOARD_LED_INVERSE           false
 #define BOARD_RGB_BRIGHTNESS        32                    // 0..255
+*/
 
 
 /*
@@ -22,6 +51,8 @@
 
 #define BUTTON_HOLD_TIME_MIN        3000
 #define BUTTON_HOLD_TIME_MAX        10000
+
+#define BOARD_PWM_MAX               1023
 
 #define WIFI_NET_CONNECT_TIMEOUT    30000
 #define WIFI_CLOUD_CONNECT_TIMEOUT  15000

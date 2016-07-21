@@ -8,12 +8,16 @@
  *
  **************************************************************/
 
-#if BOARD_LED_IS_WS2812
+#if defined(BOARD_LED_PIN_WS2812)
   #include <Adafruit_NeoPixel.h>
-  Adafruit_NeoPixel rgb = Adafruit_NeoPixel(1, BOARD_LED_PIN, NEO_GRB + NEO_KHZ800);
+  Adafruit_NeoPixel rgb = Adafruit_NeoPixel(1, BOARD_LED_PIN_WS2812, NEO_GRB + NEO_KHZ800);
 #endif
 
 void indicator_run();
+
+#if !defined(BOARD_RGB_BRIGHTNESS)
+#define BOARD_RGB_BRIGHTNESS 255
+#endif
 
 #define DIMM(x)    (((x)*(BOARD_RGB_BRIGHTNESS))/255)
 #define RGB(r,g,b) (DIMM(r) << 16 | DIMM(g) << 8 | DIMM(b) << 0)
@@ -58,7 +62,9 @@ public:
 
 protected:
 
-#if BOARD_LED_IS_WS2812
+#if defined(BOARD_LED_PIN_WS2812) || defined(BOARD_LED_PIN_R)
+
+#if defined(BOARD_LED_PIN_WS2812)
 
   void initLED() {
     rgb.begin();
@@ -69,6 +75,31 @@ protected:
     rgb.setPixelColor(0, color);
     rgb.show();
   }
+
+#elif defined(BOARD_LED_PIN_R)
+
+  void initLED() {
+    pinMode(BOARD_LED_PIN_R, OUTPUT);
+    pinMode(BOARD_LED_PIN_G, OUTPUT);
+    pinMode(BOARD_LED_PIN_B, OUTPUT);
+  }
+
+  void setRGB(uint32_t color) {
+    uint8_t r = (color & 0xFF0000) >> 16;
+    uint8_t g = (color & 0x00FF00) >> 8;
+    uint8_t b = (color & 0x0000FF);
+#if BOARD_LED_INVERSE == true
+    analogWrite(BOARD_LED_PIN_R, BOARD_PWM_MAX - r);
+    analogWrite(BOARD_LED_PIN_G, BOARD_PWM_MAX - g);
+    analogWrite(BOARD_LED_PIN_B, BOARD_PWM_MAX - b);
+#else
+    analogWrite(BOARD_LED_PIN_R, r);
+    analogWrite(BOARD_LED_PIN_G, g);
+    analogWrite(BOARD_LED_PIN_B, b);
+#endif
+  }
+  
+#endif
 
   template<typename T>
   int beatLED(uint32_t onColor, const T& beat) {
@@ -99,20 +130,24 @@ protected:
     return breathePeriod / 256;
   }
 
-#else
+#elif defined(BOARD_LED_PIN)
 
   void initLED() {
     pinMode(BOARD_LED_PIN, OUTPUT);
   }
 
   void setLED(uint8_t color) {
+#if BOARD_LED_INVERSE == true
+    analogWrite(BOARD_LED_PIN, BOARD_PWM_MAX - color);
+#else
     analogWrite(BOARD_LED_PIN, color);
+#endif
   }
 
   template<typename T>
   int beatLED(uint32_t, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
-    setLED((m_Counter % 2 == 0) ? 255 : 0);
+    setLED((m_Counter % 2 == 0) ? BOARD_PWM_MAX : 0);
     uint32_t next = beat[m_Counter];
     m_Counter = (m_Counter+1) % cnt;
     return next;
@@ -121,12 +156,16 @@ protected:
   uint32_t waveLED(uint32_t, unsigned breathePeriod) {  
     uint8_t brightness = (m_Counter < 128) ? m_Counter : 255 - m_Counter;
 
-    setLED(255 * ((float)brightness / 128.0));
+    setLED(BOARD_PWM_MAX * ((float)brightness / (BOARD_PWM_MAX/2)));
 
     // This function relies on the 8-bit, unsigned m_Counter rolling over. 
     m_Counter = (m_Counter+1) % 256;
     return breathePeriod / 256;
   }
+
+#else
+
+  #warning Invalid LED configuration.
 
 #endif 
 
