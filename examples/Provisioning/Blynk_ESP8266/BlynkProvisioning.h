@@ -11,8 +11,8 @@
 #include "Settings.h"
 #include "BlynkState.h"
 #include "ConfigStore.h"
-#include "ConfigMode.h"
 #include "ResetButton.h"
+#include "ConfigMode.h"
 #include "Indicator.h"
 #include "OTA.h"
 

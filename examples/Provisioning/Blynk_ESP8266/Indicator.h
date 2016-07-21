@@ -41,8 +41,8 @@ public:
 
   uint32_t run() {
     if (g_buttonPressed) {
-      if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_MAX) { return beatLED(COLOR_WHITE,   (int[]){ 100, 100 }); }
-      if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_MIN) { return waveLED(COLOR_WHITE,   1000); }
+      if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_ACTION)     { return beatLED(COLOR_WHITE,   (int[]){ 100, 100 }); }
+      if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_INDICATION) { return waveLED(COLOR_WHITE,   1000); }
     }
     switch (BlynkState::get()) {
     case MODE_WAIT_CONFIG:       return beatLED(COLOR_BLUE,    (int[]){ 50, 500 });

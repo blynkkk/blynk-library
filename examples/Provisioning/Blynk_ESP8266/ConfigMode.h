@@ -93,7 +93,6 @@ void enterConfigMode()
       if (port.length()) {
         configStore.cloudPort = port.toInt();
       }
-      configStore.flagConfig = true;
 
       DEBUG_PRINT(String("WiFi SSID: ") + configStore.wifiSSID + " Pass: " + configStore.wifiPass);
       DEBUG_PRINT(String("Blynk cloud: ") + configStore.cloudToken + " @ " + configStore.cloudHost + ":" + configStore.cloudPort);
@@ -102,7 +101,6 @@ void enterConfigMode()
       statusCode = 200;
       server.send(statusCode, "application/json", content);
 
-      config_save();
       BlynkState::set(MODE_CONNECTING_NET);
     } else {
       DEBUG_PRINT("Configuration invalid");
@@ -191,6 +189,12 @@ void enterConnectCloud() {
   
   if (Blynk.connected()) {
     BlynkState::set(MODE_RUNNING);
+
+    if (!configStore.flagConfig) {
+      configStore.flagConfig = true;
+      config_save();
+      DEBUG_PRINT("Configuration stored to flash");
+    }
   } else {
     BlynkState::set(MODE_ERROR);
   }
@@ -200,13 +204,15 @@ void enterError() {
   BlynkState::set(MODE_ERROR);
   
   unsigned long timeoutMs = millis() + 10000;
-  while (timeoutMs > millis())
+  while (timeoutMs > millis() || g_buttonPressed)
   {
     delay(10);
     if (!BlynkState::is(MODE_ERROR)) {
       return;
     }
   }
+  DEBUG_PRINT("Restarting after error.");
+  delay(10);
 
   restartMCU();
 }
