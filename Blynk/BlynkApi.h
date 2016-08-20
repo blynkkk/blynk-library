@@ -231,10 +231,6 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-#if defined(BLYNK_EXPERIMENTAL)
-    // Attention!
-    // Every function in this section may be changed, removed or renamed.
-
     /**
      * Sets property of a Widget
      *
@@ -253,6 +249,10 @@ public:
         cmd.add(value);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
+
+#if defined(BLYNK_EXPERIMENTAL)
+    // Attention!
+    // Every function in this section may be changed, removed or renamed.
 
     /**
      * Refreshes value of a widget by running
