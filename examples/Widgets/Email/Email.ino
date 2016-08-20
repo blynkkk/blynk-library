@@ -72,6 +72,8 @@ void emailOnButtonPress()
     Serial.println("Button is pressed."); // This can be seen in the Serial Monitor
     Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
 
+    // Or, if you want to use the email specified in the App (like for App Export):
+    //Blynk.email("Subject: Button Logger", "You just pushed the button...");
   }
 }
 
