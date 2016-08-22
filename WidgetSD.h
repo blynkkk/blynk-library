@@ -30,7 +30,7 @@ void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
     if (!strcmp(cmd, "ls")) {
         if (File dir = SD.open(param[1].asStr())) {
             while (File entry = dir.openNextFile()) {
-                char mem[32] = "";
+                char mem[32];
                 BlynkParam result(mem, 0, sizeof(mem));
                 result.add(entry.name());
                 if (entry.isDirectory()) {

@@ -24,7 +24,7 @@ public:
 
     template<typename T>
     void print(int x, int y, const T& str) {
-        char mem[64] = "";
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("p");
         cmd.add(x);
