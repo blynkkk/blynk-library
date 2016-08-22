@@ -1,5 +1,6 @@
 {
   "name": "Blynk",
+  "version": "0.3.8",
   "description": "Build a smartphone app for your project in minutes. Works with Arduino, ESP8266, Raspberry Pi, Intel Edison/Galileo, LinkIt ONE, Particle Core/Photon, Banana Pro, LeMaker Guitar, Energia, MBED, LightBlue Bean, ...",
   "keywords": "framework, iot, home, automation, esp8266, m2m, smartphone, mobile, app, web, cloud, widgets, wifi, ble, ethernet, usb, serial",
   "authors":
@@ -13,9 +14,23 @@
     "type": "git",
     "url": "https://github.com/blynkkk/blynk-library.git"
   },
-  "url": "http://www.blynk.cc",
-  "exclude": "linux",
+  "homepage": "http://www.blynk.cc",
+  "export": {
+    "exclude": [
+      "linux",
+      "extras",
+      "scripts",
+      "tests"
+    ]
+  },
   "frameworks": [ "arduino", "energia", "mbed", "wiringpi" ],
   "platforms": [ "atmelavr", "atmelsam", "espressif", "nordicnrf51", "titiva", "timsp430", "native" ],
-  "examples": "examples/*/*/*.ino"
+  "examples": "examples/*/*/*.ino",
+  "build": {
+    "srcFilter": [
+      "+<*.c>",
+      "+<*.cpp>",
+      "+<*.h>"
+    ]
+  }  
 }
