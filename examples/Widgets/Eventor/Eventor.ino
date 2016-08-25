@@ -48,7 +48,7 @@ void sendFlagToServer() {
 void setup()
 {
   Serial.begin(9600); // See the connection status in Serial Monitor
-  Blynk.begin(auth, IPAddress(192,168,0,53));
+  Blynk.begin(auth);
 
   while (Blynk.connect() == false) {
     // Wait until connected
