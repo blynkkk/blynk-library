@@ -13,8 +13,7 @@
  * This example code is in public domain.
  *
  **************************************************************
- * You can synchronize the state of widgets with hardware states,
- * even if hardware resets or looses connection temporarily
+ * You can set predefined properties of any widget. Like color, label
  *
  * Project setup in the Blynk app:
  *   Gauge widget (0...100) on V0

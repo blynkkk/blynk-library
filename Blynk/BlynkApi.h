@@ -237,7 +237,7 @@ public:
      * @experimental
      *
      * @param pin      Virtual Pin number
-     * @param property Property name ("enabled", "label", "color", "bg_color" ...)
+     * @param property Property name ("label", "labels", "color", ...)
      * @param value    Property value
      */
     template <typename T1, typename T2>
