@@ -16,8 +16,8 @@
  * You can set predefined properties of any widget. Like color, label
  *
  * Project setup in the Blynk app:
- *   Gauge widget (0...100) on V0
- *   Slider widget (0...100) on V1
+ *   Gauge widget (0...100) on V0 with min 0 and max 255
+ *   Slider widget (0...100) on V1 with min 0 and max 255
  *
  **************************************************************/
 
