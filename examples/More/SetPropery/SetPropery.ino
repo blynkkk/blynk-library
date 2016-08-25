@@ -16,8 +16,8 @@
  * You can set predefined properties of any widget. Like color, label
  *
  * Project setup in the Blynk app:
- *   Gauge widget (0...100) on V0 with min 0 and max 255
- *   Slider widget (0...100) on V1 with min 0 and max 255
+ *   Gauge widget (0...100) on V0 in PUSH mode
+ *   Slider widget (0...100) on V1
  *
  **************************************************************/
 
@@ -47,11 +47,10 @@ void loop()
 #define BLYNK_RED       "#D3435C"
 #define BLYNK_DARK_BLUE "#5F7CD8"
 
-int gaugeValue = 0;
 String gaugeColor;
 
-BLYNK_READ(V0) {
-  Blynk.virtualWrite(V0, gaugeValue);
+BLYNK_WRITE(V1) {
+  int gaugeValue = param.asInt();
 
   String newColor;
   if (gaugeValue > 80) {
@@ -67,9 +66,7 @@ BLYNK_READ(V0) {
     gaugeColor = newColor;
     Blynk.setProperty(V0, "color", gaugeColor);
   }
-}
 
-BLYNK_WRITE(V1) {
-  gaugeValue = param.asInt();
+  Blynk.virtualWrite(V0, gaugeValue);
 }
 
