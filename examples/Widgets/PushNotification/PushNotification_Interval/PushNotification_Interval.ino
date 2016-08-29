@@ -41,7 +41,7 @@ void notifyUptime()
 
   // Actually send the message.
   // Note:
-  //   We allow 1 notification per minute for now.
+  //   We allow 1 notification per 15 seconds for now.
   Blynk.notify(String("Running for ") + uptime + " minutes.");
 }
 

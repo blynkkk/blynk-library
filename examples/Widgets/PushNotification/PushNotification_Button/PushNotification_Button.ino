@@ -39,6 +39,8 @@ void notifyOnButtonPress()
   if (isButtonPressed) {
     Serial.println("Button is pressed.");
 
+    // Note:
+    //   We allow 1 notification per 15 seconds for now.
     Blynk.notify("Yaaay... button is pressed!");
   }
 }

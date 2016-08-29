@@ -21,7 +21,7 @@
  * Connect a button to digital pin 2 and GND
  * Pressing this button will send an e-mail
  *
- * WARNING: You are limited to send ONLY ONE E-MAIL PER MINUTE!
+ * WARNING: You are limited to send ONLY ONE E-MAIL PER 15 SECONDS!
  *
  **************************************************************/
 
@@ -60,7 +60,7 @@ void setup()
 
 void emailOnButtonPress()
 {
-  // *** WARNING: You are limited to send ONLY ONE E-MAIL PER MINUTE! ***
+  // *** WARNING: You are limited to send ONLY ONE E-MAIL PER 15 SECONDS! ***
 
   // Let's send an e-mail when you press the button
   // connected to digital pin 2 on your Arduino
