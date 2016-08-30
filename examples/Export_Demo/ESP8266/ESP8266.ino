@@ -90,7 +90,7 @@ void example_init() {
 
       if (btn) {
         buttonStatus = !buttonStatus;
-  
+
         digitalWrite(5, buttonStatus ? HIGH : LOW);
         Blynk.virtualWrite(V3, buttonStatus);
       }
