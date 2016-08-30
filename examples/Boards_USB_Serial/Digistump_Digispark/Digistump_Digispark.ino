@@ -23,8 +23,8 @@
 
 // Minimize size for non-Pro version
 #if !defined(ARDUINO_AVR_DIGISPARKPRO)
-  #define BLYNK_NO_INFO
-  #define BLYNK_NO_BUILTIN
+#define BLYNK_NO_INFO
+#define BLYNK_NO_BUILTIN
 #endif
 
 #include <BlynkSimpleStream.h>
