@@ -38,9 +38,9 @@ boolean flag = true;
 
 void sendFlagToServer() {
   if (flag) {
-     Blynk.virtualWrite(V0, 1);
+    Blynk.virtualWrite(V0, 1);
   } else {
-     Blynk.virtualWrite(V0, 0);
+    Blynk.virtualWrite(V0, 0);
   }
   flag = !flag;
 }
@@ -59,8 +59,8 @@ void setup()
 }
 
 BLYNK_WRITE(V1) {
-   //here you'll get 0 or 255
-   int ledValue = param.asInt();
+  //here you'll get 0 or 255
+  int ledValue = param.asInt();
 }
 
 void loop()
