@@ -13,7 +13,7 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows you how you can use server as storage for 
+ * This example shows you how you can use server as storage for
  * your data like EEPROM
  *
  * Project setup in the Blynk app (not necessary):
@@ -45,11 +45,11 @@ void setup()
 {
   Serial.begin(9600); // See the connection status in Serial Monitor
   Blynk.begin(auth);
-  
+
   while (Blynk.connect() == false) {
     // Wait until connected
   }
-  
+
   timer.setInterval(1000L, increment);
 }
 
