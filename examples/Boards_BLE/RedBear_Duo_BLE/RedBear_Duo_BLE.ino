@@ -22,9 +22,9 @@
  **************************************************************/
 
 #if defined(ARDUINO)
-  SYSTEM_MODE(MANUAL);    // If Arduino - do not connect to Particle cloud
+SYSTEM_MODE(MANUAL);    // If Arduino - do not connect to Particle cloud
 #else
-  SYSTEM_MODE(AUTOMATIC); // Otherwise, connect to Particle cloud
+SYSTEM_MODE(AUTOMATIC); // Otherwise, connect to Particle cloud
 #endif
 
 //#define BLYNK_DEBUG
