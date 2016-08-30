@@ -36,6 +36,8 @@ int uptimeCounter;
 
 void increment() {
   uptimeCounter++;
+
+  //storing int in V0 pin on server
   Blynk.virtualWrite(V0, uptimeCounter);  
 }
 
@@ -66,5 +68,6 @@ BLYNK_CONNECTED() {
 // restoring counter from server
 BLYNK_WRITE(V0)
 {
+  //restoring int value
   uptimeCounter = param.asInt();
 }
