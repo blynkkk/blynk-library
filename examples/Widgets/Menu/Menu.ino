@@ -36,21 +36,17 @@ void setup()
 BLYNK_WRITE(V1) {
   switch (param.asInt())
   {
-    case 1: { // Item 1
+    case 1: // Item 1
       Serial.println("Item 1 selected");
       break;
-    }
-    case 2: { // Item 2
+    case 2: // Item 2
       Serial.println("Item 2 selected");
       break;
-    }
-    case 3: { // Item 3
+    case 3: // Item 3
       Serial.println("Item 3 selected");
       break;
-    }
-    default: {
+    default:
       Serial.println("Unknown item selected");
-    }
   }
 }
 
