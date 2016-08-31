@@ -31,24 +31,24 @@ struct blynk_tm {
 class BlynkTime {
 
 public:
-	static const int MAX_TIME = 86400;
+    static const uint32_t MAX_TIME = 86400L;
 
-	BlynkTime() : mTime(-1) {}
+    BlynkTime() : mTime(-1) {}
 
-	BlynkTime(const BlynkTime& t) : mTime(t.mTime) {}
+    BlynkTime(const BlynkTime& t) : mTime(t.mTime) {}
 
-	BlynkTime(long seconds) : mTime(seconds) {}
+    BlynkTime(long seconds) : mTime(seconds % MAX_TIME) {}
 
-	BlynkTime(int hour, int minute, int second)
+    BlynkTime(int hour, int minute, int second)
     {
-        mTime = hour * 3600 + minute * 60 + second;
+        mTime = (hour * 3600 + minute * 60 + second) % MAX_TIME;
     }
 
     int second() const { return mTime % 60; }
-    int minute() const { return floor((mTime / 60) % 60); }
-    int hour()   const { return floor(mTime / 3600); }
+    int minute() const { return (mTime / 60) % 60; }
+    int hour()   const { return mTime / 3600; }
 
-    int hour_format_12() const {
+    int hour12() const {
         int h = hour();
         if (h == 0)
             return 12; // 12 midnight
@@ -61,12 +61,15 @@ public:
     bool isPM() const { return (hour() >= 12); }
 
     void adjustSeconds(int sec) {
-        mTime = (mTime + sec) % MAX_TIME;
+        if (isValid()) {
+            mTime = (mTime + sec) % MAX_TIME;
+        }
     }
 
-    blynk_time_t getUnixOffset() { return mTime; }
+    blynk_time_t getUnixOffset() const { return mTime; }
 
-    operator bool() const { return mTime < MAX_TIME; }
+    bool isValid()  const { return mTime < MAX_TIME; }
+    operator bool() const { return isValid(); }
 
     bool operator == (const BlynkTime& t) const { return mTime == t.mTime; }
     bool operator >= (const BlynkTime& t) const { return mTime >= t.mTime; }
@@ -75,7 +78,7 @@ public:
     bool operator <  (const BlynkTime& t) const { return mTime <  t.mTime; }
 
 private:
-	uint32_t		mTime;
+    uint32_t mTime;
 };
 
 class BlynkDateTime {
@@ -130,7 +133,7 @@ public:
         return (weekNum);
     }*/
 
-    int hour_format_12() const {
+    int hour12() const {
         int h = hour();
         if (h == 0)
             return 12; // 12 midnight
@@ -143,14 +146,17 @@ public:
     bool isPM() const { return (hour() >= 12); }
 
     void adjustSeconds(int sec) {
-        mTime += sec;
-        blynk_gmtime_r(&mTime, &mTm);
+        if (isValid()) {
+            mTime += sec;
+            blynk_gmtime_r(&mTime, &mTm);
+        }
     }
 
     //tm& getTm() { return mTm; }
-    blynk_time_t getUnix() { return mTime; }
+    blynk_time_t getUnix() const { return mTime; }
 
-    operator bool() const { return mTime != 0; }
+    bool isValid()  const { return mTime != 0; }
+    operator bool() const { return isValid(); }
 
     bool operator == (const BlynkDateTime& t) const { return mTime == t.mTime; }
     bool operator >= (const BlynkDateTime& t) const { return mTime >= t.mTime; }
