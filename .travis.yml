@@ -52,13 +52,12 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_WritePin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_ReadPin
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_WritePin
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushDataOnRequest
     - PLATFORMIO_CI_SRC=examples/GettingStarted/Servo
-    - PLATFORMIO_CI_SRC=examples/More/ButtonInterrupt
-    - PLATFORMIO_CI_SRC=examples/More/ButtonPoll
     - PLATFORMIO_CI_SRC=examples/More/DHT11
     - PLATFORMIO_CI_SRC=examples/More/FormatString
     - PLATFORMIO_CI_SRC=examples/More/NeoPixel
@@ -67,8 +66,10 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/ServerAsDataStorage/ServerAsDataStorage_SingleValue
     - PLATFORMIO_CI_SRC=examples/More/SetProperty
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
-    - PLATFORMIO_CI_SRC=examples/More/Sync
-    - PLATFORMIO_CI_SRC=examples/More/SyncPhysicalButton
+    - PLATFORMIO_CI_SRC=examples/More/Sync/ButtonInterrupt
+    - PLATFORMIO_CI_SRC=examples/More/Sync/ButtonPoll
+    - PLATFORMIO_CI_SRC=examples/More/Sync/HardwareSyncStateFromApp
+    - PLATFORMIO_CI_SRC=examples/More/Sync/SyncPhysicalButton
     - PLATFORMIO_CI_SRC=examples/Widgets/Bridge
     - PLATFORMIO_CI_SRC=examples/Widgets/Email
     - PLATFORMIO_CI_SRC=examples/Widgets/Eventor
@@ -80,6 +81,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
     - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
+    - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput
     - PLATFORMIO_CI_SRC=examples/Widgets/Timer
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
 

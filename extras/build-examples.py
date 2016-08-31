@@ -29,6 +29,8 @@ metadata = {
   "ESP8266_Standalone_SmartConfig.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
+  "Blynk_ESP8266.ino"           : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+
   # Digistump
   "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-pro" },
   "Digistump_Oak.ino"           : { "fqbn": "digistump:oak:oak1" },
@@ -42,7 +44,7 @@ metadata = {
   "RedBear_Duo_WiFi.ino"        : { "fqbn": "RedBear:STM32F2:RedBear_Duo" },
   "RedBear_Duo_BLE.ino"         : { "fqbn": "RedBear:STM32F2:RedBear_Duo" },
   "RedBearLab_BLE_Nano.ino"     : { "fqbn": "RedBearLab:nRF51822:nRF51822_NANO_32KB" },
-  "RedBearLab_BlendMicro"       : { "fqbn": "RedBearLab:avr:blendmicro8" },
+  "RedBearLab_BlendMicro.ino"   : { "fqbn": "RedBearLab:avr:blendmicro8" },
   "RedBearLab_BLE_Mini.ino"     : { "fqbn": "arduino:avr:leonardo" },
 
   #Other

@@ -22,6 +22,8 @@ metadata = {
   "ESP8266_Standalone_SmartConfig.ino"  : { "board": "nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
 
+  "Blynk_ESP8266.ino"           : { "board": "nodemcuv2" },
+
   # Digistump
   "Digistump_Digispark.ino"     : { "board": "digispark-pro" },
   "Digistump_Oak.ino"           : { "skip": True },
