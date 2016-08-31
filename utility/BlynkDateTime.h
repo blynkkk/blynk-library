@@ -31,7 +31,7 @@ struct blynk_tm {
 class BlynkDateTime {
 
 public:
-    BlynkDateTime() {}
+    BlynkDateTime() : mTime(0) {}
 
     BlynkDateTime(const BlynkDateTime& t)
     {
@@ -99,6 +99,8 @@ public:
 
     //tm& getTm() { return mTm; }
     blynk_time_t getUnix() { return mTime; }
+
+    operator bool() const { return mTime != 0; }
 
     bool operator == (const BlynkDateTime& t) const { return mTime == t.mTime; }
     bool operator >= (const BlynkDateTime& t) const { return mTime >= t.mTime; }

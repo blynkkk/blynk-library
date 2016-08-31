@@ -18,7 +18,7 @@ class TimeInputParam
 {
 public:
 
-	TimeInputParam(BlynkParam& param)
+	TimeInputParam(const BlynkParam& param)
 		: mStart (param[0].asLong())
 		, mStop  (param[1].asLong())
 	{
