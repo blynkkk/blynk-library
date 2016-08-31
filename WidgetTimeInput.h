@@ -19,19 +19,23 @@ class TimeInputParam
 public:
 
 	TimeInputParam(const BlynkParam& param)
-		: mStart (param[0].asLong())
-		, mStop  (param[1].asLong())
 	{
+		if (strlen(param[0].asStr())) {
+			mStart = param[0].asLong();
+		}
+		if (strlen(param[1].asStr())) {
+			mStop = param[1].asLong();
+		}
 		mTZ = param[2].asLong();
 	}
 
-	BlynkDateTime& getStart() { return mStart; }
-	BlynkDateTime& getStop()  { return mStop;  }
+	BlynkTime& getStart() { return mStart; }
+	BlynkTime& getStop()  { return mStop;  }
     long getTZ()  const { return mTZ; }
 
 private:
-    BlynkDateTime mStart;
-    BlynkDateTime mStop;
+    BlynkTime mStart;
+    BlynkTime mStop;
     long mTZ;
 };
 
