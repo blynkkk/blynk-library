@@ -31,4 +31,9 @@ void BlynkAverageSample (T& avg, const T& input) {
     avg += (add > 0) ? add : -1;
 }
 
+#define BlynkBitSet(value, bit)   ((value) |= (1UL << (bit)))
+#define BlynkBitClear(value, bit) ((value) &= ~(1UL << (bit)))
+#define BlynkBitRead(value, bit)  (((value) >> (bit)) & 0x01)
+#define BlynkBitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))
+
 #endif

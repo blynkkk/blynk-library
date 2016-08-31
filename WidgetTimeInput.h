@@ -13,6 +13,7 @@
 
 #include <Blynk/BlynkApi.h>
 #include <utility/BlynkDateTime.h>
+#include <utility/BlynkUtility.h>
 
 class TimeInputParam
 {
@@ -29,14 +30,14 @@ public:
         mTZ = param[2].asLong();
 
         if (param[3].isEmpty()) {
-			mWeekdays = B01111111;
+			mWeekdays = -1; // All set
         } else {
 			mWeekdays = 0;
 			const char* p = param[3].asStr();
 
 			while (int c = *p++) {
 				if (c >= '1' && c <= '7') {
-					bitSet(mWeekdays, c - '1');
+					BlynkBitSet(mWeekdays, c - '1');
 				}
 			}
         }
@@ -47,7 +48,7 @@ public:
     long getTZ()  const { return mTZ; }
 
     bool isWeekdaySelected(int day) const {
-        return bitRead(mWeekdays, (day - 1) % 7);
+        return BlynkBitRead(mWeekdays, (day - 1) % 7);
     }
 
 private:
