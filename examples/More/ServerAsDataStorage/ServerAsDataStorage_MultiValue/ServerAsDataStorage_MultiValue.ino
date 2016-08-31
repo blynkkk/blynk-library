@@ -37,7 +37,11 @@ String someStaticData = "SomeStaticData";
 
 void increment() {
   uptimeCounter++;
+
+  //storing int and string in V0 pin on server
   Blynk.virtualWrite(V0, uptimeCounter, someStaticData);
+
+  //updating value display with uptimeCounter
   Blynk.virtualWrite(V1, uptimeCounter);
 }
 
@@ -68,6 +72,8 @@ BLYNK_CONNECTED() {
 // restoring counter from server
 BLYNK_WRITE(V0)
 {
+  //restoring int value
   uptimeCounter = param[0].asInt();
+  //restoring string value
   someStaticData = param[1].asString();
 }
