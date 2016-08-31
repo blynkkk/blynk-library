@@ -43,8 +43,14 @@ IPAddress dns_ip     (  8,   8,   8,   8);
 IPAddress gateway_ip ( 10,   0,   0,   1);
 IPAddress subnet_mask(255, 255, 255,   0);
 
+#define W5100_CS  10
+#define SDCARD_CS 4
+
 void setup()
 {
+  pinMode(SDCARD_CS, OUTPUT);
+  digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
+
   Serial.begin(9600);
   Blynk.begin(auth, server_ip, 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
   // Or like this:

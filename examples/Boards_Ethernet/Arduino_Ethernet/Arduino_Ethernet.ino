@@ -36,8 +36,14 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+#define W5100_CS  10
+#define SDCARD_CS 4
+
 void setup()
 {
+  pinMode(SDCARD_CS, OUTPUT);
+  digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
+
   Serial.begin(9600);
   Blynk.begin(auth);
   // You can also specify server.
