@@ -28,6 +28,56 @@ struct blynk_tm {
     int16_t         tm_isdst;
 };
 
+class BlynkTime {
+
+public:
+	static const int MAX_TIME = 86400;
+
+	BlynkTime() : mTime(-1) {}
+
+	BlynkTime(const BlynkTime& t) : mTime(t.mTime) {}
+
+	BlynkTime(long seconds) : mTime(seconds) {}
+
+	BlynkTime(int hour, int minute, int second)
+    {
+        mTime = hour * 3600 + minute * 60 + second;
+    }
+
+    int second() const { return mTime % 60; }
+    int minute() const { return floor((mTime / 60) % 60); }
+    int hour()   const { return floor(mTime / 3600); }
+
+    int hour_format_12() const {
+        int h = hour();
+        if (h == 0)
+            return 12; // 12 midnight
+        else if (h > 12)
+            return h - 12;
+        return h;
+    }
+
+    bool isAM() const { return !isPM(); }
+    bool isPM() const { return (hour() >= 12); }
+
+    void adjustSeconds(int sec) {
+        mTime = (mTime + sec) % MAX_TIME;
+    }
+
+    blynk_time_t getUnixOffset() { return mTime; }
+
+    operator bool() const { return mTime < MAX_TIME; }
+
+    bool operator == (const BlynkTime& t) const { return mTime == t.mTime; }
+    bool operator >= (const BlynkTime& t) const { return mTime >= t.mTime; }
+    bool operator <= (const BlynkTime& t) const { return mTime <= t.mTime; }
+    bool operator >  (const BlynkTime& t) const { return mTime >  t.mTime; }
+    bool operator <  (const BlynkTime& t) const { return mTime <  t.mTime; }
+
+private:
+	uint32_t		mTime;
+};
+
 class BlynkDateTime {
 
 public:

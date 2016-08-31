@@ -38,17 +38,15 @@ BLYNK_WRITE(V1) {
   TimeInputParam time_input(param);
 
   // Process start time
-  if (BlynkDateTime& t = time_input.getStart())
+  if (BlynkTime& t = time_input.getStart())
   {
-    Serial.println(String("Start: ") + t.hour() + ":" + t.minute() + ":" + t.second() + " " +
-                   t.day() + "."  + t.month() + "."  + t.year());
+    Serial.println(String("Start: ") + t.hour() + ":" + t.minute() + ":" + t.second());
   }
 
   // Process stop time, if present
-  if (BlynkDateTime& t = time_input.getStop())
+  if (BlynkTime& t = time_input.getStop())
   {
-    Serial.println(String("Stop: ")  + t.hour() + ":" + t.minute() + ":" + t.second() + " " +
-                   t.day() + "."  + t.month() + "."  + t.year());
+    Serial.println(String("Stop: ")  + t.hour() + ":" + t.minute() + ":" + t.second());
   }
 
   // Process timezone
