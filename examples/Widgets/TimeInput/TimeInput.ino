@@ -31,6 +31,7 @@ char auth[] = "YourAuthToken";
 void setup()
 {
   Serial.begin(9600);
+
   Blynk.begin(auth);
 }
 
@@ -52,7 +53,12 @@ BLYNK_WRITE(V1) {
   // Process timezone
   Serial.println(String("Time zone: ") + time_input.getTZ());
 
-  // TODO: Process weekdays
+  // Process weekdays
+  for (int i=1; i<=7; i++) {
+    if (time_input.isWeekdaySelected(i)) {
+      Serial.println(String("Day ") + i + " is selected");
+    }
+  }
 
   Serial.println();
 }
