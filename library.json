@@ -28,9 +28,12 @@
   "examples": "examples/*/*/*.ino",
   "build": {
     "srcFilter": [
+      "+<utility/*.c>",
+      "+<utility/*.cpp>",
+      "+<utility/*.h>",
       "+<*.c>",
       "+<*.cpp>",
       "+<*.h>"
     ]
-  }  
+  }
 }
