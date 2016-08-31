@@ -77,7 +77,7 @@ abs_examples = map(lambda x: os.path.abspath(x), examples)
 
 logfile = open("./build.log","wb")
 
-os.chdir("/data2/arduino-1.6.8/")
+os.chdir("/data2/arduino-1.6.11/")
 '''
 builder = "./arduino-builder"
 
