@@ -11,4 +11,8 @@
 #include <WidgetLCD.h>
 #include <WidgetTerminal.h>
 #include <WidgetBridge.h>
-// Cannot auto-include WidgetSD, as it has library dependency
+
+// Cannot auto-include as these have library dependencies
+#include <WidgetTimeInput.h>
+//#include <WidgetRTC.h>
+//#include <WidgetSD.h>
