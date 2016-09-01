@@ -65,13 +65,13 @@ metadata = {
   "LinkItONE.ino"               : { "skip": True },
 
   # Energia
-  "Energia_WiFi.ino"            : { "skip": True },
-  "TI_MSP430F5529_CC3100.ino"   : { "skip": True },
-  "RedBearLab_CC3200.ino"       : { "skip": True },
-  "RedBearLab_WiFi_Mini.ino"    : { "skip": True },
-  "TI_CC3200_LaunchXL.ino"      : { "skip": True },
-  "TI_Stellaris_LaunchPad.ino"  : { "skip": True },
-  "TI_TivaC_Connected.ino"      : { "skip": True },
+  "Energia_WiFi.ino"            : { "fqbn": "energia:tivac:EK-TM4C123GXL" },
+  "TI_MSP430F5529_CC3100.ino"   : { "fqbn": "energia:msp430:MSP-EXP430F5529LP" },
+  "RedBearLab_CC3200.ino"       : { "fqbn": "energia:cc3200:CC3200-RBL" },
+  "RedBearLab_WiFi_Mini.ino"    : { "fqbn": "energia:cc3200:CC3200-RBL-MINI" },
+  "TI_CC3200_LaunchXL.ino"      : { "fqbn": "energia:cc3200:CC3200-LAUNCHXL" },
+  "TI_Stellaris_LaunchPad.ino"  : { "fqbn": "energia:tivac:EK-LM4F120XL" },
+  "TI_TivaC_Connected.ino"      : { "fqbn": "energia:tivac:EK-TM4C1294XL" },
 }
 
 examples = find_files('examples', '*.ino')
@@ -79,7 +79,6 @@ abs_examples = map(lambda x: os.path.abspath(x), examples)
 
 logfile = open("./build.log","wb")
 
-os.chdir("/data2/arduino-1.6.11/")
 '''
 builder = "./arduino-builder"
 
@@ -126,13 +125,19 @@ for fn in abs_examples:
     print >>logfile, "Building:", ino
     print >>logfile, "=================", "\n"
     logfile.flush()
-    
-    print "Building:", ino, "...", 
+
+    print "Building:", ino, "...",
     sys.stdout.flush()
-    
-    #cmd = [builder] + builder_args + ["-fqbn", m["fqbn"]] + [fn]
+
+    if m["fqbn"].startswith("energia:"):
+        os.chdir("/data2/ard-energia-1.6.10E18/")
+        builder = "./energia"
+    else:
+        os.chdir("/data2/arduino-1.6.11/")
+        builder = "./arduino"
+
     cmd = [
-        "./arduino",
+        builder,
         "--verbose",
         "--verify",
         "--board", m["fqbn"],
@@ -151,5 +156,5 @@ print "=================="
 if len(failed):
     print " Failed:", failed
     sys.exit(1)
-else:    
+else:
     print " All", len(built), "examples OK"
