@@ -36,7 +36,7 @@ void setup()
 }
 
 BLYNK_WRITE(V1) {
-  TimeInputParam time_input(param);
+  TimeInputParam timeInput(param);
 
   // Process start time
 
@@ -85,12 +85,12 @@ BLYNK_WRITE(V1) {
   // Process timezone (in seconds)
   // Timezone is already added to start/stop time
 
-  Serial.println(String("Time zone: ") + time_input.getTZ());
+  Serial.println(String("Time zone: ") + timeInput.getTZ());
 
   // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
 
   for (int i = 1; i <= 7; i++) {
-    if (time_input.isWeekdaySelected(i)) {
+    if (timeInput.isWeekdaySelected(i)) {
       Serial.println(String("Day ") + i + " is selected");
     }
   }
