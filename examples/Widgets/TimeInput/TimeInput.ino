@@ -54,7 +54,7 @@ BLYNK_WRITE(V1) {
   Serial.println(String("Time zone: ") + time_input.getTZ());
 
   // Process weekdays
-  for (int i=1; i<=7; i++) {
+  for (int i = 1; i <= 7; i++) {
     if (time_input.isWeekdaySelected(i)) {
       Serial.println(String("Day ") + i + " is selected");
     }
