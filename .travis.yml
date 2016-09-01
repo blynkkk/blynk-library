@@ -3,7 +3,7 @@ python:
     - "2.7"
 
 # Cache PlatformIO packages using Travis CI container-based infrastructure
-#sudo: false
+sudo: false
 cache:
     directories:
         - "~/.platformio"
@@ -33,7 +33,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/TI_Stellaris_LaunchPad PLATFORMIO_CI_EXTRA_ARGS="--board=lplm4f120h5qr"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_EXTRA_ARGS="--board=teensy31"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/User_Defined_Connection
-    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/chipKIT_Uno32 PLATFORMIO_CI_EXTRA_ARGS="--board=uno_pic32"
+    #- PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/chipKIT_Uno32 PLATFORMIO_CI_EXTRA_ARGS="--board=uno_pic32"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_MKR1000
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield_101
@@ -96,7 +96,7 @@ env:
 
 install:
     # tmp solution, use 32-bits toolchain for chipKIT_Uno32
-    - sudo apt-get install -qq lib32z1 lib32ncurses5 lib32bz2-1.0
+    #- sudo apt-get install -qq lib32z1 lib32ncurses5 lib32bz2-1.0
 
     - pip install -U https://github.com/platformio/platformio/archive/develop.zip
     #
