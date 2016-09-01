@@ -47,7 +47,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TI_MSP430F5529_CC3100 PLATFORMIO_CI_BOARDS_ARGS="--board=lpmsp430f5529"
     #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=fio"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_BOARDS_ARGS="--board=uno --board=leonardo --project-option='lib_ignore=Adafruit-CC300'"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_ReadPin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_WritePin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_ReadPin
