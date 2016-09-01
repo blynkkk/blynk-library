@@ -18,15 +18,39 @@
 class TimeInputParam
 {
 public:
+	enum TimeMode {
+		TIME_UNDEFINED,
+		TIME_SUNSET,
+		TIME_SUNRISE,
+		TIME_SPECIFIED
+	};
 
     TimeInputParam(const BlynkParam& param)
     {
-        if (!param[0].isEmpty()) {
-            mStart = param[0].asLong();
-        }
-        if (!param[1].isEmpty()) {
-            mStop = param[1].asLong();
-        }
+    	mStartMode = TIME_UNDEFINED;
+    	if (0 == strcmp(param[0].asStr(), "sr")) {
+    		mStartMode = TIME_SUNRISE;
+		} else if (0 == strcmp(param[0].asStr(), "ss")) {
+    		mStartMode = TIME_SUNSET;
+		} else if (!param[0].isEmpty()) {
+			mStart = BlynkTime(param[0].asLong());
+			if (mStart.isValid()) {
+				mStartMode = TIME_SPECIFIED;
+			}
+		}
+
+    	mStopMode = TIME_UNDEFINED;
+    	if (0 == strcmp(param[1].asStr(), "sr")) {
+    		mStopMode = TIME_SUNRISE;
+		} else if (0 == strcmp(param[1].asStr(), "ss")) {
+			mStopMode = TIME_SUNSET;
+		} else if (!param[1].isEmpty()) {
+			mStop = BlynkTime(param[1].asLong());
+			if (mStop.isValid()) {
+				mStopMode = TIME_SPECIFIED;
+			}
+		}
+
         mTZ = param[2].asLong();
 
         if (param[3].isEmpty()) {
@@ -45,6 +69,19 @@ public:
 
     BlynkTime& getStart() { return mStart; }
     BlynkTime& getStop()  { return mStop;  }
+
+    TimeMode getStartMode() const { return mStartMode; }
+    TimeMode getStopMode() const  { return mStopMode; }
+
+    int getStartHour() const   { return mStart.hour(); }
+    int getStartMinute() const { return mStart.minute(); }
+    int getStartSecond() const { return mStart.second(); }
+
+    bool hasStopTime() const   { return mStop.isValid(); }
+    int getStopHour() const    { return mStop.hour(); }
+    int getStopMinute() const  { return mStop.minute(); }
+    int getStopSecond() const  { return mStop.second(); }
+
     long getTZ()  const { return mTZ; }
 
     bool isWeekdaySelected(int day) const {
@@ -52,8 +89,12 @@ public:
     }
 
 private:
+    TimeMode  mStartMode;
     BlynkTime mStart;
+
+    TimeMode  mStopMode;
     BlynkTime mStop;
+
     int32_t   mTZ;
     uint8_t   mWeekdays;
 };
