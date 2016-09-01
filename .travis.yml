@@ -89,7 +89,8 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
     - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
-    - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput
+    - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/AdvancedTimeInput
+    - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/SimpleTimeInput
     - PLATFORMIO_CI_SRC=examples/Widgets/Timer
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
 
