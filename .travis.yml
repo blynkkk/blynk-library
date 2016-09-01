@@ -3,7 +3,7 @@ python:
     - "2.7"
 
 # Cache PlatformIO packages using Travis CI container-based infrastructure
-sudo: false
+#sudo: false
 cache:
     directories:
         - "~/.platformio"
