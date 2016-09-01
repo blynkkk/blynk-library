@@ -58,8 +58,12 @@
 #ifndef BLYNK_INFO_DEVICE
 
     #if   defined(ENERGIA)
+
         #define BLYNK_INFO_DEVICE  "Energia"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_NO_YIELD
+
+		// TODO: detect Energia devices
 
         #if   defined(__MSP430F5529__)
         #define BLYNK_INFO_CPU  "MSP430F5529"
