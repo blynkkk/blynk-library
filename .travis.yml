@@ -47,12 +47,12 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TI_MSP430F5529_CC3100 PLATFORMIO_CI_BOARDS_ARGS="--board=lpmsp430f5529"
     #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=fio"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_BOARDS_ARGS="--board=uno --board=leonardo --project-option='lib_ignore=Adafruit-CC3000'"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_ReadPin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_WritePin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_ReadPin
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_WritePin
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
@@ -87,7 +87,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
 
 install:
-    - python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+    - pip install -U https://github.com/platformio/platformio/archive/develop.zip
     #
     # Libraries from PlatformIO Library Registry:
     #
@@ -105,6 +105,6 @@ install:
     # http://platformio.org/lib/show/259/BLEPeripheral
     # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
 
-    - platformio lib install 17 28 91 418 419 420 65 44 19 299 259 177
+    - platformio lib -g install 17 28 91 418 419 420 65 44 19 299 259 177
 
 script: make travis-build
