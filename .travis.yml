@@ -52,7 +52,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_WritePin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_ReadPin
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_WritePin
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
@@ -87,7 +87,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
 
 install:
-    - python -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+    - pip install -U https://github.com/platformio/platformio/archive/develop.zip
     #
     # Libraries from PlatformIO Library Registry:
     #
