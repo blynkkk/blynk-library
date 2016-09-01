@@ -36,22 +36,22 @@ void setup()
 }
 
 BLYNK_WRITE(V1) {
-  TimeInputParam timeInput(param);
+  TimeInputParam t(param);
 
   // Process start time
 
-  if (time_input.hasStartTime())
+  if (t.hasStartTime())
   {
     Serial.println(String("Start: ") +
-                   time_input.getStartHour() + ":" +
-                   time_input.getStartMinute() + ":" +
-                   time_input.getStartSecond());
+                   t.getStartHour() + ":" +
+                   t.getStartMinute() + ":" +
+                   t.getStartSecond());
   }
-  else if (time_input.isStartSunrise())
+  else if (t.isStartSunrise())
   {
     Serial.println("Start at sunrise");
   }
-  else if (time_input.isStartSunset())
+  else if (t.isStartSunset())
   {
     Serial.println("Start at sunset");
   }
@@ -62,18 +62,18 @@ BLYNK_WRITE(V1) {
 
   // Process stop time
 
-  if (time_input.hasStopTime())
+  if (t.hasStopTime())
   {
     Serial.println(String("Stop: ") +
-                   time_input.getStopHour() + ":" +
-                   time_input.getStopMinute() + ":" +
-                   time_input.getStopSecond());
+                   t.getStopHour() + ":" +
+                   t.getStopMinute() + ":" +
+                   t.getStopSecond());
   }
-  else if (time_input.isStopSunrise())
+  else if (t.isStopSunrise())
   {
     Serial.println("Stop at sunrise");
   }
-  else if (time_input.isStopSunset())
+  else if (t.isStopSunset())
   {
     Serial.println("Stop at sunset");
   }
@@ -85,12 +85,12 @@ BLYNK_WRITE(V1) {
   // Process timezone (in seconds)
   // Timezone is already added to start/stop time
 
-  Serial.println(String("Time zone: ") + timeInput.getTZ());
+  Serial.println(String("Time zone: ") + t.getTZ());
 
   // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
 
   for (int i = 1; i <= 7; i++) {
-    if (timeInput.isWeekdaySelected(i)) {
+    if (t.isWeekdaySelected(i)) {
       Serial.println(String("Day ") + i + " is selected");
     }
   }
