@@ -23,17 +23,7 @@
       "tests"
     ]
   },
-  "frameworks": [ "arduino", "energia", "mbed", "wiringpi" ],
-  "platforms": [ "atmelavr", "atmelsam", "espressif", "nordicnrf51", "titiva", "timsp430", "native" ],
-  "examples": "examples/*/*/*.ino",
-  "build": {
-    "srcFilter": [
-      "+<utility/*.c>",
-      "+<utility/*.cpp>",
-      "+<utility/*.h>",
-      "+<*.c>",
-      "+<*.cpp>",
-      "+<*.h>"
-    ]
-  }
+  "frameworks": [ "arduino", "energia", "wiringpi" ],
+  "platforms": "*",
+  "examples": "examples/*/*/*.ino"
 }
