@@ -50,6 +50,7 @@ BLYNK_WRITE(V5)
      //do something
   }
 
+  Blynk.setProperty(V5, "label", action);
   Serial.print(action);
   Serial.println();
 }
