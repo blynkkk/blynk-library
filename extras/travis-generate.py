@@ -22,7 +22,7 @@ metadata = {
   "ESP8266_Standalone_SmartConfig.ino"  : { "board": "nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
 
-  "Blynk_ESP8266.ino"           : { "board": "nodemcuv2" },
+  "Blynk_ESP8266.ino"           : { "board": "nodemcuv2", "lib_ignore": "WiFi101" },
 
   # Digistump
   "Digistump_Digispark.ino"     : { "board": "digispark-pro" },
@@ -43,7 +43,7 @@ metadata = {
   #Other
   "Simblee_BLE.ino"             : { "skip": True },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
-  "WildFire.ino"                : { "board": "wildfirev3" },
+  "WildFire_V3.ino"             : { "board": "wildfirev3" },
   "chipKIT_Uno32.ino"           : { "board": "uno_pic32" },
   "LightBlue_Bean.ino"          : { "board": "lightblue-bean" },
   "Teensy3.ino"                 : { "board": "teensy31" },
@@ -86,8 +86,14 @@ for fn in examples:
 
     if ino in metadata:
         m = metadata[ino]
+        extra_args = ''
         if 'board' in m:
-            path = path + ' PLATFORMIO_CI_BOARDS_ARGS="--board=' + m['board'] + '"'
+            extra_args += "--board=" + m['board'] + " "
+        if 'lib_ignore' in m:
+            extra_args += "--project-option='lib_ignore=" + m['lib_ignore'] + "' "
+
+        if len(extra_args):
+            path += ' PLATFORMIO_CI_EXTRA_ARGS="' + extra_args.strip() + '"'
     else:
         m = {}
 

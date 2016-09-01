@@ -19,8 +19,8 @@ update-travis:
 travis-build:
 ifdef PLATFORMIO_CI_SRC
 	-rm -rf ./linux
-ifdef PLATFORMIO_CI_BOARDS_ARGS
-	platformio ci --lib="." $(PLATFORMIO_CI_BOARDS_ARGS)
+ifdef PLATFORMIO_CI_EXTRA_ARGS
+	platformio ci --lib="." $(PLATFORMIO_CI_EXTRA_ARGS)
 else
 	platformio ci --lib="." --board=uno --board=leonardo
 endif

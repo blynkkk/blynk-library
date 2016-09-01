@@ -5,54 +5,55 @@ python:
 env:
     - LINUX_SRC=linux
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Adafruit_Bluefruit_LE
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/Arduino_101_BLE PLATFORMIO_CI_BOARDS_ARGS="--board=genuino101"
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlue_Bean PLATFORMIO_CI_BOARDS_ARGS="--board=lightblue-bean"
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Mini PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BlendMicro PLATFORMIO_CI_BOARDS_ARGS="--board=blendmicro8"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/Arduino_101_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=genuino101"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
     # - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBear_Duo_BLE
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/Serial_HM10_HC08 PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/Serial_HM10_HC08 PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_BLE/Simblee_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/nRF8001
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet2
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet_Manual
-    - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/ENC28J60 PLATFORMIO_CI_BOARDS_ARGS="--board=nanoatmega328"
+    - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/ENC28J60 PLATFORMIO_CI_EXTRA_ARGS="--board=nanoatmega328"
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Intel_Galileo
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Seeed_EthernetV2_0
-    - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/TI_TivaC_Connected PLATFORMIO_CI_BOARDS_ARGS="--board=lptm4c1294ncpdt"
-    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/ATtiny85 PLATFORMIO_CI_BOARDS_ARGS="--board=attiny85"
+    - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/TI_TivaC_Connected PLATFORMIO_CI_EXTRA_ARGS="--board=lptm4c1294ncpdt"
+    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/ATtiny85 PLATFORMIO_CI_EXTRA_ARGS="--board=attiny85"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Serial_USB
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_SoftwareSerial
-    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Zero_M0_Serial PLATFORMIO_CI_BOARDS_ARGS="--board=zero"
-    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/TI_Stellaris_LaunchPad PLATFORMIO_CI_BOARDS_ARGS="--board=lplm4f120h5qr"
-    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_BOARDS_ARGS="--board=teensy31"
+    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Zero_M0_Serial PLATFORMIO_CI_EXTRA_ARGS="--board=zero"
+    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/TI_Stellaris_LaunchPad PLATFORMIO_CI_EXTRA_ARGS="--board=lplm4f120h5qr"
+    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_EXTRA_ARGS="--board=teensy31"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/User_Defined_Connection
+    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/chipKIT_Uno32 PLATFORMIO_CI_EXTRA_ARGS="--board=uno_pic32"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_MKR1000
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield_101
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_BOARDS_ARGS="--board=yun"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_EXTRA_ARGS="--board=yun"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_BOARDS_ARGS="--board=esp01"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SSL PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=lptm4c1294ncpdt"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SSL PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=lptm4c1294ncpdt"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Intel_Edison_WiFi
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/LinkItONE
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RN_XV_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=leonardo"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RN_XV_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RedBearLab_CC3200
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RedBearLab_WiFi_Mini
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RedBear_Duo_WiFi
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TI_CC3200_LaunchXL
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TI_MSP430F5529_CC3100 PLATFORMIO_CI_BOARDS_ARGS="--board=lpmsp430f5529"
-    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_BOARDS_ARGS="--board=fio"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_BOARDS_ARGS="--board=tinyduino"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_BOARDS_ARGS="--board=uno --board=leonardo --project-option='lib_ignore=Adafruit-CC3000'"
-    - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_ReadPin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_WritePin PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TI_MSP430F5529_CC3100 PLATFORMIO_CI_EXTRA_ARGS="--board=lpmsp430f5529"
+    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=fio"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=tinyduino"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_EXTRA_ARGS="--board=wildfirev3"
+    - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_ReadPin PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266_WritePin PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_ReadPin
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Ethernet_WritePin
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Blynk_ESP8266 PLATFORMIO_CI_BOARDS_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101'"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Blynk_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
@@ -87,6 +88,9 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
 
 install:
+    # tmp solution, use 32-bits toolchain for chipKIT_Uno32
+    - sudo apt-get install -qq lib32z1 lib32ncurses5 lib32bz2-1.0
+
     - pip install -U https://github.com/platformio/platformio/archive/develop.zip
     #
     # Libraries from PlatformIO Library Registry:
