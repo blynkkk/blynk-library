@@ -77,6 +77,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/LCD/LCD_AdvancedMode
     - PLATFORMIO_CI_SRC=examples/Widgets/LED/LED_StatusOfButton
     - PLATFORMIO_CI_SRC=examples/Widgets/Menu
+    - PLATFORMIO_CI_SRC=examples/Widgets/Player
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification/PushNotification_Button
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
