@@ -71,16 +71,21 @@ public:
     BlynkTime& getStop()  { return mStop;  }
 
     TimeMode getStartMode() const { return mStartMode; }
-    TimeMode getStopMode() const  { return mStopMode; }
+    TimeMode getStopMode()  const { return mStopMode; }
 
-    int getStartHour() const   { return mStart.hour(); }
-    int getStartMinute() const { return mStart.minute(); }
-    int getStartSecond() const { return mStart.second(); }
+	bool hasStartTime()   const { return mStartMode == TIME_SPECIFIED; }
+	bool isStartSunrise() const { return mStartMode == TIME_SUNRISE; }
+	bool isStartSunset()  const { return mStartMode == TIME_SUNSET; }
+    int getStartHour()    const { return mStart.hour(); }
+    int getStartMinute()  const { return mStart.minute(); }
+    int getStartSecond()  const { return mStart.second(); }
 
-    bool hasStopTime() const   { return mStop.isValid(); }
-    int getStopHour() const    { return mStop.hour(); }
-    int getStopMinute() const  { return mStop.minute(); }
-    int getStopSecond() const  { return mStop.second(); }
+    bool hasStopTime()    const { return mStopMode == TIME_SPECIFIED; }
+	bool isStopSunrise()  const { return mStopMode == TIME_SUNRISE; }
+	bool isStopSunset()   const { return mStopMode == TIME_SUNSET; }
+    int getStopHour()     const { return mStop.hour(); }
+    int getStopMinute()   const { return mStop.minute(); }
+    int getStopSecond()   const { return mStop.second(); }
 
     long getTZ()  const { return mTZ; }
 
@@ -89,13 +94,13 @@ public:
     }
 
 private:
-    TimeMode  mStartMode;
     BlynkTime mStart;
+    BlynkTime mStop;
+    int32_t   mTZ;
 
     TimeMode  mStopMode;
-    BlynkTime mStop;
+    TimeMode  mStartMode;
 
-    int32_t   mTZ;
     uint8_t   mWeekdays;
 };
 
