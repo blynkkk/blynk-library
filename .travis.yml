@@ -71,7 +71,8 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/PrintAllVirtual
     - PLATFORMIO_CI_SRC=examples/More/ServerAsDataStorage/ServerAsDataStorage_MultiValue
     - PLATFORMIO_CI_SRC=examples/More/ServerAsDataStorage/ServerAsDataStorage_SingleValue
-    - PLATFORMIO_CI_SRC=examples/More/SetProperty
+    - PLATFORMIO_CI_SRC=examples/More/SetProperty/SetProperty_MultiValue
+    - PLATFORMIO_CI_SRC=examples/More/SetProperty/SetProperty_SingleValue
     - PLATFORMIO_CI_SRC=examples/More/Stroboscope
     - PLATFORMIO_CI_SRC=examples/More/Sync/ButtonInterrupt
     - PLATFORMIO_CI_SRC=examples/More/Sync/ButtonPoll

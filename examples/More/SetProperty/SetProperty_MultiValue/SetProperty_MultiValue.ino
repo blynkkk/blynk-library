@@ -13,19 +13,21 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to use the Menu Widget.
+ * You can set predefined properties of any widget. Like color, label
  *
- * App project setup:
- *   Menu widget attached to V1 (put 3 items in it)
+ * Project setup in the Blynk app:
+ *   Menu Widget on V1 with 2 items
  *
  **************************************************************/
 
-#define BLYNK_PRINT Serial // Enables Serial Monitor
+#define BLYNK_PRINT Serial
 #include <SPI.h>
 #include <Ethernet.h>
-#include <BlynkSimpleEthernet.h> // This part is for Ethernet stuff
+#include <BlynkSimpleEthernet.h>
 
-char auth[] = "YourAuthToken"; // Put your Auth Token here.
+// You should get Auth Token in the Blynk App.
+// Go to the Project Settings (nut icon).
+char auth[] = "YourAuthToken";
 
 void setup()
 {
@@ -33,29 +35,33 @@ void setup()
   Blynk.begin(auth);
 }
 
+void loop()
+{
+  Blynk.run();
+}
+
 BLYNK_WRITE(V1) {
+
   switch (param.asInt())
   {
     case 1: // Item 1
       Serial.println("Item 1 selected");
       break;
     case 2: // Item 2
-      Serial.println("Item 2 selected");
-      break;
-    case 3: // Item 3
-      Serial.println("Item 3 selected");
+      // If item 2 is selected, change menu items...
+      BlynkParamAllocated items(128); // list length, in bytes
+      items.add("New item 1");
+      items.add("New item 2");
+      items.add("New item 3");
+      Blynk.setProperty(V1, "labels", items);
+
+      //you can also use overloaded methods if you have less than 4 items
+      //Blynk.setProperty(V1, "labels", "New item 1", "New item 2", "New item 3");
+
       break;
     default:
       Serial.println("Unknown item selected");
   }
-}
 
-void loop()
-{
-  Blynk.run(); // All the Blynk Magic happens here...
-
-  // You can inject your own code or combine it with other sketches.
-  // Check other examples on how to communicate with Blynk. Remember
-  // to avoid delay() function!
 }
 
