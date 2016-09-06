@@ -44,10 +44,10 @@ BLYNK_WRITE(V1) {
 
   switch (param.asInt())
   {
-    case 1: // Item 1
+    case 1: {
       Serial.println("Item 1 selected");
-      break;
-    case 2: // Item 2
+    } break;
+    case 2: {
       // If item 2 is selected, change menu items...
       BlynkParamAllocated items(128); // list length, in bytes
       items.add("New item 1");
@@ -55,10 +55,10 @@ BLYNK_WRITE(V1) {
       items.add("New item 3");
       Blynk.setProperty(V1, "labels", items);
 
-      //you can also use overloaded methods if you have less than 4 items
+      // You can also use overloaded methods if you have less than 4 items
       //Blynk.setProperty(V1, "labels", "New item 1", "New item 2", "New item 3");
 
-      break;
+    } break;
     default:
       Serial.println("Unknown item selected");
   }
