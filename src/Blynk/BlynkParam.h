@@ -103,10 +103,23 @@ public:
         add(val);
     }
 
-private:
+protected:
     char*	buff;
     size_t	len;
     size_t	buff_size;
+};
+
+
+class BlynkParamAllocated
+	: public BlynkParam
+{
+public:
+	BlynkParamAllocated(size_t size)
+		: BlynkParam(malloc(size), 0, size)
+	{}
+	~BlynkParamAllocated() {
+		free(buff);
+	}
 };
 
 inline
