@@ -19,7 +19,7 @@ public:
     WidgetBridge(int vPin)
         : mPin(vPin)
     {}
-    void onWrite(BlynkReq& request, const BlynkParam& param) {}
+    void onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param) {}
 
     void setAuthToken(const char* token) {
         char mem[BLYNK_MAX_SENDBYTES];

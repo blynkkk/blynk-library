@@ -152,10 +152,10 @@
 
 // Initial syntax:
 #define BLYNK_WRITE_2(pin) \
-    void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& param)
+    void BlynkWidgetWrite ## pin (BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param)
 
 #define BLYNK_READ_2(pin)  \
-    void BlynkWidgetRead ## pin  (BlynkReq& request)
+    void BlynkWidgetRead ## pin  (BlynkReq BLYNK_UNUSED &request)
 
 #define BLYNK_WRITE_DEFAULT() BLYNK_WRITE_2(Default)
 #define BLYNK_READ_DEFAULT()  BLYNK_READ_2(Default)
@@ -165,16 +165,16 @@
 
 // New, more readable syntax:
 #define BLYNK_IN_2(pin)  \
-    void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& getValue)
+    void BlynkWidgetWrite ## pin (BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &getValue)
 
 #define BLYNK_OUT_2(pin) \
-    void BlynkWidgetRead ## pin  (BlynkReq& request)
+    void BlynkWidgetRead ## pin  (BlynkReq BLYNK_UNUSED &request)
 
-#define BLYNK_IN_DEFAULT()   BLYNK_IN_2(Default)
-#define BLYNK_OUT_DEFAULT()  BLYNK_OUT_2(Default)
+#define BLYNK_INPUT_DEFAULT()   BLYNK_IN_2(Default)
+#define BLYNK_OUTPUT_DEFAULT()  BLYNK_OUT_2(Default)
 
-#define BLYNK_IN(pin)        BLYNK_IN_2(pin)
-#define BLYNK_OUT(pin)       BLYNK_OUT_2(pin)
+#define BLYNK_INPUT(pin)        BLYNK_IN_2(pin)
+#define BLYNK_OUTPUT(pin)       BLYNK_OUT_2(pin)
 
 // Additional handlers
 #define BLYNK_CONNECTED()    void BlynkOnConnected()
@@ -225,8 +225,8 @@ struct BlynkReq
     uint8_t pin;
 };
 
-typedef void (*WidgetReadHandler)(BlynkReq& request);
-typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
+typedef void (*WidgetReadHandler)(BlynkReq BLYNK_UNUSED &request);
+typedef void (*WidgetWriteHandler)(BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param);
 
 WidgetReadHandler GetReadHandler(uint8_t pin);
 WidgetWriteHandler GetWriteHandler(uint8_t pin);
