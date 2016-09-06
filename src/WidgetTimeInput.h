@@ -27,37 +27,52 @@ public:
 
     TimeInputParam(const BlynkParam& param)
     {
+
         mStartMode = TIME_UNDEFINED;
-        if (0 == strcmp(param[0].asStr(), "sr")) {
+        mStopMode = TIME_UNDEFINED;
+        mTZ[0] = '\0';
+        mWeekdays = -1; // All set
+
+        BlynkParam::iterator it = param.begin();
+        if (it >= param.end())
+            return;
+
+        if (0 == strcmp(it.asStr(), "sr")) {
             mStartMode = TIME_SUNRISE;
-        } else if (0 == strcmp(param[0].asStr(), "ss")) {
+        } else if (0 == strcmp(it.asStr(), "ss")) {
             mStartMode = TIME_SUNSET;
-        } else if (!param[0].isEmpty()) {
-            mStart = BlynkTime(param[0].asLong());
+        } else if (!it.isEmpty()) {
+            mStart = BlynkTime(it.asLong());
             if (mStart.isValid()) {
                 mStartMode = TIME_SPECIFIED;
             }
         }
 
-        mStopMode = TIME_UNDEFINED;
-        if (0 == strcmp(param[1].asStr(), "sr")) {
+        if (++it >= param.end())
+            return;
+
+        if (0 == strcmp(it.asStr(), "sr")) {
             mStopMode = TIME_SUNRISE;
-        } else if (0 == strcmp(param[1].asStr(), "ss")) {
+        } else if (0 == strcmp(it.asStr(), "ss")) {
             mStopMode = TIME_SUNSET;
-        } else if (!param[1].isEmpty()) {
-            mStop = BlynkTime(param[1].asLong());
+        } else if (!it.isEmpty()) {
+            mStop = BlynkTime(it.asLong());
             if (mStop.isValid()) {
                 mStopMode = TIME_SPECIFIED;
             }
         }
 
-        mTZ = param[2].asLong();
+        if (++it >= param.end())
+            return;
 
-        if (param[3].isEmpty()) {
-            mWeekdays = -1; // All set
-        } else {
+        strncpy(mTZ, it.asStr(), sizeof(mTZ));
+
+        if (++it >= param.end())
+            return;
+
+        if (!it.isEmpty()) {
             mWeekdays = 0;
-            const char* p = param[3].asStr();
+            const char* p = it.asStr();
 
             while (int c = *p++) {
                 if (c >= '1' && c <= '7') {
@@ -87,7 +102,7 @@ public:
     int getStopMinute()   const { return mStop.minute(); }
     int getStopSecond()   const { return mStop.second(); }
 
-    long getTZ()  const { return mTZ; }
+    const char* getTZ()   const { return mTZ; }
 
     bool isWeekdaySelected(int day) const {
         return BlynkBitRead(mWeekdays, (day - 1) % 7);
@@ -96,7 +111,7 @@ public:
 private:
     BlynkTime mStart;
     BlynkTime mStop;
-    int32_t   mTZ;
+    char      mTZ[32];
 
     TimeMode  mStopMode;
     TimeMode  mStartMode;

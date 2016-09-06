@@ -82,7 +82,7 @@ BLYNK_WRITE(V1) {
     // Do nothing: no stop time was set
   }
 
-  // Process timezone (in seconds)
+  // Process timezone
   // Timezone is already added to start/stop time
 
   Serial.println(String("Time zone: ") + t.getTZ());
