@@ -25,7 +25,7 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h> // This part is for Ethernet stuff
 
-char auth[] = "YourAuthToken"; // Put your Auth Token here. (see Step 3 above)
+char auth[] = "YourAuthToken"; // Put your Auth Token here.
 
 void setup()
 {
@@ -44,6 +44,14 @@ BLYNK_WRITE(V1) {
       break;
     case 3: // Item 3
       Serial.println("Item 3 selected");
+
+      // If item 3 is selected, change menu items...
+      BlynkParamAllocated items(128); // list length, in bytes
+      items.add("New item 1");
+      items.add("New item 2");
+      items.add("New item 3");
+      Blynk.setProperty(V1, "labels", items);
+
       break;
     default:
       Serial.println("Unknown item selected");
