@@ -1,13 +1,15 @@
 #######################################
 # Data types (KEYWORD1)
 #######################################
-Blynk	KEYWORD3
+Blynk	KEYWORD1
 WidgetBridge	KEYWORD1
 WidgetLCD	KEYWORD1
 WidgetLED	KEYWORD1
 WidgetRTC	KEYWORD1
 WidgetSD	KEYWORD1
 WidgetTerminal	KEYWORD1
+BlynkParam	KEYWORD1
+BlynkParamAllocated	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -33,6 +35,11 @@ BLYNK_WRITE_DEFAULT	KEYWORD2
 BLYNK_ATTACH_WIDGET	KEYWORD2
 BLYNK_CONNECTED	KEYWORD2
 #BLYNK_DISCONNECTED	KEYWORD2
+
+BLYNK_OUTPUT	KEYWORD2
+BLYNK_INPUT	KEYWORD2
+BLYNK_OUTPUT_DEFAULT	KEYWORD2
+BLYNK_INPUT_DEFAULT	KEYWORD2
 
 # Variables binding
 BLYNK_VAR_INT	KEYWORD2
