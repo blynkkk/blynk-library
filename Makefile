@@ -22,7 +22,7 @@ ifdef PLATFORMIO_CI_SRC
 ifdef PLATFORMIO_CI_EXTRA_ARGS
 	platformio ci --lib="." $(PLATFORMIO_CI_EXTRA_ARGS)
 else
-	platformio ci --lib="." --board=uno --board=leonardo
+	platformio ci --lib="." --board=uno
 endif
 endif
 ifdef LINUX_SRC
