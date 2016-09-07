@@ -89,6 +89,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification/PushNotification_Button
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
+    - PLATFORMIO_CI_SRC=examples/Widgets/Table/Table_Simple
     - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
     - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/AdvancedTimeInput
     - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/SimpleTimeInput
