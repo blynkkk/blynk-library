@@ -44,7 +44,7 @@ void setup()
 
   //clean table at start
   Blynk.virtualWrite(V1, "clr");
-  
+
   //run sendEvent method every second
   timer.setInterval(1000L, sendEvent);
 }
@@ -52,11 +52,11 @@ void setup()
 void sendEvent() {
   // adding 1 row to table every second
   Blynk.virtualWrite(V1, "add", rowIndex, "My Event", millis() / 1000);
-  
+
   //highlighting latest added row in table
   Blynk.virtualWrite(V1, "pick", rowIndex);
-  
-  index++;
+
+  rowIndex++;
 }
 
 void loop()
