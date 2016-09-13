@@ -87,6 +87,9 @@ BLYNK_WRITE(V1) {
 
   Serial.println(String("Time zone: ") + t.getTZ());
 
+  // Get timezone offset (in seconds)
+  Serial.println(String("Time zone offset: ") + t.getTZ_Offset());
+
   // Process weekdays (1. Mon, 2. Tue, 3. Wed, ...)
 
   for (int i = 1; i <= 7; i++) {

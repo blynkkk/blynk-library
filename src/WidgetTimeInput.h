@@ -27,11 +27,11 @@ public:
 
     TimeInputParam(const BlynkParam& param)
     {
-
         mStartMode = TIME_UNDEFINED;
         mStopMode = TIME_UNDEFINED;
         mTZ[0] = '\0';
         mWeekdays = -1; // All set
+        mTZ_Offset = 0;
 
         BlynkParam::iterator it = param.begin();
         if (it >= param.end())
@@ -80,6 +80,11 @@ public:
                 }
             }
         }
+
+        if (++it >= param.end())
+            return;
+
+        mTZ_Offset = it.asLong();
     }
 
     BlynkTime& getStart() { return mStart; }
@@ -103,6 +108,7 @@ public:
     int getStopSecond()   const { return mStop.second(); }
 
     const char* getTZ()   const { return mTZ; }
+    uint32_t getTZ_Offset() const { return mTZ_Offset; }
 
     bool isWeekdaySelected(int day) const {
         return BlynkBitRead(mWeekdays, (day - 1) % 7);
@@ -112,6 +118,7 @@ private:
     BlynkTime mStart;
     BlynkTime mStop;
     char      mTZ[32];
+    uint32_t  mTZ_Offset;
 
     TimeMode  mStopMode;
     TimeMode  mStartMode;
