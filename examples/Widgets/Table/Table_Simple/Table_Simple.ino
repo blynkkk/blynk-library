@@ -29,8 +29,9 @@
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
+
 SimpleTimer timer;
-int index = 0;
+int rowIndex = 0;
 
 void setup()
 {
@@ -50,10 +51,10 @@ void setup()
 
 void sendEvent() {
   // adding 1 row to table every second
-  Blynk.virtualWrite(V1, "add", index, "My Event", millis() / 1000);
+  Blynk.virtualWrite(V1, "add", rowIndex, "My Event", millis() / 1000);
   
   //highlighting latest added row in table
-  Blynk.virtualWrite(V1, "pick", index);
+  Blynk.virtualWrite(V1, "pick", rowIndex);
   
   index++;
 }
