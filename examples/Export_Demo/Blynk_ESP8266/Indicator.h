@@ -104,7 +104,7 @@ protected:
   template<typename T>
   int beatLED(uint32_t onColor, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
-    setRGB((m_Counter % 2 == 0) ? onColor : COLOR_BLACK);
+    setRGB((m_Counter % 2 == 0) ? onColor : (uint32_t)COLOR_BLACK);
     uint32_t next = beat[m_Counter];
     m_Counter = (m_Counter+1) % cnt;
     return next;

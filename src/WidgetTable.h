@@ -28,7 +28,7 @@ public:
 
     void setVPin(int vPin) { mPin = vPin; }
 
-    void onWrite(BlynkReq& request, const BlynkParam& param) {
+    void onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam& param) {
         if (mOnOrderChange && 0 == strcmp(param[0].asStr(), "order")) {
         	mOnOrderChange(param[1].asInt(), param[2].asInt());
         } else if (mOnSelectChange && 0 == strcmp(param[0].asStr(), "select")) {
