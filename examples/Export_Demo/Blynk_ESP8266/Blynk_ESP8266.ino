@@ -9,6 +9,10 @@
  *
  **************************************************************/
 
+#define USE_SPARKFUN_BLYNK_BOARD
+//#define USE_NODE_MCU_BOARD
+//#define USE_WITTY_CLOUD_BOARD
+
 #define DEBUG        // Comment this out to disable debug prints
 
 #define BLYNK_PRINT Serial
@@ -36,6 +40,9 @@ void loop() {
 
 /**************************************************************
  * Example App code
+ * 
+ * The following code emulates plant watering system functions:
+ * ...
  **************************************************************/
 
 static int sensorValue = 0;
