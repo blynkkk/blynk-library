@@ -40,6 +40,8 @@ void button_init()
 {
 #if !(BOARD_BUTTON_ACTIVE_HIGH == true)
   pinMode(BOARD_BUTTON_PIN, INPUT_PULLUP);
+#else
+  pinMode(BOARD_BUTTON_PIN, INPUT);
 #endif
   attachInterrupt(BOARD_BUTTON_PIN, button_change, CHANGE);
 }

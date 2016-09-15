@@ -6,14 +6,13 @@
 #define BOARD_HARDWARE_VERSION      "1.0.0"
 #define BOARD_NAME                  "My Product"
 #define BOARD_VENDOR                "My Company"
-#define BOARD_CONFIG_AP_URL         "my-product.cc"       // Config page will be available in a browser at 'http://my-product.cc/'
+#define BOARD_CONFIG_AP_URL         "my-plant.cc"        // Config page will be available in a browser at 'http://my-product.cc/'
 
-#define PRODUCT_WIFI_SSID           "TestProduct"
+#define PRODUCT_WIFI_SSID           "Blynk myPlant"
 
 /*
- * Board configuration description
- * See examples for different boards below
- *
+ * Board configuration (see examples below).
+ * 
 #define BOARD_BUTTON_PIN            0                     // Pin where user button is attached
 #define BOARD_BUTTON_ACTIVE_HIGH    false                 // true if button is "active-high"
 
@@ -33,9 +32,9 @@
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_HIGH    false
 
-  #define BOARD_LED_PIN_R             D5
-  #define BOARD_LED_PIN_G             D6
-  #define BOARD_LED_PIN_B             D7
+  #define BOARD_LED_PIN_R             D8
+  #define BOARD_LED_PIN_G             D7
+  #define BOARD_LED_PIN_B             D6
   #define BOARD_LED_INVERSE           true
   #define BOARD_RGB_BRIGHTNESS        32
 
@@ -53,7 +52,7 @@
 #elif defined(USE_WITTY_CLOUD_BOARD)
   #warning "Witty Cloud board selected"
 
-  // Example configuration for Witty Cloud Board
+  // Example configuration for Witty cloud Board
   #define BOARD_BUTTON_PIN            4
   #define BOARD_BUTTON_ACTIVE_HIGH    false
   
