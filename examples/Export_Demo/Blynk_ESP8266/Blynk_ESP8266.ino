@@ -100,7 +100,7 @@ void example_init() {
 
     float dayPeriod = 3.0 * 60 * 1000;
     // Light level
-    Blynk.virtualWrite(V2, sinusoidal(5, 95, dayPeriod));
+    Blynk.virtualWrite(V2, (int)sinusoidal(5, 95, dayPeriod));
     // Temperature
     Blynk.virtualWrite(V3, sinusoidal(18, 23, dayPeriod) + randomize(-1.0, 1.0));
 
