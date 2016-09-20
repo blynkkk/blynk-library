@@ -9,13 +9,12 @@ Before opening an issue, please make sure you've read these:
 Please provide the following information for all issues.
 Replace [brackets] and placeholder text with your responses.
 -->
+
 Blynk library version: [...]
 IDE: [Arduino/Energia/MBED Compiler/Platform.IO/Eclipse ...]
 IDE version: [...]
-Hardware:
- * Main prototyping board: [...]
- * Additional modules: [...]
-
+Board type: [...]
+Additional modules: [...]
 
 ### Scenario, steps to reproduce
 [What you are trying to achieve and you can't?]
