@@ -4,9 +4,9 @@
 
 #define BOARD_FIRMWARE_VERSION      "1.0.1"
 #define BOARD_HARDWARE_VERSION      "1.0.0"
-#define BOARD_NAME                  "My Product"
-#define BOARD_VENDOR                "My Company"
-#define BOARD_CONFIG_AP_URL         "my-plant.cc"        // Config page will be available in a browser at 'http://my-product.cc/'
+#define BOARD_NAME                  "My Plant"
+#define BOARD_VENDOR                "Blynk"
+#define BOARD_CONFIG_AP_URL         "my-plant.cc"        // Config page will be available in a browser at 'http://my-plant.cc/'
 
 #define PRODUCT_WIFI_SSID           "Blynk myPlant"
 

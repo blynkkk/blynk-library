@@ -4,7 +4,7 @@
  * If you would like to add these features to your product,
  * please contact Blynk for Business:
  *
- *                    http://tiny.cc/BlynkB2B
+ *                  http://www.blynk.io/
  *
  **************************************************************/
 
