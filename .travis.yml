@@ -14,7 +14,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Arduino_101_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=genuino101"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano"
+    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
     # - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBear_Duo_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Serial_HM10_HC08 PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
@@ -31,7 +31,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Serial_USB
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_SoftwareSerial
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Zero_M0_Serial PLATFORMIO_CI_EXTRA_ARGS="--board=zero"
-    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Blue_Pill_STM32F103C8 PLATFORMIO_CI_EXTRA_ARGS="--board=bluepill_f103c8"
+    - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Blue_Pill_STM32F103C8 PLATFORMIO_CI_EXTRA_ARGS="--board=bluepill_f103c8 --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Digistump_Digispark PLATFORMIO_CI_EXTRA_ARGS="--board=digispark-pro"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/TI_Stellaris_LaunchPad PLATFORMIO_CI_EXTRA_ARGS="--board=lplm4f120h5qr"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_EXTRA_ARGS="--board=teensy31"

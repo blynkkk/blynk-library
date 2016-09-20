@@ -13,10 +13,12 @@ metadata = {
   "Serial_HM10_HC08.ino"        : { "board": "leonardo" },
   "TheAirBoard_WiFly.ino"       : { "board": "fio" },
   "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4" },
+  "Blue_Pill_STM32F103C8.ino"   : { "board": "bluepill_f103c8", "framework": "arduino" },
   "Seeed_EthernetV2_0.ino"      : { "skip": True }, # Breaks build
   "Arduino_Ethernet2.ino"       : { "skip": True }, # Breaks build, arduino.org
 
   # ESP8266
+  "Sparkfun_Blynk_Board.ino"    : { "board": "nodemcuv2" },
   "ESP8266_DirectConnect.ino"   : { "board": "nodemcuv2" },
   "ESP8266_Standalone.ino"      : { "board": "esp01" },
   "ESP8266_Standalone_SmartConfig.ino"  : { "board": "nodemcuv2" },
@@ -37,7 +39,7 @@ metadata = {
   # RBL
   "RedBear_Duo_WiFi.ino"        : { "skip": True },
   "RedBear_Duo_BLE.ino"         : { "skip": True },
-  "RedBearLab_BLE_Nano.ino"     : { "board": "redBearLabBLENano" },
+  "RedBearLab_BLE_Nano.ino"     : { "board": "redBearLabBLENano", "framework": "arduino" },
   "RedBearLab_BlendMicro.ino"   : { "board": "blendmicro8" },
   "RedBearLab_BLE_Mini.ino"     : { "board": "leonardo" },
 
@@ -45,6 +47,7 @@ metadata = {
   "Simblee_BLE.ino"             : { "skip": True },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
   "WildFire_V3.ino"             : { "board": "wildfirev3" },
+  "WildFire_V4.ino"             : { "skip": True },
   "chipKIT_Uno32.ino"           : { "board": "uno_pic32" },
   "LightBlue_Bean.ino"          : { "board": "lightblue-bean" },
   "Teensy3.ino"                 : { "board": "teensy31" },
@@ -66,13 +69,14 @@ metadata = {
   "TI_CC3200_LaunchXL.ino"      : { "skip": True },
   "TI_Stellaris_LaunchPad.ino"  : { "board": "lplm4f120h5qr" },
   "TI_TivaC_Connected.ino"      : { "board": "lptm4c1294ncpdt" },
+}
 
   #seeedTinyBLE
   #nrf51_dk
+  #bbcmicrobit
+
   #nucleo_f401re
   #rfduino
-  #bbcmicrobit
-}
 
 examples = []
 for root, dirnames, filenames in os.walk('examples'):
@@ -92,6 +96,8 @@ for fn in examples:
             extra_args += "--board=" + m['board'] + " "
         if 'lib_ignore' in m:
             extra_args += "--project-option='lib_ignore=" + m['lib_ignore'] + "' "
+        if 'framework' in m:
+            extra_args += "--project-option='framework=" + m['framework'] + "' "
 
         if len(extra_args):
             path += ' PLATFORMIO_CI_EXTRA_ARGS="' + extra_args.strip() + '"'
