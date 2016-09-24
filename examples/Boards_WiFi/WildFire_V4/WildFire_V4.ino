@@ -14,13 +14,11 @@
  *
  **************************************************************
  *
- * This example shows how to use ESP8266 Shield via Hardware Serial
- * (on Mega, Leonardo, Micro...) to connect your project to Blynk.
+ * This example shows how to use WildFire V4
+ * to connect your project to Blynk.
  *
- * Note: Ensure a stable serial connection to ESP8266!
- *       Firmware version 1.0.0 (AT v0.22) or later is needed.
- *       You can change ESP baud rate. Connect to AT console and call:
- *           AT+UART_DEF=115200,8,1,0,0
+ * Note: You need to install Arduino IDE WildFire support:
+ *   http://shop.wickeddevice.com/resources/wildfire/
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
