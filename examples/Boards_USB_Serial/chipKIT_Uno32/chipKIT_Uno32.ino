@@ -22,7 +22,7 @@
  **************************************************************/
 
 #define BLYNK_PRINT Serial1
-#include <BlynkSimpleSerial.h>
+#include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
