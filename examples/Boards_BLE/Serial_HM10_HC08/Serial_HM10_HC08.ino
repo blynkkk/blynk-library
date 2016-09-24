@@ -21,26 +21,26 @@
  *
  **************************************************************/
 
-//#define BLYNK_DEBUG
-#define BLYNK_PRINT Serial
+// You could use a spare Hardware Serial on boards that have it (like Mega)
+#include <SoftwareSerial.h>
+SoftwareSerial DebugSerial(2, 3); // RX, TX
 
+#define BLYNK_PRINT DebugSerial
 #define BLYNK_USE_DIRECT_CONNECT
-
 #include <BlynkSimpleSerialBLE.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-#define SerialBLE  Serial1      // Set Serial object
-
 void setup()
 {
-  // This is for debug prints
-  Serial.begin(9600);
+  // Debug console
+  DebugSerial.begin(9600);
 
-  SerialBLE.begin(9600);        // Set Serial baud rate
-  Blynk.begin(auth, SerialBLE);
+  // Blynk will work through Serial
+  Serial.begin(9600);
+  Blynk.begin(auth, Serial);
 }
 
 void loop()
