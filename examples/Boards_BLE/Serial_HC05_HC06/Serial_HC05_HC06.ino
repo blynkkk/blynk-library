@@ -17,6 +17,10 @@
  * Bluetooth 2.0 Serial Port Profile (SPP) module
  * to connect your project to Blynk.
  *
+ * Note: This only works on Android! iOS does not support SPP :(
+ *       You may need to pair the module with your smartphone
+ *       via Bluetooth settings. Default pairing password is 1234
+ *
  * Feel free to apply it to any other example. It's simple!
  *
  * NOTE: Bluetooth support is in beta!
@@ -40,6 +44,7 @@ void setup()
   DebugSerial.begin(9600);
 
   // Blynk will work through Serial
+  // 9600 is for HC-06. For HC-05 default speed is 38400
   Serial.begin(9600);
   Blynk.begin(auth, Serial);
 }
