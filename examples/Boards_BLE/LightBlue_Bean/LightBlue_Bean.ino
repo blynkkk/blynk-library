@@ -27,9 +27,9 @@
 //#define BLYNK_USE_DIRECT_CONNECT
 
 #include <SoftwareSerial.h>
-SoftwareSerial SwSerial(2, 3); // RX, TX
-#define BLYNK_PRINT SwSerial
+SoftwareSerial DebugSerial(2, 3); // RX, TX
 
+#define BLYNK_PRINT DebugSerial
 #define BLYNK_NO_YIELD
 #include <BlynkSimpleStream.h>
 
@@ -39,7 +39,7 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
-  SwSerial.begin(9600);
+  DebugSerial.begin(9600);
 
   Blynk.begin(auth, Serial);
 }
@@ -49,12 +49,12 @@ void loop()
   Blynk.run();
 }
 
-// Attach a ZeRGBa widget to the Virtual pin 1 - and control the built-in RGB led!
+// Attach a ZeRGBa widget to the Virtual pin 1
+// to control the built-in RGB led!
 BLYNK_WRITE(V1) {
-  Bean.setLed(
-    param[0].asInt(),
-    param[1].asInt(),
-    param[2].asInt()
-  );
+  int r = param[0].asInt();
+  int g = param[1].asInt();
+  int b = param[2].asInt();
+  Bean.setLed(r, g, b);
 }
 

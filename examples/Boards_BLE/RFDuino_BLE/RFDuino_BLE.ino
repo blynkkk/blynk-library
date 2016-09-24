@@ -14,7 +14,7 @@
  *
  **************************************************************
  *
- * This example shows how to use Simblee BLE
+ * This example shows how to use RFduino BLE
  * to connect your project to Blynk.
  *
  * NOTE: BLE support is in beta!
@@ -46,7 +46,6 @@ void setup()
 
   Serial.println("Waiting for connections...");
 }
-
 
 void loop()
 {
