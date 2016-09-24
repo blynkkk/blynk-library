@@ -20,7 +20,6 @@ update-ver:
 	sed -i 's/"version": "[0-9\.]*"/"version": "$(VER)"/g' library.json
 	sed -i 's/version=[0-9\.]*/version=$(VER)/g' library.properties
 	sed -i 's/BLYNK_VERSION        "[0-9\.]*"/BLYNK_VERSION        "$(VER)"/g' src/Blynk/BlynkConfig.h
-	echo $(VER) > VERSION
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
