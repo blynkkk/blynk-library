@@ -17,18 +17,21 @@
  * This example shows how to use LightBlue Bean / Bean+
  * to connect your project to Blynk.
  *
- * For this example you need to install Bean board support files:
- *   https://github.com/PunchThrough/PunchThrough-BEAN-Arduino-Firmware
+ * For this example you need to install Bean Loader:
+ *   https://punchthrough.com/bean/guides/getting-started/intro/
  *
  * NOTE: BLE support is in beta!
  *
  **************************************************************/
 
-// WARNING: Blynk Apps do not work with the Bean directly (yet).
 //#define BLYNK_USE_DIRECT_CONNECT
 
+#include <SoftwareSerial.h>
+SoftwareSerial SwSerial(2, 3); // RX, TX
+#define BLYNK_PRINT SwSerial
+
 #define BLYNK_NO_YIELD
-#include <BlynkSimpleSerial.h>
+#include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -36,53 +39,22 @@ char auth[] = "YourAuthToken";
 
 void setup()
 {
-  Bean.enableWakeOnConnect(true);
-  Blynk.begin(auth);
+  SwSerial.begin(9600);
+
+  Blynk.begin(auth, Serial);
 }
 
 void loop()
 {
-  if (Bean.getConnectionState()) {
-    Blynk.run();
-  } else {
-    // Conserve power
-    Bean.setLed(0, 0, 0);
-    Bean.sleep(0xFFFFFFFF);
-    // Indicate connection
-    Bean.setLed(0, 0, 32);
-
-    for (int i = 0; i < 6; i++) {
-      if (!Bean.getConnectionState() || Blynk.connect()) {
-        break;
-      }
-    }
-    if (Blynk.connected()) {
-      Bean.setLed(0, 32, 0);
-    } else {
-      Bean.setLed(32, 0, 0);
-    }
-  }
+  Blynk.run();
 }
 
-BLYNK_READ(V0) {
-  Blynk.virtualWrite(V0, millis() / 1000);
-}
-
-// Attach a ZeRGBa widget to the Virtual pin 2 - and control the built-in RGB led!
-BLYNK_WRITE(V2) {
+// Attach a ZeRGBa widget to the Virtual pin 1 - and control the built-in RGB led!
+BLYNK_WRITE(V1) {
   Bean.setLed(
     param[0].asInt(),
     param[1].asInt(),
     param[2].asInt()
   );
-}
-
-WidgetTerminal terminal(V3);
-
-BLYNK_WRITE(V3) {
-  terminal.print("Bean got:");
-  terminal.write(param.getBuffer(), param.getLength());
-  terminal.println();
-  terminal.flush();
 }
 
