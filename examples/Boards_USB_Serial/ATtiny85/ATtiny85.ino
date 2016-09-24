@@ -15,6 +15,10 @@
  **************************************************************
  * This example shows how to use a tiny ATtiny85
  * to connect your project to Blynk.
+ *
+ * Note: This requires ATtiny support package:
+ *   https://github.com/damellis/attiny
+ *
  * Be sure to check ordinary Serial example first!!!
  *
  *                  +-\/-+
