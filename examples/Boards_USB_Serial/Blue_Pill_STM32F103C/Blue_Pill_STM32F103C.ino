@@ -17,8 +17,11 @@
  * to connect your project to Blynk.
  * Feel free to apply it to any other example. It's simple!
  *
- * Requires STM32duino core:
+ * Note: This requires STM32duino core:
  *   https://github.com/rogerclarkmelbourne/Arduino_STM32/wiki/Installation
+ *
+ * Note: You may need to wait up to 30 seconds after board starts,
+ *       to allow USB serial to initialize completely.
  *
  **************************************************************
  *            USB HOWTO: http://tiny.cc/BlynkUSB
