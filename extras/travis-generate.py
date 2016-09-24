@@ -6,14 +6,13 @@ import os
 metadata = {
   "Arduino_Yun.ino"             : { "board": "yun" },
   "Arduino_Zero_M0_Serial.ino"  : { "board": "zero" },
-  "Arduino_Due.ino"             : { "board": "due" },
   "ENC28J60.ino"                : { "board": "nanoatmega328" },
   "ESP8266_Shield.ino"          : { "board": "megaatmega2560" },
   "RN_XV_WiFly.ino"             : { "board": "leonardo" },
   "Serial_HM10_HC08.ino"        : { "board": "leonardo" },
   "TheAirBoard_WiFly.ino"       : { "board": "fio" },
   "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4" },
-  "Blue_Pill_STM32F103C8.ino"   : { "board": "bluepill_f103c8", "framework": "arduino" },
+  "Blue_Pill_STM32F103C.ino"    : { "board": "bluepill_f103c8", "framework": "arduino" },
   "Seeed_EthernetV2_0.ino"      : { "skip": True }, # Breaks build
   "Arduino_Ethernet2.ino"       : { "skip": True }, # Breaks build, arduino.org
 
@@ -56,7 +55,6 @@ metadata = {
   # Special examples
   "ESP8266_ReadPin.ino"         : { "board": "nodemcuv2" },
   "ESP8266_WritePin.ino"        : { "board": "nodemcuv2" },
-  "ThingSpeak.ino"              : { "board": "nodemcuv2" },
 
   # No linux support
   "LinkItONE.ino"               : { "skip": True },
@@ -91,6 +89,7 @@ for fn in examples:
 
     if ino in metadata:
         m = metadata[ino]
+        m['sketch_found'] = True
         extra_args = ''
         if 'board' in m:
             extra_args += "--board=" + m['board'] + " "
@@ -110,3 +109,7 @@ for fn in examples:
         path = "    - PLATFORMIO_CI_SRC=" + path
 
     print path
+
+for ino, m in metadata.items():
+    if not 'sketch_found' in m:
+        print "Sketch not found:", ino

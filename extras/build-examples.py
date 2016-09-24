@@ -3,33 +3,28 @@
 import os, sys, fnmatch
 from subprocess import call
 
-def find_files(directory, pattern):
-    for root, dirs, files in os.walk(directory):
-        for basename in files:
-            if fnmatch.fnmatch(basename, pattern):
-                filename = os.path.join(root, basename)
-                yield filename
-
 metadata = {
   "Arduino_Yun.ino"             : { "fqbn": "arduino:avr:yun" },
   "Arduino_Zero_M0_Serial.ino"  : { "fqbn": "arduino:samd:arduino_zero_native" },
-  "Arduino_Due.ino"             : { "fqbn": "arduino:sam:arduino_due_x" },
   "ENC28J60.ino"                : { "fqbn": "arduino:avr:nano:cpu=atmega328" },
   "ESP8266_Shield.ino"          : { "fqbn": "arduino:avr:mega:cpu=atmega2560" },
   "RN_XV_WiFly.ino"             : { "fqbn": "arduino:avr:leonardo" },
   "Serial_HM10_HC08.ino"        : { "fqbn": "arduino:avr:leonardo" },
   "TheAirBoard_WiFly.ino"       : { "fqbn": "arduino:avr:fio" },
   "Adafruit_Feather_32u4_BLE.ino": { "fqbn": "adafruit:avr:feather32u4" },
+  "Blue_Pill_STM32F103C.ino"    : { "fqbn": "Arduino_STM32:STM32F1:genericSTM32F103C:device_variant=STM32F103C8" },
   "Seeed_EthernetV2_0.ino"      : { "fqbn": "arduino:avr:uno" },
   "Arduino_Ethernet2.ino"       : { "skip": True }, # arduino.org
 
   # ESP8266
+  "Sparkfun_Blynk_Board.ino"    : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_DirectConnect.ino"   : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone.ino"      : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SmartConfig.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
   "Blynk_ESP8266.ino"           : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  "Blynk_MKR1000.ino"           : { "fqbn": "arduino:samd:mkr1000" },
 
   # Digistump
   "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-pro" },
@@ -50,16 +45,16 @@ metadata = {
   #Other
   "Simblee_BLE.ino"             : { "fqbn": "Simblee:Simblee:Simblee" },
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
-  "WildFire.ino"                : { "fqbn": "WickedDevice:avr:wildfireo3" },
+  "WildFire_V3.ino"             : { "fqbn": "WickedDevice:avr:wildfireo3" },
+  "WildFire_V4.ino"             : { "fqbn": "WickedDevice:avr:wildfireo3" },
   "chipKIT_Uno32.ino"           : { "fqbn": "chipKIT:pic32:uno_pic32" },
-  "LightBlue_Bean.ino"          : { "fqbn": "bean:avr:lightblue-bean" },
+  "LightBlue_Bean.ino"          : { "fqbn": "LightBlue-Bean:avr:beanplus" },
   "Teensy3.ino"                 : { "fqbn": "teensy:avr:teensy31" },
-  "ATtiny85.ino"                : { "fqbn": "attiny:avr:attiny:cpu=attiny85,clock=internal8" },
+  "ATtiny85.ino"                : { "fqbn": "attiny:avr:ATtinyX5:cpu=attiny85,clock=internal8" },
 
   # Special examples
   "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_WritePin.ino"        : { "fqbn": "esp8266:esp8266:nodemcuv2" },
-  "ThingSpeak.ino"              : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
   # No linux support
   "LinkItONE.ino"               : { "skip": True },
@@ -73,6 +68,13 @@ metadata = {
   "TI_Stellaris_LaunchPad.ino"  : { "fqbn": "energia:tivac:EK-LM4F120XL" },
   "TI_TivaC_Connected.ino"      : { "fqbn": "energia:tivac:EK-TM4C1294XL" },
 }
+
+def find_files(directory, pattern):
+    for root, dirs, files in os.walk(directory):
+        for basename in files:
+            if fnmatch.fnmatch(basename, pattern):
+                filename = os.path.join(root, basename)
+                yield filename
 
 examples = find_files('examples', '*.ino')
 abs_examples = map(lambda x: os.path.abspath(x), examples)
@@ -112,6 +114,7 @@ for fn in abs_examples:
 
     if ino in metadata:
         m = metadata[ino]
+        m['sketch_found'] = True
         if "skip" in m:
             skipped.append(ino)
             continue
@@ -158,3 +161,7 @@ if len(failed):
     sys.exit(1)
 else:
     print " All", len(built), "examples OK"
+
+for ino, m in metadata.items():
+    if not 'sketch_found' in m:
+        print "Sketch not found:", ino
