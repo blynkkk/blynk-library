@@ -17,7 +17,8 @@
  * This example shows how to use RedBearLab Blend Micro
  * to connect your project to Blynk.
  *
- * For this example you need BLEPeripheral library from http://librarymanager
+ * Note: This requires BLEPeripheral library
+ *   from http://librarymanager
  *   or https://github.com/sandeepmistry/arduino-BLEPeripheral
  *
  * NOTE: BLE support is in beta!
