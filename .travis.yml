@@ -14,7 +14,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Arduino_101_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=genuino101"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
+    #- PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
     # - PLATFORMIO_CI_SRC=examples/Boards_BLE/RedBear_Duo_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_BLE/Serial_HC05_HC06
