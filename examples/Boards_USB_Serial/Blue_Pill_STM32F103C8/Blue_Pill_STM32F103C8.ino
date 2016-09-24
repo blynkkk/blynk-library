@@ -17,13 +17,14 @@
  * to connect your project to Blynk.
  * Feel free to apply it to any other example. It's simple!
  *
- * Requires STM32duino: https://github.com/rogerclarkmelbourne/Arduino_STM32/wiki/Installation
+ * Requires STM32duino core:
+ *   https://github.com/rogerclarkmelbourne/Arduino_STM32/wiki/Installation
  *
  **************************************************************
  *            USB HOWTO: http://tiny.cc/BlynkUSB
  **************************************************************/
 
-#define BLYNK_PRINT Serial2
+#define BLYNK_PRINT Serial1
 #include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.
@@ -33,7 +34,7 @@ char auth[] = "YourAuthToken";
 void setup()
 {
   // Debug console
-  Serial2.begin(9600);
+  Serial1.begin(9600);
 
   // Blynk will work through Serial
   Serial.begin(9600);
