@@ -23,8 +23,8 @@ metadata = {
   "ESP8266_Standalone_SmartConfig.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
-  "Blynk_ESP8266.ino"           : { "fqbn": "esp8266:esp8266:nodemcuv2" },
-  "Blynk_MKR1000.ino"           : { "fqbn": "arduino:samd:mkr1000" },
+  "myPlant_ESP8266.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  "myPlant_MKR1000.ino"         : { "fqbn": "arduino:samd:mkr1000" },
 
   # Digistump
   "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-pro" },

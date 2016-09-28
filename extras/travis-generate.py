@@ -23,8 +23,8 @@ metadata = {
   "ESP8266_Standalone_SmartConfig.ino"  : { "board": "nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
 
-  "Blynk_ESP8266.ino"           : { "board": "nodemcuv2", "lib_ignore": "WiFi101" },
-  "Blynk_MKR1000.ino"           : { "board": "mkr1000USB" },
+  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101" },
+  "myPlant_MKR1000.ino"         : { "board": "mkr1000USB" },
 
   # Digistump
   "Digistump_Digispark.ino"     : { "board": "digispark-pro" },
