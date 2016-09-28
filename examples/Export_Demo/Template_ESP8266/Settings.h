@@ -5,11 +5,11 @@
 #define BOARD_FIRMWARE_VERSION        "1.0.1"
 #define BOARD_HARDWARE_VERSION        "1.0.0"
 
-#define BOARD_NAME                    "My Plant"
-#define BOARD_VENDOR                  "Blynk"
+#define BOARD_NAME                    "Product Name"        // Name of your product. Should match App Export request info.
+#define BOARD_VENDOR                  "Company Name"        // Name of your company. Should match App Export request info.
 
-#define PRODUCT_WIFI_SSID             "Blynk myPlant"
-#define BOARD_CONFIG_AP_URL           "my-plant.cc"        // Config page will be available in a browser at 'http://my-plant.cc/'
+#define PRODUCT_WIFI_SSID             "Our Product"         // Name of the device, to be displayed during configuration. Should match export request info.
+#define BOARD_CONFIG_AP_URL           "our-product.cc"      // Config page will be available in a browser at 'http://our-product.cc/'
 
 /*
  * Board configuration (see examples below).
