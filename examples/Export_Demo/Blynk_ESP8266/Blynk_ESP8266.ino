@@ -1,5 +1,5 @@
 /**************************************************************
- * This is a DEMO. You can use it for only development and testing.
+ * This is a DEMO. You can use it only for development and testing.
  * You should open Setting.h and modify General options.
  *
  * If you would like to add these features to your product,
@@ -39,7 +39,8 @@ void loop() {
 
 
 /**************************************************************
- * myPlant example App code
+ * 
+ *              myPlant example App code
  * 
  * The following code simulates plant watering system
  *

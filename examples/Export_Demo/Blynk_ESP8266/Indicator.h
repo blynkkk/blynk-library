@@ -88,7 +88,7 @@ protected:
     uint8_t r = (color & 0xFF0000) >> 16;
     uint8_t g = (color & 0x00FF00) >> 8;
     uint8_t b = (color & 0x0000FF);
-#if BOARD_LED_INVERSE == true
+#if BOARD_LED_INVERSE
     analogWrite(BOARD_LED_PIN_R, BOARD_PWM_MAX - r);
     analogWrite(BOARD_LED_PIN_G, BOARD_PWM_MAX - g);
     analogWrite(BOARD_LED_PIN_B, BOARD_PWM_MAX - b);
@@ -137,7 +137,7 @@ protected:
   }
 
   void setLED(uint8_t color) {
-#if BOARD_LED_INVERSE == true
+#if BOARD_LED_INVERSE
     analogWrite(BOARD_LED_PIN, BOARD_PWM_MAX - color);
 #else
     analogWrite(BOARD_LED_PIN, color);

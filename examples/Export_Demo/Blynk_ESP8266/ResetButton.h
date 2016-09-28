@@ -18,7 +18,7 @@ void button_action(void)
 
 void button_change(void)
 {
-#if !(BOARD_BUTTON_ACTIVE_HIGH == true)
+#if BOARD_BUTTON_ACTIVE_LOW
   g_buttonPressed = !digitalRead(BOARD_BUTTON_PIN);
 #else
   g_buttonPressed = digitalRead(BOARD_BUTTON_PIN);
@@ -38,7 +38,7 @@ void button_change(void)
 
 void button_init()
 {
-#if !(BOARD_BUTTON_ACTIVE_HIGH == true)
+#if BOARD_BUTTON_ACTIVE_LOW
   pinMode(BOARD_BUTTON_PIN, INPUT_PULLUP);
 #else
   pinMode(BOARD_BUTTON_PIN, INPUT);
