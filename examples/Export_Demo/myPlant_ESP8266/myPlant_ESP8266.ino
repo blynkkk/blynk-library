@@ -39,9 +39,9 @@ void loop() {
 
 
 /**************************************************************
- * 
+ *
  *              myPlant example App code
- * 
+ *
  * The following code simulates plant watering system
  *
  **************************************************************/
@@ -83,12 +83,12 @@ BLYNK_CONNECTED() {
 float sinusoidal(float minv, float maxv, float period) {
   float amp = (maxv - minv) / 2.0;
   float med = minv + amp;
-  return med + amp * sin((M_PI*2*millis())/period);
+  return med + amp * sin((M_PI * 2 * millis()) / period);
 }
 
 // This simulates value jittering
 float randomize(float minv, float maxv) {
-  return float(random(minv*1000, maxv*1000))/1000;
+  return float(random(minv * 1000, maxv * 1000)) / 1000;
 }
 
 
