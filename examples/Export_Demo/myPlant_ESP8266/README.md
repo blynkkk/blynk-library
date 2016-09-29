@@ -64,7 +64,9 @@ Instruction for Blynk Demo App - **myPlant**.
 # Resetting board configuration
 
 **NodeMCU**: Press and hold the **FLASH** button (near USB connector) for 10 seconds.
+
 **SparkFun Blynk Board**: Press and hold the on board button “0” for 10 seconds.
+
 After few seconds it will start fading white color, and then turn solid white. 
 Then you can release the button to reset device configuration.
 After the board configuration is reset, you can configure it again from the **myPlant App**.
