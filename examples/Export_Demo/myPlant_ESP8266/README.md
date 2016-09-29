@@ -47,14 +47,23 @@ Instruction for Blynk Demo App - **myPlant**.
    
    * Make sure your hardware is powered up (just connect the USB cable). RGB led should be blue and blink fast.
    * Click Begin to start device configuration :
+   
    ![Step 1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_start.png)
+   
    * Choose your home WiFi name and password : 
+   
    ![Step 2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_choose_network.png)
+   
    * Choose device, that you want to configure :
+   
    ![Step 3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_connect.png)
+   
    * Click **DONE** : 
+   
    ![Step 4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_done.png)
+   
    * Enjoy :
+   
    ![Step 5](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
 
 3. After the board is connected, the app is ready to be used.
