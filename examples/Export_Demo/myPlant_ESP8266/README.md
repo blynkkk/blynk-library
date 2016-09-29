@@ -4,16 +4,16 @@ Instruction for Blynk Demo App - **myPlant**.
 
 1. Install latest [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
-2. Download latest Blynk release package: [Blynk_Release_v0.3.10.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.3.10/Blynk_Release_v0.3.10.zip)
+2. Download latest Blynk release package: [Blynk_Release_v0.3.10.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.3.10/Blynk_Release_v0.3.10.zip).
    It contains 4 libraries, please copy them to Arduino Libraries folder. 
-   If you don’t know how to do this, please follow Manual Installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
-3. Open Arduino IDE, then select menu: **File -> Preferences**.
-
-   Click button “Additional Boards Manager URLs” and add this link:
+   If you don’t know how to do this, please follow manual Installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
+   
+3. Open Arduino IDE, then select in menu: **File -> Preferences**.
+   Click button **Additional Boards Manager URLs** and add this link:
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
    ![File -> Preferences](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/file_preferences.png)
    
-4. In Arduino IDE menu, open: **Tools -> Board -> Boards Manager**
+4. In Arduino IDE menu, open: **Tools -> Board -> Boards Manager**.
    Search for ```esp8266```, and install it:
    ![Tools -> Board -> Boards Manager](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/boards_manager.png)
    
@@ -21,12 +21,14 @@ Instruction for Blynk Demo App - **myPlant**.
 
 1. Open **File -> Examples -> Blynk -> Export_Demo -> myPlant_ESP8266**
 
-2. Now select **Tools -> Board -> NodeMCU 1.0 (ESP-12E Module)**
+2. Now select **Tools -> Board -> NodeMCU 1.0 (ESP-12E Module)**.
+
    **Note:** This board selection works for SparkFun Blynk Board and NodeMCU as well.
 
 3. If you’re using Node MCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
 
 4. Click **Verify** and check if everything went OK:
+
    ![Verify](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/verify.png)
    
 5. Check what ports are available in your **Tools -> Board** menu.
