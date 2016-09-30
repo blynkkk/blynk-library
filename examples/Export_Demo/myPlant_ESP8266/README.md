@@ -6,72 +6,79 @@ Instruction for Blynk Demo App - **myPlant**.
 
 2. Download latest Blynk release package: [Blynk_Release_v0.3.10.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.3.10/Blynk_Release_v0.3.10.zip).
    It contains 4 libraries, please copy them to Arduino Libraries folder. 
-   If you don’t know how to do this, please follow manual Installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
+   If you don’t know how to do this, please follow manual installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
    
-3. Open Arduino IDE, then select in menu: **File -> Preferences**.
-   Click button **Additional Boards Manager URLs** and add this link:
+3. Open the Arduino IDE, then select in the menu: **File -> Preferences**.
+   Click on **Additional Boards Manager URLs** button and add this link:
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
    ![File -> Preferences](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/file_preferences.png)
    
-4. In Arduino IDE menu, open: **Tools -> Board -> Boards Manager**.
+4. In the Arduino IDE menu, open: **Tools -> Board -> Boards Manager**.
    Search for ```esp8266```, and install it:
    ![Tools -> Board -> Boards Manager](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/boards_manager.png)
    
-# Uploading App Export example
+# Uploading Blynk Demo App example
 
 1. Open **File -> Examples -> Blynk -> Export_Demo -> myPlant_ESP8266**
 
 2. Now select **Tools -> Board -> NodeMCU 1.0 (ESP-12E Module)**.
 
-   **Note:** This board selection works for SparkFun Blynk Board and NodeMCU as well.
+   **Note:** This board selection works for both SparkFun BlynkBoard and NodeMCU.
 
-3. If you’re using Node MCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
+3. If you use Node MCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
 
-4. Click **Verify** and check if everything went OK:
+4. Click on **Verify** button and make sure that example compiled correctly:
 
    ![Verify](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/verify.png)
    
-5. Check what ports are available in your **Tools -> Board** menu.
-   Connect your board, and select the new port that appeared in **Tools -> Board** menu.
+5. Check the ports that are available in your **Tools -> Board** menu.
+   Connect the hardware with USB cable and select the port that appeared in **Tools -> Board** menu.
    
-6. Click **Upload**. (You should see some progress bar in the console, and then **Done uploading** message on the 
-   status panel. After this process is finished, RGB status led should start blinking blue: the board is waiting for configuration).
+6. Click the **Upload** button. (You should see a progress bar in the console, followed by **Done uploading** message in the 
+   status panel. After this process is finished, LED should start blinking blue: which means the board is waiting for configuration).
    
-7. Unplug the board. (You will plug the power again when configuring the board. Imagine that you have just unboxed your product).
+   
+The firmware was successfully loaded and is ready. 
 
-# Running Blynk myPlant example
+You can switch the board off and then on again. Imagine you just unboxed the new product. LED should be blinking blue.
 
-1. Download Blynk myPlant app (todo : add link) from Google Play, and run it.
+TODO: add statuses descriptions + reset instructions
+
+
+# Running Blynk myPlant Demo
+
+1. Download Blynk myPlant app (todo: add link) from Google Play, and run it.
 
 2. Follow the steps in WiFi provisioning wizard to connect the hardware to your WiFi network:
    
-   * Make sure your hardware is powered up (just connect the USB cable). RGB led should be blue and blink fast.
-   * Click Begin to start device configuration :
+   * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue frequent.
+   * In the app click **Begin** to start device configuration:
    
    ![Step 1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_start.png)
    
-   * Choose your home WiFi name and password :
+   * Choose your home WiFi SSID and password:
     
-   **Note**: you may be asked to grant GPS permission, this is fine as in order to get the hardware identifiers 
-   during Wi-Fi scan this is required Android permission
+   **Note**: you may be asked for a permission to access GPS. It's a regular Android OS permission to get the hardware identifiers during scanning for WiFi networks.
    
    ![Step 2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_choose_network.png)
    
-   * Choose device, that you want to configure :
+   * Choose  **myPlant device** in the list of networks. This is the board which will be configured. 
    
    ![Step 3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_connect.png)
    
-   * Click **DONE** : 
+   TODO: Very important to explain what happens here. Everyone asks about the token, credentials and so on...
+   
+   * Click **DONE**: 
    
    ![Step 4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_done.png)
    
-   * Enjoy :
+   * Enjoy!
    
    ![Step 5](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
 
-3. After the board is connected, the app is ready to be used.
-   Please note that this is only emulating a plant watering device, as this simple demo would require you to 
-   connect all of the modules to create a functional solution.
+3. After the board is connected, the app is ready.
+   
+   **NOTE: **This is a simulation of a plant watering device. All of the data is coming from the hardware, but it's not real.
 
 # Resetting board configuration
 
@@ -85,10 +92,9 @@ After the board configuration is reset, you can configure it again from the **my
 
 # Troubleshooting
 
-## RGB indicator problems
+## LED issues
 
-If you are using NodeMCU, and your RGB led shows wrong colors (or doesn’t light-up at all), it may be possible 
-that your LED is with “common anode”. Here is a good picture to explain it :
+If you are using NodeMCU, and your RGB LED shows incorrect colors (or doesn’t light-up at all), there is a chance that your LED is a “common anode” LED as shown on the image below:
 
 ![RGB](http://bildr.org/blog/wp-content/uploads/2011/01/RGBLEDs2.png)
 
