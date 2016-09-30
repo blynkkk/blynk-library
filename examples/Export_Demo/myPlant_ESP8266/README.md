@@ -13,7 +13,7 @@ Instruction for Blynk Demo App - **myPlant**.
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
    ![File -> Preferences](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/file_preferences.png)
    
-4. In the Arduino IDE menu, open: **Tools -> Board -> Boards Manager**.
+4. In the Arduino IDE menu open: **Tools -> Board -> Boards Manager**.
    Search for ```esp8266```, and install it:
    ![Tools -> Board -> Boards Manager](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/boards_manager.png)
    
@@ -23,7 +23,9 @@ Instruction for Blynk Demo App - **myPlant**.
 
 2. Now select **Tools -> Board -> NodeMCU 1.0 (ESP-12E Module)**.
 
-   **Note:** This board selection works for both SparkFun BlynkBoard and NodeMCU.
+TODO: specify Baud Rate
+
+**Note:** This board selection works for both SparkFun BlynkBoard and NodeMCU.
 
 3. If you use Node MCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
 
