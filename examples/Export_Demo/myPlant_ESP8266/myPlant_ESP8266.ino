@@ -1,16 +1,21 @@
 /**************************************************************
- * This is a DEMO. You can use it only for development and testing.
- * You should open Setting.h and modify General options.
+ * This is a DEMO sketch which works with Blynk myPlant app and
+ * showcases how your app made with Blynk can work
+ * 
+ * You can download free app here:
  *
+ * iOS: http://
+ * Android: http://
+ * 
  * If you would like to add these features to your product,
- * please contact Blynk for Business:
+ * please contact Blynk for Businesses:
  *
  *                  http://www.blynk.io/
  *
  **************************************************************/
 
-#define USE_SPARKFUN_BLYNK_BOARD
-//#define USE_NODE_MCU_BOARD
+#define USE_SPARKFUN_BLYNK_BOARD  // Uncomment the board you are using 
+//#define USE_NODE_MCU_BOARD      // Comment out the boards you are not using
 //#define USE_WITTY_CLOUD_BOARD
 
 #define DEBUG        // Comment this out to disable debug prints
@@ -23,10 +28,31 @@ void setup() {
   delay(500);
   Serial.begin(115200);
 
-  BlynkProvisioning.begin();
-
-  // Initialize this example
-  example_init();
+  
+/**************************************************************  
+ *
+ * Workflow to connect the device to WiFi network. Here is how 
+   it works:
+ * 1. At the first start hardware acts as an Access Point and 
+      broadcasts it's own WiFi.
+ * 2. myPlant smartphone app connects to this Access Point
+ * 3. myPlant smartphone app request new Auth Token and passes 
+      it together with user's WiFi SSID and password
+ * 4. Hardware saves this information to EEPROM
+ * 5. Hardware reboots and now connects to user's WiFi Network
+ * 6. Hardware connects to Blynk Cloud and is ready to work with app
+ *
+ * Next time the hardware reboots, it will use the same configuration
+ * to connect. User can RESET the board and re-initiate provisioning
+ *
+ * Explore the Settings.h for parameters 
+ * Read the documentation for more info: http://
+ *
+ **************************************************************/
+  
+  BlynkProvisioning.begin();  
+  
+  example_init(); // Initialize this example
 }
 
 void loop() {
@@ -47,7 +73,7 @@ void loop() {
  **************************************************************/
 
 #include <SimpleTimer.h>
-SimpleTimer timer;
+SimpleTimer timer; // Initiating timer to perform repeating event
 
 static int sensorSoilMoisture = 60;
 static int sensorAirHumidity = 50;
@@ -55,12 +81,12 @@ static int wateringAmount = 5;
 static int wateringTimer = -1;
 static bool isNotificationSent = false;
 
-// Set fake watering amount slider
+// Getting data from "Set watering amount" slider
 BLYNK_WRITE(V5) {
   wateringAmount = param.asInt();
 }
 
-// Start Watering button
+// Getting data from "Start Watering" button
 BLYNK_WRITE(V6) {
   if (param.asInt() == 1) {
     // If watering started -> start simulating watering
@@ -79,14 +105,14 @@ BLYNK_CONNECTED() {
   Blynk.syncVirtual(V6);
 }
 
-// This simulates sinusoidal function
+// This is a sinusoidal function used for simulations 
 float sinusoidal(float minv, float maxv, float period) {
   float amp = (maxv - minv) / 2.0;
   float med = minv + amp;
   return med + amp * sin((M_PI * 2 * millis()) / period);
 }
 
-// This simulates value jittering
+// Simulating values jittering
 float randomize(float minv, float maxv) {
   return float(random(minv * 1000, maxv * 1000)) / 1000;
 }
@@ -107,7 +133,7 @@ void example_init() {
 
   });
 
-  // Humidity updates at different rate (5s)
+  // Humidity updates at a different rate (5s)
   timer.setInterval(5000L, []() {
     sensorAirHumidity += random (-5, +5);
     sensorAirHumidity = constrain(sensorAirHumidity, 30, 90);
