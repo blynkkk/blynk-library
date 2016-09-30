@@ -50,7 +50,10 @@ Instruction for Blynk Demo App - **myPlant**.
    
    ![Step 1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_start.png)
    
-   * Choose your home WiFi name and password : 
+   * Choose your home WiFi name and password :
+    
+   **Note**: you may be asked to grant GPS permission, this is fine as in order to get the hardware identifiers 
+   during Wi-Fi scan this is required Android permission) 
    
    ![Step 2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_choose_network.png)
    
