@@ -5,15 +5,17 @@ Instruction for Blynk Demo App - **myPlant**.
 1. Install latest [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
 2. Download latest Blynk release package: [Blynk_Release_v0.3.10.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.3.10/Blynk_Release_v0.3.10.zip).
-   It contains 4 libraries, please copy them to Arduino Libraries folder. 
+   It contains 5 libraries, please copy them to Arduino Libraries folder. 
    If you don’t know how to do this, please follow manual installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
    
-3. Open the Arduino IDE, then select in the menu: **File -> Preferences**.
+3. Open the Arduino IDE, then select in the menu: **File -> Preferences**.  
    Click on **Additional Boards Manager URLs** button and add this link:
+   ```
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
+   ```
    ![File -> Preferences](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/file_preferences.png)
    
-4. In the Arduino IDE menu open: **Tools -> Board -> Boards Manager**.
+4. In the Arduino IDE menu open: **Tools -> Board -> Boards Manager**.  
    Search for ```esp8266```, and install it:
    ![Tools -> Board -> Boards Manager](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/boards_manager.png)
    
