@@ -88,9 +88,8 @@ TODO
 
 **SparkFun Blynk Board**: Press and hold the on board button “0” for 10 seconds.
 
-After few seconds it will start fading white color, and then turn solid white. 
-Then you can release the button to reset device configuration.
-After the board configuration is reset, you can configure it again from the **myPlant App**.
+After few seconds the indicator will start fading white color, and then turn solid white. 
+Then you can release the button. Device will be reset and you can configure it again using the **myPlant App**.
 
 # Troubleshooting
 
