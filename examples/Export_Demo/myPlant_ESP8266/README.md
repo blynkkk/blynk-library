@@ -66,8 +66,8 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
    ![Step 3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_connect.png)
    
-   TODO: Very important to explain what happens here. Everyone asks about the token, credentials and so on...
-   Device will start blinking slower, which indicates it’s trying to connect to your home network, and then start breathing cyan when ready.
+   At this stage, device will start blinking slower. The app sends a valid auth token prepared for this device, and also provides it with WiFi credentials. Device tries to connect to your home network, then to Blynk Cloud.  
+   When connection is established, the color indicator will start breathing cyan slowly.
    
    * Click **DONE**: 
    
