@@ -33,7 +33,7 @@
 char auth[] = "YourAuthToken";
 
 WidgetTable table;
-BLYNK_ATTACH_WIDGET(table, V2);
+BLYNK_ATTACH_WIDGET(table, V1);
 
 int rowIndex = 0;
 
