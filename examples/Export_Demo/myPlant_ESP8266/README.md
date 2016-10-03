@@ -23,11 +23,8 @@ Instruction for Blynk Demo App - **myPlant**.
 
 1. Open **File -> Examples -> Blynk -> Export_Demo -> myPlant_ESP8266**
 
-2. Now select **Tools -> Board -> NodeMCU 1.0 (ESP-12E Module)**.
-
-TODO: specify Baud Rate
-
-**Note:** This board selection works for both SparkFun BlynkBoard and NodeMCU.
+2. In **Tools -> Board** menu, select **NodeMCU 1.0 (ESP-12E Module)**.  
+   **Note:** This board selection works for both SparkFun BlynkBoard and NodeMCU.
 
 3. If you use NodeMCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
 
@@ -35,9 +32,10 @@ TODO: specify Baud Rate
 
    ![Verify](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/verify.png)
    
-5. Check the ports that are available in your **Tools -> Board** menu.
-   Connect the hardware with USB cable and select the port that appeared in **Tools -> Board** menu.
-   
+5. Select the port of your board in **Tools -> Port** menu.  
+   In **Tools -> Upload Speed**, select **115200** (higher values may also work for you).  
+   If you don't know how to select the port, check this [troubleshooting section](#how-to-pick-the-correct-port).
+
 6. Click the **Upload** button. (You should see a progress bar in the console, followed by **Done uploading** message in the 
    status panel. After this process is finished, LED should start blinking blue: which means the board is waiting for configuration).
    
@@ -45,8 +43,6 @@ TODO: specify Baud Rate
 The firmware was successfully loaded and is ready. 
 
 You can switch the board off and then on again. Imagine you just unboxed the new product. LED should be blinking blue.
-
-TODO: add statuses descriptions + reset instructions
 
 
 # Running Blynk myPlant Demo
@@ -82,6 +78,9 @@ TODO: add statuses descriptions + reset instructions
    ![App Ready](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
    
    **Note:** This is a simulation of a plant watering device. The app is communicating with the hardware, but the data is not real.
+   
+# RGB LED status indication
+TODO
 
 # Resetting board configuration
 
@@ -121,7 +120,7 @@ sudo usermod -a -G dialout $USER
 
 **Note:** You will need to reboot (or just log out and log in) for this change to take effect.
 
-## Multiple ports available in menu, how to pick the correct one?
+## How to pick the correct port?
 1. Ensure that your board is disconnected.
 2. Remember which ports are available in your **Tools -> Board** menu.
 3. Connect your board and wait 30 seconds.
