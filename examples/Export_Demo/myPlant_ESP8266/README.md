@@ -29,7 +29,7 @@ TODO: specify Baud Rate
 
 **Note:** This board selection works for both SparkFun BlynkBoard and NodeMCU.
 
-3. If you use Node MCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
+3. If you use NodeMCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
 
 4. Click on **Verify** button and make sure that example compiled correctly:
 
@@ -81,7 +81,7 @@ TODO: add statuses descriptions + reset instructions
    
    ![App Ready](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
    
-   **NOTE:** This is a simulation of a plant watering device. The app is communicating with the hardware, but the data is not real.
+   **Note:** This is a simulation of a plant watering device. The app is communicating with the hardware, but the data is not real.
 
 # Resetting board configuration
 
@@ -119,13 +119,14 @@ If you get this error, you need to set serial port permission. Open terminal, an
 sudo usermod -a -G dialout $USER
 ```
 
-You will need to reboot (or just log out and log in) for this change to take effect.
+**Note:** You will need to reboot (or just log out and log in) for this change to take effect.
 
 ## Multiple ports available in menu, how to pick the correct one?
-1. Disconnect your board.
-2. Check what ports are available in your **Tools -> Board** menu.
+1. Ensure that your board is disconnected.
+2. Remember which ports are available in your **Tools -> Board** menu.
 3. Connect your board and wait 30 seconds.
-4. Select the new port that appeared in ```Tools -> Board``` menu (the one that was missing before).
+4. Select the new port that appeared in **Tools -> Board** menu (the one that was missing before).
 
-## 
-TODO
+## The board doesn't connect to home network, RGB flashes red and board restarts.
+Ensure you have entered valid WiFi configuration (picked correct WiFi name and password).
+If you make a mistake, ho have to [reset board configuration](#resetting-board-configuration)
