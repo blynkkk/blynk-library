@@ -74,7 +74,7 @@ public:
 
 private:
     uint8_t mPin;
-    uint8_t mOutBuf[32];
+    uint8_t mOutBuf[BLYNK_MAX_SENDBYTES];
     uint8_t mOutQty;
 };
 
