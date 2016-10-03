@@ -5,15 +5,17 @@ Instruction for Blynk Demo App - **myPlant**.
 1. Install latest [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
 2. Download latest Blynk release package: [Blynk_Release_v0.3.10.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.3.10/Blynk_Release_v0.3.10.zip).
-   It contains 4 libraries, please copy them to Arduino Libraries folder. 
+   It contains 5 libraries, please copy them to Arduino Libraries folder. 
    If you don’t know how to do this, please follow manual installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
    
-3. Open the Arduino IDE, then select in the menu: **File -> Preferences**.
+3. Open the Arduino IDE, then select in the menu: **File -> Preferences**.  
    Click on **Additional Boards Manager URLs** button and add this link:
+   ```
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
+   ```
    ![File -> Preferences](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/file_preferences.png)
    
-4. In the Arduino IDE menu open: **Tools -> Board -> Boards Manager**.
+4. In the Arduino IDE menu open: **Tools -> Board -> Boards Manager**.  
    Search for ```esp8266```, and install it:
    ![Tools -> Board -> Boards Manager](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/boards_manager.png)
    
@@ -27,7 +29,7 @@ TODO: specify Baud Rate
 
 **Note:** This board selection works for both SparkFun BlynkBoard and NodeMCU.
 
-3. If you use Node MCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
+3. If you use NodeMCU, uncomment ```#define USE_NODE_MCU_BOARD``` in the ```myPlant_ESP8266.ino``` file.
 
 4. Click on **Verify** button and make sure that example compiled correctly:
 
@@ -53,7 +55,7 @@ TODO: add statuses descriptions + reset instructions
 
 2. Follow the steps in WiFi provisioning wizard to connect the hardware to your WiFi network:
    
-   * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue frequent.
+   * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue frequently.
    * In the app click **Begin** to start device configuration:
    
    ![Step 1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_start.png)
@@ -64,23 +66,22 @@ TODO: add statuses descriptions + reset instructions
    
    ![Step 2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_choose_network.png)
    
-   * Choose  **myPlant device** in the list of networks. This is the board which will be configured. 
+   * Choose **Blynk myPlant** device in the list of networks. This is the board which will be configured. 
    
    ![Step 3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_connect.png)
    
    TODO: Very important to explain what happens here. Everyone asks about the token, credentials and so on...
+   Device will start blinking slower, which indicates it’s trying to connect to your home network, and then start breathing cyan when ready.
    
    * Click **DONE**: 
    
    ![Step 4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_done.png)
-   
-   * Enjoy!
-   
-   ![Step 5](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
 
 3. After the board is connected, the app is ready.
    
-   **NOTE: **This is a simulation of a plant watering device. All of the data is coming from the hardware, but it's not real.
+   ![App Ready](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
+   
+   **Note:** This is a simulation of a plant watering device. The app is communicating with the hardware, but the data is not real.
 
 # Resetting board configuration
 
@@ -102,8 +103,8 @@ If you are using NodeMCU, and your RGB LED shows incorrect colors (or doesn’t 
 
 In this case, you will have to:
 
-  1. Connect the longest LED pin to the VCC instead of GND.
-  2. Change BOARD_LED_INVERSE to true for your board in Settings.h tab
+  1. Connect the longest LED pin to the ```VCC``` instead of ```GND```.
+  2. Change ```BOARD_LED_INVERSE``` to ```true``` for your board in ```Settings.h``` tab
   
 ## No ports appear, when board is plugged in
 
@@ -114,6 +115,18 @@ For Ubuntu / linux, it may happen that the board is detected, but when you try f
 an error appears: ```Error opening serial port...```
 If you get this error, you need to set serial port permission. Open terminal, and run command:
 
-```sudo usermod -a -G dialout $USER```
+```bash
+sudo usermod -a -G dialout $USER
+```
 
-You will need to reboot (or just log out and log in) for this change to take effect.
+**Note:** You will need to reboot (or just log out and log in) for this change to take effect.
+
+## Multiple ports available in menu, how to pick the correct one?
+1. Ensure that your board is disconnected.
+2. Remember which ports are available in your **Tools -> Board** menu.
+3. Connect your board and wait 30 seconds.
+4. Select the new port that appeared in **Tools -> Board** menu (the one that was missing before).
+
+## The board doesn't connect to home network, RGB flashes red and board restarts.
+Ensure you have entered valid WiFi configuration (picked correct WiFi name and password).
+If you make a mistake, ho have to [reset board configuration](#resetting-board-configuration)
