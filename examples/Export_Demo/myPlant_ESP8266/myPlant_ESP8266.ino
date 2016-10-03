@@ -148,7 +148,6 @@ void example_init() {
     if (sensorSoilMoisture < 20) {
       if (isNotificationSent == false) {
         Blynk.email("myPlant notification", "Your plant is thirsty!");
-        Blynk.notify("Your plant is thirsty!");
         isNotificationSent = true;
       }
     }
@@ -161,6 +160,12 @@ void example_init() {
 
     if (sensorSoilMoisture > 30) {
       isNotificationSent = false;
+    }
+    if (sensorSoilMoisture >= 85) {
+      // Stop watering
+      timer.disable(wateringTimer);
+      // Update "Start Watering" button widget state
+      Blynk.virtualWrite(V6, 0);
     }
   });
   timer.disable(wateringTimer);
