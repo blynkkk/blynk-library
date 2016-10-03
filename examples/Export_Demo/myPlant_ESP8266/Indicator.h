@@ -8,6 +8,11 @@
  *
  **************************************************************/
 
+#if defined(BOARD_LED_PIN_WS2812)
+  #include <Adafruit_NeoPixel.h>
+  Adafruit_NeoPixel rgb = Adafruit_NeoPixel(1, BOARD_LED_PIN_WS2812, NEO_GRB + NEO_KHZ800);
+#endif
+
 void indicator_run();
 
 #if !defined(BOARD_RGB_BRIGHTNESS)
@@ -62,11 +67,13 @@ protected:
 #if defined(BOARD_LED_PIN_WS2812)
 
   void initLED() {
-
+    rgb.begin();
+    setRGB(COLOR_BLACK);
   }
 
   void setRGB(uint32_t color) {
-
+    rgb.setPixelColor(0, color);
+    rgb.show();
   }
 
 #elif defined(BOARD_LED_PIN_R)
