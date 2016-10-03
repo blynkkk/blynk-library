@@ -126,14 +126,28 @@ void example_init() {
   // Update sensors each 3 seconds
   timer.setInterval(3000L, []() {
     // Soil moisture
-    Blynk.virtualWrite(V1, sensorSoilMoisture);
+    if (sensorSoilMoisture < 33) {
+      Blynk.virtualWrite(V1, "DRY");
+    } else if (sensorSoilMoisture > 33) {
+      Blynk.virtualWrite(V1, "MOIST");
+    } else {
+      Blynk.virtualWrite(V1, "WET");
+    }
 
     float dayPeriod = 3.0 * 60 * 1000;
+
     // Light level
-    Blynk.virtualWrite(V2, (int)sinusoidal(5, 95, dayPeriod));
+    int light = sinusoidal(5, 95, dayPeriod);
+    if (light < 33) {
+      Blynk.virtualWrite(V2, "LOW");
+    } else if (light > 33) {
+      Blynk.virtualWrite(V2, "GOOD");
+    } else {
+      Blynk.virtualWrite(V2, "MED");
+    }
+
     // Temperature
     Blynk.virtualWrite(V3, sinusoidal(18, 23, dayPeriod) + randomize(-1.0, 1.0));
-
   });
 
   // Humidity updates at a different rate (5s)
