@@ -84,6 +84,7 @@ static bool isNotificationSent = false;
 // Getting data from "Set watering amount" slider
 BLYNK_WRITE(V5) {
   wateringAmount = param.asInt();
+  DEBUG_PRINT(String("Watering amount: ") + wateringAmount);
 }
 
 // Getting data from "Start Watering" button
@@ -91,9 +92,11 @@ BLYNK_WRITE(V6) {
   if (param.asInt() == 1) {
     // If watering started -> start simulating watering
     timer.enable(wateringTimer);
+    DEBUG_PRINT("Watering started by user");
   } else {
     // If watering stopped -> stop simulating watering
     timer.disable(wateringTimer);
+    DEBUG_PRINT("Watering stopped by user");
   }
 }
 
@@ -149,6 +152,7 @@ void example_init() {
       if (isNotificationSent == false) {
         Blynk.email("myPlant notification", "Your plant is thirsty!");
         isNotificationSent = true;
+        DEBUG_PRINT("Email notification sent");
       }
     }
   });
@@ -166,6 +170,8 @@ void example_init() {
       timer.disable(wateringTimer);
       // Update "Start Watering" button widget state
       Blynk.virtualWrite(V6, 0);
+
+      DEBUG_PRINT("Watering stopped automatically");
     }
   });
   timer.disable(wateringTimer);
