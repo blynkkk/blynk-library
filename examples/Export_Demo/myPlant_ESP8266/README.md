@@ -47,7 +47,7 @@ You can switch the board off and then on again. Imagine you just unboxed the new
 
 # Running Blynk myPlant Demo
 
-1. Download Blynk myPlant app (todo: add link) from Google Play, and run it.
+1. Download [Blynk myPlant app](https://play.google.com/store/apps/details?id=cc.blynk.appexport.demo&hl=en) from Google Play, and run it.
 
 2. Follow the steps in WiFi provisioning wizard to connect the hardware to your WiFi network:
    
