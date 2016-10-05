@@ -93,11 +93,11 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
 # RGB LED status indication
 
-![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png) blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
+![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png) Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
 
 ![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png) Fast Blinking Blue: CONFIGURING mode - device is connected
 
-![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png) CONNECTING_NET
+![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png) CONNECTING_NET mode - device is connecting to the WiFi network
 
 ![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png) Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
 
