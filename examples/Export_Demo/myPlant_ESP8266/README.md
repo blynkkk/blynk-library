@@ -93,21 +93,21 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
 # RGB LED status indication
 
-![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png) Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
+![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png)  Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
 
-![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png) Fast Blinking Blue: CONFIGURING mode - device is connected
+![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png)  Fast Blinking Blue: CONFIGURING mode - device is getting the data from the smartphone
 
-![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png) CONNECTING_NET mode - device is connecting to the WiFi network
+![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png)  CONNECTING_NET mode - device is connecting to the WiFi network
 
-![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png) Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
+![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png)  Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
 
-![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/4.png) Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
+![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/4.png)  Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
 
-![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/6.png) Blinking red: ERROR mode
+![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/6.png)  Blinking red: ERROR mode
 
-Breathing white
+Breathing white - resetting the board
 
-Solid White
+Solid White - board was reset
 
 # Resetting the board
 
