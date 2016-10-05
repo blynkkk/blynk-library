@@ -80,7 +80,13 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    **Note:** This is a simulation of a plant watering device. The app is communicating with the hardware, but the data is not real.
    
 # RGB LED status indication
-TODO
+
+![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/0.png) WAIT_CONFIG  
+![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/1.png) CONFIGURING  
+![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/2.png) CONNECTING_NET  
+![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/3.png) CONNECTING_CLOUD  
+![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/4.png) RUNNING  
+![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/6.png) ERROR  
 
 # Resetting board configuration
 
