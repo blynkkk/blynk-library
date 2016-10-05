@@ -81,12 +81,12 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
 # RGB LED status indication
 
-![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/0.png) WAIT_CONFIG  
-![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/1.png) CONFIGURING  
-![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/2.png) CONNECTING_NET  
-![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/3.png) CONNECTING_CLOUD  
-![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/4.png) RUNNING  
-![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/status/6.png) ERROR  
+![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png) WAIT_CONFIG  
+![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png) CONFIGURING  
+![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png) CONNECTING_NET  
+![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png) CONNECTING_CLOUD  
+![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/4.png) RUNNING  
+![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/6.png) ERROR  
 
 # Resetting board configuration
 
