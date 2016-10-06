@@ -97,9 +97,9 @@ You can switch the board off and then on again. Imagine you just unboxed the new
 
 ![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png)  CONFIGURING mode - device is getting the data from the smartphone
 
-![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png)  Blinking Blue: CONNECTING_NET mode - device is connecting to the WiFi network
+![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png)  Blinking Blynk Green: CONNECTING_NET mode - device is connecting to the WiFi network
 
-![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png)  Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
+![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png)  Fast Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
 
 ![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/4.png)  Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
 
