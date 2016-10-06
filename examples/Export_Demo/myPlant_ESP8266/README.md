@@ -76,7 +76,7 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
    When the data was successfully transfered to the device:
    - Device automatically rebooots
-   - Uses the stored WiFi credentials to xonnects to the WiFi network you specified 
+   - Uses the stored WiFi credentials to connects to the WiFi network you specified 
    - Uses unique Auth Token to connect to Blynk Cloud  
    
    After device successfully connected to Blynk Cloud  status LED will change to "breathing green". 
