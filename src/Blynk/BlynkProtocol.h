@@ -353,9 +353,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         return;
     }
 
-    const int full_length = (sizeof(BlynkHeader)) +
-                            (data  ? length  : 0) +
-                            (data2 ? length2 : 0);
+    const size_t full_length = (sizeof(BlynkHeader)) +
+                               (data  ? length  : 0) +
+                               (data2 ? length2 : 0);
 
 #if defined(BLYNK_SEND_ATOMIC) || defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...

@@ -100,7 +100,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
                          analogInputToDigitalPin(atoi(it.asStr()+1)) :
                          it.asInt();
 #else
-    #warning "analogInputToDigitalPin not defined => Named analog pins will not work"
+    //#pragma message "analogInputToDigitalPin not defined"
     const uint8_t pin = it.asInt();
 #endif
 
