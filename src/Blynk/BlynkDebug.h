@@ -167,7 +167,7 @@ void BlynkFatal() BLYNK_NORETURN;
             char buff[128];
             BLYNK_PRINT.print('[');
             BLYNK_PRINT.print(millis());
-            BLYNK_PRINT.print(F("] "));
+            BLYNK_PRINT.print(BLYNK_F("] "));
 #if defined(__AVR__)
             vsnprintf_P(buff, sizeof(buff), fmt, ap);
 #else
