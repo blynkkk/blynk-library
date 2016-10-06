@@ -13,7 +13,7 @@
 
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
-#include <YunClient.h>
+#include <BridgeClient.h>
 
 typedef BlynkArduinoClient BlynkArduinoClientYun;
 
@@ -62,7 +62,7 @@ public:
 
 };
 
-static YunClient _blynkYunClient;
+static BridgeClient _blynkYunClient;
 static BlynkArduinoClient _blynkTransport(_blynkYunClient);
 BlynkYun Blynk(_blynkTransport);
 
