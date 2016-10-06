@@ -232,6 +232,10 @@
         #elif defined(ARDUINO_ESP8266_THING_DEV)
         #define BLYNK_INFO_DEVICE  "Esp Thing Dev"
 
+        /* ESP32 */
+        #elif defined(ARDUINO_ESP32_DEV)
+        #define BLYNK_INFO_DEVICE  "ESP32"
+
         /* Digistump */
         #elif defined(ARDUINO_ESP8266_OAK)
         #define BLYNK_INFO_DEVICE  "Oak"

@@ -94,7 +94,8 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (++it >= param.end())
         return;
 
-#if defined(analogInputToDigitalPin)
+// TODO: Remove workaround for ESP32
+#if defined(analogInputToDigitalPin) && !defined(ESP32)
     // Good! Analog pins can be referenced on this device by name.
     const uint8_t pin = (it.asStr()[0] == 'A') ?
                          analogInputToDigitalPin(atoi(it.asStr()+1)) :
@@ -153,6 +154,10 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #endif
         digitalWrite(pin, it.asInt() ? HIGH : LOW);
     } break;
+
+// TODO: Remove workaround for ESP32
+#if !defined(ESP32)
+
     case BLYNK_HW_AR: {
         char mem[16];
         BlynkParam rsp(mem, 0, sizeof(mem));
@@ -171,6 +176,8 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #endif
         analogWrite(pin, it.asInt());
     } break;
+
+#endif // TODO: Remove workaround for ESP32
 
 #endif
 
