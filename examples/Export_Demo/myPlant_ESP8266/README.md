@@ -47,16 +47,16 @@ You can switch the board off and then on again. Imagine you just unboxed the new
 
 # Running Blynk myPlant Demo
 
-1. Download [Blynk myPlant app](https://play.google.com/store/apps/details?id=cc.blynk.appexport.demo&hl=en) from Google Play, and run it.
+1. Download [Blynk myPlant app](https://play.google.com/store/apps/details?id=cc.blynk.appexport.demo&hl=en) from Google Play, and open it.
 
 2. Follow the steps in WiFi provisioning wizard to connect the hardware to your WiFi network:
    
-   * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue frequently.
-   * In the app click **Begin** to start device configuration:
+   * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue. It means that at this moment the board acts as an Access Point and broadcasts it's own WiFi network
+   * In the app click **Begin** to start device provisioning:
    
    ![Step 1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_start.png)
    
-   * Choose your home WiFi SSID and password:
+   * Choose the WiFi SSID you would like your device be connected to and input the password for it. It can be your home WiFi network.
     
    **Note**: you may be asked for a permission to access GPS. It's a regular Android OS permission to get the hardware identifiers during scanning for WiFi networks.
    
@@ -66,14 +66,26 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
    ![Step 3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_connect.png)
    
-   At this stage, device will start blinking slower. The app sends a valid auth token prepared for this device, and also provides it with WiFi credentials. Device tries to connect to your home network, then to Blynk Cloud.  
-   When connection is established, the color indicator will start breathing cyan slowly.
+   Now your smartphone is connected to the Access Point created by the device.
+   You should see that status LED is blinking blue, but slower. Now the provisioning process starts.
+   
+   During this process:
+   - smartphone passes WiFi credentials to the device.
+   - smartphone requests new Auth Token from the server and passes it to the device
+   - this data is stored in the device's memory (EEPROM)
+   
+   When the data was successfully transfered to the device:
+   - Device automatically rebooots
+   - Uses the stored WiFi credentials to connects to the WiFi network you specified 
+   - Uses unique Auth Token to connect to Blynk Cloud  
+   
+   After device successfully connected to Blynk Cloud  status LED will change to "breathing green". 
    
    * Click **DONE**: 
    
    ![Step 4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_done.png)
 
-3. After the board is connected, the app is ready.
+3. The app is ready to be used.
    
    ![App Ready](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
    
@@ -81,21 +93,32 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
 # RGB LED status indication
 
-![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png) WAIT_CONFIG  
-![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png) CONFIGURING  
-![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png) CONNECTING_NET  
-![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png) CONNECTING_CLOUD  
-![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/4.png) RUNNING  
-![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/6.png) ERROR  
+![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png)  Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
 
-# Resetting board configuration
+![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png)  Fast Blinking Blue: CONFIGURING mode - device is getting the data from the smartphone
+
+![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png)  CONNECTING_NET mode - device is connecting to the WiFi network
+
+![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png)  Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
+
+![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/4.png)  Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
+
+![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/6.png)  Blinking red: ERROR mode
+
+Breathing white - resetting the board
+
+Solid White - board was reset
+
+# Resetting the board
+
+There might be situations when you would need reset the board in case something went wrong, or you would like to connect it to a different WiFi network. 
 
 **NodeMCU**: Press and hold the **FLASH** button (near USB connector) for 10 seconds.
 
 **SparkFun Blynk Board**: Press and hold the on board button “0” for 10 seconds.
 
-After few seconds the indicator will start fading white color, and then turn solid white. 
-Then you can release the button. Device will be reset and you can configure it again using the **myPlant App**.
+After a few seconds status LED will change to breathing white color, and then turn to solid white. 
+Release the button. Device will be reset and you can start the provisioning process again using the **myPlant App**.
 
 # Troubleshooting
 
@@ -131,6 +154,6 @@ sudo usermod -a -G dialout $USER
 3. Connect your board and wait 30 seconds.
 4. Select the new port that appeared in **Tools -> Board** menu (the one that was missing before).
 
-## The board doesn't connect to home network, RGB flashes red and board restarts.
+## The board doesn't connect to home network, status LED flashes red and board restarts.
 Ensure you have entered valid WiFi configuration (picked correct WiFi name and password).
-If you make a mistake, ho have to [reset board configuration](#resetting-board-configuration)
+If you make a mistake, ho have to [reset the board](#resetting-the-board)
