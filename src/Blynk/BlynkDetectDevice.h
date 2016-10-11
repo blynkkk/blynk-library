@@ -59,15 +59,36 @@
 
     #if   defined(ENERGIA)
 
-        #define BLYNK_INFO_DEVICE  "Energia"
-        #define BLYNK_USE_128_VPINS
         #define BLYNK_NO_YIELD
+        #define BLYNK_USE_128_VPINS
 
-		// TODO: detect Energia devices
+        #if   defined(ENERGIA_ARCH_MSP430)
+            #define BLYNK_INFO_DEVICE  "LaunchPad"
+            #define BLYNK_INFO_CPU     "MSP430"
+            #define BLYNK_NO_FLOAT
+        #elif defined(ENERGIA_ARCH_MSP432)
+            #define BLYNK_INFO_DEVICE  "LaunchPad"
+            #define BLYNK_INFO_CPU     "MSP432"
+        #elif defined(ENERGIA_ARCH_TIVAC)
+            #define BLYNK_INFO_DEVICE  "LaunchPad"
 
-        #if   defined(__MSP430F5529__)
-        #define BLYNK_INFO_CPU  "MSP430F5529"
-        #define BLYNK_NO_FLOAT
+        #elif defined(ENERGIA_ARCH_CC3200)
+            #define BLYNK_INFO_CONNECTION  "CC3200"
+            #define BLYNK_SEND_CHUNK 64
+
+            #if   defined(ENERGIA_CC3200-LAUNCHXL)
+            #define BLYNK_INFO_DEVICE  "CC32000-LanuchXL"
+            #elif defined(ENERGIA_RedBearLab_CC3200)
+            #define BLYNK_INFO_DEVICE  "RBL CC3200"
+            #elif defined(ENERGIA_RedBearLab_WiFiMini)
+            #define BLYNK_INFO_DEVICE  "RBL WiFi Mini"
+            #elif defined(ENERGIA_RedBearLab_WiFiMicro)
+            #define BLYNK_INFO_DEVICE  "RBL WiFi Micro"
+            #endif
+        #endif
+
+        #if !defined(BLYNK_INFO_DEVICE)
+        #define BLYNK_INFO_DEVICE  "Energia"
         #endif
 
     #elif defined(LINUX)
@@ -132,7 +153,7 @@
 
     #elif defined(ARDUINO)
 
-        #ifdef ESP8266
+        #if defined(ESP8266) || defined(ESP32)
             #define BLYNK_USE_128_VPINS
         #endif
 
@@ -276,7 +297,13 @@
         #define BLYNK_INFO_DEVICE  "Arduino"
         #endif
 
-	#endif
+    #endif
+
+    #ifdef BLYNK_DEBUG
+	#pragma message ("BLYNK_INFO_DEVICE=" BLYNK_INFO_DEVICE)
+	#pragma message ("BLYNK_INFO_CPU="    BLYNK_INFO_CPU)
+    #endif
+
 #endif
 
 #endif
