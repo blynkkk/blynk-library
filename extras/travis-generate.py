@@ -24,7 +24,7 @@ metadata = {
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
 
   "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101" },
-  "myPlant_MKR1000.ino"         : { "board": "mkr1000USB" },
+  "Template_MKR1000.ino"        : { "board": "mkr1000USB" },
 
   # Digistump
   "Digistump_Digispark.ino"     : { "board": "digispark-pro" },
@@ -60,13 +60,9 @@ metadata = {
   "LinkItONE.ino"               : { "skip": True },
 
   # Energia
-  "Energia_WiFi.ino"            : { "board": "lptm4c1294ncpdt" },
-  "TI_MSP430F5529_CC3100.ino"   : { "board": "lpmsp430f5529" },
-  "RedBearLab_CC3200.ino"       : { "skip": True },
-  "RedBearLab_WiFi_Mini.ino"    : { "skip": True },
-  "TI_CC3200_LaunchXL.ino"      : { "skip": True },
-  "TI_Stellaris_LaunchPad.ino"  : { "board": "lplm4f120h5qr" },
-  "TI_TivaC_Connected.ino"      : { "board": "lptm4c1294ncpdt" },
+  "Energia_WiFi.ino"            : { "board": "lpmsp430f5529" },
+  "Energia_Ethernet.ino"        : { "board": "lptm4c1294ncpdt" },
+  "Energia_Serial_USB.ino"      : { "board": "lplm4f120h5qr" },
 }
 
   #seeedTinyBLE

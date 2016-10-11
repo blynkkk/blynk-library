@@ -24,7 +24,7 @@ metadata = {
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
   "myPlant_ESP8266.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
-  "myPlant_MKR1000.ino"         : { "fqbn": "arduino:samd:mkr1000" },
+  "Template_MKR1000.ino"        : { "fqbn": "arduino:samd:mkr1000" },
 
   # Digistump
   "Digistump_Digispark.ino"     : { "fqbn": "digistump:avr:digispark-pro" },
@@ -60,13 +60,9 @@ metadata = {
   "LinkItONE.ino"               : { "skip": True },
 
   # Energia
-  "Energia_WiFi.ino"            : { "fqbn": "energia:tivac:EK-TM4C123GXL" },
-  "TI_MSP430F5529_CC3100.ino"   : { "fqbn": "energia:msp430:MSP-EXP430F5529LP" },
-  "RedBearLab_CC3200.ino"       : { "fqbn": "energia:cc3200:CC3200-RBL" },
-  "RedBearLab_WiFi_Mini.ino"    : { "fqbn": "energia:cc3200:CC3200-RBL-MINI" },
-  "TI_CC3200_LaunchXL.ino"      : { "fqbn": "energia:cc3200:CC3200-LAUNCHXL" },
-  "TI_Stellaris_LaunchPad.ino"  : { "fqbn": "energia:tivac:EK-LM4F120XL" },
-  "TI_TivaC_Connected.ino"      : { "fqbn": "energia:tivac:EK-TM4C1294XL" },
+  "Energia_WiFi.ino"            : { "fqbn": "energia:msp430:MSP-EXP430F5529LP" },
+  "Energia_Ethernet.ino"        : { "fqbn": "energia:tivac:EK-TM4C1294XL" },
+  "Energia_Serial_USB.ino"      : { "fqbn": "energia:tivac:EK-LM4F120XL" },
 }
 
 def find_files(directory, pattern):
