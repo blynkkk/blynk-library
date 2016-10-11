@@ -13,7 +13,8 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This is an example for RedBearLab WiFi Mini board.
+ * This example shows how to use Energia with Ethernet
+ * to connect your project to Blynk.
  *
  * Requires Energia IDE: http://energia.nu/download/
  *
@@ -22,26 +23,21 @@
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
-#include <SPI.h>
-#include <WiFi.h>
-#include <BlynkSimpleRBL_WiFi_Mini.h>
+#include <Ethernet.h>
+#include <BlynkSimpleEnergiaEthernet.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// Your WiFi credentials.
-// Set password to "" for open networks.
-char ssid[] = "YourNetworkName";
-char pass[] = "YourPassword";
-
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth, ssid, pass);
-  // Or specify server using one of those commands:
-  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, ssid, pass, server_ip, port);
+  Blynk.begin(auth);
+  // You can also specify server.
+  // For more options, see BoardsAndShields/Arduino_Ethernet_Manual example
+  //Blynk.begin(auth, "your_server.com", 8442);
+  //Blynk.begin(auth, IPAddress(192,168,1,100), 8888);
 }
 
 void loop()
