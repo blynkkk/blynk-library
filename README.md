@@ -44,7 +44,7 @@ You can easily apply any type of board/connection to all examples.
 ### Supported boards, WiFi, Serial, USB...
 
 Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).  
-Please [see examples](examples/BoardsAndShields) for different connection types.
+Please [see examples](https://github.com/blynkkk/blynk-library/tree/master/examples) for different connection types.
 
 __________
 
