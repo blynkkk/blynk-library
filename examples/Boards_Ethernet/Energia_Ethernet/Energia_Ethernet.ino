@@ -14,12 +14,12 @@
  *
  **************************************************************
  * This example shows how to use Energia with Ethernet
- * to connect your project to Blynk.
+ * to connect your project to Blynk. Tested with:
+ *   TI LaunchPad (Tiva C) w/ tm4c129
  *
  * Requires Energia IDE: http://energia.nu/download/
  *
  * Feel free to apply it to any other example. It's simple!
- *
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space

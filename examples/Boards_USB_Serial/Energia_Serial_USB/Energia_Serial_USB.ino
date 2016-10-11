@@ -13,17 +13,18 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to use ordinary Arduino Serial
- * to connect your project to Blynk.
- * Feel free to apply it to any other example. It's simple!
- *
+ * This example shows how to use ordinary Energia Serial (or USB)
+ * to connect your project to Blynk. Tested with:
+ *   TI LaunchPad (Stellaris) w/ lm4f120
+ * 
  * Requires Energia IDE: http://energia.nu/download/
  *
+ * Feel free to apply it to any other example. It's simple!
  **************************************************************
  *            USB HOWTO: http://tiny.cc/BlynkUSB
  **************************************************************/
 
-#define BLYNK_PRINT Serial1
+#define BLYNK_PRINT Serial1 // Debug console
 #include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.
