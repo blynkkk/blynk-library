@@ -28,7 +28,7 @@ This document hints how to write a custom library.
 ### Adding new HW board to the Blynk mobile app
 
 Different boards can be added by creating JSON board description file.
-Look at the examples [here](https://github.com/blynkkk/blynk-library/tree/master/boards).
+Look at the examples [here](https://github.com/blynkkk/boards).
 You can send us your own board description file for review and App integration.
 
 There may be a problem that you want to start testing your implementation, but your board is not listed int the Blynk App.
