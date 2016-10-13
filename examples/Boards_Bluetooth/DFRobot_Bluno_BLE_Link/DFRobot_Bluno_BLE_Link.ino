@@ -17,6 +17,15 @@
  * This example shows how to use DFRobot Bluno or BLE Link module
  * to connect your project to Blynk.
  *
+ * Please be sure to update your DFRobot firmware to at least V1.97:
+ *   https://github.com/DFRobot/BLE_firmware_V1.9
+ *
+ * For Bluno, read instructions here:
+ *   https://www.dfrobot.com/wiki/index.php/Bluno_SKU:DFR0267
+ *
+ * For BLE-Link, read instructions here:
+ *   https://www.dfrobot.com/wiki/index.php/BLE-Link_(SKU:TEL0073)
+ *
  * NOTE: BLE support is in beta!
  *
  **************************************************************/
@@ -26,7 +35,7 @@
 SoftwareSerial DebugSerial(2, 3); // RX, TX
 
 #define BLYNK_PRINT DebugSerial
-#define BLYNK_USE_DIRECT_CONNECT
+//#define BLYNK_USE_DIRECT_CONNECT
 #include <BlynkSimpleSerialBLE.h>
 
 // You should get Auth Token in the Blynk App.
