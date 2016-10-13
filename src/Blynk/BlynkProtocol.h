@@ -221,7 +221,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         if (state == CONNECTING && (1 == hdr.msg_id)) {
             switch (hdr.length) {
             case BLYNK_SUCCESS:
-            case BLYNK_ALREADY_LOGGED_IN:
+            case BLYNK_ALREADY_REGISTERED:
                 BLYNK_LOG3(BLYNK_F("Ready (ping: "), lastActivityIn-lastHeartbeat, BLYNK_F("ms)."));
                 lastHeartbeat = lastActivityIn;
                 state = CONNECTED;
