@@ -14,10 +14,9 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Arduino_101_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=genuino101"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/DFRobot_Bluno_BLE_Link PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
-    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Microduino_BLE
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Microduino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBear_Duo_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Serial_HC05_HC06
@@ -57,7 +56,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RN_XV_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RedBear_Duo_WiFi
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Sparkfun_Blynk_Board PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=fio"
+    # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=fio"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=tinyduino"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_EXTRA_ARGS="--board=wildfirev3"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V4
