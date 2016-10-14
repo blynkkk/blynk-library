@@ -12,9 +12,12 @@ env:
     - LINUX_SRC=linux
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Adafruit_Bluefruit_LE
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Arduino_101_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=genuino101"
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/DFRobot_Bluno_BLE_Link PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Microduino_BLE
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    #- PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBear_Duo_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Serial_HC05_HC06
@@ -44,7 +47,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_EXTRA_ARGS="--board=yun"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
-    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Shield PLATFORMIO_CI_EXTRA_ARGS="--board=megaatmega2560"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SSL PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
@@ -54,7 +57,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RN_XV_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RedBear_Duo_WiFi
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Sparkfun_Blynk_Board PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
-    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=fio"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=fio"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=tinyduino"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_EXTRA_ARGS="--board=wildfirev3"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V4
@@ -122,6 +125,6 @@ install:
     # http://platformio.org/lib/show/259/BLEPeripheral
     # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
 
-    - platformio lib -g install 17 28 91 418 419 420 65 44 19 299 259 177
+    - platformio lib -g install 17 28 91 418 419 420 65 44 19 299 259 177 https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build

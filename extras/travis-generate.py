@@ -10,7 +10,9 @@ metadata = {
   "ESP8266_Shield.ino"          : { "board": "megaatmega2560" },
   "RN_XV_WiFly.ino"             : { "board": "leonardo" },
   "Serial_HM10_HC08.ino"        : { "board": "leonardo" },
+  "DFRobot_Bluno_BLE_Link.ino"  : { "board": "leonardo" },
   "TheAirBoard_WiFly.ino"       : { "board": "fio" },
+  "TheAirBoard_BLE_Link.ino"    : { "board": "fio" },
   "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4" },
   "Blue_Pill_STM32F103C.ino"    : { "board": "bluepill_f103c8", "framework": "arduino" },
   "Seeed_EthernetV2_0.ino"      : { "skip": True }, # Breaks build
@@ -44,6 +46,7 @@ metadata = {
 
   #Other
   "Simblee_BLE.ino"             : { "skip": True },
+  "RFDuino_BLE.ino"             : { "board": "rfduino" },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
   "WildFire_V3.ino"             : { "board": "wildfirev3" },
   "WildFire_V4.ino"             : { "skip": True },
