@@ -11,8 +11,9 @@ metadata = {
   "RN_XV_WiFly.ino"             : { "board": "leonardo" },
   "Serial_HM10_HC08.ino"        : { "board": "leonardo" },
   "DFRobot_Bluno_BLE_Link.ino"  : { "board": "leonardo" },
-  "TheAirBoard_WiFly.ino"       : { "board": "fio" },
-  "TheAirBoard_BLE_Link.ino"    : { "board": "fio" },
+  "Microduino_BLE.ino"          : { "board": "leonardo" },
+  "TheAirBoard_WiFly.ino"       : { "skip": True, "board": "fio" }, # No AirBoard library
+  "TheAirBoard_BLE_Link.ino"    : { "skip": True, "board": "fio" }, # No AirBoard library
   "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4" },
   "Blue_Pill_STM32F103C.ino"    : { "board": "bluepill_f103c8", "framework": "arduino" },
   "Seeed_EthernetV2_0.ino"      : { "skip": True }, # Breaks build
@@ -40,7 +41,7 @@ metadata = {
   # RBL
   "RedBear_Duo_WiFi.ino"        : { "skip": True },
   "RedBear_Duo_BLE.ino"         : { "skip": True },
-  "RedBearLab_BLE_Nano.ino"     : { "board": "redBearLabBLENano", "framework": "arduino" },
+  "RedBearLab_BLE_Nano.ino"     : { "skip": True, "board": "redBearLabBLENano", "framework": "arduino" }, # Not for Arduino
   "RedBearLab_BlendMicro.ino"   : { "board": "blendmicro8" },
   "RedBearLab_BLE_Mini.ino"     : { "board": "leonardo" },
 
