@@ -148,8 +148,9 @@ void BlynkFatal() BLYNK_NORETURN;
                         prev_print = false;
                     }
                 }
-                if (!prev_print)
-                	BLYNK_PRINT.print(']');
+                if (!prev_print) {
+                    BLYNK_PRINT.print(']');
+                }
                 BLYNK_PRINT.println();
             }
         }

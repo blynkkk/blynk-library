@@ -300,8 +300,8 @@
     #endif
 
     #ifdef BLYNK_DEBUG
-	#pragma message ("BLYNK_INFO_DEVICE=" BLYNK_INFO_DEVICE)
-	#pragma message ("BLYNK_INFO_CPU="    BLYNK_INFO_CPU)
+    #pragma message ("BLYNK_INFO_DEVICE=" BLYNK_INFO_DEVICE)
+    #pragma message ("BLYNK_INFO_CPU="    BLYNK_INFO_CPU)
     #endif
 
 #endif

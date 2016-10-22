@@ -47,15 +47,15 @@ public:
     bool connected() { return state == CONNECTED; }
 
     bool connect(uint32_t timeout = BLYNK_TIMEOUT_MS*3) {
-    	conn.disconnect();
-    	state = CONNECTING;
-    	millis_time_t started = this->getMillis();
-    	while ((state != CONNECTED) &&
-    	       (this->getMillis() - started < timeout))
-    	{
-    		run();
-    	}
-    	return state == CONNECTED;
+        conn.disconnect();
+        state = CONNECTING;
+        millis_time_t started = this->getMillis();
+        while ((state != CONNECTED) &&
+               (this->getMillis() - started < timeout))
+        {
+            run();
+        }
+        return state == CONNECTED;
     }
 
     void disconnect() {
@@ -69,12 +69,12 @@ public:
     // TODO: Fixme
     void startSession() {
         conn.connect();
-    	state = CONNECTING;
+        state = CONNECTING;
 #ifdef BLYNK_MSG_LIMIT
         deltaCmd = 1000;
 #endif
-    	currentMsgId = 0;
-    	lastHeartbeat = lastActivityIn = lastActivityOut = this->getMillis(); // TODO: - 5005UL
+        currentMsgId = 0;
+        lastHeartbeat = lastActivityIn = lastActivityOut = this->getMillis(); // TODO: - 5005UL
     }
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
@@ -98,8 +98,8 @@ private:
     millis_time_t lastActivityIn;
     millis_time_t lastActivityOut;
     union {
-    	millis_time_t lastHeartbeat;
-    	millis_time_t lastLogin;
+        millis_time_t lastHeartbeat;
+        millis_time_t lastLogin;
     };
 #ifdef BLYNK_MSG_LIMIT
     millis_time_t deltaCmd;
@@ -191,8 +191,8 @@ bool BlynkProtocol<Transp>::run(bool avail)
         }
 #else
     } else if (state == CONNECTING) {
-    	if (!tconn)
-    		conn.connect();
+        if (!tconn)
+            conn.connect();
 #endif
     }
     return true;
@@ -287,9 +287,9 @@ bool BlynkProtocol<Transp>::processInput(void)
         }
 #else
         BLYNK_LOG1(BLYNK_F("Ready"));
-		state = CONNECTED;
-		sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
-		this->sendInfo();
+        state = CONNECTED;
+        sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
+        this->sendInfo();
 #endif
     } break;
     case BLYNK_CMD_PING: {
@@ -299,10 +299,10 @@ bool BlynkProtocol<Transp>::processInput(void)
         if (!redir_serv) {
              redir_serv = new char[32];
         }
-    	BlynkParam param(inputBuffer, hdr.length);
-    	strncpy(redir_serv, param[0].asStr(), 32);
-    	uint16_t    redir_port = param[1].asLong();
-    	BLYNK_LOG4(BLYNK_F("Redirecting to "), redir_serv, ':', redir_port);
+        BlynkParam param(inputBuffer, hdr.length);
+        strncpy(redir_serv, param[0].asStr(), 32);
+        uint16_t    redir_port = param[1].asLong();
+        BLYNK_LOG4(BLYNK_F("Redirecting to "), redir_serv, ':', redir_port);
         conn.disconnect();
         conn.begin(redir_serv, redir_port);
         lastLogin = lastActivityIn - 5000L;  // Reconnect immediately
@@ -394,10 +394,10 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     size_t wlen = 0;
     while (wlen < full_length) {
         const size_t chunk = BlynkMin(size_t(BLYNK_SEND_CHUNK), full_length - wlen);
-		BLYNK_DBG_DUMP("<", buff + wlen, chunk);
+        BLYNK_DBG_DUMP("<", buff + wlen, chunk);
         const size_t w = conn.write(buff + wlen, chunk);
         ::delay(BLYNK_SEND_THROTTLE);
-    	if (w == 0) {
+        if (w == 0) {
 #ifdef BLYNK_DEBUG
             BLYNK_LOG1(BLYNK_F("Cmd error"));
 #endif
@@ -405,7 +405,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
             state = CONNECTING;
             //BlynkOnDisconnected();
             return;
-    	}
+        }
         wlen += w;
     }
 
@@ -416,7 +416,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     hdr.msg_id = htons(id);
     hdr.length = htons(length+length2);
 
-	BLYNK_DBG_DUMP("<", &hdr, sizeof(hdr));
+    BLYNK_DBG_DUMP("<", &hdr, sizeof(hdr));
     size_t wlen = conn.write(&hdr, sizeof(hdr));
     ::delay(BLYNK_SEND_THROTTLE);
 

@@ -184,33 +184,37 @@
 
 class BlynkAttachWidgetHelper {
 public:
-	template<typename T>
-	explicit BlynkAttachWidgetHelper(T& widget, uint8_t vPin) {
-		widget.setVPin(vPin);
-	}
+    template<typename T>
+    explicit BlynkAttachWidgetHelper(T& widget, uint8_t vPin) {
+        widget.setVPin(vPin);
+    }
 };
 
 // Could use __attribute__ ((constructor)), but hope for better portability
-#define BLYNK_ATTACH_WIDGET(widget, pin)	\
-	BlynkAttachWidgetHelper BLYNK_CONCAT2(blnk_widget_helper_, __COUNTER__)((widget), (pin)); \
+#define BLYNK_ATTACH_WIDGET(widget, pin) \
+    BlynkAttachWidgetHelper BLYNK_CONCAT2(blnk_widget_helper_, __COUNTER__)((widget), (pin)); \
     BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
 
-#define BLYNK_VAR_INT(name, pin)	int name;  \
+#define BLYNK_VAR_INT(name, pin) \
+    int name;  \
     BLYNK_WRITE(pin) { name = param.asInt(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 
-#define BLYNK_VAR_LONG(name, pin)	long name;  \
+#define BLYNK_VAR_LONG(name, pin) \
+    long name;  \
     BLYNK_WRITE(pin) { name = param.asLong(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 
 #ifndef BLYNK_NO_FLOAT
-#define BLYNK_VAR_DOUBLE(name, pin)	double name;  \
+#define BLYNK_VAR_DOUBLE(name, pin) \
+    double name;  \
     BLYNK_WRITE(pin) { name = param.asDouble(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 #endif
 
 #ifdef ARDUINO
-#define BLYNK_VAR_STRING(name, pin)	String name;  \
+#define BLYNK_VAR_STRING(name, pin) \
+    String name;  \
     BLYNK_WRITE(pin) { name = param.asStr(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 #endif

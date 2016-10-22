@@ -104,22 +104,22 @@ public:
     }
 
 protected:
-    char*	buff;
-    size_t	len;
-    size_t	buff_size;
+    char*    buff;
+    size_t   len;
+    size_t   buff_size;
 };
 
 
 class BlynkParamAllocated
-	: public BlynkParam
+    : public BlynkParam
 {
 public:
-	BlynkParamAllocated(size_t size)
-		: BlynkParam(malloc(size), 0, size)
-	{}
-	~BlynkParamAllocated() {
-		free(buff);
-	}
+    BlynkParamAllocated(size_t size)
+        : BlynkParam(malloc(size), 0, size)
+    {}
+    ~BlynkParamAllocated() {
+        free(buff);
+    }
 };
 
 inline
@@ -191,7 +191,7 @@ void BlynkParam::add(String& str)
 
     #include <stdlib.h>
 
-	inline
+    inline
     void BlynkParam::add(int value)
     {
         char str[2 + 8 * sizeof(value)];
@@ -199,7 +199,7 @@ void BlynkParam::add(String& str)
         add(str);
     }
 
-	inline
+    inline
     void BlynkParam::add(unsigned int value)
     {
         char str[1 + 8 * sizeof(value)];
@@ -207,7 +207,7 @@ void BlynkParam::add(String& str)
         add(str);
     }
 
-	inline
+    inline
     void BlynkParam::add(long value)
     {
         char str[2 + 8 * sizeof(value)];
@@ -215,7 +215,7 @@ void BlynkParam::add(String& str)
         add(str);
     }
 
-	inline
+    inline
     void BlynkParam::add(unsigned long value)
     {
         char str[1 + 8 * sizeof(value)];
@@ -225,7 +225,7 @@ void BlynkParam::add(String& str)
 
 #ifndef BLYNK_NO_FLOAT
 
-	inline
+    inline
     void BlynkParam::add(float value)
     {
         char str[33];
@@ -233,7 +233,7 @@ void BlynkParam::add(String& str)
         add(str);
     }
 
-	inline
+    inline
     void BlynkParam::add(double value)
     {
         char str[33];
@@ -246,25 +246,25 @@ void BlynkParam::add(String& str)
 
     #include <stdio.h>
 
-	inline
+    inline
     void BlynkParam::add(int value)
     {
         len += snprintf(buff+len, buff_size-len, "%i", value)+1;
     }
 
-	inline
+    inline
     void BlynkParam::add(unsigned int value)
     {
         len += snprintf(buff+len, buff_size-len, "%u", value)+1;
     }
 
-	inline
+    inline
     void BlynkParam::add(long value)
     {
         len += snprintf(buff+len, buff_size-len, "%li", value)+1;
     }
 
-	inline
+    inline
     void BlynkParam::add(unsigned long value)
     {
         len += snprintf(buff+len, buff_size-len, "%lu", value)+1;
@@ -274,9 +274,9 @@ void BlynkParam::add(String& str)
 
 #if defined(ESP8266)
 
-	extern char* dtostrf_internal(double number, signed char width, unsigned char prec, char *s);
+    extern char* dtostrf_internal(double number, signed char width, unsigned char prec, char *s);
 
-	inline
+    inline
     void BlynkParam::add(float value)
     {
         char str[33];
@@ -284,7 +284,7 @@ void BlynkParam::add(String& str)
         add(str);
     }
 
-	inline
+    inline
     void BlynkParam::add(double value)
     {
         char str[33];
@@ -294,13 +294,13 @@ void BlynkParam::add(String& str)
 
 #else
 
-	inline
+    inline
     void BlynkParam::add(float value)
     {
         len += snprintf(buff+len, buff_size-len, "%2.3f", value)+1;
     }
 
-	inline
+    inline
     void BlynkParam::add(double value)
     {
         len += snprintf(buff+len, buff_size-len, "%2.3f", value)+1;
