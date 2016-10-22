@@ -28,8 +28,11 @@ public:
         , port(0)
     {}
 
-    void begin_domain(WiFly* rnxv, const char* h,  uint16_t p) {
+    void setWiFly(WiFly* rnxv) {
         wifly = rnxv;
+    }
+
+    void begin(const char* h,  uint16_t p) {
         domain = h;
         port = p;
     }
@@ -93,7 +96,8 @@ public:
     {
         Base::begin(auth);
         wifly = &rnxv;
-        this->conn.begin_domain(wifly, domain, port);
+        this->conn.setWiFly(wifly);
+        this->conn.begin(domain, port);
     }
 
     void begin( const char* auth,

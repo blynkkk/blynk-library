@@ -54,9 +54,12 @@ public:
         , port(0)
     {}
 
-    void begin_domain(ESP8266* esp8266, const char* d,  uint16_t p) {
+    void setEsp8266(ESP8266* esp8266) {
         client = esp8266;
         client->setOnData(onData, this);
+    }
+
+    void begin(const char* d,  uint16_t p) {
         domain = d;
         port = p;
     }
@@ -154,7 +157,8 @@ public:
     {
         Base::begin(auth);
         wifi = &esp8266;
-        this->conn.begin_domain(wifi, domain, port);
+        this->conn.setEsp8266(wifi);
+        this->conn.begin(domain, port);
     }
 
     void begin(const char* auth,

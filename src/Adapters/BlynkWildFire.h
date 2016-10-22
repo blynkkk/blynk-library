@@ -35,6 +35,9 @@ public:
         addr = a;
     }
 
+    // TODO: Add IP redirect
+    void begin(char* h, uint16_t p) {}
+
     bool connect() {
         uint8_t* a = (uint8_t*)&addr;
         BLYNK_LOG_IP_REV("Connecting to ", a);

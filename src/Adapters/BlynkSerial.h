@@ -25,6 +25,9 @@ public:
         : stream(NULL), conn(0)
     {}
 
+    // IP Redirect not available
+    void begin(char* h, uint16_t p) {}
+
     void begin(Stream& s) {
         stream = &s;
     }

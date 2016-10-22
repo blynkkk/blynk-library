@@ -134,6 +134,9 @@ public:
         : mConn (false)
     {}
 
+    // IP redirect not available
+    void begin(char* h, uint16_t p) {}
+
     void begin() {
         instance = this;
 
