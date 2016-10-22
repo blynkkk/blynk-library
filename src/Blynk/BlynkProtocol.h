@@ -33,6 +33,7 @@ public:
     BlynkProtocol(Transp& transp)
         : conn(transp)
         , authkey(NULL)
+        , redir_serv(NULL)
         , lastActivityIn(0)
         , lastActivityOut(0)
         , lastHeartbeat(0)
@@ -93,6 +94,7 @@ protected:
 
 private:
     const char* authkey;
+    char*       redir_serv;
     millis_time_t lastActivityIn;
     millis_time_t lastActivityOut;
     union {
@@ -292,6 +294,19 @@ bool BlynkProtocol<Transp>::processInput(void)
     } break;
     case BLYNK_CMD_PING: {
         sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
+    } break;
+    case BLYNK_CMD_REDIRECT: {
+        if (!redir_serv) {
+             redir_serv = new char[32];
+        }
+    	BlynkParam param(inputBuffer, hdr.length);
+    	strncpy(redir_serv, param[0].asStr(), 32);
+    	uint16_t    redir_port = param[1].asLong();
+    	BLYNK_LOG4(BLYNK_F("Redirecting to "), redir_serv, ':', redir_port);
+        conn.disconnect();
+        conn.begin(redir_serv, redir_port);
+        lastLogin = lastActivityIn - 5000L;  // Reconnect immediately
+        state = CONNECTING;
     } break;
     case BLYNK_CMD_HARDWARE:
     case BLYNK_CMD_BRIDGE: {
