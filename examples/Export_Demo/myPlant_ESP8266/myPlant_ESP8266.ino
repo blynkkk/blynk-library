@@ -1,12 +1,12 @@
 /**************************************************************
  * This is a DEMO sketch which works with Blynk myPlant app and
  * showcases how your app made with Blynk can work
- * 
+ *
  * You can download free app here:
  *
  * iOS: http://
  * Android: http://
- * 
+ *
  * If you would like to add these features to your product,
  * please contact Blynk for Businesses:
  *
@@ -14,7 +14,7 @@
  *
  **************************************************************/
 
-#define USE_SPARKFUN_BLYNK_BOARD  // Uncomment the board you are using 
+#define USE_SPARKFUN_BLYNK_BOARD  // Uncomment the board you are using
 //#define USE_NODE_MCU_BOARD      // Comment out the boards you are not using
 //#define USE_WITTY_CLOUD_BOARD
 
@@ -28,30 +28,30 @@ void setup() {
   delay(500);
   Serial.begin(115200);
 
-  
-/**************************************************************  
- *
- * Workflow to connect the device to WiFi network. Here is how 
-   it works:
- * 1. At the first start hardware acts as an Access Point and 
-      broadcasts it's own WiFi.
- * 2. myPlant smartphone app connects to this Access Point
- * 3. myPlant smartphone app request new Auth Token and passes 
-      it together with user's WiFi SSID and password
- * 4. Hardware saves this information to EEPROM
- * 5. Hardware reboots and now connects to user's WiFi Network
- * 6. Hardware connects to Blynk Cloud and is ready to work with app
- *
- * Next time the hardware reboots, it will use the same configuration
- * to connect. User can RESET the board and re-initiate provisioning
- *
- * Explore the Settings.h for parameters 
- * Read the documentation for more info: http://
- *
- **************************************************************/
-  
-  BlynkProvisioning.begin();  
-  
+
+  /**************************************************************
+   *
+   * Workflow to connect the device to WiFi network.
+   * Here is how it works:
+   * 1. At the first start hardware acts as an Access Point and
+   *    broadcasts it's own WiFi.
+   * 2. myPlant smartphone app connects to this Access Point
+   * 3. myPlant smartphone app request new Auth Token and passes
+   *    it together with user's WiFi SSID and password
+   * 4. Hardware saves this information to EEPROM
+   * 5. Hardware reboots and now connects to user's WiFi Network
+   * 6. Hardware connects to Blynk Cloud and is ready to work with app
+   *
+   * Next time the hardware reboots, it will use the same configuration
+   * to connect. User can RESET the board and re-initiate provisioning
+   *
+   * Explore the Settings.h for parameters
+   * Read the documentation for more info: http://
+   *
+   **************************************************************/
+
+  BlynkProvisioning.begin();
+
   example_init(); // Initialize this example
 }
 
@@ -108,7 +108,7 @@ BLYNK_CONNECTED() {
   Blynk.syncVirtual(V6);
 }
 
-// This is a sinusoidal function used for simulations 
+// This is a sinusoidal function used for simulations
 float sinusoidal(float minv, float maxv, float period) {
   float amp = (maxv - minv) / 2.0;
   float med = minv + amp;
