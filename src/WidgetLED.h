@@ -15,7 +15,7 @@
 class WidgetLED
 {
 public:
-	WidgetLED(uint8_t pin) : mPin(pin) {}
+    WidgetLED(uint8_t pin) : mPin(pin) {}
     void setVPin(int vPin) { mPin = vPin; }
 
     uint8_t getValue() const {
@@ -23,16 +23,16 @@ public:
     }
 
     void setValue(uint8_t value) {
-    	mValue = value;
+        mValue = value;
         Blynk.virtualWrite(mPin, value);
     }
 
     void on() {
-    	setValue(255);
+        setValue(255);
     }
 
     void off() {
-    	setValue(0);
+        setValue(0);
     }
 
 private:

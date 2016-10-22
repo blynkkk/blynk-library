@@ -43,7 +43,7 @@ void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
             }
             dir.close();
         }
-    }  else if (!strcmp(cmd, "get")) {	// dc dc dc dc d[l|e]
+    }  else if (!strcmp(cmd, "get")) { // dc dc dc dc d[l|e]
         if (File f = SD.open(param[1].asStr())) {
             if (!f.isDirectory()) {
                 char mem[32] = "dc";
