@@ -27,7 +27,7 @@
 class BlynkTransportSimbleeBLE
 {
 public:
-	BlynkTransportSimbleeBLE()
+    BlynkTransportSimbleeBLE()
         : mConn (false)
     {}
 
@@ -55,7 +55,7 @@ public:
         uint32_t start = millis();
         while (millis() - start < BLYNK_TIMEOUT_MS) {
             if (available() < len) {
-            	::delay(1);
+                ::delay(1);
             } else {
                 break;
             }
@@ -67,19 +67,19 @@ public:
     }
 
     size_t write(const void* buf, size_t len) {
-    	SimbleeBLE.send((const char*)buf, len);
+        SimbleeBLE.send((const char*)buf, len);
         return len;
     }
 
     size_t available() {
-    	noInterrupts();
+        noInterrupts();
         size_t rxSize = mBuffRX.size();
         interrupts();
         return rxSize;
     }
 
     static
-	int putData(uint8_t* data, uint16_t len) {
+    int putData(uint8_t* data, uint16_t len) {
         if (!instance)
             return 0;
         noInterrupts();

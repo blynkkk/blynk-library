@@ -54,7 +54,7 @@ BLE  ble;
 class BlynkTransportRedBearLab_BLE_Nano
 {
 public:
-	BlynkTransportRedBearLab_BLE_Nano()
+    BlynkTransportRedBearLab_BLE_Nano()
         : mConn (false)
     {}
 

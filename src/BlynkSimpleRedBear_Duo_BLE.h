@@ -130,7 +130,7 @@ static uint8_t characteristic2_data[CHARACTERISTIC2_MAX_LEN] = { 0x00 };
 class BlynkTransportRedBearDuoBLE
 {
 public:
-	BlynkTransportRedBearDuoBLE()
+    BlynkTransportRedBearDuoBLE()
         : mConn (false)
     {}
 
@@ -193,7 +193,7 @@ public:
         uint32_t start = millis();
         while (millis() - start < BLYNK_TIMEOUT_MS) {
             if (available() < len) {
-            	::delay(1);
+                ::delay(1);
                 //blePeripheral->poll();
             } else {
                 break;
@@ -211,7 +211,7 @@ public:
     }
 
     size_t available() {
-    	noInterrupts();
+        noInterrupts();
         size_t rxSize = mBuffRX.size();
         interrupts();
         return rxSize;
@@ -221,7 +221,7 @@ private:
     static BlynkTransportRedBearDuoBLE* instance;
 
     static
-	int gattWriteCallback(uint16_t value_handle, uint8_t* data, uint16_t len) {
+    int gattWriteCallback(uint16_t value_handle, uint8_t* data, uint16_t len) {
         if (!instance)
             return 0;
         noInterrupts();
@@ -235,7 +235,7 @@ private:
     void deviceConnectedCallback(BLEStatus_t status, uint16_t handle);
 
     static
-	void deviceDisconnectedCallback(uint16_t handle);
+    void deviceDisconnectedCallback(uint16_t handle);
 
 private:
     bool mConn;
@@ -277,7 +277,7 @@ void BlynkTransportRedBearDuoBLE::deviceConnectedCallback(BLEStatus_t status, ui
 }
 
 void BlynkTransportRedBearDuoBLE::deviceDisconnectedCallback(uint16_t handle){
-	BLYNK_LOG1("Device disconnected");
+    BLYNK_LOG1("Device disconnected");
     Blynk.disconnect();
 }
 

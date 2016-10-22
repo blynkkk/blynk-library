@@ -36,14 +36,14 @@ public:
     void connectWiFi(const char* ssid, const char* pass)
     {
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
-    	SPI.begin();
-    	SPI.setClockDivider(SPI_CLOCK_DIV2);
+        SPI.begin();
+        SPI.setClockDivider(SPI_CLOCK_DIV2);
 
-    	while(!Fishino.reset()) {
-    		BLYNK_LOG1(BLYNK_F("Fishino RESET FAILED"));
-    	}
+        while(!Fishino.reset()) {
+            BLYNK_LOG1(BLYNK_F("Fishino RESET FAILED"));
+        }
 
-    	Fishino.setMode(STATION_MODE);
+        Fishino.setMode(STATION_MODE);
         if (pass && strlen(pass)) {
             while (!Fishino.begin(ssid, pass)) {
                 ::delay(500);
@@ -57,10 +57,10 @@ public:
         BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
 
         Fishino.staStartDHCP();
-    	while(Fishino.status() != STATION_GOT_IP)
-    	{
-    		::delay(500);
-    	}
+        while(Fishino.status() != STATION_GOT_IP)
+        {
+            ::delay(500);
+        }
 
         IPAddress myip = Fishino.localIP();
         BLYNK_LOG_IP("IP: ", myip);
@@ -75,7 +75,7 @@ public:
     }
 
     void config(const char* auth,
-            	IPAddress   ip,
+                IPAddress   ip,
                 uint16_t    port = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);

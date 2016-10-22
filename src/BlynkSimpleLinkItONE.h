@@ -51,11 +51,11 @@ public:
     }
 
     void config(const char* auth,
-            	IPAddress   ip,
+                IPAddress   ip,
                 uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
-    	Base::begin(auth);
-    	this->conn.begin(ip, port);
+        Base::begin(auth);
+        this->conn.begin(ip, port);
     }
 
     void begin(const char* auth,
@@ -72,12 +72,12 @@ public:
     void begin(const char* auth,
                const char* ssid,
                const char* pass,
-			   int         wifi_auth,
+               int         wifi_auth,
                IPAddress   ip,
                uint16_t    port = BLYNK_DEFAULT_PORT)
     {
         connectWiFi(ssid, pass, wifi_auth);
-    	config(auth, ip, port);
+        config(auth, ip, port);
     }
 
 };
