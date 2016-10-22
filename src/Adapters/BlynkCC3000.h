@@ -94,7 +94,7 @@ public:
         unsigned long aucInactivity = 0;
         int iRet = netapp_timeout_values(&aucDHCP, &aucARP, &aucKeepalive, &aucInactivity);
         if (iRet != 0) {
-        	BLYNK_FATAL("Cannot set netapp timeout!");
+            BLYNK_FATAL("Cannot set netapp timeout!");
         }*/
 
         /*if (!cc3000.deleteProfiles())
@@ -128,7 +128,7 @@ public:
     }
 
     void config(const char* auth,
-            	const char* domain = BLYNK_DEFAULT_DOMAIN,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);
@@ -144,7 +144,7 @@ public:
     }
 
     void config(const char* auth,
-            	IPAddress   ip,
+                IPAddress   ip,
                 uint16_t    port = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);
