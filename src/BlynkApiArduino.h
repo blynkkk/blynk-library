@@ -26,10 +26,10 @@ millis_time_t BlynkApi<Proto>::getMillis()
 // TODO: Remove workaround for Intel Curie
 // https://forum.arduino.cc/index.php?topic=391836.0
 #ifdef ARDUINO_ARCH_ARC32
-	noInterrupts();
-	uint64_t t = millis();
-	interrupts();
-	return t;
+    noInterrupts();
+    uint64_t t = millis();
+    interrupts();
+    return t;
 #else
     return millis();
 #endif
