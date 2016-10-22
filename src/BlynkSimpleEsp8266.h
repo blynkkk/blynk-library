@@ -34,9 +34,9 @@ public:
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         WiFi.mode(WIFI_STA);
         if (pass && strlen(pass)) {
-        	WiFi.begin(ssid, pass);
+            WiFi.begin(ssid, pass);
         } else {
-        	WiFi.begin(ssid);
+            WiFi.begin(ssid);
         }
         while (WiFi.status() != WL_CONNECTED) {
             ::delay(500);
@@ -56,7 +56,7 @@ public:
     }
 
     void config(const char* auth,
-            	IPAddress   ip,
+                IPAddress   ip,
                 uint16_t    port = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);
