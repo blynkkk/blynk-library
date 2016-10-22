@@ -46,9 +46,12 @@
 ********************************************************************/
 
 #define BLYNK_PRINT Serial // Enables Serial Monitor
+
+// Following includes are for Arduino Ethernet Shield (W5100)
+// If you're using another shield, see Boards_* examples
 #include <SPI.h>
 #include <Ethernet.h>
-#include <BlynkSimpleEthernet.h> // This part is for Ethernet stuff
+#include <BlynkSimpleEthernet.h>
 
 char auth[] = "YourAuthToken"; // Put your Auth Token here. (see Step 3 above)
 
