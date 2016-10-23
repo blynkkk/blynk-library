@@ -6,12 +6,13 @@
 #    sudo blynk --token=YourAuthToken
 #
 
-CC = g++
-CFLAGS  = -I ../src/ -I ./ -DLINUX
-LDFLAGS = -lrt -lpthread
+CC ?= gcc
+CXX ?= g++
+CXXFLAGS += -I ../src/ -I ./ -DLINUX
+LDFLAGS += -lrt -lpthread
 
 ifeq ($(build),debug)
-	CFLAGS += -c -g2 -O0 \
+	CXXFLAGS += -c -g2 -O0 \
 		-Wall -Weffc++ \
 		-Wextra -Wcast-align \
 		-Wchar-subscripts  -Wcomment -Wconversion \
@@ -35,17 +36,17 @@ ifeq ($(build),debug)
 		-Wvolatile-register-var  -Wwrite-strings
 	
 	# Disable some warnings
-	CFLAGS += -Wno-variadic-macros -Wno-unused-parameter -Wno-vla
+	CXXFLAGS += -Wno-variadic-macros -Wno-unused-parameter -Wno-vla
 	
 	# Uncomment this to get pedantic warnings:
-	#CFLAGS += -pedantic -Wvariadic-macros -Wunused-parameter -Waggregate-return -Wcast-qual -Wpadded
+	#CXXFLAGS += -pedantic -Wvariadic-macros -Wunused-parameter -Waggregate-return -Wcast-qual -Wpadded
 else
-	CFLAGS += -c -O3 -w
+	CXXFLAGS += -c -O3 -w
 	LDFLAGS += -s
 endif
 
 ifeq ($(target),raspberry)
-	CFLAGS += -DRASPBERRY
+	CXXFLAGS += -DRASPBERRY
 	LDFLAGS += -lwiringPi
 endif
 
@@ -62,7 +63,7 @@ clean:
 	-rm $(OBJECTS) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS) 
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
 
 .cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $< -o $@
