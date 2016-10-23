@@ -29,7 +29,8 @@ BLYNK_WRITE(V1)
 
 int main(int argc, char* argv[])
 {
-    const char *auth, *serv, *port;
+    const char *auth, *serv;
+    uint16_t port;
     parse_options(argc, argv, auth, serv, port);
 
     Blynk.begin(auth, serv, port);

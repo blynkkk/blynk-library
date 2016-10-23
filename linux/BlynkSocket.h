@@ -31,8 +31,8 @@ public:
         : sockfd(-1), domain(NULL), port(NULL)
     {}
 
-    void begin(const char* d, const char* p) {
-        this->domain = d;
+    void begin(const char* h, uint16_t p) {
+        this->domain = h;
         this->port = p;
     }
 
@@ -48,7 +48,9 @@ public:
         hints.ai_socktype = SOCK_STREAM; // TCP stream sockets
 
         // get ready to connect
-        getaddrinfo(domain, port, &hints, &res);
+        char port_str[8];
+        snprintf(port_str, sizeof(port_str), "%u", port);
+        getaddrinfo(domain, port_str, &hints, &res);
 
         if ((sockfd = ::socket(res->ai_family, res->ai_socktype, res->ai_protocol)) < 0)
         {
@@ -108,7 +110,7 @@ public:
 protected:
     int    sockfd;
     const char* domain;
-    const char* port;
+    uint16_t    port;
 };
 
 class BlynkSocket
@@ -122,7 +124,7 @@ public:
 
     void begin(const char* auth,
                const char* domain = BLYNK_DEFAULT_DOMAIN,
-               const char* port   = TOSTRING(BLYNK_DEFAULT_PORT))
+               uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);
         this->conn.begin(domain, port);

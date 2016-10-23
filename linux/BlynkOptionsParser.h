@@ -6,7 +6,7 @@ static
 void parse_options(int argc, char* argv[],
                    const char*& auth,
                    const char*& serv,
-                   const char*& port)
+                   uint16_t&    port)
 {
     static struct option long_options[] = {
         {"token",   required_argument,   0, 't'},
@@ -18,7 +18,7 @@ void parse_options(int argc, char* argv[],
     // Set default values
     auth = NULL;
     serv = BLYNK_DEFAULT_DOMAIN;
-    port = TOSTRING(BLYNK_DEFAULT_PORT);
+    port = BLYNK_DEFAULT_PORT;
 
     const char* usage =
         "Usage: blynk [options]\n"
@@ -34,7 +34,7 @@ void parse_options(int argc, char* argv[],
         switch (rez) {
         case 't': auth = optarg; break;
         case 's': serv = optarg; break;
-        case 'p': port = optarg; break;
+        case 'p': port = atoi(optarg); break;
         default : printf(usage); exit(1);
         };
     };
