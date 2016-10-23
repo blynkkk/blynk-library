@@ -11,6 +11,18 @@
 #ifndef BlynkDetectDevice_h
 #define BlynkDetectDevice_h
 
+// General defines
+
+#define BLYNK_STRINGIFY(x) #x
+#define BLYNK_TOSTRING(x) BLYNK_STRINGIFY(x)
+#define BLYNK_COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
+#define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
+#define BLYNK_NORETURN __attribute__ ((noreturn))
+#define BLYNK_UNUSED __attribute__((__unused__))
+
+// Causes problems on some platforms
+#define BLYNK_FORCE_INLINE inline //__attribute__((always_inline))
+
 #ifndef BLYNK_INFO_CPU
 
     /******************************************
@@ -300,8 +312,8 @@
     #endif
 
     #ifdef BLYNK_DEBUG
-    #pragma message ("BLYNK_INFO_DEVICE=" BLYNK_INFO_DEVICE)
-    #pragma message ("BLYNK_INFO_CPU="    BLYNK_INFO_CPU)
+    #pragma message ("BLYNK_INFO_DEVICE=" BLYNK_TOSTRING(BLYNK_INFO_DEVICE))
+    #pragma message ("BLYNK_INFO_CPU="    BLYNK_TOSTRING(BLYNK_INFO_CPU))
     #endif
 
 #endif

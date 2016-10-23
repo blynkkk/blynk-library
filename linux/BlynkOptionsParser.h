@@ -26,7 +26,7 @@ void parse_options(int argc, char* argv[],
         "Options:\n"
         "  -t auth, --token=auth    Your auth token\n"
         "  -s addr, --server=addr   Server name (default: " BLYNK_DEFAULT_DOMAIN ")\n"
-        "  -p num,  --port=num      Server port (default: " TOSTRING(BLYNK_DEFAULT_PORT) ")\n"
+        "  -p num,  --port=num      Server port (default: " BLYNK_TOSTRING(BLYNK_DEFAULT_PORT) ")\n"
         "\n";
 
     int rez;

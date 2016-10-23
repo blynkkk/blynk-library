@@ -40,8 +40,8 @@ void BlynkApi<Proto>::sendInfo()
 {
     static const char profile[] BLYNK_PROGMEM =
         BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
-        BLYNK_PARAM_KV("h-beat" , TOSTRING(BLYNK_HEARTBEAT))
-        BLYNK_PARAM_KV("buff-in", TOSTRING(BLYNK_MAX_READBYTES))
+        BLYNK_PARAM_KV("h-beat" , BLYNK_TOSTRING(BLYNK_HEARTBEAT))
+        BLYNK_PARAM_KV("buff-in", BLYNK_TOSTRING(BLYNK_MAX_READBYTES))
 #ifdef BLYNK_INFO_DEVICE
         BLYNK_PARAM_KV("dev"    , BLYNK_INFO_DEVICE)
 #endif
