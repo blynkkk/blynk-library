@@ -20,6 +20,10 @@ class GpsParam
 public:
 
     GpsParam(const BlynkParam& param)
+        : mLat (0)
+        , mLon (0)
+        , mAlt (0)
+        , mSpeed (0)
     {
         BlynkParam::iterator it = param.begin();
         if (it >= param.end())
