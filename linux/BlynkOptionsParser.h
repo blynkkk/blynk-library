@@ -41,7 +41,7 @@ void parse_options(int argc, char* argv[],
 
     // Check mandatory options
     if (!auth) {
-    	printf(usage);
+        printf(usage);
         exit(1);
     }
 }
