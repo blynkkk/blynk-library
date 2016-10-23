@@ -13,6 +13,7 @@
 #include <WidgetBridge.h>
 #include <WidgetTimeInput.h>
 #include <WidgetTable.h>
+#include <WidgetGPS.h>
 
 // Cannot auto-include as these have library dependencies
 //#include <WidgetRTC.h>
