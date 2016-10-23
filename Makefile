@@ -13,7 +13,8 @@ examples:
 	python extras/build-examples.py
 
 spaces:
-	find ./src -name '*.cpp' -o -name '*.h' -exec sed -i 's/\t/    /g' {} \;
+	find ./src ./linux -name '*.cpp' -o -name '*.h' -exec sed -i 's/\t/    /g' {} \;
+	find ./examples ./tests -name '*.ino' -o -name '*.h' -exec sed -i 's/\t/  /g' {} \;
 
 update-travis:
 	python extras/travis-generate.py > .travis.yml.new
