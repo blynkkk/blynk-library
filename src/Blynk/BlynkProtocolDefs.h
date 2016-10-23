@@ -51,7 +51,8 @@ enum BlynkCmd
     BLYNK_CMD_SHARE_LOGIN     = 32,
 
     BLYNK_CMD_REDIRECT        = 41,
-    BLYNK_CMD_DEBUG_PRINT     = 45
+
+    BLYNK_CMD_DEBUG_PRINT     = 55
 };
 
 enum BlynkStatus
