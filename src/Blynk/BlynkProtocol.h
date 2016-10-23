@@ -168,8 +168,11 @@ bool BlynkProtocol<Transp>::run(bool avail)
             sendCmd(BLYNK_CMD_PING);
             lastHeartbeat = t;
         }
-#ifndef BLYNK_USE_DIRECT_CONNECT
     } else if (state == CONNECTING) {
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        if (!tconn)
+            conn.connect();
+#else
         if (tconn && (t - lastLogin > BLYNK_TIMEOUT_MS)) {
             BLYNK_LOG1(BLYNK_F("Login timeout"));
             conn.disconnect();
@@ -189,10 +192,6 @@ bool BlynkProtocol<Transp>::run(bool avail)
             lastLogin = lastActivityOut;
             return true;
         }
-#else
-    } else if (state == CONNECTING) {
-        if (!tconn)
-            conn.connect();
 #endif
     }
     return true;
@@ -300,8 +299,14 @@ bool BlynkProtocol<Transp>::processInput(void)
              redir_serv = (char*)malloc(32);
         }
         BlynkParam param(inputBuffer, hdr.length);
-        strncpy(redir_serv, param[0].asStr(), 32);
-        uint16_t    redir_port = param[1].asLong();
+        uint16_t redir_port = 8442; // TODO: Fixit
+
+        BlynkParam::iterator it = param.begin();
+        if (it >= param.end())
+            return false;
+        strncpy(redir_serv, it.asStr(), 32);
+        if (++it < param.end())
+            redir_port = it.asLong();
         BLYNK_LOG4(BLYNK_F("Redirecting to "), redir_serv, ':', redir_port);
         conn.disconnect();
         conn.begin(redir_serv, redir_port);
