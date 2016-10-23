@@ -297,7 +297,7 @@ bool BlynkProtocol<Transp>::processInput(void)
     } break;
     case BLYNK_CMD_REDIRECT: {
         if (!redir_serv) {
-             redir_serv = new char[32];
+             redir_serv = (char*)malloc(32);
         }
         BlynkParam param(inputBuffer, hdr.length);
         strncpy(redir_serv, param[0].asStr(), 32);
