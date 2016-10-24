@@ -22,18 +22,33 @@ class BlynkTransportCC3000
 {
 public:
     BlynkTransportCC3000(Adafruit_CC3000& cc3000)
-        : cc3000(cc3000), addr(0), port(0)
+        : cc3000(cc3000)
+        , host(NULL)
+        , addr(0)
+        , port(0)
     {}
 
     void begin(uint32_t a, uint16_t p) {
+        host = NULL;
         port = p;
         addr = a;
     }
 
-    // TODO: Add IP redirect
-    void begin(char* h, uint16_t p) {}
+    void begin(const char* h, uint16_t p) {
+        host = h;
+        port = p;
+    }
 
     bool connect() {
+        if (host) {
+            BLYNK_LOG2(BLYNK_F("Looking for "), host);
+            while (addr == 0) {
+                if (!cc3000.getHostByName((char*)host, &addr)) {
+                    BLYNK_LOG1(BLYNK_F("Couldn't locate server"));
+                    ::delay(500);
+                }
+            }
+        }
         uint8_t* a = (uint8_t*)&addr;
         BLYNK_LOG_IP_REV("Connecting to ", a);
         client = cc3000.connectTCP(addr, port);
@@ -55,6 +70,7 @@ public:
 private:
     Adafruit_CC3000& cc3000;
     Adafruit_CC3000_Client client;
+    const char* host;
     uint32_t    addr;
     uint16_t    port;
 };
@@ -132,15 +148,8 @@ public:
                 uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
         Base::begin(auth);
-        uint32_t ip = 0;
-        BLYNK_LOG2(BLYNK_F("Looking for "), domain);
-        while (ip == 0) {
-            if (!cc3000.getHostByName((char*)domain, &ip)) {
-                BLYNK_LOG1(BLYNK_F("Couldn't locate server"));
-                ::delay(500);
-            }
-        }
-        this->conn.begin(ip, port);
+
+        this->conn.begin(domain, port);
     }
 
     void config(const char* auth,
