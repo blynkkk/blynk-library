@@ -1,6 +1,6 @@
 {
   "name": "Blynk",
-  "version": "0.3.11",
+  "version": "0.4.0",
   "description": "Build a smartphone app for your project in minutes. Works with Arduino, ESP8266, Raspberry Pi, Intel Edison/Galileo, LinkIt ONE, Particle Core/Photon, Banana Pro, LeMaker Guitar, Energia, MBED, LightBlue Bean, ...",
   "keywords": "framework, iot, home, automation, esp8266, m2m, smartphone, mobile, app, web, cloud, widgets, wifi, ble, ethernet, usb, serial",
   "authors":
