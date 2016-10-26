@@ -52,7 +52,10 @@ __________
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
 * [MicroPython WiPy](https://github.com/wipy/wipy/tree/master/lib/blynk)
+* [OpenWrt](https://github.com/vshymanskyy/blynk-library-openwrt)
 * [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
+* [Node-RED](https://github.com/tzapu/node-red-contrib-blynk-websockets)
+* [LabVIEW](https://github.com/juncaofish/NI-LabVIEWInterfaceforBlynk)
 
 ### License
 This project is released under The MIT License (MIT)
