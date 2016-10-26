@@ -7,6 +7,10 @@
  *
  *                  http://www.blynk.io/
  *
+ * This example requires some additional libraries:
+ *   https://github.com/cmaglie/FlashStorage
+ *   https://github.com/michael71/Timer5
+ *
  **************************************************************/
 
 #define USE_MKR1000_BOARD
