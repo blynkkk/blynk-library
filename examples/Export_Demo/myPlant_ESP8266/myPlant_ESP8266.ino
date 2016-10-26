@@ -4,8 +4,8 @@
  *
  * You can download free app here:
  *
- * iOS: http://
- * Android: http://
+ * iOS:     TODO
+ * Android: http://play.google.com/store/apps/details?id=cc.blynk.appexport.demo
  *
  * If you would like to add these features to your product,
  * please contact Blynk for Businesses:
