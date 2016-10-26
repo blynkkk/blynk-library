@@ -41,7 +41,7 @@ public:
         BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', port);
 
         struct addrinfo hints;
-        struct addrinfo *res;  // will point to the results
+        struct addrinfo *res = NULL;  // will point to the results
 
         memset(&hints, 0, sizeof hints); // make sure the struct is empty
         hints.ai_family = AF_UNSPEC;     // don't care IPv4 or IPv6
@@ -51,6 +51,11 @@ public:
         char port_str[8];
         snprintf(port_str, sizeof(port_str), "%u", port);
         getaddrinfo(domain, port_str, &hints, &res);
+
+        if (res == NULL) {
+            BLYNK_LOG1(BLYNK_F("Cannot get addr info"));
+            return false;
+        }
 
         if ((sockfd = ::socket(res->ai_family, res->ai_socktype, res->ai_protocol)) < 0)
         {
