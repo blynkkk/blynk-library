@@ -90,6 +90,7 @@ public:
     {
         connectWiFi(ssid, pass);
         config(auth, domain, port);
+        while(this->connect() != true) {}
     }
 
     void begin(const char* auth,
@@ -100,6 +101,7 @@ public:
     {
         connectWiFi(ssid, pass);
         config(auth, ip, port);
+        while(this->connect() != true) {}
     }
 
 };

@@ -49,6 +49,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Bridge init..."));
         Bridge.begin();
         config(auth, domain, port);
+        while(this->connect() != true) {}
     }
 
     void begin(const char* auth,
@@ -58,6 +59,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Bridge init..."));
         Bridge.begin();
         config(auth, ip, port);
+        while(this->connect() != true) {}
     }
 
 };

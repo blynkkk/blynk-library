@@ -182,6 +182,7 @@ public:
     {
         connectWiFi(ssid, pass, secmode);
         config(auth, domain, port);
+        while(this->connect() != true) {}
     }
 
     void begin( const char* auth,
@@ -193,6 +194,7 @@ public:
     {
         connectWiFi(ssid, pass, secmode);
         config(auth, ip, port);
+        while(this->connect() != true) {}
     }
 private:
     WildFire_CC3000& cc3000;

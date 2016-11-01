@@ -110,6 +110,7 @@ public:
         wifly = &rnxv;
         connectWiFi(ssid, pass);
         config(rnxv, auth, domain, port);
+        while(this->connect() != true) {}
     }
 
 private:
