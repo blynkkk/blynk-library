@@ -20,7 +20,7 @@
   // Custom board configuration
   #define BOARD_BUTTON_PIN            0                     // Pin where user button is attached
   #define BOARD_BUTTON_ACTIVE_LOW     true                  // true if button is "active-low"
-  
+
   #define BOARD_LED_PIN               2                     // Set LED pin - if you have a single-color LED attached
   //#define BOARD_LED_PIN_R           15                    // Set R,G,B pins - if your LED is PWM RGB 
   //#define BOARD_LED_PIN_G           12

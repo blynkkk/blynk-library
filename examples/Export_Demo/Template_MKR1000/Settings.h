@@ -13,20 +13,23 @@
 
 /*
  * Board configuration (see examples below).
- * 
-#define BOARD_BUTTON_PIN              0                     // Pin where user button is attached
-#define BOARD_BUTTON_ACTIVE_LOW       true                  // true if button is "active-low"
+ */
 
-#define BOARD_LED_PIN                 6                     // Set LED pin - if you have a simple LED attached
-#define BOARD_LED_PIN_R               15                    // Set R,G,B pins - if your LED is PWM RGB 
-#define BOARD_LED_PIN_G               12
-#define BOARD_LED_PIN_B               13
-#define BOARD_LED_PIN_WS2812          4                     // Set if your LED is WS2812 RGB
-#define BOARD_LED_INVERSE             false                 // true, if you need to inverse LED signal
-#define BOARD_RGB_BRIGHTNESS          32                    // 0..255 brightness control
-*/
+#if defined(USE_CUSTOM_BOARD)
 
-#if defined(USE_MKR1000_BOARD)
+  // Custom board configuration
+  #define BOARD_BUTTON_PIN            0                     // Pin where user button is attached
+  #define BOARD_BUTTON_ACTIVE_LOW     true                  // true if button is "active-low"
+
+  #define BOARD_LED_PIN               6                     // Set LED pin - if you have a simple LED attached
+  //#define BOARD_LED_PIN_R           15                    // Set R,G,B pins - if your LED is PWM RGB 
+  //#define BOARD_LED_PIN_G           12
+  //#define BOARD_LED_PIN_B           13
+  //#define BOARD_LED_PIN_WS2812      4                     // Set if your LED is WS2812 RGB
+  #define BOARD_LED_INVERSE           false                 // true, if you need to inverse LED signal
+  #define BOARD_RGB_BRIGHTNESS        32                    // 0..255 brightness control
+
+#elif defined(USE_MKR1000_BOARD)
 
   // Example configuration for MKR1000 Board
   #define BOARD_BUTTON_PIN            0
@@ -36,7 +39,7 @@
   #define BOARD_LED_INVERSE           false
 
 #else
-  #warning "No board selected"
+  #error "No board selected"
 #endif
 
 
