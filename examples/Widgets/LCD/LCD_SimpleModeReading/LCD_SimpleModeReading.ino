@@ -36,11 +36,8 @@ char auth[] = "YourAuthToken";
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
+  Blynk.begin(auth);
 }
 
 BLYNK_READ(V0) {

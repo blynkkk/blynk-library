@@ -47,11 +47,6 @@ void setup()
   timer.setInterval(1000L, sendSeconds);
   // Setup a function to be called every second
   timer.setInterval(1000L, sendMillis);
-
-
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
 }
 
 void sendSeconds() {

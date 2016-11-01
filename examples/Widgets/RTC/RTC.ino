@@ -86,10 +86,6 @@ void setup()
   Serial.begin(9600); // See the connection status in Serial Monitor
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Begin synchronizing time
   rtc.begin();
 

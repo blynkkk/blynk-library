@@ -42,10 +42,6 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Setup table event callbacks
   table.onOrderChange([](int indexFrom, int indexTo) {
     Serial.print("Reordering: ");

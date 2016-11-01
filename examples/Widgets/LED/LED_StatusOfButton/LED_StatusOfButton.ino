@@ -51,10 +51,6 @@ void setup()
   // Setup physical button pin (active low)
   pinMode(btnPin, INPUT_PULLUP);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   timer.setInterval(500L, buttonLedWidget);
 }
 

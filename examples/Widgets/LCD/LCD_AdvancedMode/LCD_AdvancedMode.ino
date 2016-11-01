@@ -35,10 +35,6 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   lcd.clear(); //Use it to clear the LCD Widget
   lcd.print(4, 0, "Hello"); // use: (position X: 0-15, position Y: 0-1, "Message you want to print")
   lcd.print(4, 1, "World");

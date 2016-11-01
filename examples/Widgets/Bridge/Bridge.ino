@@ -76,10 +76,6 @@ void setup()
 {
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Call blynkAnotherDevice every second
   timer.setInterval(1000L, blynkAnotherDevice);
 }

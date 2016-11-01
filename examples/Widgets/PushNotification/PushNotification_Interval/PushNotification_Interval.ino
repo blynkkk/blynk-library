@@ -50,10 +50,6 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Notify immediately on startup
   Blynk.notify("Device started");
 
@@ -66,3 +62,4 @@ void loop()
   Blynk.run();
   timer.run();
 }
+
