@@ -13,20 +13,24 @@
 
 /*
  * Board configuration (see examples below).
- * 
-#define BOARD_BUTTON_PIN              0                     // Pin where user button is attached
-#define BOARD_BUTTON_ACTIVE_LOW       true                  // true if button is "active-low"
+ */
 
-#define BOARD_LED_PIN                 2                     // Set LED pin - if you have a simple LED attached
-#define BOARD_LED_PIN_R               15                    // Set R,G,B pins - if your LED is PWM RGB 
-#define BOARD_LED_PIN_G               12
-#define BOARD_LED_PIN_B               13
-#define BOARD_LED_PIN_WS2812          4                     // Set if your LED is WS2812 RGB
-#define BOARD_LED_INVERSE             true                  // true, if you need to inverse LED signal
-#define BOARD_RGB_BRIGHTNESS          32                    // 0..255 brightness control
-*/
+#if defined(USE_CUSTOM_BOARD)
 
-#if defined(USE_NODE_MCU_BOARD)
+  // Custom board configuration
+  #define BOARD_BUTTON_PIN            0                     // Pin where user button is attached
+  #define BOARD_BUTTON_ACTIVE_LOW     true                  // true if button is "active-low"
+  
+  #define BOARD_LED_PIN               2                     // Set LED pin - if you have a single-color LED attached
+  //#define BOARD_LED_PIN_R           15                    // Set R,G,B pins - if your LED is PWM RGB 
+  //#define BOARD_LED_PIN_G           12
+  //#define BOARD_LED_PIN_B           13
+  //#define BOARD_LED_PIN_WS2812      4                     // Set if your LED is WS2812 RGB
+  #define BOARD_LED_INVERSE           false                 // true, if you need to inverse LED signal
+  #define BOARD_RGB_BRIGHTNESS        32                    // 0..255 brightness control
+
+#elif defined(USE_NODE_MCU_BOARD)
+
   #warning "NodeMCU board selected"
 
   // Example configuration for NodeMCU v1.0 Board
@@ -40,6 +44,7 @@
   #define BOARD_RGB_BRIGHTNESS        32
 
 #elif defined(USE_SPARKFUN_BLYNK_BOARD)
+
   #warning "Sparkfun Blynk board selected"
   
   // Example configuration for SparkFun Blynk Board
@@ -50,6 +55,7 @@
   #define BOARD_RGB_BRIGHTNESS        32
 
 #elif defined(USE_WITTY_CLOUD_BOARD)
+
   #warning "Witty Cloud board selected"
 
   // Example configuration for Witty cloud Board
@@ -61,8 +67,9 @@
   #define BOARD_LED_PIN_B             13
   #define BOARD_LED_INVERSE           false
   #define BOARD_RGB_BRIGHTNESS        32
+
 #else
-  #warning "No board selected"
+  #error "No board selected"
 #endif
 
 
