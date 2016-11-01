@@ -55,8 +55,8 @@ BLYNK_WRITE(V1) {
       items.add("New item 3");
       Blynk.setProperty(V1, "labels", items);
 
-      // You can also use overloaded methods if you have less than 4 items
-      //Blynk.setProperty(V1, "labels", "New item 1", "New item 2", "New item 3");
+      // You can also use it like this:
+      //Blynk.setProperty(V1, "labels", "item 1", "item 2", "item 3");
 
     } break;
     default:
