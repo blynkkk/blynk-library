@@ -37,7 +37,7 @@ You can easily apply any type of board/connection to all examples.
 * Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk))
 * Get the Auth Token from the app
 * Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries)
-* In Arduino IDE, select File -> Examples -> Blynk -> BoardsAndShields -> Arduino_Ethernet
+* In Arduino IDE, select File -> Examples -> Blynk -> Boards_Ethernet -> Arduino_Ethernet
 * Update Auth Token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
 
