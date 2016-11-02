@@ -13,7 +13,7 @@
  *
  **************************************************************
  * Project setup in the Blynk app:
- *   Gauge widget on V4
+ *   Gauge widget on V2
  *
  **************************************************************/
 
@@ -85,11 +85,12 @@ void loop() {
     }
 
     Serial.println("Reading response");
-    int contentLength = 0;
+    int contentLength = -1;
     while (client.available()) {
       String line = client.readStringUntil('\n');
       line.trim();
-      if (line.startsWith("Content-Length:")) {
+      line.toLowerCase();
+      if (line.startsWith("content-length:")) {
         contentLength = line.substring(line.lastIndexOf(':') + 1).toInt();
       } else if (line.length() == 0) {
         break;
