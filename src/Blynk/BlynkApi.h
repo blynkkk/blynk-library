@@ -74,7 +74,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vw");
         cmd.add(pin);
-        append_params(cmd, values...);
+        cmd.add(values...);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
@@ -210,7 +210,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(pin);
         cmd.add(property);
-        append_params(cmd, values...);
+        cmd.add(values...);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
@@ -280,18 +280,6 @@ protected:
     static millis_time_t getMillis();
     void processCmd(const void* buff, size_t len);
     void sendInfo();
-
-    template<typename T, typename... Args>
-    void append_params(BlynkParam& param, T last) {
-        param.add(last);
-    }
-
-    template<typename T, typename... Args>
-    void append_params(BlynkParam& param, T head, Args... tail) {
-        param.add(head);
-        append_params(param, tail...);
-    }
-
 };
 
 

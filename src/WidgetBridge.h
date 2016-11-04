@@ -52,53 +52,14 @@ public:
         Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    template <typename T>
-    void virtualWrite(int pin, const T& data) {
+    template <typename... Args>
+    void virtualWrite(int pin, Args... values) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(mPin);
         cmd.add("vw");
         cmd.add(pin);
-        cmd.add(data);
-        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    template <typename T1, typename T2>
-    void virtualWrite(int pin, const T1& data1, const T2& data2) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(mPin);
-        cmd.add("vw");
-        cmd.add(pin);
-        cmd.add(data1);
-        cmd.add(data2);
-        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    template <typename T1, typename T2, typename T3>
-    void virtualWrite(int pin, const T1& data1, const T2& data2, const T3& data3) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(mPin);
-        cmd.add("vw");
-        cmd.add(pin);
-        cmd.add(data1);
-        cmd.add(data2);
-        cmd.add(data3);
-        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    template <typename T1, typename T2, typename T3, typename T4>
-    void virtualWrite(int pin, const T1& data1, const T2& data2, const T3& data3, const T4& data4) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(mPin);
-        cmd.add("vw");
-        cmd.add(pin);
-        cmd.add(data1);
-        cmd.add(data2);
-        cmd.add(data3);
-        cmd.add(data4);
+        cmd.add(values...);
         Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
