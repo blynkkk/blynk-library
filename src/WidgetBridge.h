@@ -59,7 +59,7 @@ public:
         cmd.add(mPin);
         cmd.add("vw");
         cmd.add(pin);
-        cmd.add(values...);
+        cmd.add_multi(values...);
         Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 

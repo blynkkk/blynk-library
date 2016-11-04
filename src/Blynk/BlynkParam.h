@@ -98,14 +98,14 @@ public:
 #endif
 
     template<typename T, typename... Args>
-    void add(T last) {
+    void add_multi(T last) {
         add(last);
     }
 
     template<typename T, typename... Args>
-    void add(T head, Args... tail) {
+    void add_multi(T head, Args... tail) {
         add(head);
-        add(tail...);
+        add_multi(tail...);
     }
 
     template <typename TV>

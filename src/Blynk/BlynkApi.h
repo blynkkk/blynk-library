@@ -74,7 +74,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vw");
         cmd.add(pin);
-        cmd.add(values...);
+        cmd.add_multi(values...);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
@@ -210,7 +210,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(pin);
         cmd.add(property);
-        cmd.add(values...);
+        cmd.add_multi(values...);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
