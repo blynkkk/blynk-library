@@ -9,8 +9,6 @@ popd > /dev/null
 FROM_TYPE="SER" # SER, TCP
 TO_TYPE="SSL"   # TCP, SSL
 
-COMM_PORT_LINUX=/dev/ttyUSB0
-COMM_PORT_OSX=/dev/tty.usbmodem
 COMM_BAUD=9600
 SERV_ADDR=blynk-cloud.com
 SERV_PORT_SSL=8441
@@ -23,10 +21,6 @@ CLNT_CERT="$SCRIPTPATH/certs/client.pem"
 
 # === Edit the lines below only if absolutely sure what you're doing ===
 
-# Setup exit handler
-trap "echo Exited!; exit;" SIGINT SIGTERM
-echo [ Press Ctrl+C to exit ]
-
 usage="
     This script redirects serial communication to the server.
 
@@ -34,9 +28,8 @@ usage="
       blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
 
     The defaults are:
-      -c,--comm      /dev/ttyUSB0       (on Linux)
-                     COM1               (on Windows)
-                     /dev/tty.usbserial (on OSX)
+      -c,--comm      single available port (on Linux, OSX)
+                     COM1                  (on Windows)
       -b,--baud      9600
       -s,--server    blynk-cloud.com
       -p,--port      8442
@@ -104,8 +97,7 @@ while true; do
     -c|--comm)
       shift
       if [ -n "$1" ]; then
-        COMM_PORT_LINUX=$1
-        COMM_PORT_OSX=$1
+        COMM_PORT_USER=$1
         shift
       fi
       ;;
@@ -170,11 +162,9 @@ SER_ATTR="raw,echo=0,clocal=1,cs8,nonblock=1"
 
 if [[ "$FROM_TYPE" == "SER" ]]; then
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        COMM_PORT=$COMM_PORT_LINUX
         COMM_WCARD="/dev/ttyUSB* /dev/ttyACM*"
         COMM_STTY="-F"
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        COMM_PORT=$COMM_PORT_OSX
         COMM_WCARD="/dev/tty.usbserial* /dev/tty.usbmodem*"
         COMM_STTY="-f"
     else
@@ -182,13 +172,28 @@ if [[ "$FROM_TYPE" == "SER" ]]; then
         exit 1
     fi
 
-    # Ask for serial port interactively if not found
-    if [ ! -e "$COMM_PORT" ]; then
-        echo $COMM_PORT not found.
-        echo -n "Select serial port [" `ls $COMM_WCARD 2> /dev/null` "]: "
+    COMM_FOUND=`ls $COMM_WCARD 2> /dev/null`
+    COMM_QTY=`printf "%s\n" $COMM_FOUND | wc -l`
+
+    if [[ ! "$COMM_PORT_USER" == "" ]]; then
+        COMM_PORT=$COMM_PORT_USER
+    elif [[ "$COMM_QTY" == "1" ]]; then
+        # Select single available port
+        COMM_PORT=$COMM_FOUND
+    else
+        # Ask for serial port interactively
+        echo "$COMM_QTY ports found. You can specify port manually using -c option"
+        echo -n "Select serial port [" $COMM_FOUND "]: "
         read COMM_PORT
     fi
-    echo Resetting device $COMM_PORT...
+
+    if [ ! -e "$COMM_PORT" ]; then
+        echo "Can't find port: $COMM_PORT"
+        echo "Please specify port manually using -c option"
+        exit 1
+    fi
+
+    echo "Resetting device $COMM_PORT..."
     stty $COMM_STTY $COMM_PORT hupcl
     # Disable restarting
     #stty $COMM_STTY $COMM_PORT -hupcl
@@ -209,14 +214,14 @@ if [[ "$TO_TYPE" == "TCP" ]]; then
     echo "Warning: Server connection may be insecure!"
     TO_ATTR="TCP:$SERV_ADDR:$SERV_PORT_TCP,$TCP_ATTR"
 elif [[ "$TO_TYPE" == "SSL" ]]; then
-    if [ -e $SRVR_CERT ]; then
+    if [ -e "$SRVR_CERT" ]; then
         TCP_ATTR="cafile=$SRVR_CERT,$TCP_ATTR"
     else
         echo "Warning: $SRVR_CERT not found. Skipping server verification (connection may be insecure)!"
         TCP_ATTR="verify=0,$TCP_ATTR"
     fi
 
-    if [ -e $CLNT_CERT ]; then
+    if [ -e "$CLNT_CERT" ]; then
         TCP_ATTR="cert=$CLNT_CERT,$TCP_ATTR"
     fi
 
@@ -229,10 +234,14 @@ else
     exit 1
 fi
 
+# Setup exit handler
+trap "echo Exited!; exit;" SIGINT SIGTERM
+echo [ Press Ctrl+C to exit ]
+
 while [ 1 ]; do
     echo Connecting: "$FROM_ATTR <-> $TO_ATTR"
 
-    socat $GEN_ATTR $FROM_ATTR $TO_ATTR
+    socat $GEN_ATTR "$FROM_ATTR" "$TO_ATTR"
 
     detect_conflicts
 
