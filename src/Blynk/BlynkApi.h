@@ -116,11 +116,12 @@ public:
      *
      * @param pin Virtual Pin number
      */
-    void syncVirtual(int pin) {
+    template <typename... Args>
+    void syncVirtual(Args... pins) {
         char mem[8];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vr");
-        cmd.add(pin);
+        cmd.add_multi(pins...);
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_SYNC, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
