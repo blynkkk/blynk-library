@@ -166,7 +166,7 @@ void loop() {
 
   // Set Property
   Serial.println("Setting property");
-  
+
   if (httpRequest(String("GET /") + auth + "/update/V2?label=" + value, "", response)) {
     if (response.length() != 0) {
       Serial.print("WARNING: ");
