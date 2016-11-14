@@ -11,22 +11,21 @@
 #ifndef WidgetTable_h
 #define WidgetTable_h
 
-#include <Blynk/BlynkApi.h>
+#include <Blynk/BlynkWidgetBase.h>
 
 class WidgetTable
+    : public BlynkWidgetBase
 {
 public:
     typedef void (*ItemSelectChange)(int index, bool selected);
     typedef void (*ItemOrderChange)(int indexFrom, int indexTo);
 
 public:
-    WidgetTable(uint8_t pin = -1)
-        : mPin(pin)
+    WidgetTable(uint8_t vPin = -1)
+        : BlynkWidgetBase(vPin)
         , mOnOrderChange(NULL)
         , mOnSelectChange(NULL)
     {}
-
-    void setVPin(int vPin) { mPin = vPin; }
 
     void onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam& param) {
         if (mOnOrderChange && 0 == strcmp(param[0].asStr(), "order")) {
@@ -55,7 +54,6 @@ public:
     }
 
 private:
-    uint8_t mPin;
     ItemOrderChange  mOnOrderChange;
     ItemSelectChange mOnSelectChange;
 

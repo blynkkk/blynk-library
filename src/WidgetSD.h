@@ -11,20 +11,18 @@
 #ifndef WidgetSD_h
 #define WidgetSD_h
 
-#include <Blynk/BlynkApi.h>
+#include <Blynk/BlynkWidgetBase.h>
 
 class WidgetSD
+    : public BlynkWidgetBase
 {
 public:
-    WidgetSD() {}
-    void setVPin(int vPin) {}
+    WidgetSD(uint8_t vPin = -1) : BlynkWidgetBase(vPin) {}
     void onWrite(BlynkReq& request, const BlynkParam& param);
-private:
 };
 
 #include <SD.h>
-
-void WidgetSD::onWrite(BlynkReq& request, const BlynkParam& param)
+void WidgetSD::onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam& param)
 {
     const char* cmd = param[0].asStr();
     if (!strcmp(cmd, "ls")) {

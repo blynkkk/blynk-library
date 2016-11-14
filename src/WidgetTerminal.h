@@ -14,7 +14,7 @@
     #define BLYNK_USE_PRINT_CLASS
 #endif
 
-#include <Blynk/BlynkApi.h>
+#include <Blynk/BlynkWidgetBase.h>
 
 #ifdef BLYNK_USE_PRINT_CLASS
     #if !(defined(SPARK) || defined(PARTICLE) || (PLATFORM_ID==88) || defined(ARDUINO_RedBear_Duo)) // 88 -> RBL Duo
@@ -24,14 +24,18 @@
 #endif
 
 class WidgetTerminal
+    : public BlynkWidgetBase
 #ifdef BLYNK_USE_PRINT_CLASS
-    : public Print
+    , public Print
 #endif
 {
 public:
-    WidgetTerminal(int vPin)
-        : mPin(vPin), mOutQty(0)
+    WidgetTerminal(uint8_t vPin)
+        : BlynkWidgetBase(vPin)
+        , mOutQty(0)
     {}
+
+    //virtual ~WidgetTerminal() {}
 
     virtual size_t write(uint8_t byte) {
         mOutBuf[mOutQty++] = byte;
@@ -73,7 +77,6 @@ public:
 #endif
 
 private:
-    uint8_t mPin;
     uint8_t mOutBuf[BLYNK_MAX_SENDBYTES];
     uint8_t mOutQty;
 };

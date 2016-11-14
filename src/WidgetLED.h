@@ -10,13 +10,16 @@
 #ifndef WidgetLED_h
 #define WidgetLED_h
 
-#include <Blynk/BlynkApi.h>
+#include <Blynk/BlynkWidgetBase.h>
 
 class WidgetLED
+    : public BlynkWidgetBase
 {
 public:
-    WidgetLED(uint8_t pin) : mPin(pin) {}
-    void setVPin(int vPin) { mPin = vPin; }
+    WidgetLED(uint8_t vPin)
+        : BlynkWidgetBase(vPin)
+        , mValue(0)
+    {}
 
     uint8_t getValue() const {
         return mValue;
@@ -36,7 +39,6 @@ public:
     }
 
 private:
-    uint8_t mPin;
     uint8_t mValue;
 };
 

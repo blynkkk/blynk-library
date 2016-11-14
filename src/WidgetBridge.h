@@ -11,15 +11,15 @@
 #ifndef WidgetBridge_h
 #define WidgetBridge_h
 
-#include <Blynk/BlynkApi.h>
+#include <Blynk/BlynkWidgetBase.h>
 
 class WidgetBridge
+    : private BlynkWidgetBase
 {
 public:
-    WidgetBridge(int vPin)
-        : mPin(vPin)
+    WidgetBridge(uint8_t vPin)
+        : BlynkWidgetBase(vPin)
     {}
-    void onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param) {}
 
     void setAuthToken(const char* token) {
         char mem[BLYNK_MAX_SENDBYTES];
@@ -76,8 +76,6 @@ public:
         virtualWriteBinary(pin, param.getBuffer(), param.getLength()-1);
     }
 
-private:
-    int mPin;
 };
 
 #endif
