@@ -19,7 +19,7 @@ public:
     void setVPin(uint8_t vPin) { mPin = vPin; }
 
     void onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param) {
-        BLYNK_LOG1(F("BlynkWidgetBase::onWrite should not be called"));
+        BLYNK_LOG1(BLYNK_F("BlynkWidgetBase::onWrite should not be called"));
     }
 
     template<typename... Args>
