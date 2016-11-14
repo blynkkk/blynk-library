@@ -18,6 +18,8 @@
  * Feel free to apply it to any other example. It's simple!
  *
  * Note: Firmware version 1.14 or later is preferred.
+ *       Tools->Board     should be "Arduino Pro or Pro Mini"
+ *       Tools->Processor should be "ATmega 328 (3.3V, 8MHz)"
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  *
