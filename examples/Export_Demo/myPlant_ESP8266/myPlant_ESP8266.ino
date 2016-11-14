@@ -105,8 +105,7 @@ BLYNK_WRITE(V6) {
 //   sync watering switch button status
 //   and watering amount level from the cloud (last App value)
 BLYNK_CONNECTED() {
-  Blynk.syncVirtual(V5);
-  Blynk.syncVirtual(V6);
+  Blynk.syncVirtual(V5, V6);
 }
 
 // This is a sinusoidal function used for simulations
