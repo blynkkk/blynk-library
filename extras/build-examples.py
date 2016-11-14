@@ -44,6 +44,7 @@ metadata = {
 
   #Other
   "Simblee_BLE.ino"             : { "fqbn": "Simblee:Simblee:Simblee" },
+  "RFDuino_BLE.ino"             : { "fqbn": "RFduino:RFduino:RFduino" },
   "TinyDuino_WiFi.ino"          : { "fqbn": "arduino:avr:pro:cpu=8MHzatmega328" },
   "WildFire_V3.ino"             : { "fqbn": "WickedDevice:avr:wildfireo3" },
   "WildFire_V4.ino"             : { "fqbn": "WickedDevice:avr:wildfireo3" },
@@ -53,8 +54,7 @@ metadata = {
   "ATtiny85.ino"                : { "fqbn": "attiny:avr:ATtinyX5:cpu=attiny85,clock=internal8" },
 
   # Special examples
-  "ESP8266_ReadPin.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
-  "ESP8266_WritePin.ino"        : { "fqbn": "esp8266:esp8266:nodemcuv2" },
+  "ESP8266.ino"                 : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
   # No linux support
   "LinkItONE.ino"               : { "skip": True },

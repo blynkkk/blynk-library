@@ -57,8 +57,7 @@ metadata = {
   "ATtiny85.ino"                : { "board": "attiny85" },
 
   # Special examples
-  "ESP8266_ReadPin.ino"         : { "board": "nodemcuv2" },
-  "ESP8266_WritePin.ino"        : { "board": "nodemcuv2" },
+  "ESP8266.ino"                 : { "board": "nodemcuv2" },
 
   # No linux support
   "LinkItONE.ino"               : { "skip": True },
