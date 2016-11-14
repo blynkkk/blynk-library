@@ -70,9 +70,9 @@ BLYNK_WRITE(V3)
   test = param.asInt();
 }
 
-BLYNK_READ(V3)
+BLYNK_READ(V4)
 {
-  Blynk.virtualWrite(V3, test);
+  Blynk.virtualWrite(V4, test);
 }
 
 #endif /* ENABLE_HANDLERS */
