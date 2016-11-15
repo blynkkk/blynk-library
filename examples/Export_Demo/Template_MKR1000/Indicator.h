@@ -33,7 +33,7 @@ public:
     COLOR_RED     = RGB(0xFF, 0x10, 0x08),
     COLOR_MAGENTA = RGB(0xA7, 0x00, 0xFF),
   };
-  
+
   Indicator() {
     m_Counter = 0;
     initLED();
@@ -98,7 +98,7 @@ protected:
     analogWrite(BOARD_LED_PIN_B, b);
 #endif
   }
-  
+
 #endif
 
   template<typename T>
@@ -114,18 +114,18 @@ protected:
     uint8_t redMax = (colorMax & 0xFF0000) >> 16;
     uint8_t greenMax = (colorMax & 0x00FF00) >> 8;
     uint8_t blueMax = (colorMax & 0x0000FF);
-  
+
     // Brightness will rise from 0 to 128, then fall back to 0
     uint8_t brightness = (m_Counter < 128) ? m_Counter : 255 - m_Counter;
-  
+
     // Multiply our three colors by the brightness:
     redMax *= ((float)brightness / 128.0);
     greenMax *= ((float)brightness / 128.0);
     blueMax *= ((float)brightness / 128.0);
     // And turn the LED to that color:
     setRGB((redMax << 16) | (greenMax << 8) | blueMax);
-  
-    // This function relies on the 8-bit, unsigned m_Counter rolling over. 
+
+    // This function relies on the 8-bit, unsigned m_Counter rolling over.
     m_Counter = (m_Counter+1) % 256;
     return breathePeriod / 256;
   }
@@ -153,12 +153,12 @@ protected:
     return next;
   }
 
-  uint32_t waveLED(uint32_t, unsigned breathePeriod) {  
+  uint32_t waveLED(uint32_t, unsigned breathePeriod) {
     uint8_t brightness = (m_Counter < 128) ? m_Counter : 255 - m_Counter;
 
     setLED(BOARD_PWM_MAX * ((float)brightness / (BOARD_PWM_MAX/2)));
 
-    // This function relies on the 8-bit, unsigned m_Counter rolling over. 
+    // This function relies on the 8-bit, unsigned m_Counter rolling over.
     m_Counter = (m_Counter+1) % 256;
     return breathePeriod / 256;
   }
@@ -167,7 +167,7 @@ protected:
 
   #warning Invalid LED configuration.
 
-#endif 
+#endif
 
 private:
   uint8_t m_Counter;
@@ -186,7 +186,7 @@ Indicator indicator;
       blinker.attach_ms(returnTime, indicator_run);
     }
   }
-  
+
   void indicator_init() {
     blinker.attach_ms(100, indicator_run);
   }
@@ -225,7 +225,7 @@ Indicator indicator;
 
 #elif defined(USE_TIMER_FIVE)
 
-  #include "Timer5.h"
+  #include <Timer5.h>
 
   int indicator_counter = -1;
   void indicator_run() {
