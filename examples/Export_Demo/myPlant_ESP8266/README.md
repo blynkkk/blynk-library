@@ -4,7 +4,7 @@ Instruction for Blynk Demo App - **myPlant**.
 
 1. Install latest [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
-2. Download latest Blynk release package: [Blynk_Release_v0.3.10.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.3.10/Blynk_Release_v0.3.10.zip).
+2. Download latest Blynk release package: [Blynk_Release_v0.4.0.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.4.0/Blynk_Release_v0.4.0.zip).
    It contains 5 libraries, please copy them to Arduino Libraries folder. 
    If you don’t know how to do this, please follow manual installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
    
@@ -13,11 +13,11 @@ Instruction for Blynk Demo App - **myPlant**.
    ```
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
    ```
-   ![File -> Preferences](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/file_preferences.png)
+   ![File -> Preferences](/extras/docs/images/file_preferences.png)
    
 4. In the Arduino IDE menu open: **Tools -> Board -> Boards Manager**.  
    Search for ```esp8266```, and install it:
-   ![Tools -> Board -> Boards Manager](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/boards_manager.png)
+   ![Tools -> Board -> Boards Manager](/extras/docs/images/boards_manager.png)
    
 # Uploading Blynk Demo App example
 
@@ -30,7 +30,7 @@ Instruction for Blynk Demo App - **myPlant**.
 
 4. Click on **Verify** button and make sure that example compiled correctly:
 
-   ![Verify](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/verify.png)
+   ![Verify](/extras/docs/images/verify.png)
    
 5. Select the port of your board in **Tools -> Port** menu.  
    In **Tools -> Upload Speed**, select **115200** (higher values may also work for you).  
@@ -54,17 +54,17 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue. It means that at this moment the board acts as an Access Point and broadcasts it's own WiFi network
    * In the app click **Begin** to start device provisioning:
    
-   ![Step 1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_start.png)
+   ![Step 1](/master/extras/docs/images/provisioning_start.png)
    
    * Choose the WiFi SSID you would like your device be connected to and input the password for it. It can be your home WiFi network.
     
    **Note**: you may be asked for a permission to access GPS. It's a regular Android OS permission to get the hardware identifiers during scanning for WiFi networks.
    
-   ![Step 2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_choose_network.png)
+   ![Step 2](/extras/docs/images/provisioning_choose_network.png)
    
    * Choose **Blynk myPlant** device in the list of networks. This is the board which will be configured. 
    
-   ![Step 3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_connect.png)
+   ![Step 3](/extras/docs/images/provisioning_connect.png)
    
    Now your smartphone is connected to the Access Point created by the device.
    You should see that status LED is blinking blue, but slower. Now the provisioning process starts.
@@ -83,31 +83,31 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
    * Click **DONE**: 
    
-   ![Step 4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/provisioning_done.png)
+   ![Step 4](/extras/docs/images/provisioning_done.png)
 
 3. The app is ready to be used.
    
-   ![App Ready](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/demo_app.png)
+   ![App Ready](/extras/docs/images/demo_app.png)
    
    **Note:** This is a simulation of a plant watering device. The app is communicating with the hardware, but the data is not real.
    
 # RGB LED status indication
 
-![0](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/0.png)  Fast Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
+![0](/extras/docs/images/states/0.png)  Fast Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
 
-![1](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/1.png)  CONFIGURING mode - device is getting the data from the smartphone
+![1](/extras/docs/images/states/1.png)  CONFIGURING mode - device is getting the data from the smartphone
 
-![2](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/2.png)  Blinking Blynk Green: CONNECTING_NET mode - device is connecting to the WiFi network
+![2](/extras/docs/images/states/2.png)  Blinking Blynk Green: CONNECTING_NET mode - device is connecting to the WiFi network
 
-![3](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/3.png)  Fast Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
+![3](/extras/docs/images/states/3.png)  Fast Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
 
-![4](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/4.png)  Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
+![4](/extras/docs/images/states/4.png)  Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
 
-![6](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/6.png)  Blinking Red: ERROR mode
+![6](/extras/docs/images/states/6.png)  Blinking Red: ERROR mode
 
-![7](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/7.png)  Breathing White - confirming resetting the board configuration
+![7](/extras/docs/images/states/7.png)  Breathing White - confirming resetting the board configuration
 
-![8](https://github.com/blynkkk/blynk-library/blob/master/extras/docs/images/states/8.png)  Blinking White - board configuration was reset
+![8](/extras/docs/images/states/8.png)  Blinking White - board configuration was reset
 
 # Resetting the board
 
