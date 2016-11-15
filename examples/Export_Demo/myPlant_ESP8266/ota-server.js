@@ -53,3 +53,4 @@ app.get('/firmware.bin', function (req, res) {
 app.listen(3000, function () {
   console.log('Firmware server listening on port 3000!');
 });
+

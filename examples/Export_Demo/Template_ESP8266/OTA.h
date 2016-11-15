@@ -17,8 +17,8 @@
           node ota-server.js
  *   5. Trigger update by sending the firmware url to V100.
  *      For example, using blynk-ctrl.js:
- *        blynk-ctrl.js --token your-token -vw 100 'http://your-server:3000/firmware.bin?auth=your-token'
- * 
+ *        blynk-ctrl.js --token your-token -vw 100 'http://ota-server:3000/firmware.bin'
+ *
  * More about ESP8266 OTA updates:
  *  https://github.com/esp8266/Arduino/blob/master/doc/ota_updates/readme.md
  */
@@ -29,8 +29,9 @@
 String overTheAirURL;
 
 BLYNK_WRITE(100) {
-  // url should be something like "http://server:port/firmware.bin?auth=12345"
-  String overTheAirURL = param.asString();
+  // URL should be something like "http://ota-server:port/firmware.bin?auth=12345"
+  overTheAirURL = param.asString();
+  overTheAirURL += String("?auth=") + configStore.cloudToken;
 
   // Disconnect, not to interfere with OTA process
   Blynk.disconnect();
