@@ -20,6 +20,7 @@ class WidgetRTC
 {
 public:
     WidgetRTC(uint8_t vPin = -1) : BlynkWidgetBase(vPin) {}
+    void setVPin(uint8_t vPin) { instance()->mPin = vPin; }
     void onWrite(BlynkReq& request, const BlynkParam& param);
     void begin();
 

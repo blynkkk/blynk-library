@@ -18,8 +18,8 @@
  *
  * App project setup:
  *   RTC widget on V5
- *   Value Display widget on V1
- *   Value Display widget on V2
+ *   Value Display M widget on V1
+ *   Value Display M widget on V2
  *
  * WARNING :
  * For this example you'll need SimpleTimer library:
@@ -50,16 +50,6 @@ SimpleTimer timer;
 WidgetRTC rtc;
 
 BLYNK_ATTACH_WIDGET(rtc, V5);
-
-// Utility function for digital clock display: prints preceding colon and leading 0
-void printDigits(int digits)
-{
-  Serial.print(":");
-  if (digits < 10) {
-    Serial.print('0');
-  }
-  Serial.print(digits);
-}
 
 // Digital clock display of the time
 void clockDisplay()

@@ -73,9 +73,22 @@ public:
         : Base(transp)
     {}
 
-    void begin(const char* auth, Stream& stream) {
+    void config(Stream&     stream,
+                const char* auth)
+    {
         Base::begin(auth);
         this->conn.begin(stream);
+    }
+
+    void begin(Stream& stream, const char* auth) {
+    	config(stream, auth);
+        while(this->connect() != true) {}
+    }
+
+    // TODO: For backward-compatibility
+    void begin(const char* auth, Stream& stream) {
+    	config(stream, auth);
+        while(this->connect() != true) {}
     }
 };
 
