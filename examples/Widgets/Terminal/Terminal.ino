@@ -40,9 +40,9 @@ void setup()
   // This will print Blynk Software version to the Terminal Widget when
   // your hardware gets connected to Blynk Server
   terminal.println(F("Blynk v" BLYNK_VERSION ": Device started"));
-  terminal.println("-------------");
-  terminal.println("Type 'Marco' and get a reply, or type");
-  terminal.println("anything else and get it printed back.");
+  terminal.println(F("-------------"));
+  terminal.println(F("Type 'Marco' and get a reply, or type"));
+  terminal.println(F("anything else and get it printed back."));
   terminal.flush();
 }
 
