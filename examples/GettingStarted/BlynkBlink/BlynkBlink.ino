@@ -17,8 +17,8 @@
  You’ll need, in general:
   - Blynk App (download from AppStore or Google Play)
   - Arduino UNO or similar microcontroller board
-  - Decide how to connect Arduino to the Internet (USB, Ethernet,
-    Wi-Fi, etc.). Bluetooth is on the way.
+  - Decide how to connect Arduino to the Internet
+    (USB, Ethernet, Wi-Fi, Bluetooth, ...)
 
  There is a bunch of great example sketches included to show you how to get
  started. Think of them as LEGO bricks  and combine them as you wish.
