@@ -43,6 +43,9 @@
   4. Add a Button Widget. Select Pin D9 in Widget's Settings
   5. Press Play icon. Enjoy Blynking!
 
+  You can find a QR code for easy setup of this project here:
+  https://github.com/blynkkk/blynk-library/tree/master/examples/GettingStarted/BlynkBlink
+
 ********************************************************************/
 
 #define BLYNK_PRINT Serial // Enables Serial Monitor
