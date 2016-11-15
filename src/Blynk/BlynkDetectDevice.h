@@ -304,6 +304,11 @@
         #define BLYNK_INFO_DEVICE  "Simblee"
         #define BLYNK_USE_128_VPINS
 
+        /* Nordic NRF5x */
+        #elif defined(ARDUINO_ARCH_NRF5)
+        #define BLYNK_INFO_DEVICE  "nRF5"
+        #define BLYNK_USE_128_VPINS
+
         #else
         #warning "Cannot detect board type"
         #define BLYNK_INFO_DEVICE  "Arduino"
