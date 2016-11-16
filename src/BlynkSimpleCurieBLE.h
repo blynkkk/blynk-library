@@ -134,6 +134,15 @@ public:
         : Base(transp)
     {}
 
+    void begin(BLEPeripheral& per, const char* auth)
+    {
+        Base::begin(auth);
+        state = DISCONNECTED;
+        conn.begin(per);
+    }
+
+    // Please use Blynk.begin(BLEPeripheral, "auth")
+    BLYNK_DEPRECATED
     void begin(const char* auth, BLEPeripheral& per)
     {
         Base::begin(auth);
