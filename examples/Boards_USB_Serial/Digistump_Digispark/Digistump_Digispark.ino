@@ -37,8 +37,9 @@ char auth[] = "YourAuthToken";
 void setup()
 {
   // Blynk will work through SerialUSB
+  // Do not read or write this serial manually in your sketch
   SerialUSB.begin();
-  Blynk.begin(auth, SerialUSB);
+  Blynk.begin(SerialUSB, auth);
 }
 
 void loop()

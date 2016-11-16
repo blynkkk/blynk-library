@@ -34,8 +34,9 @@ void setup()
   SerialUSB.begin(9600);
 
   // Blynk will work through Serial
+  // Do not read or write this serial manually in your sketch
   Serial.begin(9600);
-  Blynk.begin(auth, Serial);
+  Blynk.begin(Serial, auth);
 }
 
 void loop()
