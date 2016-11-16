@@ -55,7 +55,7 @@ void setup() {
   SerialBLE.setAppearance(0x0080);
   SerialBLE.begin();
 
-  Blynk.begin(auth, SerialBLE);
+  Blynk.begin(SerialBLE, auth);
 
   Serial.println("Waiting for connections...");
 }

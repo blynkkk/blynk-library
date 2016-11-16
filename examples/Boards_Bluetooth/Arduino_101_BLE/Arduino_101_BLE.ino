@@ -45,7 +45,7 @@ void setup() {
   blePeripheral.setDeviceName("Blynk");
   blePeripheral.setAppearance(384);
 
-  Blynk.begin(auth, blePeripheral);
+  Blynk.begin(blePeripheral, auth);
 
   blePeripheral.begin();
 

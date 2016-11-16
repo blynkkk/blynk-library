@@ -45,8 +45,9 @@ void setup()
 
   // Blynk will work through Serial
   // 9600 is for HC-06. For HC-05 default speed is 38400
+  // Do not read or write this serial manually in your sketch
   Serial.begin(9600);
-  Blynk.begin(auth, Serial);
+  Blynk.begin(Serial, auth);
 }
 
 void loop()

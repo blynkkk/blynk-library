@@ -40,7 +40,7 @@ void setup()
   Serial.begin(9600);
 
   SerialBLE.begin(57600);       // BLE Mini uses baud 57600
-  Blynk.begin(auth, SerialBLE);
+  Blynk.begin(SerialBLE, auth);
 }
 
 void loop()

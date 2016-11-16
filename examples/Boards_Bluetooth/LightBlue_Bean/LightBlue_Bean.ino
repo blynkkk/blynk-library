@@ -31,27 +31,38 @@ SoftwareSerial DebugSerial(2, 3); // RX, TX
 
 #define BLYNK_PRINT DebugSerial
 #define BLYNK_NO_YIELD
-#include <BlynkSimpleStream.h>
+#include <BlynkSimpleSerialBLE.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+#include <SimpleTimer.h>
+SimpleTimer timer;
+
 void setup()
 {
   DebugSerial.begin(9600);
 
-  Blynk.begin(auth, Serial);
+  // Blynk will work through Serial
+  // Do not read or write this serial manually in your sketch
+  Serial.begin();
+  Blynk.begin(Serial, auth);
+
+  timer.setInterval(1000L, []() {
+    Blynk.virtualWrite(V1, millis());
+  });
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run();
 }
 
 // Attach a ZeRGBa widget to the Virtual pin 1
 // to control the built-in RGB led!
-BLYNK_WRITE(V1) {
+BLYNK_WRITE(V0) {
   int r = param[0].asInt();
   int g = param[1].asInt();
   int b = param[2].asInt();
