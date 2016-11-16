@@ -41,9 +41,9 @@ You can easily apply any type of board/connection to all examples.
 * Update Auth Token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
 
-### Supported boards, WiFi, Serial, USB...
+### Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
 
-Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).  
+Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).
 Please [see examples](/examples) for different connection types.
 
 __________
