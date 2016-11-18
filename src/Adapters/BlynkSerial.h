@@ -25,8 +25,8 @@ public:
         : stream(NULL), conn(0)
     {}
 
-    // IP Redirect not available
-    void begin(char* h, uint16_t p) {}
+    // IP redirect not available
+    void begin(char BLYNK_UNUSED *h, uint16_t BLYNK_UNUSED p) {}
 
     void begin(Stream& s) {
         stream = &s;
@@ -81,14 +81,14 @@ public:
     }
 
     void begin(Stream& stream, const char* auth) {
-    	config(stream, auth);
+        config(stream, auth);
         while(this->connect() != true) {}
     }
 
     // Please use Blynk.begin(Stream, "auth")
     BLYNK_DEPRECATED
     void begin(const char* auth, Stream& stream) {
-    	config(stream, auth);
+        config(stream, auth);
         while(this->connect() != true) {}
     }
 };

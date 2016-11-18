@@ -24,12 +24,12 @@ public:
 
     template<typename... Args>
     void setLabel(Args... args) {
-    	Blynk.setProperty(mPin, "label", args...);
+        Blynk.setProperty(mPin, "label", args...);
     }
 
     template<typename... Args>
     void setColor(Args... args) {
-    	Blynk.setProperty(mPin, "color", args...);
+        Blynk.setProperty(mPin, "color", args...);
     }
 
 protected:
