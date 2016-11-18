@@ -50,7 +50,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SSL PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=lpmsp430f5529"
+    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=lpmsp430f5529"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Intel_Edison_WiFi
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/LinkItONE
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RN_XV_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
@@ -63,7 +63,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_GSM
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB"
+    #- PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB"
     - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
