@@ -270,6 +270,17 @@
         #elif defined(ARDUINO_ESP32_DEV)
         #define BLYNK_INFO_DEVICE  "ESP32"
 
+        /* STM32 */
+        #elif defined(ARDUINO_ARCH_STM32F1)
+        #define BLYNK_INFO_DEVICE  "STM32F1"
+        #define BLYNK_NO_YIELD
+        #elif defined(ARDUINO_ARCH_STM32F3)
+        #define BLYNK_INFO_DEVICE  "STM32F3"
+        #define BLYNK_NO_YIELD
+        #elif defined(ARDUINO_ARCH_STM32F4)
+        #define BLYNK_INFO_DEVICE  "STM32F4"
+        #define BLYNK_NO_YIELD
+
         /* Digistump */
         #elif defined(ARDUINO_ESP8266_OAK)
         #define BLYNK_INFO_DEVICE  "Oak"
@@ -303,6 +314,11 @@
         /* Simblee */
         #elif defined(__Simblee__)
         #define BLYNK_INFO_DEVICE  "Simblee"
+        #define BLYNK_USE_128_VPINS
+
+        /* RFduino */
+        #elif defined(__RFduino__)
+        #define BLYNK_INFO_DEVICE  "RFduino"
         #define BLYNK_USE_128_VPINS
 
         /* Nordic NRF5x */
