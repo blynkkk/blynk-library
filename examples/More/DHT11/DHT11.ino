@@ -19,7 +19,8 @@
  * WARNING :
  * For this example you'll need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
- * and Adafruit DHT sensor library:
+ * and Adafruit DHT sensor libraries:
+ *   https://github.com/adafruit/Adafruit_Sensor
  *   https://github.com/adafruit/DHT-sensor-library
  *
  * App project setup:

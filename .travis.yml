@@ -120,11 +120,12 @@ install:
     # http://platformio.org/lib/show/418/WildFireCore
     # http://platformio.org/lib/show/420/WildFire-CC3000
     # http://platformio.org/lib/show/65/WiFlyHQ
+    # http://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
     # http://platformio.org/lib/show/19/Adafruit-DHT
     # http://platformio.org/lib/show/299/WiFi101
     # http://platformio.org/lib/show/259/BLEPeripheral
     # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
 
-    - platformio lib -g install 17 28 91 418 419 420 65 44 19 299 259 177 https://github.com/vshymanskyy/BlynkESP8266.git https://github.com/cmaglie/FlashStorage.git https://github.com/michael71/Timer5.git
+    - platformio lib -g install 17 28 91 418 419 420 65 44 31 19 299 259 177 https://github.com/vshymanskyy/BlynkESP8266.git https://github.com/cmaglie/FlashStorage.git https://github.com/michael71/Timer5.git
 
 script: make travis-build
