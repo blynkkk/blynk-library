@@ -12,11 +12,9 @@
 #define ENABLE_HANDLERS
 
 #ifdef ENABLE_MINIMIZATION
-
-#define BLYNK_NO_BUILTIN
-#define BLYNK_NO_INFO
-#define BLYNK_NO_FLOAT
-
+  #define BLYNK_NO_BUILTIN
+  #define BLYNK_NO_INFO
+  #define BLYNK_NO_FLOAT
 #endif
 
 #include <BlynkSimpleUserDefined.h>

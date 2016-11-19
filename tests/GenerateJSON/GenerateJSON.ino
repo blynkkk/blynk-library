@@ -77,7 +77,7 @@ struct Ser {
   void print(T last) {
     Serial.print(last);
   }
-  
+
   template<typename T, typename... Args>
   void print(T head, Args... tail) {
     Serial.print(head);
@@ -86,36 +86,36 @@ struct Ser {
 } ser;
 
 const char* JS[] = {
-"\n"
-"{\n"
-"    ",
-     "\"map\": {\n"
-"        \"digital\": {\n"
-"            \"pins\": {\n"
-"                 ", "\n"
-"            },\n"
-"            \"ops\": [ \"dr\", \"dw\" ]\n"
-"        },\n"
-"        \"analog\": {\n"
-"            \"pins\": {\n"
-"                 ", "\n"
-"            },\n"
-"            \"ops\": [ \"dr\", \"dw\", \"ar\" ],\n"
-"            \"arRange\": [ 0, ", " ]\n"
-"        },\n"
-"        \"pwm\": {\n"
-"            \"pins\": [\n"
-"                ", "\n"
-"            ],\n"
-"            \"ops\": [ \"aw\" ],\n"
-"            \"awRange\": [ 0, ", " ]\n"
-"        },\n"
-"        \"virtual\":  {\n"
-"            \"pinsRange\": [ 0, ", " ],\n"
-"            \"ops\": [ \"vr\", \"vw\" ]\n"
-"        }\n"
-"    }\n"
-"}\n"
+  "\n"
+  "{\n"
+  "    ",
+  "\"map\": {\n"
+  "        \"digital\": {\n"
+  "            \"pins\": {\n"
+  "                 ", "\n"
+  "            },\n"
+  "            \"ops\": [ \"dr\", \"dw\" ]\n"
+  "        },\n"
+  "        \"analog\": {\n"
+  "            \"pins\": {\n"
+  "                 ", "\n"
+  "            },\n"
+  "            \"ops\": [ \"dr\", \"dw\", \"ar\" ],\n"
+  "            \"arRange\": [ 0, ", " ]\n"
+  "        },\n"
+  "        \"pwm\": {\n"
+  "            \"pins\": [\n"
+  "                ", "\n"
+  "            ],\n"
+  "            \"ops\": [ \"aw\" ],\n"
+  "            \"awRange\": [ 0, ", " ]\n"
+  "        },\n"
+  "        \"virtual\":  {\n"
+  "            \"pinsRange\": [ 0, ", " ],\n"
+  "            \"ops\": [ \"vr\", \"vw\" ]\n"
+  "        }\n"
+  "    }\n"
+  "}\n"
 };
 
 
