@@ -150,7 +150,13 @@
 
     #elif defined(ARDUINO) && defined(TEENSYDUINO)
 
-        #if   defined(__MK20DX256__)
+        #if   defined(__MK66FX1M0__)
+        #define BLYNK_INFO_DEVICE  "Teensy 3.6"
+        #define BLYNK_USE_128_VPINS
+        #elif defined(__MK64FX512__)
+        #define BLYNK_INFO_DEVICE  "Teensy 3.5"
+        #define BLYNK_USE_128_VPINS
+        #elif defined(__MK20DX256__)
         #define BLYNK_INFO_DEVICE  "Teensy 3.2/3.1"
         #define BLYNK_USE_128_VPINS
         #elif   defined(__MK20DX128__)
