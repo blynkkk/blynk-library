@@ -8,6 +8,8 @@ WidgetLED	KEYWORD1
 WidgetRTC	KEYWORD1
 WidgetSD	KEYWORD1
 WidgetTerminal	KEYWORD1
+WidgetMap	KEYWORD1
+WidgetTable	KEYWORD1
 BlynkParam	KEYWORD1
 BlynkParamAllocated	KEYWORD1
 
