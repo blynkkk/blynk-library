@@ -89,8 +89,8 @@
             #define BLYNK_INFO_CONNECTION  "CC3200"
             #define BLYNK_SEND_CHUNK 64
 
-            #if   defined(ENERGIA_CC3200-LAUNCHXL)
-            #define BLYNK_INFO_DEVICE  "CC32000-LanuchXL"
+            #if   defined(ENERGIA_CC3200_LAUNCHXL) //TODO: This is a bug in Energia IDE
+            #define BLYNK_INFO_DEVICE  "CC32000 LaunchXL"
             #elif defined(ENERGIA_RedBearLab_CC3200)
             #define BLYNK_INFO_DEVICE  "RBL CC3200"
             #elif defined(ENERGIA_RedBearLab_WiFiMini)
