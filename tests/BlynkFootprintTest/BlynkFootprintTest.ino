@@ -70,7 +70,7 @@ BLYNK_WRITE(V3)
 
 BLYNK_READ(V4)
 {
-  Blynk.virtualWrite(V4, BlynkFreeRam());
+  Blynk.virtualWrite(V4, millis(), BlynkFreeRam());
 }
 
 #endif /* ENABLE_HANDLERS */
