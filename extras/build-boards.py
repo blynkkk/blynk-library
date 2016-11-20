@@ -5,6 +5,27 @@ from subprocess import call
 import json
 import re
 
+''' Arduino Board Manager URLs:
+http://arduino.esp8266.com/stable/package_esp8266com_index.json
+https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
+https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+http://digistump.com/package_digistump_index.json
+http://download.labs.mediatek.com/package_mtk_linkit_index.json
+http://download.labs.mediatek.com/package_mtk_linkit_smart_7688_index.json
+https://redbearlab.github.io/arduino/package_redbearlab_index.json
+https://redbearlab.github.io/arduino/package_redbear_index.json
+http://downloads.konekt.io/arduino/package_konekt_index.json
+https://www.simblee.com/package_simblee_index.json
+https://github.com/chipKIT32/chipKIT-core/raw/master/package_chipkit_index.json
+http://rfduino.com/package_rfduino_index.json
+https://github.com/wasdpkj/Microduino-IDE-Support/raw/master/package_Microduino_index.json
+https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
+http://downloads.arduino.cc/packages/package_arduino.cc_linux_index.json
+https://sandeepmistry.github.io/arduino-nRF5/package_nRF5_boards_index.json
+http://dan.drown.org/stm32duino/package_STM32duino_index.json
+http://update.wickeddevice.com/package_WildFireBSP-4.0.0_index.json
+'''
+
 def find_files(directory, pattern):
     for root, dirs, files in os.walk(directory):
         for basename in files:
@@ -84,7 +105,7 @@ for x in fqbns:
 #exit(0)
 
 logfile = open("./build.log","wb")
-datafile = os.path.abspath('./boards-build.json')
+datafile = os.path.abspath('./extras/all-boards.json')
 fn = os.path.abspath('./tests/BlynkBuildTest/BlynkBuildTest.ino')
 
 try:
@@ -94,17 +115,14 @@ except:
     json_data = {}
 json_data.setdefault('failed', [])
 json_data.setdefault('built', [])
-json_data.setdefault('once_built', [])
 json_data.setdefault('skip', [])
 data = {
   'failed': set(json_data['failed']),
   'built': set(json_data['built']),
-  'once_built': set(json_data['once_built']),
 }
 
 skip_boards = [
   "Microduino:*",
-  "WildFire*",
   "chipKIT:*",
   "esp8266:*",
   "stm32duino:STM32F3:discovery_f3", # no c++0x
@@ -153,11 +171,8 @@ for m in fqbns:
     if rc:
         print "Failed"
         data['failed'].add(m["fqbn"])
-        if m["fqbn"] in data['built']:
-            data['built'].remove(m["fqbn"])
     else:
         print "OK"
-        data['once_built'].add(m["fqbn"])
         data['built'].add(m["fqbn"])
         if m["fqbn"] in data['failed']:
             data['failed'].remove(m["fqbn"])
@@ -167,8 +182,7 @@ for m in fqbns:
         json.dump({
           'failed': sorted(list(data['failed'])),
           'built': sorted(list(data['built'])),
-          'once_built': sorted(list(data['once_built'])),
-          'broken': sorted(data['once_built'].intersection(data['failed'])),
+          'broken': sorted(data['built'].intersection(data['failed'])),
         }, fp, indent=4)
 
 print "=================="
