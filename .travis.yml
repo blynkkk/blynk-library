@@ -46,8 +46,10 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_EXTRA_ARGS="--board=yun"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nano32 --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Shield PLATFORMIO_CI_EXTRA_ARGS="--board=megaatmega2560"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_Manual_IP PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SSL PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=lpmsp430f5529"
@@ -90,6 +92,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
     - PLATFORMIO_CI_SRC=examples/Widgets/LCD/LCD_AdvancedMode
     - PLATFORMIO_CI_SRC=examples/Widgets/LED/LED_StatusOfButton
+    - PLATFORMIO_CI_SRC=examples/Widgets/Map
     - PLATFORMIO_CI_SRC=examples/Widgets/Menu
     - PLATFORMIO_CI_SRC=examples/Widgets/Player
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification/PushNotification_Button
@@ -102,6 +105,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/SimpleTimeInput
     - PLATFORMIO_CI_SRC=examples/Widgets/Timer
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
+    - PLATFORMIO_CI_SRC=examples/Widgets/WebHook/WebHook_GET
 
 install:
     # tmp solution, use 32-bits toolchain for chipKIT_Uno32

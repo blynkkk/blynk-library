@@ -23,6 +23,8 @@ metadata = {
   "ESP8266_Standalone_SmartConfig.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "fqbn": "esp8266:esp8266:nodemcuv2" },
 
+  "ESP32_WiFi.ino"              : { "fqbn": "espressif:esp32:nano32" },
+
   "myPlant_ESP8266.ino"         : { "fqbn": "esp8266:esp8266:nodemcuv2" },
   "Template_MKR1000.ino"        : { "fqbn": "arduino:samd:mkr1000" },
 
@@ -132,7 +134,7 @@ for fn in abs_examples:
         os.chdir("/data2/ard-energia-1.6.10E18/")
         builder = "./energia"
     else:
-        os.chdir("/data2/arduino-1.6.11/")
+        os.chdir("/data2/arduino-1.6.12/")
         builder = "./arduino"
 
     cmd = [

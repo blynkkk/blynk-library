@@ -26,6 +26,8 @@ metadata = {
   "ESP8266_Standalone_SmartConfig.ino"  : { "board": "nodemcuv2" },
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
 
+  "ESP32_WiFi.ino"              : { "board": "nano32" },
+
   "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101" },
   "Template_MKR1000.ino"        : { "board": "mkr1000USB" },
 
