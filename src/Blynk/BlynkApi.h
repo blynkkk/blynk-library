@@ -103,6 +103,10 @@ public:
         virtualWriteBinary(pin, param.getBuffer(), param.getLength());
     }
 
+    void virtualWrite(int pin, const BlynkParamAllocated& param) {
+        virtualWriteBinary(pin, param.getBuffer(), param.getLength());
+    }
+
     /**
      * Requests Server to re-send current values for all widgets.
      */
