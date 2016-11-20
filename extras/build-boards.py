@@ -12,17 +12,28 @@ def find_files(directory, pattern):
                 filename = os.path.join(root, basename)
                 yield filename
 
+arduino_ide_path = "/data2/arduino-1.6.12"
+energia_ide_path = "/data2/ard-energia-1.6.10E18"
+
+
 hardware = os.path.expanduser('~') + '/.arduino15/packages/'
 boards = find_files(hardware, 'boards.txt')
 
-hardware2 = '/data2/arduino-1.6.12/hardware/'
+hardware2 = arduino_ide_path + '/hardware/'
 boards2 = find_files(hardware2, 'boards.txt')
 
-boards = filter(lambda x: -1 == x.find('variants'), list(boards) + list(boards2))
+hardware3 = os.path.expanduser('~') + '/.energia15/packages/'
+boards3 = find_files(hardware3, 'boards.txt')
+
+hardware4 = energia_ide_path + '/hardware/'
+boards4 = find_files(hardware4, 'boards.txt')
+
+boards = list(boards) + list(boards2) + list(boards3) + list(boards4)
+boards = filter(lambda x: -1 == x.find('variants'), boards)
 
 fqbns = []
 for b in boards:
-    folders = b.replace(hardware,'').replace(hardware2,'')
+    folders = b.replace(hardware,'').replace(hardware2,'').replace(hardware3,'').replace(hardware4,'')
     folders = folders.split('/')
     if len(folders) == 3:
         fqbn = [ folders[i] for i in [0, 1] ]
@@ -54,74 +65,6 @@ for b in boards:
                 if not line[0] in fbqn["opts"]:
                     fbqn["opts"][line[0]] = line[1]
 
-logfile = open("./build.log","wb")
-datafile = os.path.abspath('./boards-build.json')
-fn = os.path.abspath('./tests/BlynkBuildTest/BlynkBuildTest.ino')
-
-try:
-    with open(datafile, 'r') as fp:
-        json_data = json.load(fp)
-except:
-    json_data = {}
-json_data.setdefault('failed', [])
-json_data.setdefault('built', [])
-json_data.setdefault('once_built', [])
-json_data.setdefault('skip', [])
-
-skip_boards = [
-  "RedBearLab:*",
-  "Microduino:*",
-  "WildFire*",
-  "chipKIT:*",
-#  "esp8266:*",
-  "stm32duino:STM32F3:discovery_f3", # no c++0x
-]
-skip_boards = "(" + ")|(".join(skip_boards) + ")"
-
-data = {
-  'failed': set(json_data['failed']),
-  'built': set(json_data['built']),
-  'once_built': set(json_data['once_built']),
-}
-
-fqbns.sort(key=lambda x: x['fqbn'] in data['built'])
-'''
-advanced_boards = {
-  "stm32duino:STM32F1:genericSTM32F103C" : ":device_variant=STM32F103C8",
-  "stm32duino:STM32F1:genericSTM32F103R" : ":device_variant=STM32F103R8",
-  "stm32duino:STM32F1:genericSTM32F103T" : ":device_variant=STM32F103T8",
-  "stm32duino:STM32F1:genericSTM32F103V" : ":device_variant=STM32F103VC",
-  "stm32duino:STM32F1:genericSTM32F103Z" : ":device_variant=STM32F103ZC",
-  "stm32duino:STM32F1:nucleo_f103rb" : ":device_variant=NucleoF103_HSI",
-
-  "sandeepmistry:nRF5:Generic_nRF51822" : ":chip=xxaa,softdevice=none,lfclk=lfxo",
-  "sandeepmistry:nRF5:RedBearLab_nRF51822" : ":version=1_5,softdevice=none",
-  "sandeepmistry:nRF5:BLENano" : ":version=1_5,softdevice=none",
-
-  "esp8266:esp8266:generic" : ":CpuFrequency=80,FlashFreq=40,FlashMode=dio,FlashSize=512K64",
-
-  "attiny:avr:ATtinyX5" : ":cpu=attiny85,clock=internal16",
-  "attiny:avr:ATtinyX4" : ":cpu=attiny84,clock=internal8",
-
-  "konekt:sam:dash" : ":cpu_speed=speed120,check_update=check",
-  "konekt:sam:dashpro" : ":cpu_speed=speed120,check_update=check",
-  "konekt:sam:dashpro_beta" : ":cpu_speed=speed120,check_update=check",
-
-  "teensy:avr:teensy36" : ":usb=serial,speed=180opt,keys=en-us",
-  "teensy:avr:teensy35" : ":usb=serial,speed=120opt,keys=en-us",
-  "teensy:avr:teensy31" : ":usb=serial,speed=96opt,keys=en-us",
-  "teensy:avr:teensy30" : ":usb=serial,speed=96,keys=en-us",
-  "teensy:avr:teensyLC" : ":usb=serial,speed=48,keys=en-us",
-  "teensy:avr:teensypp2" : ":usb=serial,speed=16,keys=en-us",
-  "teensy:avr:teensy2" : ":usb=serial,speed=16,keys=en-us",
-  
-}
-
-for x in fqbns:
-    if x['fqbn'] in advanced_boards.keys():
-       x['fqbn_adv'] = x['fqbn'] + advanced_boards[x['fqbn']]
-'''
-
 advanced_boards = {
   "attiny:avr:ATtinyX5" : ":cpu=attiny85,clock=internal16",
   "attiny:avr:ATtinyX4" : ":cpu=attiny84,clock=internal8",
@@ -140,6 +83,40 @@ for x in fqbns:
 #print json.dumps(fqbns, sort_keys=True, indent=2)
 #exit(0)
 
+logfile = open("./build.log","wb")
+datafile = os.path.abspath('./boards-build.json')
+fn = os.path.abspath('./tests/BlynkBuildTest/BlynkBuildTest.ino')
+
+try:
+    with open(datafile, 'r') as fp:
+        json_data = json.load(fp)
+except:
+    json_data = {}
+json_data.setdefault('failed', [])
+json_data.setdefault('built', [])
+json_data.setdefault('once_built', [])
+json_data.setdefault('skip', [])
+data = {
+  'failed': set(json_data['failed']),
+  'built': set(json_data['built']),
+  'once_built': set(json_data['once_built']),
+}
+
+skip_boards = [
+  "Microduino:*",
+  "WildFire*",
+  "chipKIT:*",
+  "esp8266:*",
+  "stm32duino:STM32F3:discovery_f3", # no c++0x
+  "digistump:avr:digispark-tiny*",
+  ".*STM32F103T.*",
+  ".*GD32F103C.*",
+  "adafruit:avr:trinket.*",
+]
+skip_boards = "(" + ")|(".join(skip_boards) + ")"
+
+fqbns.sort(key=lambda x: x['fqbn'] in data['built'])
+
 for m in fqbns:
 
     if len(sys.argv) > 1:
@@ -157,10 +134,10 @@ for m in fqbns:
     logfile.flush()
 
     if m["fqbn"].startswith("energia:"):
-        os.chdir("/data2/ard-energia-1.6.10E18/")
+        os.chdir(energia_ide_path)
         builder = "./energia"
     else:
-        os.chdir("/data2/arduino-1.6.12/")
+        os.chdir(arduino_ide_path)
         builder = "./arduino"
 
     fqbn = m["fqbn_adv"] if "fqbn_adv" in m.keys() else m["fqbn"]
