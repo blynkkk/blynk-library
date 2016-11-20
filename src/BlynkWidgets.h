@@ -14,6 +14,7 @@
 #include <WidgetTimeInput.h>
 #include <WidgetTable.h>
 #include <WidgetGPS.h>
+#include <WidgetMap.h>
 
 // Cannot auto-include as these have library dependencies
 //#include <WidgetRTC.h>
