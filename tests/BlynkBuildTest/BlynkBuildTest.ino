@@ -72,8 +72,10 @@ BLYNK_READ(V4)
 
   Blynk.virtualWrite(V10, (size_t)1);
 
+#ifndef BLYNK_NO_FLOAT
   Blynk.virtualWrite(V10, (float)1.0F);
   Blynk.virtualWrite(V10, (double)1.0);
+#endif
 
   Blynk.virtualWrite(V10, String("Some string as String)"));
   Blynk.virtualWrite(V10, "Some string from RAM");
