@@ -25,6 +25,7 @@ tweet	KEYWORD2
 notify	KEYWORD2
 email	KEYWORD2
 virtualWrite	KEYWORD2
+virtualWriteBinary	KEYWORD2
 syncAll	KEYWORD2
 syncVirtual	KEYWORD2
 setProperty	KEYWORD2
