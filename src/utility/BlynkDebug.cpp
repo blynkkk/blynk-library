@@ -80,6 +80,7 @@
     {
         return 0;
     }
+
     void BlynkReset()
     {
         NVIC_SystemReset();
@@ -101,8 +102,11 @@
         for(;;) {} // To make compiler happy
     }
 
-#elif defined (TEENSYDUINO)
-    
+#elif defined(__STM32F1__) || defined(__STM32F3__)
+
+    #include <Arduino.h>
+    #include <libmaple/nvic.h>
+
     size_t BlynkFreeRam()
     {
         return 0;
@@ -110,14 +114,15 @@
 
     void BlynkReset()
     {
-        _restart_Teensyduino_();
+        nvic_sys_reset();
         for(;;) {}
     }
 
 // TODO:
+//#elif defined (TEENSYDUINO)
+//#elif defined (__STM32F4__)
 //#elif defined (ARDUINO_ARCH_ARC32)
 //#elif defined (__RFduino__) || defined (__Simblee__)
-//#elif defined(__STM32F1__) || defined(__STM32F3__) || defined(__STM32F4__)
 
 #else
 
