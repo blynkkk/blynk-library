@@ -7,7 +7,7 @@
  **************************************************************/
 
 #if defined(ARDUINO_AVR_GEMMA) \
-    || defined(ARDUINO_attiny)
+  || defined(ARDUINO_attiny)
 
   #define BLYNK_NO_INFO
   #define BLYNK_NO_BUILTIN
