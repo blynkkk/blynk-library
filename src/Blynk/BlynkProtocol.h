@@ -85,8 +85,37 @@ private:
 
 protected:
     void begin(const char* auth) {
-        BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
         this->authkey = auth;
+
+#if defined(BLYNK_NO_FANCY_LOGO)
+        BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
+#elif defined(BLYNK_FANCY_LOGO_3D)
+        BLYNK_LOG1(BLYNK_F("\n"
+            "   ____     ___                      __\n"
+            "  /\\  _`\\  /\\_ \\                    /\\ \\  _\n"
+            "  \\ \\ \\_\\ \\\\//\\ \\    __  __     ___ \\ \\ \\/ \\\n"
+            "   \\ \\  _ <  \\ \\ \\  /\\ \\/\\ \\  /' _ `\\\\ \\ , <\n"
+            "    \\ \\ \\_\\ \\ \\_\\ \\_\\ \\ \\_\\ \\ /\\ \\/\\ \\\\ \\ \\\\`\\\n"
+            "     \\ \\____/ /\\____\\\\/`____ \\\\ \\_\\ \\_\\\\ \\_\\\\_\\\n"
+            "      \\/___/  \\/____/ `/___/\\ \\\\/_/\\/_/ \\/_//_/\n"
+            "                         /\\___/\n"
+            "                         \\/__/   " BLYNK_VERSION " on " BLYNK_INFO_DEVICE "\n"
+        ));
+#else
+        BLYNK_LOG1(BLYNK_F("\n"
+            "    ___  __          __\n"
+            "   / _ )/ /_ _____  / /__\n"
+            "  / _  / / // / _ \\/  '_/\n"
+            " /____/_/\\_, /_//_/_/\\_\\\n"
+            "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE "\n"
+        ));
+#endif
+
+#ifdef BLYNK_DEBUG
+        if (size_t ram = BlynkFreeRam()) {
+            BLYNK_LOG2(BLYNK_F("Free RAM: "), ram);
+        }
+#endif
     }
     bool processInput(void);
 
@@ -112,9 +141,7 @@ protected:
 template <class Transp>
 bool BlynkProtocol<Transp>::run(bool avail)
 {
-#if !defined(BLYNK_NO_YIELD)
-    yield();
-#endif
+    BLYNK_RUN_YIELD();
 
     if (state == DISCONNECTED) {
         return false;
@@ -227,9 +254,7 @@ bool BlynkProtocol<Transp>::processInput(void)
                 lastHeartbeat = lastActivityIn;
                 state = CONNECTED;
                 this->sendInfo();
-#if !defined(BLYNK_NO_YIELD)
-                yield();
-#endif
+                BLYNK_RUN_YIELD();
                 BlynkOnConnected();
                 return true;
             case BLYNK_INVALID_TOKEN:
@@ -455,10 +480,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         return;
     }
 
-#if defined BLYNK_MSG_LIMIT && BLYNK_MSG_LIMIT > 0
     const millis_time_t ts = this->getMillis();
+#if defined BLYNK_MSG_LIMIT && BLYNK_MSG_LIMIT > 0
     BlynkAverageSample<32>(deltaCmd, ts - lastActivityOut);
-    lastActivityOut = ts;
     //BLYNK_LOG2(BLYNK_F("Delta: "), deltaCmd);
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
         BLYNK_LOG_TROUBLE(BLYNK_F("flood-error"));
@@ -466,9 +490,8 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         state = CONNECTING;
         //BlynkOnDisconnected();
     }
-#else
-    lastActivityOut = this->getMillis();
 #endif
+    lastActivityOut = ts;
 
 }
 
