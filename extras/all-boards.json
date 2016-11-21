@@ -1,5 +1,7 @@
 {
     "failed": [
+        "LightBlue-Bean:avr:bean", 
+        "LightBlue-Bean:avr:beanplus", 
         "adafruit:avr:trinket3", 
         "adafruit:avr:trinket5", 
         "chipKIT:pic32:uno_pmod", 

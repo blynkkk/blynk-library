@@ -46,13 +46,14 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_EXTRA_ARGS="--board=yun"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nano32 --project-option='framework=arduino'"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nano32 --project-option='lib_ignore=WiFi101' --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Shield PLATFORMIO_CI_EXTRA_ARGS="--board=megaatmega2560"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_Manual_IP PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SSL PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=lpmsp430f5529"
+    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/Fishino
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Intel_Edison_WiFi
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/LinkItONE
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RN_XV_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
