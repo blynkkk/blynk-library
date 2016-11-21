@@ -275,6 +275,16 @@
         /* ESP32 */
         #elif defined(ARDUINO_ESP32_DEV)
         #define BLYNK_INFO_DEVICE  "ESP32"
+        #elif defined(ARDUINO_ESP320)
+        #define BLYNK_INFO_DEVICE  "SweetPeas ESP320"
+        #elif defined(ARDUINO_NANO32)
+        #define BLYNK_INFO_DEVICE  "ESP32 Nano32"
+        #elif defined(ARDUINO_LoLin32)
+        #define BLYNK_INFO_DEVICE  "LoLin32"
+        #elif defined(ARDUINO_ESPea32)
+        #define BLYNK_INFO_DEVICE  "ESPea32"
+        #elif defined(ARDUINO_QUANTUM)
+        #define BLYNK_INFO_DEVICE  "Noduino Quantum"
 
         /* STM32 */
         #elif defined(ARDUINO_ARCH_STM32F1)
