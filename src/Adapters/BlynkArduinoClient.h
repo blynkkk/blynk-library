@@ -16,7 +16,7 @@
 #include <Client.h>
 
 #if defined(ESP8266) && !defined(BLYNK_NO_YIELD)
-    #define YIELD_FIX() yield();
+    #define YIELD_FIX() BLYNK_RUN_YIELD();
 #else
     #define YIELD_FIX()
 #endif
