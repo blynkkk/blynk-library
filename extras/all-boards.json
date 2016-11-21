@@ -1,18 +1,9 @@
 {
-    "failed": [
-        "LightBlue-Bean:avr:bean", 
-        "LightBlue-Bean:avr:beanplus", 
-        "adafruit:avr:trinket3", 
-        "adafruit:avr:trinket5", 
-        "chipKIT:pic32:uno_pmod", 
-        "digistump:avr:digispark-tiny", 
-        "digistump:avr:digispark-tiny1", 
-        "digistump:avr:digispark-tiny16", 
-        "digistump:avr:digispark-tiny8", 
-        "stm32duino:STM32F1:genericGD32F103C", 
-        "stm32duino:STM32F1:genericSTM32F103T", 
-        "stm32duino:STM32F3:discovery_f3"
-    ], 
+    "_stats": {
+        "built": 182, 
+        "failed": 8
+    }, 
+    "broken": [], 
     "built": [
         "Intel:arc32:arduino_101", 
         "Intel:i586:izmir_fd", 
@@ -50,6 +41,8 @@
         "adafruit:avr:protrinket3ftdi", 
         "adafruit:avr:protrinket5", 
         "adafruit:avr:protrinket5ftdi", 
+        "adafruit:avr:trinket3", 
+        "adafruit:avr:trinket5", 
         "arduino:arm_cortexA:artik10", 
         "arduino:arm_cortexA:artik5", 
         "arduino:arm_cortexA:artik5_v05", 
@@ -95,17 +88,20 @@
         "chipKIT:pic32:chipkit_Pi_USB_Serial", 
         "chipKIT:pic32:chipkit_WF32", 
         "chipKIT:pic32:chipkit_WiFire", 
+        "chipKIT:pic32:chipkit_WiFire_80MHz", 
         "chipKIT:pic32:chipkit_WiFire_AB", 
         "chipKIT:pic32:chipkit_mx3", 
         "chipKIT:pic32:chipkit_pro_mx4", 
         "chipKIT:pic32:chipkit_pro_mx7", 
         "chipKIT:pic32:chipkit_uc32", 
+        "chipKIT:pic32:clicker2", 
         "chipKIT:pic32:cmod", 
         "chipKIT:pic32:cui32", 
         "chipKIT:pic32:fubarino_mini", 
         "chipKIT:pic32:fubarino_mini_dev", 
         "chipKIT:pic32:fubarino_sd", 
         "chipKIT:pic32:fubarino_sd_seeed", 
+        "chipKIT:pic32:lenny", 
         "chipKIT:pic32:mega_pic32", 
         "chipKIT:pic32:mega_usb_pic32", 
         "chipKIT:pic32:picadillo_35t", 
@@ -118,6 +114,10 @@
         "digistump:avr:digispark-pro", 
         "digistump:avr:digispark-pro32", 
         "digistump:avr:digispark-pro64", 
+        "digistump:avr:digispark-tiny", 
+        "digistump:avr:digispark-tiny1", 
+        "digistump:avr:digispark-tiny16", 
+        "digistump:avr:digispark-tiny8", 
         "digistump:oak:oak", 
         "digistump:oak:oak1", 
         "digistump:oak:oak1_noauto", 
@@ -188,5 +188,14 @@
         "teensy:avr:teensyLC", 
         "teensy:avr:teensypp2"
     ], 
-    "broken": []
+    "failed": [
+        "LightBlue-Bean:avr:bean", 
+        "LightBlue-Bean:avr:beanplus", 
+        "chipKIT:pic32:OpenScope", 
+        "chipKIT:pic32:openbci", 
+        "chipKIT:pic32:uno_pmod", 
+        "stm32duino:STM32F1:genericGD32F103C", 
+        "stm32duino:STM32F1:genericSTM32F103T", 
+        "stm32duino:STM32F3:discovery_f3"
+    ]
 }

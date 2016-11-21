@@ -122,15 +122,20 @@ data = {
 }
 
 skip_boards = [
-  "Microduino:*",
-  "chipKIT:*",
-  "esp8266:*",
-  "stm32duino:STM32F3:discovery_f3", # no c++0x
+  # Hello world fails:
+  "chipKIT:pic32:OpenScope",
+  "chipKIT:pic32:openbci",
+  "chipKIT:pic32:uno_pmod",
+  "stm32duino:STM32F1:genericGD32F103C",
+  "stm32duino:STM32F1:genericSTM32F103T",
+
+  # __FlashString problem:
   "digistump:avr:digispark-tiny*",
-  ".*STM32F103T.*",
-  ".*GD32F103C.*",
-  "adafruit:avr:trinket.*",
+
+  # No c++0x:
+  "stm32duino:STM32F3:discovery_f3",
 ]
+
 skip_boards = "(" + ")|(".join(skip_boards) + ")"
 
 fqbns.sort(key=lambda x: x['fqbn'] in data['built'])
@@ -180,10 +185,14 @@ for m in fqbns:
 
     with open(datafile, 'w') as fp:
         json.dump({
+          '_stats': {
+            'failed': len(data['failed']),
+            'built': len(data['built']),
+          },
           'failed': sorted(list(data['failed'])),
           'built': sorted(list(data['built'])),
           'broken': sorted(data['built'].intersection(data['failed'])),
-        }, fp, indent=4)
+        }, fp, sort_keys=True, indent=4)
 
 print "=================="
 if len(data['built']):

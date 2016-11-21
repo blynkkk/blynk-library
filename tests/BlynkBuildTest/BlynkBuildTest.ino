@@ -7,7 +7,10 @@
  **************************************************************/
 
 #if defined(ARDUINO_AVR_GEMMA) \
-  || defined(ARDUINO_attiny)
+  || defined(ARDUINO_attiny) \
+  || defined(ARDUINO_AVR_TRINKET3) \
+  || defined(ARDUINO_AVR_TRINKET5) \
+  || defined(ARDUINO_AVR_DIGISPARK)
 
   #define BLYNK_NO_INFO
   #define BLYNK_NO_BUILTIN
