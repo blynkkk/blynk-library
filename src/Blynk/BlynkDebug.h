@@ -45,6 +45,12 @@
     #define BLYNK_NO_YIELD
 #endif
 
+#if defined(BLYNK_NO_YIELD)
+    #define BLYNK_RUN_YIELD() {}
+#else
+    #define BLYNK_RUN_YIELD() { ::yield(); }
+#endif
+
 #if defined(__AVR__)
     #include <avr/pgmspace.h>
     #define BLYNK_HAS_PROGMEM
@@ -57,8 +63,12 @@
     #define BLYNK_PSTR(s) s
 #endif
 
-#ifndef LED_BUILTIN
-# define LED_BUILTIN 2
+#ifdef ARDUINO_AVR_DIGISPARK
+    typedef fstr_t __FlashStringHelper;
+#endif
+
+#if defined(BLYNK_DEBUG) && !(__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__))
+    #warning ("Compiler features not enabled -> please contact yor board vendor to enable c++0x")
 #endif
 
 // Diagnostic defines
