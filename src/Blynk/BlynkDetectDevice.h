@@ -130,7 +130,9 @@
         #elif PLATFORM_ID==103
         #define BLYNK_INFO_DEVICE  "Bluz"
         #else
-        #warning "Cannot detect board type"
+        #if defined(BLYNK_DEBUG_ALL)
+            #warning "Cannot detect board type"
+        #endif
         #define BLYNK_INFO_DEVICE  "Particle"
         #endif
 
@@ -343,13 +345,15 @@
         #define BLYNK_USE_128_VPINS
 
         #else
-        #warning "Cannot detect board type"
+        #if defined(BLYNK_DEBUG_ALL)
+            #warning "Cannot detect board type"
+        #endif
         #define BLYNK_INFO_DEVICE  "Arduino"
         #endif
 
     #endif
 
-    #ifdef BLYNK_DEBUG
+    #if defined(BLYNK_DEBUG_ALL)
     #pragma message ("BLYNK_INFO_DEVICE=" BLYNK_TOSTRING(BLYNK_INFO_DEVICE))
     #pragma message ("BLYNK_INFO_CPU="    BLYNK_TOSTRING(BLYNK_INFO_CPU))
     #endif

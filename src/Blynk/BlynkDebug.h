@@ -67,8 +67,8 @@
     typedef fstr_t __FlashStringHelper;
 #endif
 
-#if defined(BLYNK_DEBUG) && !(__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__))
-    #warning ("Compiler features not enabled -> please contact yor board vendor to enable c++0x")
+#if defined(BLYNK_DEBUG_ALL) && !(__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__))
+    #warning "Compiler features not enabled -> please contact yor board vendor to enable c++0x"
 #endif
 
 // Diagnostic defines
@@ -204,7 +204,7 @@ void BlynkFatal() BLYNK_NORETURN;
 
     #else
 
-        #warning Could not detect platform
+        #warning "Cannot detect platform"
 
     #endif
 

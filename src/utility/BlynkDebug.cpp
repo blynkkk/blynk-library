@@ -126,8 +126,8 @@
 
 #else
 
-    #ifdef BLYNK_DEBUG
-    #warning "Need to implement board-specific utilities"
+    #if defined(BLYNK_DEBUG_ALL)
+        #warning "Need to implement board-specific utilities"
     #endif
 
     size_t BlynkFreeRam()
