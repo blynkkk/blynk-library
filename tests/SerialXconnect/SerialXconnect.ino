@@ -7,7 +7,7 @@
  *   Converting baud rate
  *   Sending AT commands
  *   etc.
- * 
+ *
  * Popular AT command sets:
  *   ESP8266: http://www.espressif.com/sites/default/files/4a-esp8266_at_instruction_set_en_v1.5.4_0.pdf
  *   SIM800L: https://www.itead.cc/wiki/images/6/6f/SIM800_Series_AT_Command_Manual_V1.05.pdf
@@ -56,7 +56,7 @@ uint8_t cmd_prefix_idx = 0;
 bool parseCommands(int c) {
   if (c == cmd_prefix[cmd_prefix_idx]) {
     cmd_prefix_idx++;
-    if (cmd_prefix_idx >= sizeof(cmd_prefix)-1) {
+    if (cmd_prefix_idx >= sizeof(cmd_prefix) - 1) {
       String cmd = ser1.readStringUntil('\n');
       long baud = cmd.toInt();
       ser1.print("Speed:"); ser1.println(baud);

@@ -21,7 +21,7 @@
  *       You can change the baud rate (SIM module has auto-baud by default).
  *       It is recommended to use Hard Serial.
  *       Soft Serial may be unstable.
- * 
+ *
  * WARNING: SIM moudle support is for BETA testing.
  *
  * Change GPRS apm, user, pass, and Blynk auth token to run :)
@@ -41,13 +41,13 @@
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "3339f3ebe05d44dfac1ca9f11985ffe5";
+char auth[] = "YourAuthToken";
 
 // Your Network credentials
 // Leave empty, if missing user or pass
-char apn[]  = "www.ab.kyivstar.net";
-char user[] = "igprs";
-char pass[] = "internet";
+char apn[]  = "YourAPN";
+char user[] = "";
+char pass[] = "";
 
 // Hardware Serial on Mega, Leonardo, Micro...
 #define GsmSerial Serial1
