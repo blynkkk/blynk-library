@@ -19,6 +19,10 @@
 #define BLYNK_INFO_CONNECTION  "ESP8266"
 #endif
 
+#ifndef BLYNK_ESP8266_MUX
+#define BLYNK_ESP8266_MUX  1
+#endif
+
 #define BLYNK_SEND_ATOMIC
 #define BLYNK_SEND_CHUNK 40
 
@@ -34,6 +38,9 @@ class BlynkTransportShieldEsp8266
     }
 
     void onData(uint8_t mux_id, uint32_t len) {
+        if (mux_id != BLYNK_ESP8266_MUX) {
+            return;
+        }
         //BLYNK_LOG2("Got ", len);
         while (len) {
             if (client->getUart()->available()) {
@@ -67,14 +74,14 @@ public:
     bool connect() {
         if (!domain || !port)
             return false;
-        status = client->createTCP(domain, port);
+        status = client->createTCP(BLYNK_ESP8266_MUX, domain, port);
         return status;
     }
 
     void disconnect() {
         status = false;
         buffer.clear();
-        client->releaseTCP();
+        client->releaseTCP(BLYNK_ESP8266_MUX);
     }
 
     size_t read(void* buf, size_t len) {
@@ -86,7 +93,7 @@ public:
         return buffer.read((uint8_t*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
-        if (client->send((const uint8_t*)buf, len)) {
+        if (client->send(BLYNK_ESP8266_MUX, (const uint8_t*)buf, len)) {
             return len;
         }
         return 0;
@@ -132,6 +139,9 @@ public:
         }
         String ver = wifi->ESP8266::getVersion();
         BLYNK_LOG1(ver);
+        if (!wifi->enableMUX()) {
+            BLYNK_LOG1(BLYNK_F("Failed to enable MUX"));
+        }
         if (!wifi->setOprToStation()) {
             BLYNK_LOG1(BLYNK_F("Failed to set STA mode"));
             return false;
@@ -142,9 +152,6 @@ public:
         } else {
             BLYNK_LOG1(BLYNK_F("Failed to connect WiFi"));
             return false;
-        }
-        if (!wifi->disableMUX()) {
-            BLYNK_LOG1(BLYNK_F("Failed to disable MUX"));
         }
         BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
         return true;
