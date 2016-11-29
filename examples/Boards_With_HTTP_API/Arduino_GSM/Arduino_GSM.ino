@@ -138,7 +138,7 @@ void setup()
 void loop() {
   String response;
 
-  int value = millis();
+  unsigned long value = millis();
 
   // Send value to the cloud
   // similar to Blynk.virtualWrite()
