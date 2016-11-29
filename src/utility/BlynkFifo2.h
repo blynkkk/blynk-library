@@ -138,7 +138,7 @@ public:
     }
 
 private:
-    inline int _inc(int i, int n = 1)
+    int _inc(int i, int n = 1)
     {
         return (i + n) % N;
     }
