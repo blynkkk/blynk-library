@@ -41,27 +41,22 @@ void loop()
 }
 
 BLYNK_WRITE(V1) {
+  int value = param.asInt();
+  if (value == 1) {
+    Serial.println("Item 1 selected");
+  } else if (value == 2) {
+    // If item 2 is selected, change menu items...
+    BlynkParamAllocated items(128); // list length, in bytes
+    items.add("New item 1");
+    items.add("New item 2");
+    items.add("New item 3");
+    Blynk.setProperty(V1, "labels", items);
 
-  switch (param.asInt())
-  {
-    case 1: {
-      Serial.println("Item 1 selected");
-    } break;
-    case 2: {
-      // If item 2 is selected, change menu items...
-      BlynkParamAllocated items(128); // list length, in bytes
-      items.add("New item 1");
-      items.add("New item 2");
-      items.add("New item 3");
-      Blynk.setProperty(V1, "labels", items);
+    // You can also use it like this:
+    //Blynk.setProperty(V1, "labels", "item 1", "item 2", "item 3");
 
-      // You can also use it like this:
-      //Blynk.setProperty(V1, "labels", "item 1", "item 2", "item 3");
-
-    } break;
-    default:
-      Serial.println("Unknown item selected");
+  } else {
+    Serial.println("Unknown item selected");
   }
-
 }
 
