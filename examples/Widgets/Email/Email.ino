@@ -44,10 +44,6 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Send e-mail when your hardware gets connected to Blynk Server
   // Just put the recepient's "e-mail address", "Subject" and the "message body"
   Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online.");

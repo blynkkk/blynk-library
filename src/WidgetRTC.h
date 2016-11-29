@@ -11,42 +11,42 @@
 #ifndef WidgetRTC_h
 #define WidgetRTC_h
 
-#include <Blynk/BlynkApi.h>
+#include <Blynk/BlynkWidgetBase.h>
+#include <Blynk/BlynkTemplates.h>
 
 class WidgetRTC
+    : public BlynkWidgetBase
+    , public BlynkSingleton<WidgetRTC>
 {
 public:
-    WidgetRTC() {}
-    void setVPin(int vPin) { mPin = vPin; }
+    WidgetRTC(uint8_t vPin = -1) : BlynkWidgetBase(vPin) {}
+    void setVPin(uint8_t vPin) { instance()->mPin = vPin; }
     void onWrite(BlynkReq& request, const BlynkParam& param);
     void begin();
-    static uint8_t mPin;
-};
 
-#ifndef WidgetRTC_h_NO_IMPL
+private:
+    static time_t requestTimeSync();
+};
 
 #include <TimeLib.h>
 
-namespace WidgetRTC_impl {
-
 // This is called by Time library when it needs time sync
-static
-time_t requestTimeSync()
+time_t WidgetRTC::requestTimeSync()
 {
-    Blynk.syncVirtual(WidgetRTC::mPin); // Request RTC widget update from the server
-    return 0;                // Tell the Time library that we'll set it later
-}
-
+    // Request RTC widget update from the server
+    Blynk.syncVirtual(instance()->mPin);
+    // Tell the Time library that we'll set it later
+    return 0;
 }
 
 inline
 void WidgetRTC::begin()
 {
-    setSyncProvider(WidgetRTC_impl::requestTimeSync);
+    setSyncProvider(requestTimeSync);
 }
 
 inline
-void WidgetRTC::onWrite(BlynkReq& request, const BlynkParam& param)
+void WidgetRTC::onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam& param)
 {
     const unsigned long DEFAULT_TIME = 1357041600; // Jan 1 2013
     unsigned long blynkTime = param.asLong();
@@ -56,7 +56,5 @@ void WidgetRTC::onWrite(BlynkReq& request, const BlynkParam& param)
         BLYNK_LOG1(BLYNK_F("Time sync: OK"));
     }
 }
-
-#endif
 
 #endif

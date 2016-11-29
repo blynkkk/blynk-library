@@ -152,10 +152,10 @@
 
 // Initial syntax:
 #define BLYNK_WRITE_2(pin) \
-    void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& param)
+    void BlynkWidgetWrite ## pin (BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param)
 
 #define BLYNK_READ_2(pin)  \
-    void BlynkWidgetRead ## pin  (BlynkReq& request)
+    void BlynkWidgetRead ## pin  (BlynkReq BLYNK_UNUSED &request)
 
 #define BLYNK_WRITE_DEFAULT() BLYNK_WRITE_2(Default)
 #define BLYNK_READ_DEFAULT()  BLYNK_READ_2(Default)
@@ -165,16 +165,16 @@
 
 // New, more readable syntax:
 #define BLYNK_IN_2(pin)  \
-    void BlynkWidgetWrite ## pin (BlynkReq& request, const BlynkParam& getValue)
+    void BlynkWidgetWrite ## pin (BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &getValue)
 
 #define BLYNK_OUT_2(pin) \
-    void BlynkWidgetRead ## pin  (BlynkReq& request)
+    void BlynkWidgetRead ## pin  (BlynkReq BLYNK_UNUSED &request)
 
-#define BLYNK_IN_DEFAULT()   BLYNK_IN_2(Default)
-#define BLYNK_OUT_DEFAULT()  BLYNK_OUT_2(Default)
+#define BLYNK_INPUT_DEFAULT()   BLYNK_IN_2(Default)
+#define BLYNK_OUTPUT_DEFAULT()  BLYNK_OUT_2(Default)
 
-#define BLYNK_IN(pin)        BLYNK_IN_2(pin)
-#define BLYNK_OUT(pin)       BLYNK_OUT_2(pin)
+#define BLYNK_INPUT(pin)        BLYNK_IN_2(pin)
+#define BLYNK_OUTPUT(pin)       BLYNK_OUT_2(pin)
 
 // Additional handlers
 #define BLYNK_CONNECTED()    void BlynkOnConnected()
@@ -182,35 +182,26 @@
 
 // Advanced functions
 
-class BlynkAttachWidgetHelper {
-public:
-	template<typename T>
-	explicit BlynkAttachWidgetHelper(T& widget, uint8_t vPin) {
-		widget.setVPin(vPin);
-	}
-};
-
-// Could use __attribute__ ((constructor)), but hope for better portability
-#define BLYNK_ATTACH_WIDGET(widget, pin)	\
-	BlynkAttachWidgetHelper BLYNK_CONCAT2(blnk_widget_helper_, __COUNTER__)((widget), (pin)); \
-    BLYNK_WRITE(pin) { (widget).onWrite(request, param); }
-
-#define BLYNK_VAR_INT(name, pin)	int name;  \
+#define BLYNK_VAR_INT(name, pin) \
+    int name;  \
     BLYNK_WRITE(pin) { name = param.asInt(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 
-#define BLYNK_VAR_LONG(name, pin)	long name;  \
+#define BLYNK_VAR_LONG(name, pin) \
+    long name;  \
     BLYNK_WRITE(pin) { name = param.asLong(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 
 #ifndef BLYNK_NO_FLOAT
-#define BLYNK_VAR_DOUBLE(name, pin)	double name;  \
+#define BLYNK_VAR_DOUBLE(name, pin) \
+    double name;  \
     BLYNK_WRITE(pin) { name = param.asDouble(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 #endif
 
 #ifdef ARDUINO
-#define BLYNK_VAR_STRING(name, pin)	String name;  \
+#define BLYNK_VAR_STRING(name, pin) \
+    String name;  \
     BLYNK_WRITE(pin) { name = param.asStr(); } \
     BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
 #endif
@@ -225,8 +216,8 @@ struct BlynkReq
     uint8_t pin;
 };
 
-typedef void (*WidgetReadHandler)(BlynkReq& request);
-typedef void (*WidgetWriteHandler)(BlynkReq& request, const BlynkParam& param);
+typedef void (*WidgetReadHandler)(BlynkReq BLYNK_UNUSED &request);
+typedef void (*WidgetWriteHandler)(BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param);
 
 WidgetReadHandler GetReadHandler(uint8_t pin);
 WidgetWriteHandler GetWriteHandler(uint8_t pin);

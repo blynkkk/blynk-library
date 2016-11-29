@@ -22,7 +22,7 @@
  **************************************************************/
 
 #define BLYNK_PRINT Serial1
-#include <BlynkSimpleSerial.h>
+#include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -34,8 +34,9 @@ void setup()
   Serial1.begin(9600);
 
   // Blynk will work through Serial
+  // Do not read or write this serial manually in your sketch
   Serial.begin(9600);
-  Blynk.begin(auth, Serial);
+  Blynk.begin(Serial, auth);
 }
 
 void loop()

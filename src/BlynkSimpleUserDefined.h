@@ -28,6 +28,9 @@ public:
         : mConn (false)
     {}
 
+    // IP redirect not available
+    void begin(char BLYNK_UNUSED *h, uint16_t BLYNK_UNUSED p) {}
+
     bool connect() {
         return mConn = true;
     }

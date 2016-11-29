@@ -25,7 +25,7 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h> // This part is for Ethernet stuff
 
-char auth[] = "YourAuthToken"; // Put your Auth Token here. (see Step 3 above)
+char auth[] = "YourAuthToken"; // Put your Auth Token here.
 
 void setup()
 {

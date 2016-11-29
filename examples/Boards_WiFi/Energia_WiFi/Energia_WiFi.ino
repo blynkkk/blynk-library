@@ -13,13 +13,17 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to use Arduino WiFi shield
- * to connect your project to Blynk.
+ * This example shows how to use Energia with WiFi
+ * to connect your project to Blynk. Tested with:
+ *   TI MSP430F5529 + CC3100
+ *   TI CC3200-LaunchXL
+ *   RedBearLab CC3200
+ *   RedBearLab WiFi Mini w/ CC3200
+ *   RedBearLab WiFi Micro w/ CC3200
  *
  * Requires Energia IDE: http://energia.nu/download/
  *
  * Feel free to apply it to any other example. It's simple!
- *
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space

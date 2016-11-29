@@ -32,8 +32,8 @@ enum BlynkCmd
     BLYNK_CMD_BRIDGE         = 15,
     BLYNK_CMD_HARDWARE_SYNC  = 16,
     BLYNK_CMD_HARDWARE_INFO  = 17,
-	BLYNK_CMD_SMS            = 18,
-	BLYNK_CMD_PROPERTY       = 19,
+    BLYNK_CMD_SMS            = 18,
+    BLYNK_CMD_PROPERTY       = 19,
     BLYNK_CMD_HARDWARE       = 20,
 
     BLYNK_CMD_CREATE_DASH    = 21,
@@ -48,7 +48,11 @@ enum BlynkCmd
     BLYNK_CMD_GET_SHARED_DASH = 29,
     BLYNK_CMD_GET_SHARE_TOKEN = 30,
     BLYNK_CMD_REFRESH_SHARE_TOKEN = 31,
-    BLYNK_CMD_SHARE_LOGIN     = 32
+    BLYNK_CMD_SHARE_LOGIN     = 32,
+
+    BLYNK_CMD_REDIRECT        = 41,
+
+    BLYNK_CMD_DEBUG_PRINT     = 55
 };
 
 enum BlynkStatus
@@ -60,21 +64,23 @@ enum BlynkStatus
     BLYNK_ALREADY_REGISTERED     = 4,
     BLYNK_NOT_AUTHENTICATED      = 5,
     BLYNK_NOT_ALLOWED            = 6,
-    BLYNK_NO_CONNECTION          = 7,
+    BLYNK_DEVICE_NOT_IN_NETWORK  = 7,
     BLYNK_NO_ACTIVE_DASHBOARD    = 8,
     BLYNK_INVALID_TOKEN          = 9,
-    BLYNK_DEVICE_WENT_OFFLINE    = 10,
-    BLYNK_ALREADY_LOGGED_IN      = 11,
+    BLYNK_ILLEGAL_COMMAND_BODY   = 11,
     BLYNK_GET_GRAPH_DATA_EXCEPTION = 12,
     BLYNK_NO_DATA_EXCEPTION      = 17,
-    BLYNK_DEVICE_WENT_OFFLINE_2  = 18,
+    BLYNK_DEVICE_WENT_OFFLINE    = 18,
     BLYNK_SERVER_EXCEPTION       = 19,
 
     BLYNK_NTF_INVALID_BODY       = 13,
     BLYNK_NTF_NOT_AUTHORIZED     = 14,
     BLYNK_NTF_ECXEPTION          = 15,
 
-    BLYNK_TIMEOUT                = 16
+    BLYNK_TIMEOUT                = 16,
+
+    BLYNK_NOT_SUPPORTED_VERSION  = 20,
+    BLYNK_ENERGY_LIMIT           = 21
 };
 
 struct BlynkHeader
@@ -85,7 +91,7 @@ struct BlynkHeader
 }
 BLYNK_ATTR_PACKED;
 
-#if defined(ARDUINO) || defined(ESP8266) || defined(PARTICLE) || defined(MBED_LIBRARY_VERSION)
+#if !defined(ESP32) && (defined(ARDUINO) || defined(ESP8266) || defined(PARTICLE) || defined(MBED_LIBRARY_VERSION))
     #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         #define htons(x) ( ((x)<<8) | (((x)>>8)&0xFF) )
         #define htonl(x) ( ((x)<<24 & 0xFF000000UL) | \

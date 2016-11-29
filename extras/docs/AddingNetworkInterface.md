@@ -13,7 +13,7 @@
 2. Create **Blynk representative class**, which contains connection-specific helper functions (like begin).
   Examples:
   * BlynkEthernet
-  * BlynkSerial
+  * BlynkStream
   * BlynkCC3000
   * BlynkWildFire
   * BlynkYun

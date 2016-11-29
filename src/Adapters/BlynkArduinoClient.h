@@ -16,9 +16,9 @@
 #include <Client.h>
 
 #if defined(ESP8266) && !defined(BLYNK_NO_YIELD)
-	#define YIELD_FIX() yield();
+    #define YIELD_FIX() BLYNK_RUN_YIELD();
 #else
-	#define YIELD_FIX()
+    #define YIELD_FIX()
 #endif
 
 template <typename Client>
@@ -96,9 +96,9 @@ public:
     }
 #else
     size_t write(const void* buf, size_t len) {
-    	YIELD_FIX();
+        YIELD_FIX();
         size_t res = client.write((const uint8_t*)buf, len);
-    	YIELD_FIX();
+        YIELD_FIX();
         return res;
     }
 #endif

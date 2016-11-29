@@ -17,10 +17,8 @@
  * to connect your project to Blynk.
  * Feel free to apply it to any other example. It's simple!
  *
- * For this example you need a WildFire device,
- * and also to install "Combined Arduino Support Package".
- * Please find more information here:
- *   http://shop.wickeddevice.com/resources/wildfire
+ * Note: You need to install Arduino IDE WildFire support:
+ *   http://shop.wickeddevice.com/resources/wildfire/
  *
  * Note: Firmware version 1.14 or later is preferred.
  *

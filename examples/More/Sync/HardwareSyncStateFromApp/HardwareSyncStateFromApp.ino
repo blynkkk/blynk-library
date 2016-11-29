@@ -47,8 +47,8 @@ BLYNK_CONNECTED() {
     // Request Blynk server to re-send latest values for all pins
     Blynk.syncAll();
 
-    // You can also update an individual Virtual pin like this:
-    //Blynk.syncVirtual(V0);
+    // You can also update individual virtual pins like this:
+    //Blynk.syncVirtual(V0, V1, V4);
 
     isFirstConnect = false;
   }

@@ -33,6 +33,7 @@ public:
     BlynkProtocol(Transp& transp)
         : conn(transp)
         , authkey(NULL)
+        , redir_serv(NULL)
         , lastActivityIn(0)
         , lastActivityOut(0)
         , lastHeartbeat(0)
@@ -46,15 +47,15 @@ public:
     bool connected() { return state == CONNECTED; }
 
     bool connect(uint32_t timeout = BLYNK_TIMEOUT_MS*3) {
-    	conn.disconnect();
-    	state = CONNECTING;
-    	millis_time_t started = this->getMillis();
-    	while ((state != CONNECTED) &&
-    	       (this->getMillis() - started < timeout))
-    	{
-    		run();
-    	}
-    	return state == CONNECTED;
+        conn.disconnect();
+        state = CONNECTING;
+        millis_time_t started = this->getMillis();
+        while ((state != CONNECTED) &&
+               (this->getMillis() - started < timeout))
+        {
+            run();
+        }
+        return state == CONNECTED;
     }
 
     void disconnect() {
@@ -68,12 +69,12 @@ public:
     // TODO: Fixme
     void startSession() {
         conn.connect();
-    	state = CONNECTING;
+        state = CONNECTING;
 #ifdef BLYNK_MSG_LIMIT
         deltaCmd = 1000;
 #endif
-    	currentMsgId = 0;
-    	lastHeartbeat = lastActivityIn = lastActivityOut = this->getMillis(); // TODO: - 5005UL
+        currentMsgId = 0;
+        lastHeartbeat = lastActivityIn = lastActivityOut = this->getMillis(); // TODO: - 5005UL
     }
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
@@ -84,8 +85,37 @@ private:
 
 protected:
     void begin(const char* auth) {
-        BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
         this->authkey = auth;
+
+#if defined(BLYNK_NO_FANCY_LOGO)
+        BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
+#elif defined(BLYNK_FANCY_LOGO_3D)
+        BLYNK_LOG1(BLYNK_F("\n"
+            "   ____     ___                      __\n"
+            "  /\\  _`\\  /\\_ \\                    /\\ \\  _\n"
+            "  \\ \\ \\_\\ \\\\//\\ \\    __  __     ___ \\ \\ \\/ \\\n"
+            "   \\ \\  _ <  \\ \\ \\  /\\ \\/\\ \\  /' _ `\\\\ \\ , <\n"
+            "    \\ \\ \\_\\ \\ \\_\\ \\_\\ \\ \\_\\ \\ /\\ \\/\\ \\\\ \\ \\\\`\\\n"
+            "     \\ \\____/ /\\____\\\\/`____ \\\\ \\_\\ \\_\\\\ \\_\\\\_\\\n"
+            "      \\/___/  \\/____/ `/___/\\ \\\\/_/\\/_/ \\/_//_/\n"
+            "                         /\\___/\n"
+            "                         \\/__/   " BLYNK_VERSION " on " BLYNK_INFO_DEVICE "\n"
+        ));
+#else
+        BLYNK_LOG1(BLYNK_F("\n"
+            "    ___  __          __\n"
+            "   / _ )/ /_ _____  / /__\n"
+            "  / _  / / // / _ \\/  '_/\n"
+            " /____/_/\\_, /_//_/_/\\_\\\n"
+            "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE "\n"
+        ));
+#endif
+
+#ifdef BLYNK_DEBUG
+        if (size_t ram = BlynkFreeRam()) {
+            BLYNK_LOG2(BLYNK_F("Free RAM: "), ram);
+        }
+#endif
     }
     bool processInput(void);
 
@@ -93,11 +123,12 @@ protected:
 
 private:
     const char* authkey;
+    char*       redir_serv;
     millis_time_t lastActivityIn;
     millis_time_t lastActivityOut;
     union {
-    	millis_time_t lastHeartbeat;
-    	millis_time_t lastLogin;
+        millis_time_t lastHeartbeat;
+        millis_time_t lastLogin;
     };
 #ifdef BLYNK_MSG_LIMIT
     millis_time_t deltaCmd;
@@ -110,9 +141,7 @@ protected:
 template <class Transp>
 bool BlynkProtocol<Transp>::run(bool avail)
 {
-#if !defined(BLYNK_NO_YIELD)
-    yield();
-#endif
+    BLYNK_RUN_YIELD();
 
     if (state == DISCONNECTED) {
         return false;
@@ -166,8 +195,11 @@ bool BlynkProtocol<Transp>::run(bool avail)
             sendCmd(BLYNK_CMD_PING);
             lastHeartbeat = t;
         }
-#ifndef BLYNK_USE_DIRECT_CONNECT
     } else if (state == CONNECTING) {
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        if (!tconn)
+            conn.connect();
+#else
         if (tconn && (t - lastLogin > BLYNK_TIMEOUT_MS)) {
             BLYNK_LOG1(BLYNK_F("Login timeout"));
             conn.disconnect();
@@ -187,10 +219,6 @@ bool BlynkProtocol<Transp>::run(bool avail)
             lastLogin = lastActivityOut;
             return true;
         }
-#else
-    } else if (state == CONNECTING) {
-    	if (!tconn)
-    		conn.connect();
 #endif
     }
     return true;
@@ -221,14 +249,12 @@ bool BlynkProtocol<Transp>::processInput(void)
         if (state == CONNECTING && (1 == hdr.msg_id)) {
             switch (hdr.length) {
             case BLYNK_SUCCESS:
-            case BLYNK_ALREADY_LOGGED_IN:
+            case BLYNK_ALREADY_REGISTERED:
                 BLYNK_LOG3(BLYNK_F("Ready (ping: "), lastActivityIn-lastHeartbeat, BLYNK_F("ms)."));
                 lastHeartbeat = lastActivityIn;
                 state = CONNECTED;
                 this->sendInfo();
-#if !defined(BLYNK_NO_YIELD)
-                yield();
-#endif
+                BLYNK_RUN_YIELD();
                 BlynkOnConnected();
                 return true;
             case BLYNK_INVALID_TOKEN:
@@ -285,19 +311,43 @@ bool BlynkProtocol<Transp>::processInput(void)
         }
 #else
         BLYNK_LOG1(BLYNK_F("Ready"));
-		state = CONNECTED;
-		sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
-		this->sendInfo();
+        state = CONNECTED;
+        sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
+        this->sendInfo();
 #endif
     } break;
     case BLYNK_CMD_PING: {
         sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
+    } break;
+    case BLYNK_CMD_REDIRECT: {
+        if (!redir_serv) {
+             redir_serv = (char*)malloc(32);
+        }
+        BlynkParam param(inputBuffer, hdr.length);
+        uint16_t redir_port = BLYNK_DEFAULT_PORT; // TODO: Fixit
+
+        BlynkParam::iterator it = param.begin();
+        if (it >= param.end())
+            return false;
+        strncpy(redir_serv, it.asStr(), 32);
+        if (++it < param.end())
+            redir_port = it.asLong();
+        BLYNK_LOG4(BLYNK_F("Redirecting to "), redir_serv, ':', redir_port);
+        conn.disconnect();
+        conn.begin(redir_serv, redir_port);
+        lastLogin = lastActivityIn - 5000L;  // Reconnect immediately
+        state = CONNECTING;
     } break;
     case BLYNK_CMD_HARDWARE:
     case BLYNK_CMD_BRIDGE: {
         currentMsgId = hdr.msg_id;
         this->processCmd(inputBuffer, hdr.length);
         currentMsgId = 0;
+    } break;
+    case BLYNK_CMD_DEBUG_PRINT: {
+        if (hdr.length) {
+            BLYNK_LOG2(BLYNK_F("Server: "), (char*)inputBuffer);
+        }
     } break;
     default: {
 #ifdef BLYNK_DEBUG
@@ -353,9 +403,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         return;
     }
 
-    const int full_length = (sizeof(BlynkHeader)) +
-                            (data  ? length  : 0) +
-                            (data2 ? length2 : 0);
+    const size_t full_length = (sizeof(BlynkHeader)) +
+                               (data  ? length  : 0) +
+                               (data2 ? length2 : 0);
 
 #if defined(BLYNK_SEND_ATOMIC) || defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...
@@ -379,10 +429,10 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     size_t wlen = 0;
     while (wlen < full_length) {
         const size_t chunk = BlynkMin(size_t(BLYNK_SEND_CHUNK), full_length - wlen);
-		BLYNK_DBG_DUMP("<", buff + wlen, chunk);
+        BLYNK_DBG_DUMP("<", buff + wlen, chunk);
         const size_t w = conn.write(buff + wlen, chunk);
         ::delay(BLYNK_SEND_THROTTLE);
-    	if (w == 0) {
+        if (w == 0) {
 #ifdef BLYNK_DEBUG
             BLYNK_LOG1(BLYNK_F("Cmd error"));
 #endif
@@ -390,7 +440,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
             state = CONNECTING;
             //BlynkOnDisconnected();
             return;
-    	}
+        }
         wlen += w;
     }
 
@@ -401,7 +451,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     hdr.msg_id = htons(id);
     hdr.length = htons(length+length2);
 
-	BLYNK_DBG_DUMP("<", &hdr, sizeof(hdr));
+    BLYNK_DBG_DUMP("<", &hdr, sizeof(hdr));
     size_t wlen = conn.write(&hdr, sizeof(hdr));
     ::delay(BLYNK_SEND_THROTTLE);
 
@@ -430,10 +480,9 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         return;
     }
 
-#if defined BLYNK_MSG_LIMIT && BLYNK_MSG_LIMIT > 0
     const millis_time_t ts = this->getMillis();
+#if defined BLYNK_MSG_LIMIT && BLYNK_MSG_LIMIT > 0
     BlynkAverageSample<32>(deltaCmd, ts - lastActivityOut);
-    lastActivityOut = ts;
     //BLYNK_LOG2(BLYNK_F("Delta: "), deltaCmd);
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
         BLYNK_LOG_TROUBLE(BLYNK_F("flood-error"));
@@ -441,9 +490,8 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         state = CONNECTING;
         //BlynkOnDisconnected();
     }
-#else
-    lastActivityOut = this->getMillis();
 #endif
+    lastActivityOut = ts;
 
 }
 

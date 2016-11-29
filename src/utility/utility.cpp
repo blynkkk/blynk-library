@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 
-char* dtostrf_internal(double number, signed char width, unsigned char prec, char *s) {
+char* dtostrf_internal(double number, signed char BLYNK_UNUSED width, unsigned char prec, char *s) {
     if(isnan(number)) {
         strcpy(s, "nan");
         return s;
@@ -38,7 +38,7 @@ char* dtostrf_internal(double number, signed char width, unsigned char prec, cha
     // Extract the integer part of the number and print it
     unsigned long int_part = (unsigned long) number;
     double remainder = number - (double) int_part;
-    out += sprintf(out, "%d", int_part);
+    out += sprintf(out, "%lu", int_part);
 
     // Print the decimal point, but only if there are digits beyond
     if(prec > 0) {

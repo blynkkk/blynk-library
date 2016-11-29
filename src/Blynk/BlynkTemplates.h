@@ -3,8 +3,11 @@ class BlynkStackOnly
 protected:
   BlynkStackOnly() {}
   ~BlynkStackOnly() {}
+
 private:
+  /// @brief Declared as private to prevent usage of dynamic memory
   void* operator new(size_t size);
+  /// @brief Declared as private to prevent usage of dynamic memory
   void operator delete(void *p);
 };
 
@@ -22,7 +25,8 @@ private:
 };
 
 template<typename T>
-class BlynkSingleton: public BlynkNonCopyable
+class BlynkSingleton
+  : public BlynkNonCopyable
 {
 public:
   /** @brief Returns the instance of the singleton type

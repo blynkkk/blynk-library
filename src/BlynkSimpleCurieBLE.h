@@ -31,6 +31,9 @@ public:
         : mConn (false)
     {}
 
+    // IP redirect not available
+    void begin(char BLYNK_UNUSED *h, uint16_t BLYNK_UNUSED p) {}
+
     void begin(BLEPeripheral& per) {
         instance = this;
 
@@ -131,6 +134,15 @@ public:
         : Base(transp)
     {}
 
+    void begin(BLEPeripheral& per, const char* auth)
+    {
+        Base::begin(auth);
+        state = DISCONNECTED;
+        conn.begin(per);
+    }
+
+    // Please use Blynk.begin(BLEPeripheral, "auth")
+    BLYNK_DEPRECATED
     void begin(const char* auth, BLEPeripheral& per)
     {
         Base::begin(auth);

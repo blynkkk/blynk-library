@@ -17,8 +17,8 @@
  You’ll need, in general:
   - Blynk App (download from AppStore or Google Play)
   - Arduino UNO or similar microcontroller board
-  - Decide how to connect Arduino to the Internet (USB, Ethernet,
-    Wi-Fi, etc.). Bluetooth is on the way.
+  - Decide how to connect Arduino to the Internet
+    (USB, Ethernet, Wi-Fi, Bluetooth, ...)
 
  There is a bunch of great example sketches included to show you how to get
  started. Think of them as LEGO bricks  and combine them as you wish.
@@ -43,12 +43,18 @@
   4. Add a Button Widget. Select Pin D9 in Widget's Settings
   5. Press Play icon. Enjoy Blynking!
 
+  You can find a QR code for easy setup of this project here:
+  https://github.com/blynkkk/blynk-library/tree/master/examples/GettingStarted/BlynkBlink
+
 ********************************************************************/
 
 #define BLYNK_PRINT Serial // Enables Serial Monitor
+
+// Following includes are for Arduino Ethernet Shield (W5100)
+// If you're using another shield, see Boards_* examples
 #include <SPI.h>
 #include <Ethernet.h>
-#include <BlynkSimpleEthernet.h> // This part is for Ethernet stuff
+#include <BlynkSimpleEthernet.h>
 
 char auth[] = "YourAuthToken"; // Put your Auth Token here. (see Step 3 above)
 

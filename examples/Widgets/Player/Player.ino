@@ -38,18 +38,19 @@ BLYNK_WRITE(V5)
   String action = param.asStr();
 
   if (action == "play") {
-     //do something
+    // Do something
   }
   if (action == "stop") {
-     //do something
+    // Do something
   }
   if (action == "next") {
-     //do something
+    // Do something
   }
   if (action == "prev") {
-     //do something
+    // Do something
   }
 
+  Blynk.setProperty(V5, "label", action);
   Serial.print(action);
   Serial.println();
 }

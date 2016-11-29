@@ -50,10 +50,6 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Setup notification button on pin 2
   pinMode(2, INPUT_PULLUP);
   // Attach pin 2 interrupt to our handler

@@ -11,7 +11,7 @@
 #ifndef BlynkConfig_h
 #define BlynkConfig_h
 
-#include "Blynk/BlynkDetectDevice.h"
+#include <Blynk/BlynkDetectDevice.h>
 
 /***************************************************
  * Change these settings to match your need
@@ -25,7 +25,7 @@
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "0.3.8"
+#define BLYNK_VERSION        "0.4.0"
 
 // Heartbeat period in seconds.
 #ifndef BLYNK_HEARTBEAT
@@ -63,6 +63,12 @@
 
 // Uncomment to force-enable 128 virtual pins
 //#define BLYNK_USE_128_VPINS
+
+// Uncomment to disable fancy logo
+//#define BLYNK_NO_FANCY_LOGO
+
+// Uncomment to enable 3D fancy logo
+//#define BLYNK_FANCY_LOGO_3D
 
 // Uncomment to enable experimental functions.
 //#define BLYNK_EXPERIMENTAL

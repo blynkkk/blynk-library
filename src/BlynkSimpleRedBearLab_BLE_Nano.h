@@ -54,9 +54,12 @@ BLE  ble;
 class BlynkTransportRedBearLab_BLE_Nano
 {
 public:
-	BlynkTransportRedBearLab_BLE_Nano()
+    BlynkTransportRedBearLab_BLE_Nano()
         : mConn (false)
     {}
+
+    // IP redirect not available
+    void begin(char* h, uint16_t p) {}
 
     void begin() {
         instance = this;

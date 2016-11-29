@@ -23,8 +23,8 @@
 
 // Minimize size for non-Pro version
 #if !defined(ARDUINO_AVR_DIGISPARKPRO)
-#define BLYNK_NO_INFO
-#define BLYNK_NO_BUILTIN
+  #define BLYNK_NO_INFO
+  #define BLYNK_NO_BUILTIN
 #endif
 
 #include <BlynkSimpleStream.h>
@@ -37,8 +37,9 @@ char auth[] = "YourAuthToken";
 void setup()
 {
   // Blynk will work through SerialUSB
+  // Do not read or write this serial manually in your sketch
   SerialUSB.begin();
-  Blynk.begin(auth, SerialUSB);
+  Blynk.begin(SerialUSB, auth);
 }
 
 void loop()

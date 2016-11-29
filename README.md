@@ -37,14 +37,14 @@ You can easily apply any type of board/connection to all examples.
 * Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk))
 * Get the Auth Token from the app
 * Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries)
-* In Arduino IDE, select File -> Examples -> Blynk -> BoardsAndShields -> Arduino_Ethernet
+* In Arduino IDE, select File -> Examples -> Blynk -> Boards_Ethernet -> Arduino_Ethernet
 * Update Auth Token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
 
-### Supported boards, WiFi, Serial, USB...
+### Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
 
-Full list of supported hardware is [here](http://community.blynk.cc/t/hardware-supported-by-blynk).  
-Please [see examples](examples/BoardsAndShields) for different connection types.
+Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).
+Please [see examples](/examples) for different connection types.
 
 __________
 
@@ -52,7 +52,10 @@ __________
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
 * [MicroPython WiPy](https://github.com/wipy/wipy/tree/master/lib/blynk)
+* [OpenWrt](https://github.com/vshymanskyy/blynk-library-openwrt)
 * [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
+* [Node-RED](https://github.com/tzapu/node-red-contrib-blynk-websockets)
+* [LabVIEW](https://github.com/juncaofish/NI-LabVIEWInterfaceforBlynk)
 
 ### License
 This project is released under The MIT License (MIT)

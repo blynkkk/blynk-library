@@ -35,9 +35,9 @@
 
 #if defined(ARDUINO)
     #if ARDUINO >= 100
-        #include "Arduino.h"
+        #include <Arduino.h>
     #else
-        #include "WProgram.h"
+        #include <WProgram.h>
     #endif
 #endif
 
@@ -45,16 +45,11 @@
     #define BLYNK_NO_YIELD
 #endif
 
-// General defines
-
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
-#define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
-#define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
-#define BLYNK_NORETURN __attribute__ ((noreturn))
-
-// Causes problems on some platforms
-#define BLYNK_FORCE_INLINE inline //__attribute__((always_inline))
+#if defined(BLYNK_NO_YIELD)
+    #define BLYNK_RUN_YIELD() {}
+#else
+    #define BLYNK_RUN_YIELD() { ::yield(); }
+#endif
 
 #if defined(__AVR__)
     #include <avr/pgmspace.h>
@@ -68,8 +63,12 @@
     #define BLYNK_PSTR(s) s
 #endif
 
-#ifndef LED_BUILTIN
-# define LED_BUILTIN 2
+#ifdef ARDUINO_AVR_DIGISPARK
+    typedef fstr_t __FlashStringHelper;
+#endif
+
+#if defined(BLYNK_DEBUG_ALL) && !(__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__))
+    #warning "Compiler features not enabled -> please contact yor board vendor to enable c++0x"
 #endif
 
 // Diagnostic defines
@@ -147,8 +146,9 @@ void BlynkFatal() BLYNK_NORETURN;
                         prev_print = false;
                     }
                 }
-                if (!prev_print)
-                	BLYNK_PRINT.print(']');
+                if (!prev_print) {
+                    BLYNK_PRINT.print(']');
+                }
                 BLYNK_PRINT.println();
             }
         }
@@ -158,7 +158,7 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <stdio.h>
         #include <stdarg.h>
 
-        static
+        BLYNK_UNUSED
         void blynk_dbg_print(const char* BLYNK_PROGMEM fmt, ...)
         {
             va_list ap;
@@ -166,7 +166,7 @@ void BlynkFatal() BLYNK_NORETURN;
             char buff[128];
             BLYNK_PRINT.print('[');
             BLYNK_PRINT.print(millis());
-            BLYNK_PRINT.print(F("] "));
+            BLYNK_PRINT.print(BLYNK_F("] "));
 #if defined(__AVR__)
             vsnprintf_P(buff, sizeof(buff), fmt, ap);
 #else
@@ -204,7 +204,7 @@ void BlynkFatal() BLYNK_NORETURN;
 
     #else
 
-        #warning Could not detect platform
+        #warning "Cannot detect platform"
 
     #endif
 

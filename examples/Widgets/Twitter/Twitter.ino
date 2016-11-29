@@ -40,10 +40,6 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Tweet immediately on startup
   Blynk.tweet("My Arduino project is tweeting using @blynk_app and it’s awesome!\n #arduino #IoT #blynk");
 

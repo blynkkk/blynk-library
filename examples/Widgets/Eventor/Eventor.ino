@@ -50,10 +50,6 @@ void setup()
   Serial.begin(9600); // See the connection status in Serial Monitor
   Blynk.begin(auth);
 
-  while (Blynk.connect() == false) {
-    // Wait until connected
-  }
-
   // Setup a function to be called every second
   timer.setInterval(1000L, sendFlagToServer);
 }
@@ -68,3 +64,4 @@ void loop()
   Blynk.run();
   timer.run();
 }
+

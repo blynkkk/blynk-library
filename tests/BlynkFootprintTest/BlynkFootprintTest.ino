@@ -12,11 +12,9 @@
 #define ENABLE_HANDLERS
 
 #ifdef ENABLE_MINIMIZATION
-
-#define BLYNK_NO_BUILTIN
-#define BLYNK_NO_INFO
-#define BLYNK_NO_FLOAT
-
+  #define BLYNK_NO_BUILTIN
+  #define BLYNK_NO_INFO
+  #define BLYNK_NO_FLOAT
 #endif
 
 #include <BlynkSimpleUserDefined.h>
@@ -70,9 +68,9 @@ BLYNK_WRITE(V3)
   test = param.asInt();
 }
 
-BLYNK_READ(V3)
+BLYNK_READ(V4)
 {
-  Blynk.virtualWrite(V3, test);
+  Blynk.virtualWrite(V4, millis(), BlynkFreeRam());
 }
 
 #endif /* ENABLE_HANDLERS */
