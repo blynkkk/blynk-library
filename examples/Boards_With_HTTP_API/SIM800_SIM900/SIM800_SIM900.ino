@@ -15,6 +15,18 @@
  * Project setup in the Blynk app:
  *   Value Display widget on V2
  *
+ * Attention!
+ *   1. Using your phone:
+ *       Disable PIN code on the SIM card
+ *       Check your ballance
+ *       Check that APN,User,Pass are correct and you have internet
+ *   2. Ensure the sim card is correctly inserted into the module
+ *   3. Provide a good, stable power supply (up to 2A)
+ *      (4.0-4.2V or 5V according to your module documentation)
+ *   4. Provide good serial connection
+ *      (Hardware Serial is recommended)
+ *   5. Check if GSM antenna is attached
+ *
  **************************************************************/
 
 // You should get Auth Token in the Blynk App.
@@ -188,7 +200,7 @@ bool gprsConnect()
 
   // Open a GPRS context
   sendAT(F("+SAPBR=1,1"));
-  waitOK_ERROR(30000L);
+  waitOK_ERROR(85000L);
   // Query the GPRS context
   sendAT(F("+SAPBR=2,1"));
   if (waitOK_ERROR(30000L) != 1)
@@ -249,8 +261,12 @@ int httpRequest(const String& method,
 
   if (method == "GET") {
     sendAT(F("+HTTPACTION=0"));
-  } else if (method == "PUT") {
+  } else if (method == "POST") {
     sendAT(F("+HTTPACTION=1"));
+  } else if (method == "HEAD") {
+    sendAT(F("+HTTPACTION=2"));
+  } else if (method == "DELETE") {
+    sendAT(F("+HTTPACTION=3"));
   }
   waitOK_ERROR();
 
