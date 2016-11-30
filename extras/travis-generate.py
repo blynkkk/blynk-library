@@ -29,8 +29,8 @@ metadata = {
 
   "ESP32_WiFi.ino"              : { "board": "nano32", "framework": "arduino" , "lib_ignore": "WiFi101" },
 
-  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101" },
-  "Template_MKR1000.ino"        : { "board": "mkr1000USB" },
+  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101", "build_flags": "-DBOARD_LED_PIN_WS2812"},
+  "Template_MKR1000.ino"        : { "board": "mkr1000USB", "build_flags": "-DUSE_TIMER_FIVE"},
 
   # Digistump
   "Digistump_Digispark.ino"     : { "board": "digispark-pro" },
@@ -71,6 +71,8 @@ metadata = {
   "Energia_Serial_USB.ino"      : { "board": "lplm4f120h5qr" },
 }
 
+pio_project_options = ['lib_ignore', 'framework', 'build_flags']
+
   #seeedTinyBLE
   #nrf51_dk
   #bbcmicrobit
@@ -95,10 +97,9 @@ for fn in examples:
         extra_args = ''
         if 'board' in m:
             extra_args += "--board=" + m['board'] + " "
-        if 'lib_ignore' in m:
-            extra_args += "--project-option='lib_ignore=" + m['lib_ignore'] + "' "
-        if 'framework' in m:
-            extra_args += "--project-option='framework=" + m['framework'] + "' "
+        if set(m.keys()) & set(pio_project_options):
+            for _key in set(m.keys()) & set(pio_project_options):
+                extra_args += "--project-option='{0}={1}' ".format(_key, m[_key])
 
         if len(extra_args):
             path += ' PLATFORMIO_CI_EXTRA_ARGS="' + extra_args.strip() + '"'
