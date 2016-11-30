@@ -74,7 +74,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/SIM800_SIM900
     - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_ESP8266
     - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='build_flags=-DUSE_TIMER_FIVE'"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101' --project-option='build_flags=-DBOARD_LED_PIN_WS2812'"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101' --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
@@ -122,28 +122,31 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/WebHook/WebHook_GET
 
 install:
-    # tmp solution, use 32-bits toolchain for chipKIT_Uno32
-    - sudo apt-get install -qq lib32z1 lib32ncurses5 lib32bz2-1.0
+    # ChipKIT issue: install 32-bit support for GCC PIC32
+    - sudo apt-get install libc6-i386
 
     - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+
     #
     # Libraries from PlatformIO Library Registry:
-    #
-    # http://platformio.org/lib/show/44/Time
-    # http://platformio.org/lib/show/419/SimpleTimer
     #
     # http://platformio.org/lib/show/17/Adafruit-CC3000
     # http://platformio.org/lib/show/28/SPI4Teensy3
     # http://platformio.org/lib/show/91/UIPEthernet
     # http://platformio.org/lib/show/418/WildFireCore
+    # http://platformio.org/lib/show/419/SimpleTimer
     # http://platformio.org/lib/show/420/WildFire-CC3000
     # http://platformio.org/lib/show/65/WiFlyHQ
+    # http://platformio.org/lib/show/44/Time
     # http://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
     # http://platformio.org/lib/show/19/Adafruit-DHT
     # http://platformio.org/lib/show/299/WiFi101
     # http://platformio.org/lib/show/259/BLEPeripheral
     # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
+    # http://platformio.org/lib/show/1192/FlashStorage
+    # http://platformio.org/lib/show/1285/Timer5
 
-    - platformio lib -g install 17 28 91 418 419 420 65 44 31 19 299 259 177 https://github.com/vshymanskyy/BlynkESP8266.git https://github.com/cmaglie/FlashStorage.git https://github.com/michael71/Timer5.git
+    - platformio lib -g install 17 28 91 418 419 420 65 44 31 19 299 259 177 1192 1285
+    - platformio lib -g install https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build

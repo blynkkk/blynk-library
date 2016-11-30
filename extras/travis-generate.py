@@ -29,7 +29,7 @@ metadata = {
 
   "ESP32_WiFi.ino"              : { "board": "nano32", "framework": "arduino" , "lib_ignore": "WiFi101" },
 
-  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101", "build_flags": "-DBOARD_LED_PIN_WS2812"},
+  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101", "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
   "Template_MKR1000.ino"        : { "board": "mkr1000USB", "build_flags": "-DUSE_TIMER_FIVE"},
 
   # Digistump
