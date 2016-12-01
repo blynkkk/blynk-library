@@ -67,7 +67,7 @@ public:
     }
 
     void begin(const char* auth,
-    		   TinyGsmClient&  gsm,
+               TinyGsmClient&  gsm,
                const char* apn,
                const char* user,
                const char* pass,
