@@ -14,7 +14,7 @@ metadata = {
   "Microduino_BLE.ino"          : { "board": "leonardo" },
   "TheAirBoard_WiFly.ino"       : { "skip": True, "board": "fio" }, # No AirBoard library
   "TheAirBoard_BLE_Link.ino"    : { "skip": True, "board": "fio" }, # No AirBoard library
-  "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4" },
+  "Adafruit_Feather_32u4_BLE.ino": { "board": "feather32u4", "lib_deps": "SoftwareSerial" },
   "Blue_Pill_STM32F103C.ino"    : { "board": "bluepill_f103c8", "framework": "arduino" },
   "Seeed_EthernetV2_0.ino"      : { "skip": True }, # Breaks build
   "Arduino_Ethernet2.ino"       : { "skip": True }, # Breaks build, arduino.org
@@ -27,10 +27,12 @@ metadata = {
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
   "ESP8266_Standalone_Manual_IP.ino" : { "board": "esp01" },
 
+  "ESP32.ino"                   : { "board": "esp32dev", "lib_ignore": "WiFi101" },
   "ESP32_WiFi.ino"              : { "board": "nano32", "framework": "arduino" , "lib_ignore": "WiFi101" },
 
-  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101" },
-  "Template_MKR1000.ino"        : { "board": "mkr1000USB" },
+  "Template_ESP8266.ino"        : { "board": "nodemcuv2" , "lib_ignore": "WiFi101"},
+  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101", "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
+  "Template_MKR1000.ino"        : { "board": "mkr1000USB", "build_flags": "-DUSE_TIMER_FIVE"},
 
   # Digistump
   "Digistump_Digispark.ino"     : { "board": "digispark-pro" },
@@ -48,7 +50,12 @@ metadata = {
   "RedBearLab_BlendMicro.ino"   : { "board": "blendmicro8" },
   "RedBearLab_BLE_Mini.ino"     : { "board": "leonardo" },
 
+  # GSM
+  "SIM800_SIM900.ino"           : { "skip": True },
+
   #Other
+  "Fishino.ino"                 : { "skip": True },  # requires extra lib
+  "Energia_WiFi.ino"            : { "skip": True },
   "Simblee_BLE.ino"             : { "skip": True },
   "RFDuino_BLE.ino"             : { "board": "rfduino" },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
@@ -66,10 +73,12 @@ metadata = {
   "LinkItONE.ino"               : { "skip": True },
 
   # Energia
-  "Energia_WiFi.ino"            : { "board": "lpmsp430f5529" },
+  "Energia_WiFi.ino"            : { "skip": True, "board": "lpmsp430f5529" },
   "Energia_Ethernet.ino"        : { "board": "lptm4c1294ncpdt" },
   "Energia_Serial_USB.ino"      : { "board": "lplm4f120h5qr" },
 }
+
+pio_project_options = ['lib_ignore', 'framework', 'build_flags', 'lib_deps']
 
   #seeedTinyBLE
   #nrf51_dk
@@ -95,10 +104,9 @@ for fn in examples:
         extra_args = ''
         if 'board' in m:
             extra_args += "--board=" + m['board'] + " "
-        if 'lib_ignore' in m:
-            extra_args += "--project-option='lib_ignore=" + m['lib_ignore'] + "' "
-        if 'framework' in m:
-            extra_args += "--project-option='framework=" + m['framework'] + "' "
+        if set(m.keys()) & set(pio_project_options):
+            for _key in set(m.keys()) & set(pio_project_options):
+                extra_args += "--project-option='{0}={1}' ".format(_key, m[_key])
 
         if len(extra_args):
             path += ' PLATFORMIO_CI_EXTRA_ARGS="' + extra_args.strip() + '"'
