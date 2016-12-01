@@ -37,7 +37,7 @@ public:
 
     bool connect() {
         if (BlynkArduinoClientGen<Client>::connect()) {
-          if (fingerprint && !this->client.verify(fingerprint, this->domain)) {
+          if (fingerprint && !this->client->verify(fingerprint, this->domain)) {
               BLYNK_LOG1(BLYNK_F("Certificate doesn't match"));
               return false;
           } else {
