@@ -43,37 +43,42 @@
 // If you want override this value, uncomment and set this option:
 //#define BLYNK_HEARTBEAT 30
 
-#include <GSM_Lib.h>
+#include <TinyGsmClient.h>
 #include <BlynkSimpleSIM800.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// Your Network credentials
+// Your GPRS credentials
 // Leave empty, if missing user or pass
 char apn[]  = "YourAPN";
 char user[] = "";
 char pass[] = "";
 
-// Hardware Serial on Mega, Leonardo, Micro...
+// Hardware Serial on Mega, Leonardo, Micro
 #define GsmSerial Serial1
 
-// or Software Serial on Uno, Nano...
+// or Software Serial on Uno, Nano
 //#include <SoftwareSerial.h>
 //SoftwareSerial GsmSerial(2, 3); // RX, TX
 
-GSM gsm(&GsmSerial);
+TinyGsmClient gsm(GsmSerial);
 
 void setup()
 {
   // Set console baud rate
   Serial.begin(115200);
-  delay(1000);
+  delay(10);
 
   // Set GSM module baud rate
   GsmSerial.begin(115200);
-  delay(10);
+  delay(3000);
+
+  // Restart takes quite some time
+  // You can skip it in many cases
+  Serial.println("Restarting modem...");
+  gsm.restart();
 
   Blynk.begin(auth, gsm, apn, user, pass);
 }

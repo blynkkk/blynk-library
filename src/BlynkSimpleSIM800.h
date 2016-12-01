@@ -15,7 +15,7 @@
 #define BLYNK_INFO_CONNECTION  "SIM800"
 #endif
 
-#include <Adapters/BlynkGSM_SIM.h>
+#include <Adapters/BlynkGsmClient.h>
 
 static BlynkTransportSIM _blynkTransport;
 BlynkSIM Blynk(_blynkTransport);
