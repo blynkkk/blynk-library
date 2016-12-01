@@ -17,6 +17,9 @@
  * This example shows how to use SIM800 or SIM900
  * to connect your project to Blynk.
  *
+ * TinyGSM Getting Started guide:
+ *   http://tiny.cc/tiny-gsm-readme
+ *
  * Attention!
  *   1. Using your phone:
  *       Disable PIN code on the SIM card
