@@ -11,12 +11,15 @@ cache:
 env:
     - LINUX_SRC=linux
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Adafruit_Bluefruit_LE
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Adafruit_Feather_32u4_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=feather32u4 --project-option='lib_deps=SoftwareSerial'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Arduino_101_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=genuino101"
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/BBC_MicroBit
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/DFRobot_Bluno_BLE_Link PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Microduino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
+    # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBear_Duo_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Serial_HC05_HC06
@@ -30,6 +33,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Energia_Ethernet PLATFORMIO_CI_EXTRA_ARGS="--board=lptm4c1294ncpdt"
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Intel_Galileo
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Seeed_EthernetV2_0
+    # - PLATFORMIO_CI_SRC=examples/Boards_GSM/SIM800_SIM900
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/ATtiny85 PLATFORMIO_CI_EXTRA_ARGS="--board=attiny85"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Serial_USB
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_SoftwareSerial
@@ -46,14 +50,15 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_EXTRA_ARGS="--board=yun"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nano32 --project-option='lib_ignore=WiFi101' --project-option='framework=arduino'"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32 PLATFORMIO_CI_EXTRA_ARGS="--board=esp32dev --project-option='lib_ignore=WiFi101'"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nano32 --project-option='framework=arduino' --project-option='lib_ignore=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Shield PLATFORMIO_CI_EXTRA_ARGS="--board=megaatmega2560"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_Manual_IP PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SSL PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_SmartConfig PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
-    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=lpmsp430f5529"
-    #- PLATFORMIO_CI_SRC=examples/Boards_WiFi/Fishino
+    # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Energia_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=lpmsp430f5529"
+    # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Fishino
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Intel_Edison_WiFi
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/LinkItONE
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RN_XV_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
@@ -66,8 +71,10 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_GSM
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101'"
+    # - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/SIM800_SIM900
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='build_flags=-DUSE_TIMER_FIVE'"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101' --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
@@ -92,11 +99,17 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/GPS_Stream
     - PLATFORMIO_CI_SRC=examples/Widgets/JoystickTwoAxis
     - PLATFORMIO_CI_SRC=examples/Widgets/LCD/LCD_AdvancedMode
+    - PLATFORMIO_CI_SRC=examples/Widgets/LCD/LCD_SimpleModePushing
+    - PLATFORMIO_CI_SRC=examples/Widgets/LCD/LCD_SimpleModeReading
+    - PLATFORMIO_CI_SRC=examples/Widgets/LED/LED_Blink
+    - PLATFORMIO_CI_SRC=examples/Widgets/LED/LED_Color
+    - PLATFORMIO_CI_SRC=examples/Widgets/LED/LED_Fade
     - PLATFORMIO_CI_SRC=examples/Widgets/LED/LED_StatusOfButton
     - PLATFORMIO_CI_SRC=examples/Widgets/Map
     - PLATFORMIO_CI_SRC=examples/Widgets/Menu
     - PLATFORMIO_CI_SRC=examples/Widgets/Player
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification/PushNotification_Button
+    - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification/PushNotification_Interval
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
     - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
     - PLATFORMIO_CI_SRC=examples/Widgets/Table/Table_Advanced
@@ -109,28 +122,31 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/WebHook/WebHook_GET
 
 install:
-    # tmp solution, use 32-bits toolchain for chipKIT_Uno32
-    - sudo apt-get install -qq lib32z1 lib32ncurses5 lib32bz2-1.0
+    # ChipKIT issue: install 32-bit support for GCC PIC32
+    - sudo apt-get install libc6-i386
 
     - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+
     #
     # Libraries from PlatformIO Library Registry:
-    #
-    # http://platformio.org/lib/show/44/Time
-    # http://platformio.org/lib/show/419/SimpleTimer
     #
     # http://platformio.org/lib/show/17/Adafruit-CC3000
     # http://platformio.org/lib/show/28/SPI4Teensy3
     # http://platformio.org/lib/show/91/UIPEthernet
     # http://platformio.org/lib/show/418/WildFireCore
+    # http://platformio.org/lib/show/419/SimpleTimer
     # http://platformio.org/lib/show/420/WildFire-CC3000
     # http://platformio.org/lib/show/65/WiFlyHQ
+    # http://platformio.org/lib/show/44/Time
     # http://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
     # http://platformio.org/lib/show/19/Adafruit-DHT
     # http://platformio.org/lib/show/299/WiFi101
     # http://platformio.org/lib/show/259/BLEPeripheral
     # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
+    # http://platformio.org/lib/show/1192/FlashStorage
+    # http://platformio.org/lib/show/1285/Timer5
 
-    - platformio lib -g install 17 28 91 418 419 420 65 44 31 19 299 259 177 https://github.com/vshymanskyy/BlynkESP8266.git https://github.com/cmaglie/FlashStorage.git https://github.com/michael71/Timer5.git
+    - platformio lib -g install 17 28 91 418 419 420 65 44 31 19 299 259 177 1192 1285
+    - platformio lib -g install https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build
