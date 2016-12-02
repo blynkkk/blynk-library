@@ -72,7 +72,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_GSM
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     # - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/SIM800_SIM900
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101' --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
     - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='build_flags=-DUSE_TIMER_FIVE'"
     - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101' --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
