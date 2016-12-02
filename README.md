@@ -32,9 +32,6 @@ If you need more information, please follow these links:
 ![Button edit](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/button_edit.png)
 ![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
 
-Please find examples on how to use different types of connections (transports) and how to do make something great with Blynk.
-You can easily apply any type of board/connection to all examples.
-
 ### Quickstart: Arduino + Ethernet shield
 
 * Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk))
@@ -43,6 +40,9 @@ You can easily apply any type of board/connection to all examples.
 * In Arduino IDE, select File -> Examples -> Blynk -> Boards_Ethernet -> Arduino_Ethernet
 * Update Auth Token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
+
+Please find examples on how to use different types of connections (transports) and how to do make something great with Blynk.
+You can easily apply any type of board/connection to all examples.
 
 ### Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
 
