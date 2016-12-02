@@ -1,11 +1,15 @@
 [![GitHub version](https://img.shields.io/github/release/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/releases/latest)
 [![GitHub download](https://img.shields.io/github/downloads/blynkkk/blynk-library/total.svg)](https://github.com/blynkkk/blynk-library/releases/latest)
-[![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library)
+[![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/issues)
 [![Build Status](https://img.shields.io/travis/blynkkk/blynk-library.svg)](https://travis-ci.org/blynkkk/blynk-library)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blynkkk/blynk-library)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blynkkk/blynk-library/blob/master/LICENSE)
 
 [Documentation](http://docs.blynk.cc/#blynk-firmware)
+
+If you like **Blynk** - give it a star, or fork it and contribute! 
+[![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg?style=social&label=Star)](https://github.com/blynkkk/blynk-library/stargazers) 
+[![GitHub forks](https://img.shields.io/github/forks/blynkkk/blynk-library.svg?style=social&label=Fork)](https://github.com/blynkkk/blynk-library/network)
 
 __________
 
@@ -26,7 +30,6 @@ If you need more information, please follow these links:
 ![Dashboard settings](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash_settings.png)
 ![Widgets Box](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/widgets_box.png)
 ![Button edit](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/button_edit.png)
-![Terminal edit](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/terminal_edit.png)
 ![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
 
 Please find examples on how to use different types of connections (transports) and how to do make something great with Blynk.
