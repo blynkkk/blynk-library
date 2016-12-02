@@ -16,7 +16,6 @@
 #endif
 
 #define BLYNK_MINIMIZE_PINMODE_USAGE
-#define BLYNK_NO_YIELD
 
 #include <BlynkSimpleWifi.h>
 

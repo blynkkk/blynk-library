@@ -48,7 +48,7 @@
 #if defined(BLYNK_NO_YIELD)
     #define BLYNK_RUN_YIELD() {}
 #else
-    #define BLYNK_RUN_YIELD() { ::yield(); }
+    #define BLYNK_RUN_YIELD() { ::delay(0); }
 #endif
 
 #if defined(__AVR__)

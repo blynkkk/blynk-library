@@ -15,7 +15,6 @@
 #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting.
 #endif
 
-#define BLYNK_NO_YIELD
 #define BLYNK_SEND_ATOMIC
 
 #include <BlynkApiArduino.h>

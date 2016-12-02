@@ -25,7 +25,7 @@
  *       https://www.arduino.cc/en/Main/ArduinoEthernetShield
  *
  **************************************************************/
-#define BLYNK_NO_YIELD
+
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 #include <SPI.h>
 #include <Ethernet.h>
