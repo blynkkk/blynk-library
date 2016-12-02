@@ -18,14 +18,10 @@ Blynk is a platform with iOS and Android apps to control Arduino, Raspberry Pi a
 You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
 If you need more information, please follow these links:
 
-* [Blynk webpage](http://www.blynk.cc)
-* [Blynk community](http://community.blynk.cc)
-* [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
-* [Google Play](https://play.google.com/store/apps/details?id=cc.blynk)
-* [Facebook](http://www.fb.com/blynkapp)
-* [Twitter](http://twitter.com/blynk_app)
-* [Blynk Server](https://github.com/blynkkk/blynk-server)
-* [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
+* Social: [Webpage](http://www.blynk.cc) / [Facebook](http://www.fb.com/blynkapp) / [Twitter](http://twitter.com/blynk_app) / [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
+* Join our [Blynk community forum](http://community.blynk.cc)
+* Smartphone Apps: [Google Play](https://play.google.com/store/apps/details?id=cc.blynk) / [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
+* Deploy your own [Blynk Server](https://github.com/blynkkk/blynk-server)
 
 ![Dashboard settings](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash_settings.png)
 ![Widgets Box](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/widgets_box.png)
