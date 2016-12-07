@@ -51,7 +51,7 @@ metadata = {
   "RedBearLab_BLE_Mini.ino"     : { "board": "leonardo" },
 
   # GSM
-  "SIM800_SIM900.ino"           : { "skip": True },
+  "SIM800_SIM900.ino"           : { "board": "leonardo" },
 
   #Other
   "Fishino.ino"                 : { "skip": True },  # requires extra lib
