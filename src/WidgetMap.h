@@ -19,7 +19,7 @@ public:
     WidgetMap(uint8_t vPin) : BlynkWidgetBase(vPin) {}
 
     void clear() {
-        Blynk.virtualWrite(mPin, "Clear");
+        Blynk.virtualWrite(mPin, "clr");
     }
 
     template<typename T1, typename T2, typename T3, typename T4>
