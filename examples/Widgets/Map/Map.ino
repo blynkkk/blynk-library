@@ -35,6 +35,9 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth);
 
+  // If you want to remove all points:
+  //myMap.clear();
+
   int index = 1;
   float lat = 51.5074;
   float lon = 0.1278;
