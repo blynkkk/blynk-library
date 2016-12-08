@@ -17,7 +17,7 @@
 
 #include <Adapters/BlynkGsmClient.h>
 
-static BlynkTransportSIM _blynkTransport;
+static BlynkArduinoClient _blynkTransport;
 BlynkSIM Blynk(_blynkTransport);
 
 #include <BlynkWidgets.h>

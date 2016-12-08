@@ -14,7 +14,7 @@
  *
  **************************************************************
  *
- * This example shows how to use SIM800 or SIM900
+ * This example shows how to use SIM800 or SIM900 modem series
  * to connect your project to Blynk.
  *
  * TinyGSM Getting Started guide:
@@ -32,7 +32,7 @@
  *      (Hardware Serial is recommended)
  *   5. Check if GSM antenna is attached
  *
- * WARNING: SIM moudle support is for BETA testing.
+ * WARNING: SIM module support is for BETA testing.
  *
  * Change GPRS apm, user, pass, and Blynk auth token to run :)
  * Feel free to apply it to any other example. It's simple!
@@ -60,13 +60,13 @@ char user[] = "";
 char pass[] = "";
 
 // Hardware Serial on Mega, Leonardo, Micro
-#define GsmSerial Serial1
+#define SerialAT Serial1
 
 // or Software Serial on Uno, Nano
 //#include <SoftwareSerial.h>
-//SoftwareSerial GsmSerial(2, 3); // RX, TX
+//SoftwareSerial SerialAT(2, 3); // RX, TX
 
-TinyGsmClient gsm(GsmSerial);
+TinyGsm modem(SerialAT);
 
 void setup()
 {
@@ -75,15 +75,14 @@ void setup()
   delay(10);
 
   // Set GSM module baud rate
-  GsmSerial.begin(115200);
+  SerialAT.begin(115200);
   delay(3000);
 
   // Restart takes quite some time
   // You can skip it in many cases
-  Serial.println("Restarting modem...");
   gsm.restart();
 
-  Blynk.begin(auth, gsm, apn, user, pass);
+  Blynk.begin(auth, modem, apn, user, pass);
 }
 
 void loop()
