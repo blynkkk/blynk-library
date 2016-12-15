@@ -1,4 +1,4 @@
-.PHONY: docs format-examples cloc travis-build examples update-travis update-ver spaces clean
+.PHONY: docs format-examples cloc travis-build examples update-travis update-ver spaces clean check
 
 docs:
 	doxygen extras/doxygen.config
@@ -28,6 +28,12 @@ update-ver:
 clean:
 	-rm .travis.yml.new
 	-find . -type f -name "*.orig" -exec rm -f {} \;
+
+check: spaces format-examples
+	@echo '******************************************'
+	@echo ' Files with no "YourAuthToken":'
+	@echo '******************************************'
+	@find ./examples -name "*.ino" -exec grep -L "YourAuthToken" {} \;
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
