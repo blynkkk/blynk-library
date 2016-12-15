@@ -54,7 +54,7 @@ void setup() {
   ble.factoryReset(); // Optional
   ble.setMode(BLUEFRUIT_MODE_DATA);
 
-  Blynk.begin(auth,ble);
+  Blynk.begin(auth, ble);
 }
 
 void loop() {
