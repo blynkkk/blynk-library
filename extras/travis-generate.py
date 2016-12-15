@@ -56,6 +56,7 @@ metadata = {
   #Other
   "Fishino.ino"                 : { "skip": True },  # requires extra lib
   "Energia_WiFi.ino"            : { "skip": True },
+  "BBC_MicroBit.ino"            : { "board": "uno", "lib_deps": "SPI" }, #TODO
   "Simblee_BLE.ino"             : { "skip": True },
   "RFDuino_BLE.ino"             : { "board": "rfduino" },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
@@ -82,7 +83,6 @@ pio_project_options = ['lib_ignore', 'framework', 'build_flags', 'lib_deps']
 
   #seeedTinyBLE
   #nrf51_dk
-  #bbcmicrobit
 
   #nucleo_f401re
   #rfduino
