@@ -1,4 +1,4 @@
-.PHONY: docs format-examples cloc travis-build examples update-travis update-ver spaces
+.PHONY: docs format-examples cloc travis-build examples update-travis update-ver spaces clean
 
 docs:
 	doxygen extras/doxygen.config
@@ -24,6 +24,10 @@ update-ver:
 	sed -i 's/"version": "[0-9\.]*"/"version": "$(VER)"/g' library.json
 	sed -i 's/version=[0-9\.]*/version=$(VER)/g' library.properties
 	sed -i 's/BLYNK_VERSION        "[0-9\.]*"/BLYNK_VERSION        "$(VER)"/g' src/Blynk/BlynkConfig.h
+
+clean:
+	-rm .travis.yml.new
+	-find . -type f -name "*.orig" -exec rm -f {} \;
 
 travis-build:
 ifdef PLATFORMIO_CI_SRC
