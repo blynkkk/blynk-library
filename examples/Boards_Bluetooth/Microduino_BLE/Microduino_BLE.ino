@@ -21,9 +21,11 @@
  *
  **************************************************************/
 
+//#define BLYNK_USE_DIRECT_CONNECT
+
 // For CoreUSB, use Serial for debug output
 #define BLYNK_PRINT Serial
-//#define BLYNK_USE_DIRECT_CONNECT
+
 #include <BlynkSimpleSerialBLE.h>
 
 // You should get Auth Token in the Blynk App.

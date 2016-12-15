@@ -30,12 +30,14 @@
  *
  **************************************************************/
 
+//#define BLYNK_USE_DIRECT_CONNECT
+
 // You could use a spare Hardware Serial on boards that have it (like Mega)
 #include <SoftwareSerial.h>
 SoftwareSerial DebugSerial(2, 3); // RX, TX
 
 #define BLYNK_PRINT DebugSerial
-//#define BLYNK_USE_DIRECT_CONNECT
+
 #include <BlynkSimpleSerialBLE.h>
 
 // You should get Auth Token in the Blynk App.

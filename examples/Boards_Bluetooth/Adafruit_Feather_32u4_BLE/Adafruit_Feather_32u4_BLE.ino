@@ -25,15 +25,14 @@
  *
  **************************************************************/
 
-//#define BLYNK_DEBUG
-#define BLYNK_PRINT Serial
-
 #define BLYNK_USE_DIRECT_CONNECT
 
+#define BLYNK_PRINT Serial
+
 #include <BlynkSimpleSerialBLE.h>
-#include <SPI.h>
 #include <Adafruit_BLE.h>
 #include <Adafruit_BluefruitLE_SPI.h>
+#include <SPI.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).

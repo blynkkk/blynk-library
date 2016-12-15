@@ -30,7 +30,7 @@
 SoftwareSerial DebugSerial(2, 3); // RX, TX
 
 #define BLYNK_PRINT DebugSerial
-#define BLYNK_NO_YIELD
+
 #include <BlynkSimpleSerialBLE.h>
 
 // You should get Auth Token in the Blynk App.

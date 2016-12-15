@@ -27,10 +27,9 @@
   SYSTEM_MODE(AUTOMATIC); // Otherwise, connect to Particle cloud
 #endif
 
-//#define BLYNK_DEBUG
-#define BLYNK_PRINT Serial
-
 //#define BLYNK_USE_DIRECT_CONNECT
+
+#define BLYNK_PRINT Serial
 
 #include <BlynkSimpleRedBear_Duo_BLE.h>
 
