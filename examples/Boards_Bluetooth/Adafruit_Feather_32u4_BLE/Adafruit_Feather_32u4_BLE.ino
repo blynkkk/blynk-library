@@ -50,10 +50,11 @@ Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_
 void setup() {
   Serial.begin(9600);
 
-  Blynk.begin(ble, auth);
   ble.begin(BLUEFRUIT_VERBOSE_MODE);
   ble.factoryReset(); // Optional
   ble.setMode(BLUEFRUIT_MODE_DATA);
+
+  Blynk.begin(auth,ble);
 }
 
 void loop() {
