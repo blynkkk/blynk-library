@@ -39,7 +39,6 @@
  *
  **************************************************************/
 
-//#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
 
 // Default heartbeat interval for GSM is 60
@@ -80,7 +79,7 @@ void setup()
 
   // Restart takes quite some time
   // You can skip it in many cases
-  gsm.restart();
+  modem.restart();
 
   Blynk.begin(auth, modem, apn, user, pass);
 }
