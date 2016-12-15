@@ -13,6 +13,7 @@
 
 #include <Blynk/BlynkWidgetBase.h>
 #include <Blynk/BlynkTemplates.h>
+#include <TimeLib.h>
 
 class WidgetRTC
     : public BlynkWidgetBase
@@ -27,8 +28,6 @@ public:
 private:
     static time_t requestTimeSync();
 };
-
-#include <TimeLib.h>
 
 // This is called by Time library when it needs time sync
 time_t WidgetRTC::requestTimeSync()
