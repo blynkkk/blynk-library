@@ -35,7 +35,6 @@
 SoftwareSerial DebugSerial(1, 2); // RX, TX
 SoftwareSerial SwSerial(3, 4);
 
-//#define BLYNK_DEBUG
 #define BLYNK_PRINT DebugSerial    // Comment this out to disable prints and save space
 #include <BlynkSimpleStream.h>
 
