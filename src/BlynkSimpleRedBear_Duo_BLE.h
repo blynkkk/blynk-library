@@ -15,7 +15,6 @@
 #define BLYNK_INFO_CONNECTION "RB_Duo_BLE"
 #endif
 
-#define BLYNK_NO_YIELD
 #define BLYNK_SEND_ATOMIC
 #define BLYNK_SEND_CHUNK 20
 //#define BLYNK_SEND_THROTTLE 20

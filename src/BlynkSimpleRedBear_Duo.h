@@ -11,8 +11,6 @@
 #ifndef BlynkSimpleRedBear_Duo_h
 #define BlynkSimpleRedBear_Duo_h
 
-#define BLYNK_NO_YIELD
-
 #include "BlynkParticle.h"
 
 static BlynkTransportParticle _blynkTransport;
