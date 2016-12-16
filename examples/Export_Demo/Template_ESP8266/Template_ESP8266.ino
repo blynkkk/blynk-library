@@ -9,7 +9,7 @@
  *
  **************************************************************/
 
-  #define USE_SPARKFUN_BLYNK_BOARD  // Uncomment the board you are using
+#define USE_SPARKFUN_BLYNK_BOARD    // Uncomment the board you are using
 //#define USE_NODE_MCU_BOARD        // Comment out the boards you are not using
 //#define USE_WITTY_CLOUD_BOARD
 //#define USE_CUSTOM_BOARD          // See "Custom board configuration" in Settings.h
