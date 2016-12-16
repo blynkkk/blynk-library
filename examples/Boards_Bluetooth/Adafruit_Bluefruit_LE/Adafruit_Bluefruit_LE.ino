@@ -18,7 +18,7 @@
  * to connect your project to Blynk.
  *
  * Note: This requires BLEPeripheral library
- *   from http://librarymanager
+ *   from http://librarymanager/all#BLEPeripheral
  *   or https://github.com/sandeepmistry/arduino-BLEPeripheral
  *
  * NOTE: BLE support is in beta!

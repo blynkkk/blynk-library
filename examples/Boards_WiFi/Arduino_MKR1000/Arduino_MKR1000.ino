@@ -16,8 +16,8 @@
  * This example shows how to use Arduino MKR1000
  * to connect your project to Blynk.
  *
- * NOTE: You may need to install WiFi101 library through the
- *       Arduino IDE Library Manager.
+ * Note: This requires WiFi101 library
+ *   from http://librarymanager/all#WiFi101
  *
  * Feel free to apply it to any other example. It's simple!
  *

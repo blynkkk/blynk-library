@@ -17,7 +17,8 @@
  * This example shows how to use Arduino 101 CurieBLE
  * to connect your project to Blynk.
  *
- * Note: This requires CurieBLE library from http://librarymanager
+ * Note: This requires CurieBLE library
+ *   from http://librarymanager/all#CurieBLE
  *
  * NOTE: BLE support is in beta!
  *

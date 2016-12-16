@@ -17,7 +17,8 @@
  * This example shows how to use nRF8001 breakout
  * to connect your project to Blynk.
  *
- * For this example you need BLEPeripheral library from http://librarymanager
+ * For this example you need BLEPeripheral library
+ *   from http://librarymanager/all#BLEPeripheral
  *   or https://github.com/sandeepmistry/arduino-BLEPeripheral
  *
  * NOTE: BLE support is in beta!

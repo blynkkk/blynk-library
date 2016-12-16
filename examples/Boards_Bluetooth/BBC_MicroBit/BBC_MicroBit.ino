@@ -17,10 +17,12 @@
  * This example shows how to use BBC Micro:Bit
  * to connect your project to Blynk.
  *
- * Note: This requires installing:
+ * Note: This requires nRF5 support package:
  *   https://github.com/sandeepmistry/arduino-nRF5
- *   and
- *   https://github.com/sandeepmistry/arduino-BLEPeripheral
+ *
+ * And BLEPeripheral library
+ *   from http://librarymanager/all#BLEPeripheral
+ *   or https://github.com/sandeepmistry/arduino-BLEPeripheral
  *
  * 1. Select: Tools -> SoftDevice -> S110
  * 2. Select: Tools -> Programmer -> CMSIS-DAP

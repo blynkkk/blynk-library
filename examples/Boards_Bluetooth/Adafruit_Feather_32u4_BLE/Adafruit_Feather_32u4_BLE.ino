@@ -17,8 +17,8 @@
  * This example shows how to use Adafruit Feather 32u4 BLE
  * to connect your project to Blynk.
  *
- * Note: This requires Adafruit BluefruitLE nRF51 library
- *   from http://librarymanager
+ * Note: This requires BluefruitLE nRF51 library
+ *   from http://librarymanager/all#Adafruit_BluefruitLE_nRF51
  *   or https://github.com/adafruit/Adafruit_BluefruitLE_nRF51
  *
  * NOTE: BLE support is in beta!
