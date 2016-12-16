@@ -17,7 +17,7 @@
  * This example shows how to use LightBlue Bean / Bean+
  * to connect your project to Blynk.
  *
- * For this example you need to install Bean Loader:
+ * Note: For this example you need to install Bean Loader:
  *   https://punchthrough.com/bean/guides/getting-started/intro/
  *
  * NOTE: BLE support is in beta!

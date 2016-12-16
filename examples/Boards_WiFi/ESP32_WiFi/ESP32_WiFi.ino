@@ -15,7 +15,7 @@
  **************************************************************
  * This example runs directly on ESP32 chip.
  *
- * You need to install this for ESP32 development:
+ * Note: This requires ESP32 support package:
  *   https://github.com/espressif/arduino-esp32
  *
  * Please be sure to select the right ESP32 module

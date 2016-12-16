@@ -18,7 +18,7 @@
  * WARNING! ESP8266 SSL support is still experimental.
  *          More info here: https://github.com/esp8266/Arduino/issues/43
  *
- * You need to install this for ESP8266 development:
+ * Note: This requires ESP8266 support package:
  *   https://github.com/esp8266/Arduino
  *
  * Please be sure to select the right ESP8266 module
