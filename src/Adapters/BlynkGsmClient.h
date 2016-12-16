@@ -12,15 +12,18 @@
 #define BlynkGsmClient_h
 
 #ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "GSM SIM"
+#define BLYNK_INFO_CONNECTION  "SIMCom"
 #endif
 
 #ifndef BLYNK_HEARTBEAT
 #define BLYNK_HEARTBEAT 60
 #endif
 
+#ifndef BLYNK_TIMEOUT_MS
+#define BLYNK_TIMEOUT_MS 6000
+#endif
+
 #define BLYNK_SEND_ATOMIC
-#define BLYNK_TIMEOUT_MS 5000
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
