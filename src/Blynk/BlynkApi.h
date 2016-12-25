@@ -122,7 +122,7 @@ public:
      */
     template <typename... Args>
     void syncVirtual(Args... pins) {
-        char mem[8];
+        char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vr");
         cmd.add_multi(pins...);
