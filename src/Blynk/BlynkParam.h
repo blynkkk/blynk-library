@@ -203,7 +203,11 @@ inline
 void BlynkParam::add(const __FlashStringHelper* ifsh)
 {
     PGM_P p = reinterpret_cast<PGM_P>(ifsh);
-    strncpy_P(buff+len, p, buff_size-len);
+    size_t l = strlen_P(p) + 1;
+    if (len + l > buff_size)
+        return;
+    memcpy_P(buff+len, p, l);
+    len += l;
     buff[len] = '\0';
 }
 
