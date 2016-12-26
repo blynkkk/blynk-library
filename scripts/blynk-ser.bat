@@ -11,6 +11,8 @@ set SERV_PORT=8442
 REM === Edit lines below only if absolutely sure what you're doing ===
 
 rem Get command line options
+set SCRIPTS_PATH=%~dp0
+
 :loop
 IF NOT "%1"=="" (
     IF "%1"=="-c" set COMM_PORT=%2& SHIFT & SHIFT & GOTO :loop
@@ -37,8 +39,8 @@ if not "x%PORTS%"=="x~1" (
 )
 
 rem Create exe
-if not exist com2tcp.exe (
-    copy com2tcp.bin com2tcp.exe
+if not exist %SCRIPTS_PATH%\com2tcp.exe (
+    copy %SCRIPTS_PATH%\com2tcp.bin %SCRIPTS_PATH%\com2tcp.exe
 )
 
 rem Do the job
@@ -48,7 +50,7 @@ rem Try resetting board
 rem mode %COMM_PORT%:%COMM_BAUD%,N,8,1 >nul
 
 :restart
-  com2tcp --baud %COMM_BAUD% --ignore-dsr \\.\%COMM_PORT% %SERV_ADDR% %SERV_PORT%
+  %SCRIPTS_PATH%\com2tcp.exe --baud %COMM_BAUD% --ignore-dsr \\.\%COMM_PORT% %SERV_ADDR% %SERV_PORT%
   echo Reconnecting in 3s...
   timeout /T 3
 goto restart
@@ -74,4 +76,3 @@ goto:eof
     echo.   If the specified serial port is not found, it will ask to enter another one.
     echo.   The script also tries to reestablish connection if it was lost.
 goto:eof
-
