@@ -1,7 +1,7 @@
 .PHONY: docs format-examples cloc travis-build build-examples build-boards build-tools update-travis update-ver spaces clean check
 
 export ARDUINO_IDE_PATH=/data2/arduino-1.8.0
-export ENERGIA_IDE_PATH=/data2/ard-energia-1.6.10E18
+export ENERGIA_IDE_PATH=/data2/energia-1.6.10E18
 
 
 docs:
