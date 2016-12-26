@@ -50,7 +50,6 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_EXTRA_ARGS="--board=yun"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32 PLATFORMIO_CI_EXTRA_ARGS="--board=esp32dev --project-option='lib_ignore=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nano32 --project-option='framework=arduino' --project-option='lib_ignore=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Shield PLATFORMIO_CI_EXTRA_ARGS="--board=megaatmega2560"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=esp01"

@@ -27,7 +27,6 @@ metadata = {
   "ESP8266_Standalone_SSL.ino"  : { "board": "nodemcuv2" },
   "ESP8266_Standalone_Manual_IP.ino" : { "board": "esp01" },
 
-  "ESP32.ino"                   : { "board": "esp32dev", "lib_ignore": "WiFi101" },
   "ESP32_WiFi.ino"              : { "board": "nano32", "framework": "arduino" , "lib_ignore": "WiFi101" },
 
   "Template_ESP8266.ino"        : { "board": "nodemcuv2" , "lib_ignore": "WiFi101", "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
