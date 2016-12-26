@@ -52,6 +52,8 @@ enum BlynkCmd
 
     BLYNK_CMD_REDIRECT        = 41,
 
+	BLYNK_CMD_APP_CONNECTED   = 50,
+
     BLYNK_CMD_DEBUG_PRINT     = 55
 };
 

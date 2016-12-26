@@ -344,6 +344,9 @@ bool BlynkProtocol<Transp>::processInput(void)
         this->processCmd(inputBuffer, hdr.length);
         currentMsgId = 0;
     } break;
+    case BLYNK_CMD_APP_CONNECTED: {
+    	BlynkOnAppConnected();
+    } break;
     case BLYNK_CMD_DEBUG_PRINT: {
         if (hdr.length) {
             BLYNK_LOG2(BLYNK_F("Server: "), (char*)inputBuffer);

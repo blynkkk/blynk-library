@@ -180,6 +180,8 @@
 #define BLYNK_CONNECTED()    void BlynkOnConnected()
 #define BLYNK_DISCONNECTED() void BlynkOnDisconnected()
 
+#define BLYNK_APP_CONNECTED() void BlynkOnAppConnected()
+
 // Advanced functions
 
 #define BLYNK_VAR_INT(name, pin) \
@@ -230,6 +232,8 @@ void BlynkNoOpCbk();
 // Declare all pin handlers (you can redefine them in your code)
 BLYNK_CONNECTED();
 BLYNK_DISCONNECTED();
+
+BLYNK_APP_CONNECTED();
 
 BLYNK_READ_DEFAULT();
 BLYNK_WRITE_DEFAULT();
