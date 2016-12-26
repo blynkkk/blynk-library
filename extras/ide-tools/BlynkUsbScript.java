@@ -25,6 +25,7 @@ import processing.app.tools.Tool;
 
 import processing.app.BaseNoGui;
 import processing.app.I18n;
+import processing.app.helpers.OSUtils;
 import processing.app.helpers.FileUtils;
 import processing.app.helpers.PreferencesMap;
 import processing.app.Base;
@@ -77,7 +78,12 @@ public class BlynkUsbScript implements Tool {
 
         String blynk_path = sketchbook_path + "/libraries/Blynk/";
         String scripts_path = blynk_path + "/scripts/";
-        String cmd = "blynk-ser.sh --comm=" + serial_port + " --baud=" + serial_serial_rate;
+
+        String script_name = "blynk-ser.sh";
+        if (OSUtils.isWindows()) {
+          script_name = "blynk-ser.bat";
+        }
+        String cmd = script_name + " -c " + serial_port + " -b " + serial_serial_rate;
 
         JFrame frame = new JFrame(cmd);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
