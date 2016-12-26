@@ -5,6 +5,9 @@ from subprocess import call
 import json
 import re
 
+arduino_ide_path = os.environ['ARDUINO_IDE_PATH']
+energia_ide_path = os.environ['ENERGIA_IDE_PATH']
+
 ''' Arduino Board Manager URLs:
 http://arduino.esp8266.com/stable/package_esp8266com_index.json
 https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
@@ -32,10 +35,6 @@ def find_files(directory, pattern):
             if fnmatch.fnmatch(basename, pattern):
                 filename = os.path.join(root, basename)
                 yield filename
-
-arduino_ide_path = "/data2/arduino-1.6.12"
-energia_ide_path = "/data2/ard-energia-1.6.10E18"
-
 
 hardware = os.path.expanduser('~') + '/.arduino15/packages/'
 boards = find_files(hardware, 'boards.txt')

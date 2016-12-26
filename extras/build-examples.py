@@ -3,6 +3,9 @@
 import os, sys, fnmatch
 from subprocess import call
 
+arduino_ide_path = os.environ['ARDUINO_IDE_PATH']
+energia_ide_path = os.environ['ENERGIA_IDE_PATH']
+
 metadata = {
   "Arduino_Yun.ino"             : { "fqbn": "arduino:avr:yun" },
   "Arduino_Zero_M0_Serial.ino"  : { "fqbn": "arduino:samd:arduino_zero_native" },
@@ -131,10 +134,10 @@ for fn in abs_examples:
     sys.stdout.flush()
 
     if m["fqbn"].startswith("energia:"):
-        os.chdir("/data2/ard-energia-1.6.10E18/")
+        os.chdir(energia_ide_path)
         builder = "./energia"
     else:
-        os.chdir("/data2/arduino-1.6.12/")
+        os.chdir(arduino_ide_path)
         builder = "./arduino"
 
     cmd = [

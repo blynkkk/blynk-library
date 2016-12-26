@@ -1,4 +1,8 @@
-.PHONY: docs format-examples cloc travis-build examples update-travis update-ver spaces clean check
+.PHONY: docs format-examples cloc travis-build build-examples build-boards build-tools update-travis update-ver spaces clean check
+
+export ARDUINO_IDE_PATH=/data2/arduino-1.8.0
+export ENERGIA_IDE_PATH=/data2/ard-energia-1.6.10E18
+
 
 docs:
 	doxygen extras/doxygen.config
@@ -9,8 +13,15 @@ format-examples:
 cloc:
 	cloc ./
 
-examples:
+build-examples:
 	python extras/build-examples.py
+
+build-boards:
+	python extras/build-boards.py
+
+build-tools:
+	cd ./extras/ide-tools/; ./build.sh BlynkUpdater
+	cd ./extras/ide-tools/; ./build.sh BlynkUsbScript
 
 spaces:
 	find ./src ./linux -name '*.cpp' -o -name '*.h' -exec sed -i 's/\t/    /g' {} \;
