@@ -73,25 +73,37 @@ public:
         : Base(transp)
     {}
 
-    // TODO: config
+    void config(const char* auth,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        this->conn.begin(domain, port);
+    }
+
+    void config(const char* auth,
+                IPAddress addr,
+                uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        this->conn.begin(addr, port);
+    }
 
     void begin( const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t port      = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
         ::delay(1000); // Give the board time to settle
-        this->conn.begin(domain, port);
+        config(auth, domain, port);
         while(this->connect() != true) {}
     }
 
     void begin( const char* auth,
                 IPAddress addr,
-                uint16_t port)
+                uint16_t port      = BLYNK_DEFAULT_PORT)
     {
-        Base::begin(auth);
         ::delay(1000); // Give the board time to settle
-        this->conn.begin(addr, port);
+        config(auth, addr, port);
         while(this->connect() != true) {}
     }
 private:
