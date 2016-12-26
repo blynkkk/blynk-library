@@ -1,7 +1,7 @@
 {
     "_stats": {
-        "built": 189, 
-        "failed": 8
+        "built": 193, 
+        "failed": 14
     }, 
     "broken": [], 
     "built": [
@@ -75,10 +75,14 @@
         "arduino:avr:yunmini", 
         "arduino:sam:arduino_due_x", 
         "arduino:sam:arduino_due_x_dbg", 
+        "arduino:samd:adafruit_circuitplayground_m0", 
         "arduino:samd:arduino_zero_edbg", 
         "arduino:samd:arduino_zero_native", 
         "arduino:samd:mkr1000", 
         "arduino:samd:mkrzero", 
+        "arduino:samd:mzero_bl", 
+        "arduino:samd:mzero_pro_bl", 
+        "arduino:samd:mzero_pro_bl_dbg", 
         "attiny:avr:ATtinyX4", 
         "attiny:avr:ATtinyX5", 
         "chipKIT:pic32:CUI32stem", 
