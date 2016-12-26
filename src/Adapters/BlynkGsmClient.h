@@ -43,7 +43,9 @@ public:
     bool connectNetwork(const char* apn, const char* user, const char* pass)
     {
         BLYNK_LOG1(BLYNK_F("Modem init..."));
-        modem->begin();
+        if (!modem->begin()) {
+           BLYNK_FATAL(BLYNK_F("Cannot init"));
+        }
 
         switch (modem->getSimStatus()) {
         case SIM_ERROR:  BLYNK_FATAL(BLYNK_F("SIM is missing"));    break;
