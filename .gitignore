@@ -1,6 +1,8 @@
 linux/blynk
 linux/wiringPi
 scripts/certs/client.*
+extras/ide-tools/BlynkUpdater/*
+extras/ide-tools/BlynkUsbScript/*
 *.orig
 *.log
 *.bak
