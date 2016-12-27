@@ -40,7 +40,7 @@ if not "x%PORTS%"=="x~1" (
 
 rem Create exe
 if not exist %SCRIPTS_PATH%\com2tcp.exe (
-    copy %SCRIPTS_PATH%\com2tcp.bin %SCRIPTS_PATH%\com2tcp.exe
+    copy %SCRIPTS_PATH%\com2tcp.bin %SCRIPTS_PATH%\com2tcp.exe > NUL
 )
 
 rem Do the job
