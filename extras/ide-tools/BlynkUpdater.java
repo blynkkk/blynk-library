@@ -43,6 +43,7 @@ import static processing.app.I18n.tr;
 
 public class BlynkUpdater implements Tool {
   private Editor editor;
+  final String lib_url = "https://raw.githubusercontent.com/blynkkk/blynk-library/master/library.properties";
 
   public void init(Editor editor) {
     this.editor = editor;
@@ -56,18 +57,29 @@ public class BlynkUpdater implements Tool {
     System.out.println("Downloading '" + url + "'");
     System.out.print("...");
 
-    InputStream is = new URL(url).openStream();
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    final int retries = 3;
+    for (int i=0; i<retries; i++) {
+      try {
+        InputStream is = new URL(url).openStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-    byte[] chunk = new byte[32 * 1024];
-    int bytesRead;
+        byte[] chunk = new byte[32 * 1024];
+        int bytesRead;
 
-    while ((bytesRead = is.read(chunk)) > 0) {
-      System.out.print(".");
-      outputStream.write(chunk, 0, bytesRead);
+        while ((bytesRead = is.read(chunk)) > 0) {
+          System.out.print(".");
+          outputStream.write(chunk, 0, bytesRead);
+        }
+        System.out.println(" done.");
+        return outputStream;
+      } catch (Exception e) {
+        if (i == retries-1) {
+          throw(e);
+        }
+        try { Thread.sleep(1000); } catch (Exception _e) {}
+      }
     }
-    System.out.println(" done.");
-    return outputStream;
+    return null;
   }
 
   private static boolean isSymlink(File file) throws IOException {
@@ -83,53 +95,63 @@ public class BlynkUpdater implements Tool {
     return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
   }
 
-  private static void updateFolder(File[] components, File tgtFolder) {
+  private static void updateFolder(File[] components, File tgtFolder) throws IOException {
     for (File f: components) {
-      try {
-        File tgt = new File(tgtFolder, f.getName());
-        if (isSymlink(tgt)) {
-          System.out.println("Skipping " + f.getName() + " [symlink]");
-        } else {
-          System.out.println("Updating " + f.getName());
-          FileUtils.recursiveDelete(tgt);
-          tgt.mkdir();
-          FileUtils.copy(f, tgt);
+      File tgt = new File(tgtFolder, f.getName());
+      if (isSymlink(tgt)) {
+        System.out.println("Skipping " + f.getName() + " [symlink]");
+      } else {
+        System.out.println("Updating " + f.getName());
+
+        final int retries = 3;
+        for (int i=0; i<retries; i++) {
+          try {
+            FileUtils.recursiveDelete(tgt);
+            tgt.mkdir();
+            FileUtils.copy(f, tgt);
+            break;
+          } catch (Exception e) {
+            if (i == retries-1) {
+              throw(e);
+            }
+            System.out.println("Retry.");
+            try { Thread.sleep(1000); } catch (Exception _e) {}
+          }
         }
-      } catch (Exception e) {
-        System.err.println(e);
-        //e.printStackTrace(System.err);
-      } finally {}
+      }
     }
   }
 
-  public void run() {
-    String lib_url = "https://raw.githubusercontent.com/blynkkk/blynk-library/master/library.properties";
+  String getLatestVersion() throws IOException {
+    ByteArrayOutputStream last_lib_os = downloadFile(lib_url);
+    ByteArrayInputStream  last_lib_is = new ByteArrayInputStream(last_lib_os.toByteArray()); 
+    PreferencesMap properties = new PreferencesMap();
+    properties.load(last_lib_is);
+    return properties.get("version");
+  }
 
-    Runnable runnable = () -> {
+  public void run() {
+
+    Thread thread = new Thread(() -> {
       try {
         BaseNoGui.librariesIndexer.rescanLibraries();
+        final File sketchbook_path = new File(PreferencesData.get("sketchbook.path"));
+        final File ide_path = new File(PreferencesData.get("runtime.ide.path"));
 
-        ByteArrayOutputStream last_lib_os = downloadFile(lib_url);
-        ByteArrayInputStream  last_lib_is = new ByteArrayInputStream(last_lib_os.toByteArray()); 
-        PreferencesMap properties = new PreferencesMap();
-        properties.load(last_lib_is);
-
-        String last_version = properties.get("version");
-        System.out.println("Last version: " + last_version);
-
-        File sketchbook_path = new File(PreferencesData.get("sketchbook.path"));
-        File ide_path = new File(PreferencesData.get("runtime.ide.path"));
+        final String last_version = getLatestVersion();
+        System.out.println("Latest version: " + last_version);
 
         List<ContributedLibrary> blynk_libs = BaseNoGui.librariesIndexer.getIndex().find("Blynk").stream().filter(new InstalledPredicate()).collect(Collectors.toList());
-        if (blynk_libs.size() >= 2) {
-          Base.showMessage(tr("Error"), tr("Error!"));
+        if (blynk_libs.size() > 1) {
+          JOptionPane.showMessageDialog(editor,
+              tr("Multiple Blynk libraries found!\n\nPlease reinstall libraries manually."),
+              tr("Error"),
+              JOptionPane.ERROR_MESSAGE);
           return;
         }
 
-        boolean needUpdate = false;
-        if (blynk_libs.size() == 0) {
-          needUpdate = true;
-        } else {
+        boolean needUpdate = true;
+        if (blynk_libs.size() == 1) {
           ContributedLibrary installed = blynk_libs.get(0);
 
           System.out.println("Installed version: " + installed.getVersion());
@@ -145,35 +167,39 @@ public class BlynkUpdater implements Tool {
         { // Ask for update
           Object[] options = { tr("Yes"), tr("No") };
           int result = JOptionPane.showOptionDialog(editor,
-                                                    "Blynk v" + last_version + " is available.\n" +
-                                                    "Do you want to update?",
-                                                    tr("Update"),
-                                                    JOptionPane.YES_NO_OPTION,
-                                                    JOptionPane.QUESTION_MESSAGE,
-                                                    null,
-                                                    options,
-                                                    options[0]);
+              "Blynk v" + last_version + " is available.\n" +
+              "Do you want to update?",
+              tr("Update"),
+              JOptionPane.YES_NO_OPTION,
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              options,
+              options[0]);
           if (result != JOptionPane.YES_OPTION) {
             return;
           }
         }
 
-        String zip_fn = "Blynk_Release_v" + last_version;
-        String zip_url = "https://github.com/blynkkk/blynk-library/releases/download/v" + last_version + "/" + zip_fn + ".zip";
+        final String zip_fn = "Blynk_Release_v" + last_version;
+        final String zip_url = "https://github.com/blynkkk/blynk-library/releases/download/v" + last_version + "/" + zip_fn + ".zip";
 
-        File tmpFolder = null;
         ByteArrayOutputStream zip_os = downloadFile(zip_url);
+        File tmpFolder = null;
         try {
           tmpFolder = FileUtils.createTempFolder();
 
-          File tmpFile = new File(tmpFolder, zip_fn + ".zip");
-          try(OutputStream outputStream = new FileOutputStream(tmpFile)) {
+          {
+            File tmpFile = new File(tmpFolder, zip_fn + ".zip");
+            try(OutputStream outputStream = new FileOutputStream(tmpFile)) {
               zip_os.writeTo(outputStream);
+            }
+            System.out.println("Unpacking to " + tmpFolder);
+            ZipDeflater zipDeflater = new ZipDeflater(tmpFile, tmpFolder);
+            zipDeflater.deflate();
+
+            zip_os = null;
+            zipDeflater = null;
           }
-          zip_os = null;
-          System.out.println("Unpacking to " + tmpFolder);
-          ZipDeflater zipDeflater = new ZipDeflater(tmpFile, tmpFolder);
-          zipDeflater.deflate();
 
           File tmpUnpackedFolder = new File(tmpFolder, zip_fn);
 
@@ -188,7 +214,32 @@ public class BlynkUpdater implements Tool {
           if (tmpToolsFolder.exists()) {
             updateFolder(tmpToolsFolder.listFiles(), tgtToolsFolder);
           }
+
+          BaseNoGui.librariesIndexer.rescanLibraries();
+
+          { // Ask for a star
+            Object[] options = { tr("Yes"), tr("Not now") };
+            int result = JOptionPane.showOptionDialog(editor,
+                "Blynk libraries are succesfully updated!\n\n" +
+                "Would you like to give us a star on github?",
+                tr("Update"),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
+            if (result == JOptionPane.YES_OPTION) {
+              Base.openURL(tr("https://github.com/blynkkk/blynk-library/releases/latest"));
+            }
+          }
+
+          editor.statusNotice("Blynk libraries updated.");
         } catch (IOException e) {
+          JOptionPane.showMessageDialog(editor,
+              tr("Failed to update Blynk libraries! ;(\n\nLibrary may not work properly.\nPlease re-run the update tool later, or try installing update manually."),
+              tr("Update"),
+              JOptionPane.ERROR_MESSAGE);
+          throw(e);
         } finally {
           // delete zip created temp folder, if exists
           if (tmpFolder != null) {
@@ -196,44 +247,13 @@ public class BlynkUpdater implements Tool {
           }
         }
 
-        BaseNoGui.librariesIndexer.rescanLibraries();
-
-        { // Ask for a star
-          Object[] options = { tr("Yes"), tr("Not now") };
-          int result = JOptionPane.showOptionDialog(editor,
-                                                    "Blynk libraries are succesfully updated!\n\n" +
-                                                    "Would you like to give us a star on github?",
-                                                    tr("Update"),
-                                                    JOptionPane.YES_NO_OPTION,
-                                                    JOptionPane.QUESTION_MESSAGE,
-                                                    null,
-                                                    options,
-                                                    options[0]);
-          if (result == JOptionPane.YES_OPTION) {
-            Base.openURL(tr("https://github.com/blynkkk/blynk-library/releases/latest"));
-          }
-        }
-
-        editor.statusNotice("Blynk libraries updated.");
-/*
-        for (ContributedLibrary l : libraries) {
-          System.out.println(l.getVersion());
-          //FileUtils.isSubDirectory(sketchbookLibrariesFolder, folder);
-          if (FileUtils.isSubDirectory(sketchbook_path, l.getInstalledFolder())) {
-            System.out.println("In folder: " + l.getInstalledFolder());
-          }
-        }
-*/
-
       } catch (Exception e) {
         editor.statusError("Blynk update failed");
         System.err.println(e);
         //e.printStackTrace(System.err);
         return;
       }
-    };
-
-    Thread thread = new Thread(runnable);
+    });
     thread.start();
   }
 }
