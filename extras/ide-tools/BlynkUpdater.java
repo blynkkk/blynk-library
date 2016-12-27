@@ -97,6 +97,7 @@ public class BlynkUpdater implements Tool {
         }
       } catch (Exception e) {
         System.err.println(e);
+        //e.printStackTrace(System.err);
       } finally {}
     }
   }
@@ -178,8 +179,8 @@ public class BlynkUpdater implements Tool {
 
           // Update libs
           File tgtLibsFolder = new File(sketchbook_path, "libraries");
-          File[] libraries = tmpUnpackedFolder.listFiles((dir, name) -> !(name.equals("tools") || name.equals("hardware")));
-          updateFolder(libraries, tgtLibsFolder);
+          File tmpLibsFolder = new File(tmpUnpackedFolder, "libraries");
+          updateFolder(tmpLibsFolder.listFiles(), tgtLibsFolder);
 
           // Update tools
           File tgtToolsFolder = new File(sketchbook_path, "tools");
@@ -227,6 +228,7 @@ public class BlynkUpdater implements Tool {
       } catch (Exception e) {
         editor.statusError("Blynk update failed");
         System.err.println(e);
+        //e.printStackTrace(System.err);
         return;
       }
     };
