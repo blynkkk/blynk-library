@@ -39,8 +39,8 @@ if not "x%PORTS%"=="x~1" (
 )
 
 rem Create exe
-if not exist %SCRIPTS_PATH%\com2tcp.exe (
-    copy %SCRIPTS_PATH%\com2tcp.bin %SCRIPTS_PATH%\com2tcp.exe > NUL
+if not exist "%SCRIPTS_PATH%\com2tcp.exe" (
+    copy "%SCRIPTS_PATH%\com2tcp.bin" "%SCRIPTS_PATH%\com2tcp.exe" > NUL
 )
 
 rem Do the job
@@ -50,7 +50,7 @@ rem Try resetting board
 rem mode %COMM_PORT%:%COMM_BAUD%,N,8,1 >nul
 
 :restart
-  %SCRIPTS_PATH%\com2tcp.exe --baud %COMM_BAUD% --ignore-dsr \\.\%COMM_PORT% %SERV_ADDR% %SERV_PORT%
+  "%SCRIPTS_PATH%\com2tcp.exe" --baud %COMM_BAUD% --ignore-dsr \\.\%COMM_PORT% %SERV_ADDR% %SERV_PORT%
   echo Reconnecting in 3s...
   timeout /T 3
 goto restart
