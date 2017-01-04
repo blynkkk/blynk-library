@@ -45,10 +45,12 @@
     #define BLYNK_NO_YIELD
 #endif
 
-#if defined(BLYNK_NO_YIELD)
-    #define BLYNK_RUN_YIELD() {}
-#else
-    #define BLYNK_RUN_YIELD() { ::delay(0); }
+#if !defined(BLYNK_RUN_YIELD)
+    #if defined(BLYNK_NO_YIELD)
+        #define BLYNK_RUN_YIELD() {}
+    #else
+        #define BLYNK_RUN_YIELD() { ::delay(0); }
+    #endif
 #endif
 
 #if defined(__AVR__)
