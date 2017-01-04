@@ -76,11 +76,11 @@
         #define BLYNK_USE_128_VPINS
 
         #if   defined(ENERGIA_ARCH_MSP430)
-            #define BLYNK_INFO_DEVICE  "LaunchPad"
+            #define BLYNK_INFO_DEVICE  "LaunchPad MSP430"
             #define BLYNK_INFO_CPU     "MSP430"
             #define BLYNK_NO_FLOAT
         #elif defined(ENERGIA_ARCH_MSP432)
-            #define BLYNK_INFO_DEVICE  "LaunchPad"
+            #define BLYNK_INFO_DEVICE  "LaunchPad MSP432"
             #define BLYNK_INFO_CPU     "MSP432"
         #elif defined(ENERGIA_ARCH_TIVAC)
             #define BLYNK_INFO_DEVICE  "LaunchPad"
