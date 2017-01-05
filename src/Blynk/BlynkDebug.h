@@ -48,6 +48,8 @@
 #if !defined(BLYNK_RUN_YIELD)
     #if defined(BLYNK_NO_YIELD)
         #define BLYNK_RUN_YIELD() {}
+    #elif defined(SPARK) || defined(PARTICLE)
+        #define BLYNK_RUN_YIELD() { Particle.process(); }
     #else
         #define BLYNK_RUN_YIELD() { ::delay(0); }
     #endif
