@@ -345,7 +345,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         currentMsgId = 0;
     } break;
     case BLYNK_CMD_APP_CONNECTED: {
-    	BlynkOnAppConnected();
+        BlynkOnAppConnected();
     } break;
     case BLYNK_CMD_DEBUG_PRINT: {
         if (hdr.length) {
