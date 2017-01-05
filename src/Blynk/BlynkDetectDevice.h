@@ -88,6 +88,7 @@
         #elif defined(ENERGIA_ARCH_CC3200)
             #define BLYNK_INFO_CONNECTION  "CC3200"
             #define BLYNK_SEND_CHUNK 64
+            #define BLYNK_BUFFERS_SIZE 1024
 
             #if   defined(ENERGIA_CC3200_LAUNCHXL) //TODO: This is a bug in Energia IDE
             #define BLYNK_INFO_DEVICE  "CC32000 LaunchXL"
@@ -108,13 +109,16 @@
 
         #define BLYNK_INFO_DEVICE  "Linux"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 4096
 
     #elif defined(SPARK) || defined(PARTICLE)
 
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
 
         #if PLATFORM_ID==0
         #define BLYNK_INFO_DEVICE  "Particle Core"
+        #undef BLYNK_BUFFERS_SIZE // Use default on Core
         #elif PLATFORM_ID==6
         #define BLYNK_INFO_DEVICE  "Particle Photon"
         #elif PLATFORM_ID==8
@@ -140,6 +144,7 @@
 
         #define BLYNK_INFO_DEVICE  "MBED"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 512
 
     #elif defined(ARDUINO) && defined(MPIDE)
         #define BLYNK_NO_YIELD
@@ -155,17 +160,22 @@
         #if   defined(__MK66FX1M0__)
         #define BLYNK_INFO_DEVICE  "Teensy 3.6"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(__MK64FX512__)
         #define BLYNK_INFO_DEVICE  "Teensy 3.5"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(__MK20DX256__)
         #define BLYNK_INFO_DEVICE  "Teensy 3.2/3.1"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif   defined(__MK20DX128__)
         #define BLYNK_INFO_DEVICE  "Teensy 3.0"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif   defined(__MKL26Z64__)
         #define BLYNK_INFO_DEVICE  "Teensy LC"
+        #define BLYNK_BUFFERS_SIZE 512
         #elif   defined(ARDUINO_ARCH_AVR)
         #define BLYNK_INFO_DEVICE  "Teensy 2.0"
         #else
@@ -176,6 +186,7 @@
 
         #if defined(ESP8266) || defined(ESP32)
             #define BLYNK_USE_128_VPINS
+            #define BLYNK_BUFFERS_SIZE 1024
         #endif
 
         /* Arduino AVR */
@@ -202,9 +213,11 @@
         #elif defined(ARDUINO_AVR_MEGA) || defined(ARDUINO_AVR_MEGA2560)
         #define BLYNK_INFO_DEVICE  "Arduino Mega"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_AVR_ADK)
         #define BLYNK_INFO_DEVICE  "Arduino Mega ADK"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_AVR_LEONARDO)
         #define BLYNK_INFO_DEVICE  "Arduino Leonardo"
         #elif defined(ARDUINO_AVR_MICRO)
@@ -224,26 +237,33 @@
         #elif defined(ARDUINO_SAM_DUE)
         #define BLYNK_INFO_DEVICE  "Arduino Due"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_SAMD_ZERO)
         #define BLYNK_INFO_DEVICE  "Arduino Zero"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_SAMD_MKR1000)
         #define BLYNK_INFO_DEVICE  "Arduino MKR1000"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
 
         /* Intel */
         #elif defined(ARDUINO_GALILEO)
         #define BLYNK_INFO_DEVICE  "Galileo"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 4096
         #elif defined(ARDUINO_GALILEOGEN2)
         #define BLYNK_INFO_DEVICE  "Galileo Gen2"
+        #define BLYNK_BUFFERS_SIZE 4096
         #define BLYNK_USE_128_VPINS
         #elif defined(ARDUINO_EDISON)
         #define BLYNK_INFO_DEVICE  "Edison"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 4096
         #elif defined(ARDUINO_ARCH_ARC32)
         #define BLYNK_INFO_DEVICE  "Arduino 101"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
 
         /* Konekt */
         #elif defined(ARDUINO_DASH)
@@ -255,6 +275,7 @@
         #elif defined(ARDUINO_RedBear_Duo)
         #define BLYNK_INFO_DEVICE  "RedBear Duo"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_BLEND)
         #define BLYNK_INFO_DEVICE  "Blend"
         #elif defined(ARDUINO_BLEND_MICRO_8MHZ) || defined(ARDUINO_BLEND_MICRO_16MHZ)
@@ -297,6 +318,8 @@
         #define BLYNK_NO_YIELD
         #elif defined(ARDUINO_ARCH_STM32F4)
         #define BLYNK_INFO_DEVICE  "STM32F4"
+        #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #define BLYNK_NO_YIELD
 
         /* Digistump */
@@ -322,27 +345,33 @@
         #elif defined(ARDUINO_WILDFIRE_V2)
         #define BLYNK_INFO_DEVICE  "Wildfire V2"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_WILDFIRE_V3)
         #define BLYNK_INFO_DEVICE  "Wildfire V3"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_WILDFIRE_V4)
         #define BLYNK_INFO_DEVICE  "Wildfire V4"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
 
         /* Simblee */
         #elif defined(__Simblee__)
         #define BLYNK_INFO_DEVICE  "Simblee"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 512
 
         /* RFduino */
         #elif defined(__RFduino__)
         #define BLYNK_INFO_DEVICE  "RFduino"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 512
 
         /* Nordic NRF5x */
         #elif defined(ARDUINO_ARCH_NRF5)
         #define BLYNK_INFO_DEVICE  "nRF5"
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 512
 
         #else
         #if defined(BLYNK_DEBUG_ALL)
@@ -353,9 +382,28 @@
 
     #endif
 
+    #if !defined(BLYNK_MAX_READBYTES) && defined(BLYNK_BUFFERS_SIZE)
+    #define BLYNK_MAX_READBYTES  BLYNK_BUFFERS_SIZE
+    #endif
+
+    #if !defined(BLYNK_MAX_SENDBYTES) && defined(BLYNK_BUFFERS_SIZE)
+    #define BLYNK_MAX_SENDBYTES  BLYNK_BUFFERS_SIZE
+    #endif
+
+    // Print diagnostics
+
     #if defined(BLYNK_DEBUG_ALL)
-    #pragma message ("BLYNK_INFO_DEVICE=" BLYNK_TOSTRING(BLYNK_INFO_DEVICE))
-    #pragma message ("BLYNK_INFO_CPU="    BLYNK_TOSTRING(BLYNK_INFO_CPU))
+        #if defined(BLYNK_INFO_DEVICE)
+        #pragma message ("BLYNK_INFO_DEVICE=" BLYNK_TOSTRING(BLYNK_INFO_DEVICE))
+        #endif
+
+        #if defined(BLYNK_INFO_CPU)
+        #pragma message ("BLYNK_INFO_CPU="    BLYNK_TOSTRING(BLYNK_INFO_CPU))
+        #endif
+
+        #if defined(BLYNK_BUFFERS_SIZE)
+        #pragma message ("BLYNK_BUFFERS_SIZE=" BLYNK_TOSTRING(BLYNK_BUFFERS_SIZE))
+        #endif
     #endif
 
 #endif
