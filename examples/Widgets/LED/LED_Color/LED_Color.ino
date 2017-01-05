@@ -51,18 +51,25 @@ void setup()
   Serial.begin(9600); // See the connection status in Serial Monitor
   Blynk.begin(auth);
 
+  // Turn LED on, so colors are visible
+  led1.on();
+  // Setup periodic color change
   timer.setInterval(1000L, blinkLedWidget);
 }
+
+bool ledStatus = false;
 
 // V1 LED Widget is blinking
 void blinkLedWidget()
 {
-  if (led1.getValue()) {
+  if (ledStatus) {
     led1.setColor(BLYNK_RED);
     Serial.println("LED on V1: red");
+    ledStatus = false;
   } else {
     led1.setColor(BLYNK_GREEN);
     Serial.println("LED on V1: green");
+    ledStatus = true;
   }
 }
 
