@@ -79,12 +79,22 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (it >= param.end())
         return;
     const char* cmd = it.asStr();
-    const uint16_t cmd16 = *(uint16_t*)cmd;
-
+    uint16_t cmd16;
+    memcpy(&cmd16, cmd, sizeof(cmd16));
     if (++it >= param.end())
         return;
 
+#if defined(analogInputToDigitalPin)
+    // Good! Analog pins can be referenced on this device by name.
+    const uint8_t pin = (it.asStr()[0] == 'A') ?
+                         analogInputToDigitalPin(atoi(it.asStr()+1)) :
+                         it.asInt();
+#else
+    #if defined(BLYNK_DEBUG_ALL)
+        #pragma message "analogInputToDigitalPin not defined"
+    #endif
     const uint8_t pin = it.asInt();
+#endif
 
     switch(cmd16) {
 
