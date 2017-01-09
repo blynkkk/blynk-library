@@ -3,18 +3,18 @@
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
   projects by simply dragging and dropping widgets.
- 
+
     Downloads, docs, tutorials: http://www.blynk.cc
     Blynk community:            http://community.blynk.cc
     Social networks:            http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
- 
+
   Blynk library is licensed under MIT license
   This example code is in public domain.
- 
+
  *************************************************************
   Browse SD card from phone App
- 
+
   App project setup:
     SD widget on V1
  *************************************************************/

@@ -20,14 +20,14 @@
     RTC widget on V5
     Value Display M widget on V1
     Value Display M widget on V2
- 
+
   WARNING :
   For this example you'll need SimpleTimer library:
     https://github.com/jfturcot/SimpleTimer
- 
+
   And also this Time keeping library:
     https://github.com/PaulStoffregen/Time
- 
+
   This code is based on an example from the Time library:
     https://github.com/PaulStoffregen/Time/blob/master/examples/TimeSerial/TimeSerial.ino
  *************************************************************/
