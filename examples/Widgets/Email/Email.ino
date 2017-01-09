@@ -1,30 +1,30 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- * Simple e-mail example
- *
- * App project setup:
- *   E-mail Widget
- *
- * Connect a button to digital pin 2 and GND
- * Pressing this button will send an e-mail
- *
- * WARNING: You are limited to send ONLY ONE E-MAIL PER 15 SECONDS!
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
 
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+  Simple e-mail example
+
+  App project setup:
+    E-mail Widget
+
+  Connect a button to digital pin 2 and GND
+  Pressing this button will send an e-mail
+
+  WARNING: You are limited to send ONLY ONE E-MAIL PER 15 SECONDS!
+ *************************************************************/
+
+/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
 /* Set this to a bigger number, to enable sending longer messages */
@@ -37,22 +37,6 @@
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
-
-
-void setup()
-{
-  Serial.begin(9600);
-  Blynk.begin(auth);
-
-  // Send e-mail when your hardware gets connected to Blynk Server
-  // Just put the recepient's "e-mail address", "Subject" and the "message body"
-  Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online.");
-
-  // Setting the button
-  pinMode(2, INPUT_PULLUP);
-  // Attach pin 2 interrupt to our handler
-  attachInterrupt(digitalPinToInterrupt(2), emailOnButtonPress, CHANGE);
-}
 
 void emailOnButtonPress()
 {
@@ -71,6 +55,23 @@ void emailOnButtonPress()
     // Or, if you want to use the email specified in the App (like for App Export):
     //Blynk.email("Subject: Button Logger", "You just pushed the button...");
   }
+}
+
+void setup()
+{
+  // Debug console
+  Serial.begin(9600);
+
+  Blynk.begin(auth);
+
+  // Send e-mail when your hardware gets connected to Blynk Server
+  // Just put the recepient's "e-mail address", "Subject" and the "message body"
+  Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online.");
+
+  // Setting the button
+  pinMode(2, INPUT_PULLUP);
+  // Attach pin 2 interrupt to our handler
+  attachInterrupt(digitalPinToInterrupt(2), emailOnButtonPress, CHANGE);
 }
 
 void loop()

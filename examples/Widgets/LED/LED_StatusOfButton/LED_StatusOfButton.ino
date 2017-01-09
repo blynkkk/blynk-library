@@ -1,32 +1,33 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- * Blynk using a LED widget on your phone!
- *
- * App project setup:
- *   LED widget on V3
- *
- * WARNING :
- * For this example you'll need SimpleTimer library:
- *   https://github.com/jfturcot/SimpleTimer
- * Visit this page for more information:
- *   http://playground.arduino.cc/Code/SimpleTimer
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+  Blynk using a LED widget on your phone!
+
+  App project setup:
+    LED widget on V3
+
+  WARNING :
+  For this example you'll need SimpleTimer library:
+    https://github.com/jfturcot/SimpleTimer
+  Visit this page for more information:
+    http://playground.arduino.cc/Code/SimpleTimer
+ *************************************************************/
+
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
@@ -42,17 +43,6 @@ const int btnPin = 7;
 WidgetLED led3(V3);
 
 SimpleTimer timer;
-
-void setup()
-{
-  Serial.begin(9600); // See the connection status in Serial Monitor
-  Blynk.begin(auth);
-
-  // Setup physical button pin (active low)
-  pinMode(btnPin, INPUT_PULLUP);
-
-  timer.setInterval(500L, buttonLedWidget);
-}
 
 // V3 LED Widget represents the physical button state
 boolean btnState = false;
@@ -70,6 +60,19 @@ void buttonLedWidget()
     }
     btnState = isPressed;
   }
+}
+
+void setup()
+{
+  // Debug console
+  Serial.begin(9600);
+
+  Blynk.begin(auth);
+
+  // Setup physical button pin (active low)
+  pinMode(btnPin, INPUT_PULLUP);
+
+  timer.setInterval(500L, buttonLedWidget);
 }
 
 void loop()
