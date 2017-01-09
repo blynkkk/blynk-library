@@ -16,12 +16,10 @@
 #include <TimeLib.h>
 
 class WidgetRTC
-    : public BlynkWidgetBase
-    , public BlynkSingleton<WidgetRTC>
+    : public BlynkSingleton<WidgetRTC>
 {
 public:
-    WidgetRTC(uint8_t vPin = -1) : BlynkWidgetBase(vPin) {}
-    void setVPin(uint8_t vPin) { instance()->mPin = vPin; }
+    WidgetRTC() {}
     void onWrite(BlynkReq& request, const BlynkParam& param);
     void begin();
 
@@ -33,7 +31,7 @@ private:
 time_t WidgetRTC::requestTimeSync()
 {
     // Request RTC widget update from the server
-    Blynk.syncVirtual(instance()->mPin);
+    Blynk.sendInternal("rtc", "sync");
     // Tell the Time library that we'll set it later
     return 0;
 }
@@ -44,13 +42,11 @@ void WidgetRTC::begin()
     setSyncProvider(requestTimeSync);
 }
 
-inline
-void WidgetRTC::onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam& param)
-{
+BLYNK_WRITE(RTC) {
     const unsigned long DEFAULT_TIME = 1357041600; // Jan 1 2013
     unsigned long blynkTime = param.asLong();
 
-    if ( blynkTime >= DEFAULT_TIME) {   // Check the integer is a valid time (greater than Jan 1 2013)
+    if (blynkTime >= DEFAULT_TIME) {    // Check the integer is a valid time (greater than Jan 1 2013)
         setTime(blynkTime);             // Sync Time library clock to the value received from Blynk
         BLYNK_LOG1(BLYNK_F("Time sync: OK"));
     }

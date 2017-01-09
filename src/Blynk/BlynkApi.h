@@ -115,6 +115,17 @@ public:
     }
 
     /**
+     * Sends internal command
+     */
+    template <typename... Args>
+    void sendInternal(Args... params) {
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add_multi(params...);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, cmd.getBuffer(), cmd.getLength()-1);
+    }
+
+    /**
      * Requests App or Server to re-send current value of a Virtual Pin.
      * This will probably cause user-defined BLYNK_WRITE handler to be called.
      *

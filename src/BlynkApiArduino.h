@@ -67,9 +67,9 @@ void BlynkApi<Proto>::sendInfo()
 #ifdef BLYNK_HAS_PROGMEM
     char mem[profile_len];
     memcpy_P(mem, profile, profile_len);
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_INFO, 0, mem, profile_len);
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, mem, profile_len);
 #else
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_INFO, 0, profile, profile_len);
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile, profile_len);
 #endif
     return;
 }

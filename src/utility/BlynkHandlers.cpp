@@ -33,8 +33,13 @@ void BlynkWidgetWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNU
 BLYNK_CONNECTED() __attribute__((weak, alias("BlynkNoOpCbk")));
 BLYNK_DISCONNECTED() __attribute__((weak, alias("BlynkNoOpCbk")));
 
-BLYNK_APP_CONNECTED() __attribute__((weak, alias("BlynkNoOpCbk")));
+// Internal Virtual Pins
+BLYNK_ON_WRITE_IMPL(ACON);
+BLYNK_ON_WRITE_IMPL(ADIS);
+BLYNK_ON_WRITE_IMPL(RTC);
+BLYNK_ON_WRITE_IMPL(OTA);
 
+// Regular Virtual Pins
 BLYNK_ON_READ_IMPL(Default);
 BLYNK_ON_WRITE_IMPL(Default);
 
