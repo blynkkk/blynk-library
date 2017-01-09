@@ -1,49 +1,42 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- * Control a color gradient on NeoPixel strip using a slider!
- *
- * For this example you need NeoPixel library:
- *   https://github.com/adafruit/Adafruit_NeoPixel
- *
- * App project setup:
- *   Slider widget (0...500) on V1
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
 
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+  Control a color gradient on NeoPixel strip using a slider!
+
+  For this example you need NeoPixel library:
+    https://github.com/adafruit/Adafruit_NeoPixel
+
+  App project setup:
+    Slider widget (0...500) on V1
+ *************************************************************/
+
+/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 #include <Adafruit_NeoPixel.h>
 
-#define PIN 8
-
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
-
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-void setup()
-{
-  Serial.begin(9600);
-  Blynk.begin(auth);
-  strip.begin();
-  strip.show();
-}
+#define PIN 8
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
 BLYNK_WRITE(V1)
 {
@@ -54,11 +47,6 @@ BLYNK_WRITE(V1)
     // OR: strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
   }
   strip.show();
-}
-
-void loop()
-{
-  Blynk.run();
 }
 
 // Input a value 0 to 255 to get a color value.
@@ -73,5 +61,21 @@ uint32_t Wheel(byte WheelPos) {
     WheelPos -= 170;
     return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
   }
+}
+
+void setup()
+{
+  // Debug console
+  Serial.begin(9600);
+
+  Blynk.begin(auth);
+
+  strip.begin();
+  strip.show();
+}
+
+void loop()
+{
+  Blynk.run();
 }
 

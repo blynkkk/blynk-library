@@ -1,31 +1,32 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- * This example shows how to synchronize Button widget
- * and physical button state.
- *
- * WARNING :
- * For this example you'll need SimpleTimer library:
- *   https://github.com/jfturcot/SimpleTimer
- *
- * App project setup:
- *   Button widget attached to V2 (Switch mode)
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+  This example shows how to synchronize Button widget
+  and physical button state.
+
+  WARNING :
+  For this example you'll need SimpleTimer library:
+    https://github.com/jfturcot/SimpleTimer
+
+  App project setup:
+    Button widget attached to V2 (Switch mode)
+ *************************************************************/
+
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
@@ -44,19 +45,6 @@ void checkPhysicalButton();
 
 int ledState = LOW;
 int btnState = HIGH;
-
-void setup()
-{
-  Serial.begin(9600); // See the connection status in Serial Monitor
-  Blynk.begin(auth);
-
-  pinMode(ledPin, OUTPUT);
-  pinMode(btnPin, INPUT_PULLUP);
-  digitalWrite(ledPin, ledState);
-
-  // Setup a function to be called every 100 ms
-  timer.setInterval(100L, checkPhysicalButton);
-}
 
 // Every time we connect to the cloud...
 BLYNK_CONNECTED() {
@@ -92,9 +80,24 @@ void checkPhysicalButton()
   }
 }
 
+void setup()
+{
+  // Debug console
+  Serial.begin(9600);
+
+  Blynk.begin(auth);
+
+  pinMode(ledPin, OUTPUT);
+  pinMode(btnPin, INPUT_PULLUP);
+  digitalWrite(ledPin, ledState);
+
+  // Setup a function to be called every 100 ms
+  timer.setInterval(100L, checkPhysicalButton);
+}
+
 void loop()
 {
-  Blynk.run(); // Run Blynk
-  timer.run(); // Run SimpleTimer
+  Blynk.run();
+  timer.run();
 }
 
