@@ -64,7 +64,7 @@ void BlynkApi<Proto>::sendInfo()
     BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
     profile_dyn.add_key("conn", "Socket");
 
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_INFO, 0, profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
     return;
 }
 

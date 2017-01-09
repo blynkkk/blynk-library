@@ -345,8 +345,8 @@ bool BlynkProtocol<Transp>::processInput(void)
         currentMsgId = 0;
     } break;
     case BLYNK_CMD_INTERNAL: {
-    	BlynkReq req = { 0 };
-    	BlynkParam param(inputBuffer, hdr.length);
+        BlynkReq req = { 0 };
+        BlynkParam param(inputBuffer, hdr.length);
         BlynkParam::iterator it = param.begin();
         if (it >= param.end())
             return true;
@@ -359,12 +359,12 @@ bool BlynkProtocol<Transp>::processInput(void)
         char* start = (char*)it.asStr();
         BlynkParam param2(start, hdr.length - (start - (char*)inputBuffer));
 
-    	switch (cmd32) {
-    	case BLYNK_INT_RTC:  BlynkWidgetWriteRTC(req, param2);        break;
-    	case BLYNK_INT_OTA:  BlynkWidgetWriteOTA(req, param2);        break;
-    	case BLYNK_INT_ACON: BlynkWidgetWriteACON(req, param2);   break;
-    	case BLYNK_INT_ADIS: BlynkWidgetWriteADIS(req, param2);   break;
-    	}
+        switch (cmd32) {
+        case BLYNK_INT_RTC:  BlynkWidgetWriteRTC(req, param2);    break;
+        case BLYNK_INT_OTA:  BlynkWidgetWriteOTA(req, param2);    break;
+        case BLYNK_INT_ACON: BlynkWidgetWriteACON(req, param2);   break;
+        case BLYNK_INT_ADIS: BlynkWidgetWriteADIS(req, param2);   break;
+        }
     } break;
     case BLYNK_CMD_DEBUG_PRINT: {
         if (hdr.length) {
