@@ -50,8 +50,6 @@ SimpleTimer timer;
 
 WidgetRTC rtc;
 
-BLYNK_ATTACH_WIDGET(rtc, V5);
-
 // Digital clock display of the time
 void clockDisplay()
 {
