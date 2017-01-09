@@ -38,17 +38,6 @@ char auth[] = "YourAuthToken";
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
-BLYNK_WRITE(V1)
-{
-  int shift = param.asInt();
-  for (int i = 0; i < strip.numPixels(); i++)
-  {
-    strip.setPixelColor(i, Wheel(shift & 255));
-    // OR: strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
-  }
-  strip.show();
-}
-
 // Input a value 0 to 255 to get a color value.
 // The colours are a transition r - g - b - back to r.
 uint32_t Wheel(byte WheelPos) {
@@ -61,6 +50,17 @@ uint32_t Wheel(byte WheelPos) {
     WheelPos -= 170;
     return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
   }
+}
+
+BLYNK_WRITE(V1)
+{
+  int shift = param.asInt();
+  for (int i = 0; i < strip.numPixels(); i++)
+  {
+    strip.setPixelColor(i, Wheel(shift & 255));
+    // OR: strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
+  }
+  strip.show();
 }
 
 void setup()
