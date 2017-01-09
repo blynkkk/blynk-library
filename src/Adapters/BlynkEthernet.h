@@ -72,7 +72,7 @@ public:
                 const byte mac[] = NULL)
     {
         BLYNK_LOG1(BLYNK_F("Using static IP"));
-        Ethernet.begin(SelectMacAddress(auth, mac), local);
+        Ethernet.begin(SelectMacAddress(auth, mac), local, dns);
         // give the Ethernet shield a second to initialize:
         ::delay(1000);
         IPAddress myip = Ethernet.localIP();
