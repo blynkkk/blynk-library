@@ -145,6 +145,8 @@
         #define BLYNK_INFO_DEVICE  "MBED"
         #define BLYNK_USE_128_VPINS
         #define BLYNK_BUFFERS_SIZE 512
+        #define noInterrupts() __disable_irq()
+        #define interrupts()   __enable_irq()
 
     #elif defined(ARDUINO) && defined(MPIDE)
         #define BLYNK_NO_YIELD

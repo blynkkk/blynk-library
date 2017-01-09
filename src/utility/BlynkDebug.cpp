@@ -124,6 +124,20 @@
 //#elif defined (ARDUINO_ARCH_ARC32)
 //#elif defined (__RFduino__) || defined (__Simblee__)
 
+#elif defined(MBED_LIBRARY_VERSION)
+
+    #include "mbed.h"
+
+    size_t BlynkFreeRam()
+    {
+        return 0;
+    }
+
+    void BlynkReset()
+    {
+        for(;;) {} // To make compiler happy
+    }
+
 #else
 
     #if defined(BLYNK_DEBUG_ALL)
