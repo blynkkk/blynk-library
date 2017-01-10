@@ -42,7 +42,7 @@ void WidgetRTC::begin()
     setSyncProvider(requestTimeSync);
 }
 
-BLYNK_WRITE(RTC) {
+BLYNK_WRITE(InternalPinRTC) {
     const unsigned long DEFAULT_TIME = 1357041600; // Jan 1 2013
     unsigned long blynkTime = param.asLong();
 

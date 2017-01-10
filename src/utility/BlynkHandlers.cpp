@@ -34,10 +34,10 @@ BLYNK_CONNECTED() __attribute__((weak, alias("BlynkNoOpCbk")));
 BLYNK_DISCONNECTED() __attribute__((weak, alias("BlynkNoOpCbk")));
 
 // Internal Virtual Pins
-BLYNK_ON_WRITE_IMPL(ACON);
-BLYNK_ON_WRITE_IMPL(ADIS);
-BLYNK_ON_WRITE_IMPL(RTC);
-BLYNK_ON_WRITE_IMPL(OTA);
+BLYNK_ON_WRITE_IMPL(InternalPinACON);
+BLYNK_ON_WRITE_IMPL(InternalPinADIS);
+BLYNK_ON_WRITE_IMPL(InternalPinRTC);
+BLYNK_ON_WRITE_IMPL(InternalPinOTA);
 
 // Regular Virtual Pins
 BLYNK_ON_READ_IMPL(Default);

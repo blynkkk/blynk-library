@@ -360,10 +360,10 @@ bool BlynkProtocol<Transp>::processInput(void)
         BlynkParam param2(start, hdr.length - (start - (char*)inputBuffer));
 
         switch (cmd32) {
-        case BLYNK_INT_RTC:  BlynkWidgetWriteRTC(req, param2);    break;
-        case BLYNK_INT_OTA:  BlynkWidgetWriteOTA(req, param2);    break;
-        case BLYNK_INT_ACON: BlynkWidgetWriteACON(req, param2);   break;
-        case BLYNK_INT_ADIS: BlynkWidgetWriteADIS(req, param2);   break;
+        case BLYNK_INT_RTC:  BlynkWidgetWriteInternalPinRTC(req, param2);    break;
+        case BLYNK_INT_OTA:  BlynkWidgetWriteInternalPinOTA(req, param2);    break;
+        case BLYNK_INT_ACON: BlynkWidgetWriteInternalPinACON(req, param2);   break;
+        case BLYNK_INT_ADIS: BlynkWidgetWriteInternalPinADIS(req, param2);   break;
         }
     } break;
     case BLYNK_CMD_DEBUG_PRINT: {
