@@ -17,7 +17,7 @@
   Please note that the accuracy of this method is up to several seconds.
 
   App project setup:
-    RTC widget on V5
+    RTC
     Value Display M widget on V1
     Value Display M widget on V2
 
