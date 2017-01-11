@@ -20,7 +20,6 @@ class WidgetRTC
 {
 public:
     WidgetRTC() {}
-    void onWrite(BlynkReq& request, const BlynkParam& param);
     void begin();
 
 private:
