@@ -28,7 +28,7 @@
 
 String overTheAirURL;
 
-BLYNK_WRITE(100) {
+BLYNK_WRITE(InternalPinOTA) {
   // URL should be something like "http://ota-server:port/firmware.bin?auth=12345"
   overTheAirURL = param.asString();
   overTheAirURL += String("?auth=") + configStore.cloudToken;
