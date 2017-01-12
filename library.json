@@ -19,7 +19,6 @@
     "exclude": [
       "linux",
       "extras",
-      "scripts",
       "tests"
     ]
   },
