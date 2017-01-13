@@ -6,17 +6,16 @@
 [![GitHub wiki](https://img.shields.io/badge/Wiki-available-brightgreen.svg)](https://github.com/blynkkk/blynk-library/wiki)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blynkkk/blynk-library/blob/master/LICENSE)
 
-[Documentation](http://docs.blynk.cc/#blynk-firmware)
+If you like **Blynk** - give it a star, or fork it and contribute! 
+[![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg?style=social&label=Star)](https://github.com/blynkkk/blynk-library/stargazers) 
+[![GitHub forks](https://img.shields.io/github/forks/blynkkk/blynk-library.svg?style=social&label=Fork)](https://github.com/blynkkk/blynk-library/network)
 
 ## Download
 https://github.com/blynkkk/blynk-library/releases/latest
 
-## Wiki
-https://github.com/blynkkk/blynk-library/wiki
-
-If you like **Blynk** - give it a star, or fork it and contribute! 
-[![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg?style=social&label=Star)](https://github.com/blynkkk/blynk-library/stargazers) 
-[![GitHub forks](https://img.shields.io/github/forks/blynkkk/blynk-library.svg?style=social&label=Fork)](https://github.com/blynkkk/blynk-library/network)
+## Documentation
+Blynk Docs: http://docs.blynk.cc/#blynk-firmware  
+Wiki: https://github.com/blynkkk/blynk-library/wiki
 
 __________
 
