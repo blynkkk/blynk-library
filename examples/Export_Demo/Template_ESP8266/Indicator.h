@@ -227,24 +227,6 @@ Indicator indicator;
     Timer3.attachInterrupt(indicator_run);
   }
 
-#elif defined(USE_TIMER_FIVE)
-
-  #include <Timer5.h>
-
-  int indicator_counter = -1;
-  void indicator_run() {
-    indicator_counter -= 10;
-    if (indicator_counter < 0) {
-      indicator_counter = indicator.run();
-    }
-  }
-
-  void indicator_init() {
-    MyTimer5.begin(1000/10);
-    MyTimer5.attachInterrupt(indicator_run);
-    MyTimer5.start();
-  }
-
 #else
 
   #warning LED indicator needs a functional timer!
