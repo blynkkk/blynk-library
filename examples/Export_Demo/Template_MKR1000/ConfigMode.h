@@ -69,7 +69,7 @@ void enterConfigMode()
           char c = client.read();             // read a byte, then
           Serial.write(c);                    // print it out the serial monitor
           if (c == '\n') {                    // if the byte is a newline character
-  
+
             // if the current line is blank, you got two newline characters in a row.
             // that's the end of the client HTTP request, so send a response:
             if (currentLine.length() == 0) {
@@ -96,6 +96,7 @@ void enterConfigMode()
     DEBUG_PRINT(String("Blynk cloud: ") + token + " @ " + host + ":" + port);
 
     if (token.length() == 32 && ssid.length() > 0) {
+      configStore.flagConfig = false;
       CopyString(ssid, configStore.wifiSSID);
       CopyString(pass, configStore.wifiPass);
       CopyString(token, configStore.cloudToken);
@@ -107,7 +108,6 @@ void enterConfigMode()
       }
 
       content = R"json({"status":"ok","msg":"Configuration saved"})json";
-
       BlynkState::set(MODE_CONNECTING_NET);
     } else {
       DEBUG_PRINT("Configuration invalid");
@@ -155,7 +155,7 @@ void enterConfigMode()
           } else if (currentLine.indexOf(" /config") >= 0) {
             req = REQ_CONFIG;
             int idx = currentLine.indexOf("?");
-            config_line = '&' + currentLine.substring(idx+1, currentLine.lastIndexOf(' ')) + '&';
+            config_line = "&" + currentLine.substring(idx+1, currentLine.lastIndexOf(' ')) + "&";
           } else if (currentLine.indexOf(" /reset") >= 0) {
             req = REQ_RESET;
           } else if (currentLine.indexOf(" /reboot") >= 0) {
@@ -196,7 +196,7 @@ String urlDecode(const String& text)
 
 String urlFindArg(const String& url, const String& arg)
 {
-  int s = url.indexOf('&' + arg + '=');
+  int s = url.indexOf("&" + arg + "=");
   if (s < 0)
     return "";
   int s_len = arg.length() + 2;
@@ -209,7 +209,7 @@ void enterConnectNet() {
   DEBUG_PRINT(String("Connecting to WiFi: ") + configStore.wifiSSID);
   
   WiFi.end();
-
+  
   unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))
   {

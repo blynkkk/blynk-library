@@ -64,7 +64,7 @@
 //#define USE_TIMER_THREE
 #define USE_TIMER_FIVE
 
-#if defined(DEBUG)
+#if defined(APP_DEBUG)
   #define DEBUG_PRINT(...) BLYNK_LOG1(__VA_ARGS__)
 #else
   #define DEBUG_PRINT(...)

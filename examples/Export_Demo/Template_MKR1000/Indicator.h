@@ -102,7 +102,7 @@ protected:
 #endif
 
   template<typename T>
-  int beatLED(uint32_t onColor, const T& beat) {
+  uint32_t beatLED(uint32_t onColor, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
     setRGB((m_Counter % 2 == 0) ? onColor : (uint32_t)COLOR_BLACK);
     uint32_t next = beat[m_Counter];
@@ -145,7 +145,7 @@ protected:
   }
 
   template<typename T>
-  int beatLED(uint32_t, const T& beat) {
+  uint32_t beatLED(uint32_t, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
     setLED((m_Counter % 2 == 0) ? BOARD_PWM_MAX : 0);
     uint32_t next = beat[m_Counter];
@@ -168,6 +168,10 @@ protected:
   #warning Invalid LED configuration.
 
 #endif
+
+  uint32_t skipLED() {
+    return 20;
+  }
 
 private:
   uint8_t m_Counter;

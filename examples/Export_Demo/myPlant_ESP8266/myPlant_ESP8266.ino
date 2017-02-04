@@ -19,7 +19,7 @@
 //#define USE_WITTY_CLOUD_BOARD
 //#define USE_CUSTOM_BOARD          // See "Custom board configuration" in Settings.h
 
-#define DEBUG        // Comment this out to disable debug prints
+#define APP_DEBUG        // Comment this out to disable debug prints
 
 #define BLYNK_PRINT Serial
 #include <BlynkSimpleEsp8266.h>

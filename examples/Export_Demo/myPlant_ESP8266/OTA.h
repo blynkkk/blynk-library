@@ -6,22 +6,7 @@
  *
  *                  http://www.blynk.io/
  *
- **************************************************************
- *
- * This is just an example how you can trigger OTA update using a virtual pin.
- *   1. In Arduino IDE menu: Sketch -> Export compiled Binary
- *   2. Navigate to the sketch directory
- *   3. Edit ota-firmwares.json:
- *        Set your auth token, firmware version and .bin filename
- *   4. Run OTA server:
-          node ota-server.js
- *   5. Trigger update by sending the firmware url to V100.
- *      For example, using blynk-ctrl.js:
- *        blynk-ctrl.js --token your-token -vw 100 'http://ota-server:3000/firmware.bin'
- *
- * More about ESP8266 OTA updates:
- *  https://github.com/esp8266/Arduino/blob/master/doc/ota_updates/readme.md
- */
+ **************************************************************/
 
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>

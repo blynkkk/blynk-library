@@ -15,7 +15,7 @@
 
 #define USE_MKR1000_BOARD
 
-#define DEBUG        // Comment this out to disable debug prints
+#define APP_DEBUG        // Comment this out to disable debug prints
 
 #define BLYNK_PRINT Serial
 #include <SPI.h>

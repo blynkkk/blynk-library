@@ -82,7 +82,12 @@ void enterConfigMode()
 
     String content;
     unsigned statusCode;
+
+    DEBUG_PRINT(String("WiFi SSID: ") + ssid + " Pass: " + pass);
+    DEBUG_PRINT(String("Blynk cloud: ") + token + " @ " + host + ":" + port);
+
     if (token.length() == 32 && ssid.length() > 0) {
+      configStore.flagConfig = false;
       CopyString(ssid, configStore.wifiSSID);
       CopyString(pass, configStore.wifiPass);
       CopyString(token, configStore.cloudToken);
@@ -92,9 +97,6 @@ void enterConfigMode()
       if (port.length()) {
         configStore.cloudPort = port.toInt();
       }
-
-      DEBUG_PRINT(String("WiFi SSID: ") + configStore.wifiSSID + " Pass: " + configStore.wifiPass);
-      DEBUG_PRINT(String("Blynk cloud: ") + configStore.cloudToken + " @ " + configStore.cloudHost + ":" + configStore.cloudPort);
 
       content = R"json({"status":"ok","msg":"Configuration saved"})json";
       statusCode = 200;
@@ -150,7 +152,7 @@ void enterConnectNet() {
   WiFi.mode(WIFI_STA);
   if (!WiFi.begin(configStore.wifiSSID, configStore.wifiPass))
     return;
-    
+  
   unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))
   {
