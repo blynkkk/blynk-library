@@ -20,7 +20,7 @@ enum State {
   MODE_MAX_VALUE
 };
 
-#if defined(DEBUG)
+#if defined(APP_DEBUG)
 const char* StateStr[MODE_MAX_VALUE] = {
   "WAIT_CONFIG",
   "CONFIGURING",
