@@ -299,22 +299,19 @@ bool BlynkProtocol<Transp>::processInput(void)
     {
     case BLYNK_CMD_LOGIN: {
 #ifdef BLYNK_USE_DIRECT_CONNECT
-        if (!strncmp(authkey, (char*)inputBuffer, 32)) {
-            BLYNK_LOG1(BLYNK_F("Ready"));
-            state = CONNECTED;
-            sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
-            this->sendInfo();
-            BlynkOnConnected();
-        } else {
+        if (strncmp(authkey, (char*)inputBuffer, 32)) {
             BLYNK_LOG1(BLYNK_F("Invalid token"));
             sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_INVALID_TOKEN);
+            break;
         }
-#else
-        BLYNK_LOG1(BLYNK_F("Ready"));
-        state = CONNECTED;
-        sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
-        this->sendInfo();
 #endif
+        if (state == CONNECTING) {
+            BLYNK_LOG1(BLYNK_F("Ready"));
+            state = CONNECTED;
+            this->sendInfo();
+            BlynkOnConnected();
+        }
+        sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
     } break;
     case BLYNK_CMD_PING: {
         sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
