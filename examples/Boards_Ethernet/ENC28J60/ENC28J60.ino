@@ -18,7 +18,7 @@
  * to connect your project to Blynk.
  *
  * For this example you need UIPEthernet library:
- *   https://github.com/ntruchsess/arduino_uip
+ *   https://github.com/UIPEthernet/UIPEthernet
  *
  * Typical wiring would be:
  *  VCC -- 5V
