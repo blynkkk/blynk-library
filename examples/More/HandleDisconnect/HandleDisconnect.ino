@@ -13,11 +13,9 @@
  * This example code is in public domain.
  *
  **************************************************************
- * This example shows how to separate online and offline parts of your code.
  * 
- * You should specify your connection type and board.
+ * This example shows how to keep WiFi connection on ESP8266.
  * 
- * This sketch uses ESP8266 libraries as example.
  **************************************************************/
 
 #define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
@@ -34,8 +32,8 @@ char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
 
 
-int lastTry = millis();
-int connDelay = 5000; // Try to connect every 5 seconds
+int lastConnectionAttempt = millis();
+int connectionDelay = 5000; // try to reconnect every 5 seconds
 
 void setup()
 {
@@ -45,16 +43,29 @@ void setup()
 
 void loop()
 {
-  if(!Blynk.connected() && millis() - lastTry >= connDelay){
-    Blynk.connect();
-    lastTry = millis();
-  }
-  
-  if(Blynk.connected()){
-    Blynk.run();
-    // insert your online part
-  }
-  else{
-    //insert your offline part
-  }
+	// check WiFi connection:
+	if(WiFi.status() != WL_CONNECTED)
+	{
+		// (optional) "offline" part of code
+		
+		// check delay:
+		if(millis() - lastConnectionAttempt >= connectionDelay)
+		{
+			lastConnectionAttempt = millis();
+
+      // attempt to connect to Wifi network:
+			if (pass && strlen(pass)) 
+			{
+				WiFi.begin((char*)ssid, (char*)pass);
+			} 
+			else 
+			{
+				WiFi.begin((char*)ssid);
+			}
+		}
+	}
+	else
+	{
+		Blynk.run();
+	}
 }
