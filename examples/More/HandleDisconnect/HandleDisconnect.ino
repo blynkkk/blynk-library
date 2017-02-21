@@ -43,29 +43,29 @@ void setup()
 
 void loop()
 {
-	// check WiFi connection:
-	if(WiFi.status() != WL_CONNECTED)
-	{
-		// (optional) "offline" part of code
-		
-		// check delay:
-		if(millis() - lastConnectionAttempt >= connectionDelay)
-		{
-			lastConnectionAttempt = millis();
+  // check WiFi connection:
+  if(WiFi.status() != WL_CONNECTED)
+  {
+    // (optional) "offline" part of code
+    
+    // check delay:
+    if(millis() - lastConnectionAttempt >= connectionDelay)
+    {
+      lastConnectionAttempt = millis();
 
       // attempt to connect to Wifi network:
-			if (pass && strlen(pass)) 
-			{
-				WiFi.begin((char*)ssid, (char*)pass);
-			} 
-			else 
-			{
-				WiFi.begin((char*)ssid);
-			}
-		}
-	}
-	else
-	{
-		Blynk.run();
-	}
+      if (pass && strlen(pass)) 
+      {
+        WiFi.begin((char*)ssid, (char*)pass);
+      } 
+      else 
+      {
+        WiFi.begin((char*)ssid);
+      }
+    }
+  }
+  else
+  {
+    Blynk.run();
+  }
 }
