@@ -17,8 +17,8 @@
   even if hardware resets or looses connection temporarily
 
   Project setup in the Blynk app:
-    Slider widget (0...100) on V0
-    Slider widget (0...100) on V2
+    Slider widget (0...1024) on V0
+    Value display (0...1024) on V2
     Button widget on digital pin (connected to an LED)
  *************************************************************/
 
@@ -43,7 +43,7 @@ BLYNK_CONNECTED() {
     Blynk.syncAll();
 
     // You can also update individual virtual pins like this:
-    //Blynk.syncVirtual(V0, V1, V4);
+    //Blynk.syncVirtual(V0, V2);
 
     isFirstConnect = false;
   }
@@ -55,9 +55,16 @@ BLYNK_CONNECTED() {
 
 BLYNK_WRITE(V0)
 {
-  int value = param.asInt();
-  Blynk.virtualWrite(V2, value);
+  //here you'll get latest slider value as result of syncAll().
+  int sliderValue0 = param.asInt();
 }
+
+BLYNK_WRITE(V2)
+{
+  //here you'll get uptime value as result of syncAll().
+  int uptime = param.asInt();
+}
+
 
 void setup()
 {
