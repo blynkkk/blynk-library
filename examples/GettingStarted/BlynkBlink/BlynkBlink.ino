@@ -4,7 +4,7 @@
  hardware out there.
 
  Docs, Tutorials, everything:  http://www.blynk.cc
- Github:                       http://github.com/blynkkk
+ Sketch generator:             http://examples.blynk.cc
  Blynk Community:              http://community.blynk.cc
  Follow Us:                    http://www.facebook.com/blynkapp
                                http://twitter.com/blynk_app
