@@ -6,6 +6,7 @@
 
     Downloads, docs, tutorials: http://www.blynk.cc
     Blynk community:            http://community.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
     Social networks:            http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
