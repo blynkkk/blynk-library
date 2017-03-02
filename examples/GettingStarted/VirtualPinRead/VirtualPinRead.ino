@@ -17,7 +17,7 @@
   This sketch shows how to read values from Virtual Pins
 
   App project setup:
-    Slider widget (0...100) on specified pin (V1 default)
+    Slider widget (0...100) on Virtual Pin V1
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -31,19 +31,13 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// Change this definition to read different Virtual Pins
-#define PIN V1
-
 // This function will be called every time Slider Widget
-// in Blynk app writes values to the specified Virtual Pin
-BLYNK_WRITE(PIN)
+// in Blynk app writes values to the Virtual Pin V1
+BLYNK_WRITE(V1)
 {
   int pinValue = param.asInt(); // assigning incoming value from pin V1 to a variable
-  // You can also use:
-  // String i = param.asStr();
-  // double d = param.asDouble();
-  Serial.print("Slider value is: ");
-  Serial.println(pinValue);
+  
+  // process received value
 }
 
 void setup()
