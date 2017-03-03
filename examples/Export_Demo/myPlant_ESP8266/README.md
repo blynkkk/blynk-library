@@ -4,11 +4,12 @@ Instruction for Blynk Demo App - **myPlant**.
 
 1. Install latest [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
-2. Download latest Blynk release package: [Blynk_Release_v0.4.0.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.4.0/Blynk_Release_v0.4.0.zip).
+2. Download latest Blynk release package: [Blynk_Release_v0.4.4.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.4.4/Blynk_Release_v0.4.4.zip).
    It contains 5 libraries, please copy them to Arduino Libraries folder. 
-   If you don’t know how to do this, please follow manual installation [guide](https://www.arduino.cc/en/Guide/Libraries#toc5).
+   If you don’t know how to do this, please follow manual installation [Arduino guide](https://www.arduino.cc/en/Guide/Libraries#toc5) or
+   [Blynk guide](https://github.com/blynkkk/blynk-library/releases).
    
-3. Open the Arduino IDE, then select in the menu: **File -> Preferences**.  
+3. Open the Arduino IDE, then select in the menu: **File -> Preferences** (**Arduino -> Preferences** for Mac).  
    Click on **Additional Boards Manager URLs** button and add this link:
    ```
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
@@ -122,6 +123,27 @@ Release the button. Device will be reset and you can start the provisioning proc
 
 # Troubleshooting
 
+## Arduino IDE download issue
+
+In step 4 you may see error ```Error downloading http://downloads.arduino.cc/packages/package_index.json```.
+Like this : 
+   
+   ![Error Download](/extras/docs/images/error_download_mac.png)
+   
+In order to fix you need to find folder ```Arduino15``` or ```.Arduino15``` and remove all files inside with ```package``` word in name.
+
+
+## Arduino IDE upload issue
+
+During sketch upload you may see next errors : 
+
+```
+error: espcomm_open failed
+error: espcomm_upload_mem failed
+```
+
+This means you have no drivers installed for. Follow [this](https://github.com/blynkkk/blynk-library/blob/master/examples/Export_Demo/myPlant_ESP8266/README.md#no-ports-appear-when-board-is-plugged-in).  
+
 ## LED issues
 
 If you are using NodeMCU, and your RGB LED shows incorrect colors (or doesn’t light-up at all), there is a chance that your LED is a “common anode” LED as shown on the image below:
@@ -136,7 +158,7 @@ In this case, you will have to:
 ## No ports appear, when board is plugged in
 
 For Windows or OS X you may need to install drivers [here](https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx) 
-or [here](http://www.ftdichip.com/Drivers/VCP.htm).
+or [here](http://www.ftdichip.com/Drivers/VCP.htm) or for Max [here](https://blog.sengotta.net/signed-mac-os-driver-for-winchiphead-ch340-serial-bridge/).
 
 For Ubuntu / linux, it may happen that the board is detected, but when you try flashing the board, 
 an error appears: ```Error opening serial port...```
