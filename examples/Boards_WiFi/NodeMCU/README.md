@@ -1,14 +1,13 @@
-Instruction for NodeMCU setup.
+# Instruction for NodeMCU setup.
 
 # Setting up Arduino IDE
 
 1. Install latest [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
 2. **Blynk library should be installed manually**.
-   Download latest Blynk library: [Blynk_Release_v0.4.4.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.4.4/Blynk_Release_v0.4.4.zip). 
-   Unzip it. This archive contains several libraries.
-   Copy them to  **sketchbook folder** of Arduino IDE.
-   To find exact **sketchbook folder** location, go to `File -> Preferences` (`Arduino -> Preferences` for Mac) top menu in Arduino IDE.
+   - Download latest Blynk library: [Blynk_Release_v0.4.4.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.4.4/Blynk_Release_v0.4.4.zip). 
+   - Unzip it. This archive contains several libraries.
+   - Copy them to  **sketchbook folder** of Arduino IDE. To find exact **sketchbook folder** location, go to `File -> Preferences` (`Arduino -> Preferences` for Mac) top menu in Arduino IDE.
    
    The structure of your sketchbook folder should look like this, along with your saved sketches:
    
@@ -32,7 +31,7 @@ Instruction for NodeMCU setup.
    Search for ```esp8266```, and install it:
    ![Tools -> Board -> Boards Manager](/extras/docs/images/boards_manager.png)
    
-   In case you see error ```Error downloading http://downloads.arduino.cc/packages/package_index.json``` like this : 
+   In case you see ```Error downloading http://downloads.arduino.cc/packages/package_index.json``` like this : 
       
       ![Error Download](/extras/docs/images/error_download_mac.png)
       
@@ -42,9 +41,24 @@ Instruction for NodeMCU setup.
 
 1. Open **File -> Examples -> Blynk -> Boards_WiFi -> NodeMCU**
 
+   ![File -> Examples -> Blynk -> Boards_WiFi -> NodeMCU](/extras/docs/images/nodeMCU_in_menu.png)
+
 2. In **Tools -> Board** menu, select **NodeMCU 1.0 (ESP-12E Module)**.
+
+   ![Tools -> Board](/extras/docs/images/nodemcu_board_type.png)
   
-3. Put your AUTH_TOKEN from Blynk app and your WiFi credentials.
+3. Put your auth token from Blynk app and your WiFi credentials in sketch : 
+
+   ```
+    // You should get Auth Token in the Blynk App.
+    // Go to the Project Settings (nut icon).
+    char auth[] = "YourAuthToken";
+
+    // Your WiFi credentials.
+    // Set password to "" for open networks.
+    char ssid[] = "YourNetworkName";
+    char pass[] = "YourPassword";
+   ```
 
 4. Click on **Verify** button and make sure that example compiled correctly:
 
