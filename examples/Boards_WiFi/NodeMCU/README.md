@@ -42,12 +42,8 @@
 1. Open **File -> Examples -> Blynk -> Boards_WiFi -> NodeMCU**
 
    ![File -> Examples -> Blynk -> Boards_WiFi -> NodeMCU](/extras/docs/images/nodeMCU_in_menu.png)
-
-2. In **Tools -> Board** menu, select **NodeMCU 1.0 (ESP-12E Module)**.
-
-   ![Tools -> Board](/extras/docs/images/nodemcu_board_type.png)
-  
-3. Put your auth token from Blynk app and your WiFi credentials in sketch : 
+   
+2. Put your auth token from Blynk app and your WiFi credentials in sketch : 
 
    ```
     // You should get Auth Token in the Blynk App.
@@ -60,13 +56,18 @@
     char pass[] = "YourPassword";
    ```
 
+3. In **Tools -> Board** menu, select **NodeMCU 1.0 (ESP-12E Module)**.
+
+   ![Tools -> Board](/extras/docs/images/nodemcu_board_type.png)
+
 4. Click on **Verify** button and make sure that example compiled correctly:
 
    ![Verify](/extras/docs/images/verify.png)
    
 5. Select the port of your board in **Tools -> Port** menu.  
    In **Tools -> Upload Speed**, select **115200** (higher values may also work for you).  
-   If you don't know how to select the port or you don't see any, check this [troubleshooting section](#how-to-pick-the-correct-port).
+   If you don't know how to select the port check this [troubleshooting section](#how-to-pick-the-correct-port) or 
+   if you don't see any ports, check this [troubleshooting section](#no-ports-appear-when-board-is-plugged-in).
 
 6. Click the **Upload** button. (You should see a progress bar in the console, followed by **Done uploading** message in the 
    status panel. After this process is finished, LED should start blinking blue: which means the board is waiting for configuration).
