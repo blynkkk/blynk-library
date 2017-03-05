@@ -72,9 +72,7 @@
 6. Click the **Upload** button. (You should see a progress bar in the console, followed by **Done uploading** message in the 
    status panel. After this process is finished, LED should start blinking blue: which means the board is waiting for configuration).
    
-The firmware was successfully loaded and is ready. 
-
-You can switch the board off and then on again. Imagine you just unboxed the new product. LED should be blinking blue.
+The firmware was successfully loaded and is ready. Now go to app and try to light on board LED (pin D4).
 
 # Troubleshooting
 
@@ -112,6 +110,8 @@ If you get this error, you need to set serial port permission. Open terminal, an
 ```bash
 sudo usermod -a -G dialout $USER
 ```
+
+When drivers are installed and you still don't see port try to unplug and plug USB for your NodeMCU board. It should help.
 
 **Note:** You will need to reboot (or just log out and log in) for this change to take effect.
 
