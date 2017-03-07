@@ -85,23 +85,12 @@ error: espcomm_open failed
 error: espcomm_upload_mem failed
 ```
 
-This means you have no drivers installed for. Follow [this](https://github.com/blynkkk/blynk-library/blob/master/examples/Export_Demo/myPlant_ESP8266/README.md#no-ports-appear-when-board-is-plugged-in).  
-
-## LED issues
-
-If you are using NodeMCU, and your RGB LED shows incorrect colors (or doesn’t light-up at all), there is a chance that your LED is a “common anode” LED as shown on the image below:
-
-![RGB](http://bildr.org/blog/wp-content/uploads/2011/01/RGBLEDs2.png)
-
-In this case, you will have to:
-
-  1. Connect the longest LED pin to the ```VCC``` instead of ```GND```.
-  2. Change ```BOARD_LED_INVERSE``` to ```true``` for your board in ```Settings.h``` tab
-  
+This means you have no drivers installed. Please follow next section.  
+ 
 ## No ports appear, when board is plugged in
 
 For Windows or OS X you may need to install drivers [here](https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx) 
-or [here](http://www.ftdichip.com/Drivers/VCP.htm) or for Max [here](https://blog.sengotta.net/signed-mac-os-driver-for-winchiphead-ch340-serial-bridge/).
+or [here](http://www.ftdichip.com/Drivers/VCP.htm) or for Mac [here](https://blog.sengotta.net/signed-mac-os-driver-for-winchiphead-ch340-serial-bridge/).
 
 For Ubuntu / linux, it may happen that the board is detected, but when you try flashing the board, 
 an error appears: ```Error opening serial port...```
