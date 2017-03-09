@@ -5,7 +5,7 @@
 1. Install latest [Arduino IDE](https://www.arduino.cc/en/Main/Software).
 
 2. **Blynk library should be installed manually**.
-   - Download latest Blynk library: [Blynk_Release_v0.4.4.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.4.4/Blynk_Release_v0.4.4.zip). 
+   - Download latest Blynk library: [Blynk_Release_v0.4.6.zip](https://github.com/blynkkk/blynk-library/releases/download/v0.4.6/Blynk_Release_v0.4.6.zip). 
    - Unzip it. This archive contains several libraries.
    - Copy them to  **sketchbook folder** of Arduino IDE. To find exact **sketchbook folder** location, go to `File -> Preferences` (`Arduino -> Preferences` for Mac) top menu in Arduino IDE.
    
