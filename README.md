@@ -19,7 +19,7 @@ If you like **Blynk** - give it a star, or fork it and contribute!
 Help Center: http://help.blynk.cc  
 Documentation: http://docs.blynk.cc/#blynk-firmware  
 Community Forum: http://community.blynk.cc  
-Examples Browser: http://examples.blynk.cc
+Examples Browser: http://examples.blynk.cc  
 Blynk for Business: http://www.blynk.io
 
 __________
