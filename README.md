@@ -11,14 +11,15 @@ If you like **Blynk** - give it a star, or fork it and contribute!
 [![GitHub forks](https://img.shields.io/github/forks/blynkkk/blynk-library.svg?style=social&label=Fork)](https://github.com/blynkkk/blynk-library/network)
 
 ## Download here:
-Library: https://github.com/blynkkk/blynk-library/releases/latest
+*Library:* https://github.com/blynkkk/blynk-library/releases/latest
 
-Smartphone Apps: [Google Play](https://play.google.com/store/apps/details?id=cc.blynk) / [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
+*Apps:* [Google Play](https://play.google.com/store/apps/details?id=cc.blynk) / [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
 
 ## Documentation
-Help Center: http://help.blynk.cc/  
-Blynk Docs: http://docs.blynk.cc/#blynk-firmware  
-Community support: http://community.blynk.cc
+Help Center: http://help.blynk.cc  
+Documentation: http://docs.blynk.cc/#blynk-firmware  
+Community Forum: http://community.blynk.cc  
+Examples Browser: http://examples.blynk.cc
 
 __________
 
@@ -47,8 +48,8 @@ You can easily apply any type of board/connection to all examples.
 
 ### Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
 
-Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).
-Please [see examples](/examples) for different connection types.
+Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).  
+Check out our Examples Browser: http://examples.blynk.cc
 
 __________
 
