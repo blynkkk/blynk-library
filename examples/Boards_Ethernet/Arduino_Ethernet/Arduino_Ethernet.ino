@@ -17,10 +17,8 @@
   This example code is in public domain.
 
  *************************************************************
-
   This example shows how to use Arduino Ethernet shield (W5100)
   to connect your project to Blynk.
-  Feel free to apply it to any other example. It's simple!
 
   NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
         DON'T use them in your sketch directly!
@@ -29,6 +27,7 @@
         by setting pin 4 to HIGH. Read more here:
         https://www.arduino.cc/en/Main/ArduinoEthernetShield
 
+  Feel free to apply it to any other example. It's simple!
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

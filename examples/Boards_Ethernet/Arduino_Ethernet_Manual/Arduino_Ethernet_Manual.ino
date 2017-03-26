@@ -27,6 +27,7 @@
         by setting pin 4 to HIGH. Read more here:
         https://www.arduino.cc/en/Main/ArduinoEthernetShield
 
+  Feel free to apply it to any other example. It's simple!
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

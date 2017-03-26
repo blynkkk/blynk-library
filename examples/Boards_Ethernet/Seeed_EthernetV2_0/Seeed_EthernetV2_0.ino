@@ -17,7 +17,6 @@
   This example code is in public domain.
 
  *************************************************************
-
   This example shows how to use Seeed Ethernet Shield V2.0 (W5200)
   to connect your project to Blynk.
 
@@ -28,7 +27,6 @@
   Note: This Hardware is not tested.
 
   Feel free to apply it to any other example. It's simple!
-
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

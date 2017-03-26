@@ -20,7 +20,6 @@
   This example shows how to use Intel Galileo with Blynk.
 
   Feel free to apply it to any other example. It's simple!
-
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

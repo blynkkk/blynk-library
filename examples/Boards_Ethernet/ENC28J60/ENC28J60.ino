@@ -29,6 +29,7 @@
    SO  -- D12
    INT -- D2
 
+  Feel free to apply it to any other example. It's simple!
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
