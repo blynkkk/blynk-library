@@ -22,6 +22,8 @@
   =>
 
   Requires Energia IDE: http://energia.nu/download/
+
+  Feel free to apply it to any other example. It's simple!
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

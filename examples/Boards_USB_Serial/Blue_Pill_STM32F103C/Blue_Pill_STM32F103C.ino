@@ -27,6 +27,7 @@
   Note: You may need to wait up to 30 seconds after board starts,
         to allow USB serial to initialize completely.
 
+  Feel free to apply it to any other example. It's simple!
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
