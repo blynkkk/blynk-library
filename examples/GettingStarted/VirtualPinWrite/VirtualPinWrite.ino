@@ -15,7 +15,9 @@
 
   Blynk library is licensed under MIT license
   This example code is in public domain.
+
  *************************************************************
+
   This sketch shows how to write values to Virtual Pins
   WARNING :
   For this example you'll need SimpleTimer library:
@@ -38,7 +40,6 @@
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
-
 
 SimpleTimer timer;
 
