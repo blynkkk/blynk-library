@@ -127,6 +127,8 @@
         #define BLYNK_INFO_DEVICE  "Particle Ethernet"
         #elif PLATFORM_ID==10
         #define BLYNK_INFO_DEVICE  "Particle Electron"
+        #elif PLATFORM_ID==31
+        #define BLYNK_INFO_DEVICE  "Particle RPi"
         #elif PLATFORM_ID==82
         #define BLYNK_INFO_DEVICE  "Digistump Oak"
         #elif PLATFORM_ID==88
