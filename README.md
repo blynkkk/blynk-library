@@ -3,7 +3,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/issues)
 [![Build Status](https://img.shields.io/travis/blynkkk/blynk-library.svg)](https://travis-ci.org/blynkkk/blynk-library)
-[![GitHub wiki](https://img.shields.io/badge/Wiki-available-brightgreen.svg)](https://github.com/blynkkk/blynk-library/wiki)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blynkkk/blynk-library/blob/master/LICENSE)
 
 If you like **Blynk** - give it a star, or fork it and contribute! 
