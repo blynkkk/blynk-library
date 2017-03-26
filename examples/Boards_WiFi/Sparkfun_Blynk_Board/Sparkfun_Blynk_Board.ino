@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -19,14 +22,17 @@
   Note: This requires ESP8266 support package:
     https://github.com/esp8266/Arduino
 
-  NOTE: You can select NodeMCU 1.0 (compatible board)
+  You can select NodeMCU 1.0 (compatible board)
   in the Tools -> Board menu
 
   Change WiFi ssid, pass, and Blynk auth token to run :)
-
+  Feel free to apply it to any other example. It's simple!
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
@@ -41,8 +47,13 @@ char pass[] = "YourPassword";
 
 void setup()
 {
+  // Debug console
   Serial.begin(9600);
+
   Blynk.begin(auth, ssid, pass);
+  // You can also specify server:
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
 }
 
 void loop()

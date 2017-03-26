@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -18,10 +21,12 @@
   to connect your project to Blynk.
 
   Feel free to apply it to any other example. It's simple!
-
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
 #include <BlynkSimpleRedBear_Duo.h>
 
 // You should get Auth Token in the Blynk App.
@@ -39,6 +44,7 @@ SYSTEM_MODE(MANUAL);
 
 void setup()
 {
+  // Debug console
   Serial.begin(9600);
 
   delay(5000);

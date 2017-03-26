@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -24,10 +27,12 @@
 
   Change WiFi ssid, pass, and Blynk auth token to run :)
   Feel free to apply it to any other example. It's simple!
-
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
 #include <ESP8266_Lib.h>
 #include <BlynkSimpleShieldEsp8266.h>
 
@@ -54,9 +59,11 @@ ESP8266 wifi(&EspSerial);
 
 void setup()
 {
-  // Set console baud rate
+  // Debug console
   Serial.begin(9600);
+
   delay(10);
+
   // Set ESP8266 baud rate
   EspSerial.begin(ESP8266_BAUD);
   delay(10);

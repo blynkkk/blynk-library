@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -26,10 +29,12 @@
 
   Change WiFi ssid, pass, and Blynk auth token to run :)
   Feel free to apply it to any other example. It's simple!
-
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
 #include <WiFlyHQ.h>
 #include <BlynkSimpleWiFly.h>
 
@@ -51,8 +56,11 @@ WiFly wifly;
 
 void setup()
 {
-  Serial.begin(9600);       // Set console baud rate
+  // Debug console
+  Serial.begin(9600);
+
   delay(10);
+
   WiFlySerial.begin(9600);  // Set your RN-XV baud rate
   delay(10);
 

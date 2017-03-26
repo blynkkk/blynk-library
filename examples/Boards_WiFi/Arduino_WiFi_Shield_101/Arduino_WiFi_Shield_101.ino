@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -21,10 +24,12 @@
     from http://librarymanager/all#WiFi101
 
   Feel free to apply it to any other example. It's simple!
-
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
 #include <SPI.h>
 #include <WiFi101.h>
 #include <BlynkSimpleWiFiShield101.h>
@@ -40,11 +45,13 @@ char pass[] = "YourPassword";
 
 void setup()
 {
+  // Debug console
   Serial.begin(9600);
+
   Blynk.begin(auth, ssid, pass);
-  // Or specify server using one of those commands:
+  // You can also specify server:
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8442);
-  //Blynk.begin(auth, ssid, pass, server_ip, port);
+  //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8442);
 }
 
 void loop()
