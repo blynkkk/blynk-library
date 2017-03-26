@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -14,8 +17,9 @@
   This example code is in public domain.
 
  *************************************************************
-  This example shows how to use a tiny ATtiny85
-  to connect your project to Blynk.
+  =>
+  =>          USB HOWTO: http://tiny.cc/BlynkUSB
+  =>
 
   Note: This requires ATtiny support package:
     https://github.com/damellis/attiny
@@ -29,14 +33,16 @@
              GND  4|    |5  PB0 (D 0) pwm0
                    +----+
 
- *************************************************************
-             USB HOWTO: http://tiny.cc/BlynkUSB
  *************************************************************/
+
 #include <SoftwareSerial.h>
 SoftwareSerial DebugSerial(1, 2); // RX, TX
 SoftwareSerial SwSerial(3, 4);
 
-#define BLYNK_PRINT DebugSerial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT DebugSerial
+
+
 #include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.

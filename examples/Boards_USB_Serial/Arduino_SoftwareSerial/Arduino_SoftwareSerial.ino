@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -14,23 +17,23 @@
   This example code is in public domain.
 
  *************************************************************
-  This example shows how to use Software Serial
-  to connect your project to Blynk.
-  Be sure to check ordinary Serial example first!!!
-
- *************************************************************
-             USB HOWTO: http://tiny.cc/BlynkUSB
+  =>
+  =>          USB HOWTO: http://tiny.cc/BlynkUSB
+  =>
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
-#include <BlynkSimpleStream.h>
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
 
+
+#include <BlynkSimpleStream.h>
 #include <SoftwareSerial.h>
-SoftwareSerial SwSerial(2, 3); // RX, TX
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
+
+SoftwareSerial SwSerial(2, 3); // RX, TX
 
 void setup()
 {
