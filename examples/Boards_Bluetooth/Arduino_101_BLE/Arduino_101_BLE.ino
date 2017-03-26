@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -14,20 +17,17 @@
   This example code is in public domain.
 
  *************************************************************
-
-  This example shows how to use Arduino 101 CurieBLE
-  to connect your project to Blynk.
-
   Note: This requires CurieBLE library
     from http://librarymanager/all#CurieBLE
 
-  NOTE: BLE support is in beta!
-
+  Warning: Bluetooth support is in beta!
  *************************************************************/
 
 //#define BLYNK_USE_DIRECT_CONNECT
 
+/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
+
 
 #include <BlynkSimpleCurieBLE.h>
 #include <CurieBLE.h>
@@ -38,8 +38,11 @@ char auth[] = "YourAuthToken";
 
 BLEPeripheral  blePeripheral;
 
-void setup() {
+void setup()
+{
+  // Debug console
   Serial.begin(9600);
+
   delay(1000);
 
   blePeripheral.setLocalName("Blynk");
@@ -53,8 +56,9 @@ void setup() {
   Serial.println("Waiting for connections...");
 }
 
-void loop() {
-  Blynk.run();
+void loop()
+{
   blePeripheral.poll();
+  Blynk.run();
 }
 
