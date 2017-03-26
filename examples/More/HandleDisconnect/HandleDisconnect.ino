@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -19,7 +22,10 @@
  
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
@@ -38,7 +44,9 @@ int connectionDelay = 5000; // try to reconnect every 5 seconds
 
 void setup()
 {
+  // Debug console
   Serial.begin(9600);
+
   Blynk.begin(auth, ssid, pass);
 }
 

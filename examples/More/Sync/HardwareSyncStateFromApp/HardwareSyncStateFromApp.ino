@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -14,6 +17,7 @@
   This example code is in public domain.
 
  *************************************************************
+
   You can synchronize the state of widgets with hardware states,
   even if hardware resets or looses connection temporarily
 
@@ -25,6 +29,7 @@
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
+
 
 #include <SPI.h>
 #include <Ethernet.h>
@@ -56,16 +61,16 @@ BLYNK_CONNECTED() {
 
 BLYNK_WRITE(V0)
 {
-  //here you'll get latest slider value as result of syncAll().
+  // Use of syncAll() will cause this function to be called
+  // Parameter holds last slider value
   int sliderValue0 = param.asInt();
 }
 
 BLYNK_WRITE(V2)
 {
-  //here you'll get uptime value as result of syncAll().
+  // You'll get uptime value here as result of syncAll()
   int uptime = param.asInt();
 }
-
 
 void setup()
 {
