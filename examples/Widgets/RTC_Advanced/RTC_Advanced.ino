@@ -18,15 +18,11 @@
 
  *************************************************************
 
-  This example shows how LOW/HIGH event may be triggered from
-  Blynk Server to Arduino at specific time.
-
-  Timer widget works for ANALOG and DIGITAL pins also.
-  In this case you don't need to write code.
-  Blynk handles that for you.
+  Blynk can provide your device with time data, like an RTC.
+  Please note that the accuracy of this method is up to several seconds.
 
   App project setup:
-    Timer widget attached to V5 and running project.
+    RTC widget (no pin required)
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -36,19 +32,23 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
+#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-BLYNK_WRITE(V5)
-{
-  // You'll get HIGH/1 at startTime and LOW/0 at stopTime.
-  // this method will be triggered every day
-  // until you remove widget or stop project or
-  // clean stop/start fields of widget
-  Serial.print("Got a value: ");
-  Serial.println(param.asStr());
+SimpleTimer timer;
+
+void requestTime() {
+  Blynk.sendInternal("rtc", "sync");
+}
+
+BLYNK_WRITE(InternalPinRTC) {
+  long t = param.asLong();
+  Serial.print("Unix time: ");
+  Serial.print(t);
+  Serial.println();
 }
 
 void setup()
@@ -57,10 +57,13 @@ void setup()
   Serial.begin(9600);
 
   Blynk.begin(auth);
+
+  timer.setInterval(10000L, requestTime);
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run();
 }
 

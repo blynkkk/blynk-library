@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -14,12 +17,14 @@
   This example code is in public domain.
 
  *************************************************************
+
   App project setup:
     GPS Stream widget on V1.
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
+
 
 #include <SPI.h>
 #include <Ethernet.h>
