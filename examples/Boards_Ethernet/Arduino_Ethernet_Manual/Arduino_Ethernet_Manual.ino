@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -26,7 +29,10 @@
 
  *************************************************************/
 
-#define BLYNK_PRINT Serial    // Comment this out to disable prints and save space
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
@@ -49,10 +55,12 @@ IPAddress subnet_mask(255, 255, 255,   0);
 
 void setup()
 {
+  // Debug console
+  Serial.begin(9600);
+
   pinMode(SDCARD_CS, OUTPUT);
   digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
 
-  Serial.begin(9600);
   Blynk.begin(auth, server_ip, 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
   // Or like this:
   //Blynk.begin(auth, "blynk-cloud.com", 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
