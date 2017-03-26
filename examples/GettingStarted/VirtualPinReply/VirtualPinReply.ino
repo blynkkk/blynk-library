@@ -4,7 +4,7 @@
   You can easily build graphic interfaces for all your
   projects by simply dragging and dropping widgets.
 
-    Downloads, docs, tutorials: http://www.blynk.cc    
+    Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
     Social networks:            http://www.fb.com/blynkapp
@@ -14,7 +14,7 @@
   This example code is in public domain.
 
  *************************************************************
-  This example shows how to send requested values to the Blynk App 
+  This example shows how to send requested values to the Blynk App
 
   Project setup in the app:
     Value Display widget attached to V5. Set any reading
