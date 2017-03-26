@@ -79,8 +79,12 @@ env:
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushDataOnRequest
     - PLATFORMIO_CI_SRC=examples/GettingStarted/Servo
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/VirtualPinRead
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/VirtualPinReply
+    - PLATFORMIO_CI_SRC=examples/GettingStarted/VirtualPinWrite
     - PLATFORMIO_CI_SRC=examples/More/DHT11
     - PLATFORMIO_CI_SRC=examples/More/FormatString
+    - PLATFORMIO_CI_SRC=examples/More/HandleDisconnect PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/More/NeoPixel
     - PLATFORMIO_CI_SRC=examples/More/PrintAllVirtual
     - PLATFORMIO_CI_SRC=examples/More/ServerAsDataStorage/ServerAsDataStorage_MultiValue
@@ -110,7 +114,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification/PushNotification_Button
     - PLATFORMIO_CI_SRC=examples/Widgets/PushNotification/PushNotification_Interval
     - PLATFORMIO_CI_SRC=examples/Widgets/RTC
-    - PLATFORMIO_CI_SRC=examples/Widgets/SDcard
+    - PLATFORMIO_CI_SRC=examples/Widgets/RTC_Advanced
     - PLATFORMIO_CI_SRC=examples/Widgets/Table/Table_Advanced
     - PLATFORMIO_CI_SRC=examples/Widgets/Table/Table_Simple
     - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
