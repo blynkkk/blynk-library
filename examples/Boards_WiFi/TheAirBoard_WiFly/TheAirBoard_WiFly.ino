@@ -1,32 +1,32 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Sketch generator:           http://examples.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- * This example shows how to use AirBoard + RN-XV WiFly module
- * to connect your project to Blynk.
- *
- * For this example you need WiFlyHQ library:
- *   https://github.com/harlequin-tech/WiFlyHQ
- *
- * Note: Be sure to read this: http://www.theairboard.cc/quick-start/
- *       WiFly firmware version 4.41 or later is preferred.
- *
- * Change WiFi ssid, pass, and Blynk auth token to run :)
- * Feel free to apply it to any other example. It's simple!
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
+
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+  This example shows how to use AirBoard + RN-XV WiFly module
+  to connect your project to Blynk.
+
+  For this example you need WiFlyHQ library:
+    https://github.com/harlequin-tech/WiFlyHQ
+
+  Note: Be sure to read this: http://www.theairboard.cc/quick-start/
+        WiFly firmware version 4.41 or later is preferred.
+
+  Change WiFi ssid, pass, and Blynk auth token to run :)
+  Feel free to apply it to any other example. It's simple!
+
+ *************************************************************/
 
 #include <SoftwareSerial.h>
 SoftwareSerial DebugSerial(10, 11); // RX, TX

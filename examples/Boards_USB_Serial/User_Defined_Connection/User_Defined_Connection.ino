@@ -1,34 +1,34 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Sketch generator:           http://examples.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- *
- * This is an example how to create a custom, user-defined connection type.
- * Here, we create similar to built-in USB connectivity manually.
- *
- * Using this method you will be able to:
- *  - Integrate a custom connectivity shield
- *  - Roll your own connection type
- *  - Make really cool low-power devices
- *  - Handle connection status
- *
- * Note: If you create a working example for your hardware/environment,
- *       please send it to us for investigation!
- *       We may decide to include it into "simple" examples :)
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
+
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+
+  This is an example how to create a custom, user-defined connection type.
+  Here, we create similar to built-in USB connectivity manually.
+
+  Using this method you will be able to:
+   - Integrate a custom connectivity shield
+   - Roll your own connection type
+   - Make really cool low-power devices
+   - Handle connection status
+
+  Note: If you create a working example for your hardware/environment,
+        please send it to us for investigation!
+        We may decide to include it into "simple" examples :)
+
+ *************************************************************/
 
 #include <BlynkSimpleUserDefined.h>
 
