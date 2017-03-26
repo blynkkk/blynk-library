@@ -108,7 +108,7 @@ public:
     int getStopSecond()   const { return mStop.second(); }
 
     const char* getTZ()   const { return mTZ; }
-    uint32_t getTZ_Offset() const { return mTZ_Offset; }
+    int32_t getTZ_Offset() const { return mTZ_Offset; }
 
     bool isWeekdaySelected(int day) const {
         return BlynkBitRead(mWeekdays, (day - 1) % 7);
@@ -118,7 +118,7 @@ private:
     BlynkTime mStart;
     BlynkTime mStop;
     char      mTZ[32];
-    uint32_t  mTZ_Offset;
+    int32_t   mTZ_Offset;
 
     TimeMode  mStopMode;
     TimeMode  mStartMode;
