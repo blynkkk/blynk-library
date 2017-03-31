@@ -31,12 +31,7 @@
 #define SIMPLETIMER_H
 #define SimpleTimer BlynkTimer
 
-
-#if defined(ARDUINO) && ARDUINO >= 100
-#include <Arduino.h>
-#else
-#include <WProgram.h>
-#endif
+typedef bool boolean;
 
 typedef void (*timer_callback)(void);
 
