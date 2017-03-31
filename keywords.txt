@@ -2,6 +2,7 @@
 # Data types (KEYWORD1)
 #######################################
 Blynk	KEYWORD1
+BlynkTimer	KEYWORD1
 WidgetBridge	KEYWORD1
 WidgetLCD	KEYWORD1
 WidgetLED	KEYWORD1
