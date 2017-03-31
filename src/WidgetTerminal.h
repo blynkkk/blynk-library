@@ -77,7 +77,7 @@ public:
 #endif
 
 private:
-    uint8_t mOutBuf[BLYNK_MAX_SENDBYTES];
+    uint8_t mOutBuf[64];
     uint8_t mOutQty;
 };
 

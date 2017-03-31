@@ -3,36 +3,36 @@
 [![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/issues)
 [![Build Status](https://img.shields.io/travis/blynkkk/blynk-library.svg)](https://travis-ci.org/blynkkk/blynk-library)
-[![GitHub wiki](https://img.shields.io/badge/Wiki-available-brightgreen.svg)](https://github.com/blynkkk/blynk-library/wiki)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blynkkk/blynk-library/blob/master/LICENSE)
 
 If you like **Blynk** - give it a star, or fork it and contribute! 
 [![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg?style=social&label=Star)](https://github.com/blynkkk/blynk-library/stargazers) 
 [![GitHub forks](https://img.shields.io/github/forks/blynkkk/blynk-library.svg?style=social&label=Fork)](https://github.com/blynkkk/blynk-library/network)
 
-## Download
-https://github.com/blynkkk/blynk-library/releases/latest
+## Download here:
+**Library:** https://github.com/blynkkk/blynk-library/releases/latest
+
+**Apps:** [Google Play](https://play.google.com/store/apps/details?id=cc.blynk) / [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
 
 ## Documentation
-Blynk Docs: http://docs.blynk.cc/#blynk-firmware  
-Wiki: https://github.com/blynkkk/blynk-library/wiki
+Help Center: http://help.blynk.cc  
+Documentation: http://docs.blynk.cc/#blynk-firmware  
+Community Forum: http://community.blynk.cc  
+Examples Browser: http://examples.blynk.cc  
+Blynk for Business: http://www.blynk.io
 
 __________
 
 # What is Blynk?
 Blynk is a platform with iOS and Android apps to control Arduino, Raspberry Pi and the likes over the Internet.
 You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets.
-If you need more information, please follow these links:
+
+![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
+![Widgets Box](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/widgets_box.png)
 
 * Social: [Webpage](http://www.blynk.cc) / [Facebook](http://www.fb.com/blynkapp) / [Twitter](http://twitter.com/blynk_app) / [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)
-* Join our [Blynk community forum](http://community.blynk.cc)
-* Smartphone Apps: [Google Play](https://play.google.com/store/apps/details?id=cc.blynk) / [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)
-* Deploy your own [Blynk Server](https://github.com/blynkkk/blynk-server)
 
-![Dashboard settings](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash_settings.png)
-![Widgets Box](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/widgets_box.png)
-![Button edit](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/button_edit.png)
-![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
+* Deploy your own [Blynk Server](https://github.com/blynkkk/blynk-server)
 
 ### Quickstart: Arduino + Ethernet shield
 
@@ -48,8 +48,8 @@ You can easily apply any type of board/connection to all examples.
 
 ### Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
 
-Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).
-Please [see examples](/examples) for different connection types.
+Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).  
+Check out our Examples Browser: http://examples.blynk.cc
 
 __________
 

@@ -11,6 +11,9 @@
 #ifndef BlynkSimpleUserManaged_h
 #define BlynkSimpleUserManaged_h
 
+#warning "This user-defined connection is now deprecated."
+#warning "Please use https://github.com/blynkkk/blynk-library/tree/master/examples/More/ArduinoClient examples"
+
 #ifndef BLYNK_INFO_CONNECTION
 #define BLYNK_INFO_CONNECTION "custom"
 #endif

@@ -1,4 +1,7 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
@@ -14,53 +17,53 @@
   This example code is in public domain.
 
  *************************************************************
-  Browse SD card from phone App
+
+  Blynk can provide your device with time data, like an RTC.
+  Please note that the accuracy of this method is up to several seconds.
 
   App project setup:
-    SD widget on V1
+    RTC widget (no pin required)
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SD.h>
-#include <WidgetSD.h>
+#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-WidgetSD sd;
+SimpleTimer timer;
 
-BLYNK_ATTACH_WIDGET(sd, V1)
+void requestTime() {
+  Blynk.sendInternal("rtc", "sync");
+}
+
+BLYNK_WRITE(InternalPinRTC) {
+  long t = param.asLong();
+  Serial.print("Unix time: ");
+  Serial.print(t);
+  Serial.println();
+}
 
 void setup()
 {
+  // Debug console
   Serial.begin(9600);
 
-  // Arduino Ethernet shield: pin 4
-  // Adafruit SD shields and modules: pin 10
-  // Sparkfun SD shield: pin 8
-  const int sdChipSelect = 4;
-
-  // Pin 10 (or 53 on Mega) should stay output - read SD examples for details
-  pinMode(SS, OUTPUT);
-
-  // Disable the W5100 and init SD
-  digitalWrite(10, HIGH);
-  if (!SD.begin(sdChipSelect)) {
-    BLYNK_FATAL("SD init failed!");
-  }
-
-  // Init Ethernet & Blynk
   Blynk.begin(auth);
+
+  timer.setInterval(10000L, requestTime);
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run();
 }
 

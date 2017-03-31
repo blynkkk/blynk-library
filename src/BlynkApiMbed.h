@@ -1,5 +1,5 @@
 /**
- * @file       BlynkApiArduino.h
+ * @file       BlynkApiMbed.h
  * @author     Volodymyr Shymanskyy
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef BlynkApiArduino_h
-#define BlynkApiArduino_h
+#ifndef BlynkApiMbed_h
+#define BlynkApiMbed_h
 
 #include "mbed.h"
 
