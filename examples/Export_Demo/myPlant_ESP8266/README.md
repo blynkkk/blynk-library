@@ -14,11 +14,11 @@ Instruction for Blynk Demo App - **myPlant**.
    ```
    http://arduino.esp8266.com/stable/package_esp8266com_index.json
    ```
-   ![File -> Preferences](/extras/docs/images/file_preferences.png)
+   ![File -> Preferences](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/file_preferences.png)
    
 4. In the Arduino IDE menu open: **Tools -> Board -> Boards Manager**.  
    Search for ```esp8266```, and install it:
-   ![Tools -> Board -> Boards Manager](/extras/docs/images/boards_manager.png)
+   ![Tools -> Board -> Boards Manager](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/boards_manager.png)
    
 # Uploading Blynk Demo App example
 
@@ -31,7 +31,7 @@ Instruction for Blynk Demo App - **myPlant**.
 
 4. Click on **Verify** button and make sure that example compiled correctly:
 
-   ![Verify](/extras/docs/images/verify.png)
+   ![Verify](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/verify.png)
    
 5. Select the port of your board in **Tools -> Port** menu.  
    In **Tools -> Upload Speed**, select **115200** (higher values may also work for you).  
@@ -55,17 +55,17 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue. It means that at this moment the board acts as an Access Point and broadcasts it's own WiFi network
    * In the app click **Begin** to start device provisioning:
    
-   ![Step 1](/master/extras/docs/images/provisioning_start.png)
+   ![Step 1](/masterhttps://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/provisioning_start.png)
    
    * Choose the WiFi SSID you would like your device be connected to and input the password for it. It can be your home WiFi network.
     
    **Note**: you may be asked for a permission to access GPS. It's a regular Android OS permission to get the hardware identifiers during scanning for WiFi networks.
    
-   ![Step 2](/extras/docs/images/provisioning_choose_network.png)
+   ![Step 2](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/provisioning_choose_network.png)
    
    * Choose **Blynk myPlant** device in the list of networks. This is the board which will be configured. 
    
-   ![Step 3](/extras/docs/images/provisioning_connect.png)
+   ![Step 3](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/provisioning_connect.png)
    
    Now your smartphone is connected to the Access Point created by the device.
    You should see that status LED is blinking blue, but slower. Now the provisioning process starts.
@@ -84,31 +84,31 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    
    * Click **DONE**: 
    
-   ![Step 4](/extras/docs/images/provisioning_done.png)
+   ![Step 4](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/provisioning_done.png)
 
 3. The app is ready to be used.
    
-   ![App Ready](/extras/docs/images/demo_app.png)
+   ![App Ready](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/demo_app.png)
    
    **Note:** This is a simulation of a plant watering device. The app is communicating with the hardware, but the data is not real.
    
 # RGB LED status indication
 
-![0](/extras/docs/images/states/0.png)  Fast Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
+![0](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/0.png)  Fast Blinking Blue: WAIT_CONFIG mode - Device acts as an Access Point (broadcasts it's own WiFi network). It's waiting for the app to pass the required information
 
-![1](/extras/docs/images/states/1.png)  CONFIGURING mode - device is getting the data from the smartphone
+![1](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/1.png)  CONFIGURING mode - device is getting the data from the smartphone
 
-![2](/extras/docs/images/states/2.png)  Blinking Blynk Green: CONNECTING_NET mode - device is connecting to the WiFi network
+![2](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/2.png)  Blinking Blynk Green: CONNECTING_NET mode - device is connecting to the WiFi network
 
-![3](/extras/docs/images/states/3.png)  Fast Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
+![3](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/3.png)  Fast Blinking Blynk Green: CONNECTING_CLOUD - device is trying to connect to Blynk Cloud
 
-![4](/extras/docs/images/states/4.png)  Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
+![4](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/4.png)  Breathing Blynk Green: RUNNING - device successfully connected to Blynk Cloud
 
-![6](/extras/docs/images/states/6.png)  Blinking Red: ERROR mode
+![6](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/6.png)  Blinking Red: ERROR mode
 
-![7](/extras/docs/images/states/7.png)  Breathing White - confirming resetting the board configuration
+![7](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/7.png)  Breathing White - confirming resetting the board configuration
 
-![8](/extras/docs/images/states/8.png)  Blinking White - board configuration was reset
+![8](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/states/8.png)  Blinking White - board configuration was reset
 
 # Resetting the board
 
@@ -128,7 +128,7 @@ Release the button. Device will be reset and you can start the provisioning proc
 In step 4 you may see error ```Error downloading http://downloads.arduino.cc/packages/package_index.json```.
 Like this : 
    
-   ![Error Download](/extras/docs/images/error_download_mac.png)
+   ![Error Download](https://github.com/blynkkk/blynkkk.github.io/tree/master/images/demo/error_download_mac.png)
    
 In order to fix you need to find folder ```Arduino15``` or ```.Arduino15``` and remove all files inside with ```package``` word in name.
 
