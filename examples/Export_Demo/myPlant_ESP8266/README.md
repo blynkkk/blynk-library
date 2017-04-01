@@ -55,7 +55,7 @@ You can switch the board off and then on again. Imagine you just unboxed the new
    * Make sure your hardware is powered up (with the battery or USB cable). Status LED should be blinking blue. It means that at this moment the board acts as an Access Point and broadcasts it's own WiFi network
    * In the app click **Begin** to start device provisioning:
    
-   ![Step 1](/masterhttps://raw.githubusercontent.com/blynkkk/blynkkk.github.io/master/images/demo/provisioning_start.png)
+   ![Step 1](https://raw.githubusercontent.com/blynkkk/blynkkk.github.io/master/images/demo/provisioning_start.png)
    
    * Choose the WiFi SSID you would like your device be connected to and input the password for it. It can be your home WiFi network.
     
