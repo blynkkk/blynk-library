@@ -27,11 +27,11 @@
 #ifndef BLYNKTIMER_H
 #define BLYNKTIMER_H
 
+#include <Blynk/BlynkDebug.h>
+
 // Replace SimpleTimer
 #define SIMPLETIMER_H
 #define SimpleTimer BlynkTimer
-
-typedef bool boolean;
 
 typedef void (*timer_callback)(void);
 
@@ -69,7 +69,7 @@ public:
     void restartTimer(int numTimer);
 
     // returns true if the specified timer is enabled
-    boolean isEnabled(int numTimer);
+    bool isEnabled(int numTimer);
 
     // enables the specified timer
     void enable(int numTimer);
@@ -113,7 +113,7 @@ private:
     int numRuns[MAX_TIMERS];
 
     // which timers are enabled
-    boolean enabled[MAX_TIMERS];
+    bool enabled[MAX_TIMERS];
 
     // deferred function call (sort of) - N.B.: this array is only used in run()
     int toBeCalled[MAX_TIMERS];
