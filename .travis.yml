@@ -140,7 +140,6 @@ install:
     # http://platformio.org/lib/show/28/SPI4Teensy3
     # http://platformio.org/lib/show/91/UIPEthernet
     # http://platformio.org/lib/show/418/WildFireCore
-    # http://platformio.org/lib/show/419/SimpleTimer
     # http://platformio.org/lib/show/420/WildFire-CC3000
     # http://platformio.org/lib/show/65/WiFlyHQ
     # http://platformio.org/lib/show/44/Time
@@ -153,7 +152,7 @@ install:
     # http://platformio.org/lib/show/1285/Timer5
     # http://platformio.org/lib/show/1287/TinyGSM
 
-    - platformio lib -g install 17 28 91 418 419 420 65 44 31 19 299 259 177 1192 1285 1287
+    - platformio lib -g install 17 28 91 418 420 65 44 31 19 299 259 177 1192 1285 1287
     - platformio lib -g install https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build
