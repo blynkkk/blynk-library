@@ -44,12 +44,12 @@ WiFiServer wifiServer(8442);
 WiFiClient wifiClient;
 
 // This function tries to reconnect to WiFi network
-void connectWiFi() {  
+void connectWiFi() {
   Serial.print("Configuring access point...");
 
-  if(pass && strlen(pass)){
+  if (pass && strlen(pass)) {
     WiFi.softAP((char*)ssid, (char*)pass);
-  } else{
+  } else {
     WiFi.softAP((char*)ssid);
   }
 
@@ -66,7 +66,7 @@ void setup() {
 
   connectWiFi();
 }
- 
+
 void loop() {
   // If thereis some client
   wifiClient = wifiServer.available();

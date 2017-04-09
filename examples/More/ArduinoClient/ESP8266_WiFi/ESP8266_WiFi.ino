@@ -4,7 +4,7 @@
   You can easily build graphic interfaces for all your
   projects by simply dragging and dropping widgets.
 
-    Downloads, docs, tutorials: http://www.blynk.cc    
+    Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
     Follow us:                  http://www.fb.com/blynkapp
@@ -53,7 +53,7 @@ void connectWiFi()
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  if(pass && strlen(pass)) {
+  if (pass && strlen(pass)) {
     WiFi.begin((char*)ssid, (char*)pass);
   } else {
     WiFi.begin((char*)ssid);
@@ -70,14 +70,14 @@ void setup()
 {
   // Debug console
   Serial.begin(9600);
-  
+
   connectWiFi();
-  
+
   connectBlynk();
-  
+
   Blynk.begin(wifiClient, auth);
 }
- 
+
 void loop()
 {
   // Reconnect WiFi
@@ -91,7 +91,7 @@ void loop()
     connectBlynk();
     return;
   }
-  
+
   Blynk.run();
 }
 
