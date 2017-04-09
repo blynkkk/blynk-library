@@ -10,7 +10,7 @@
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
@@ -22,12 +22,6 @@
 
   App project setup:
     LED widget on V3
-
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
-    http://playground.arduino.cc/Code/SimpleTimer
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -37,7 +31,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -48,7 +41,7 @@ const int btnPin = 1;
 
 WidgetLED led3(V3);
 
-SimpleTimer timer;
+BlynkTimer timer;
 
 // V3 LED Widget represents the physical button state
 boolean btnState = false;

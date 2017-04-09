@@ -10,7 +10,7 @@
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
@@ -27,10 +27,7 @@
     Value Display widget on V2
 
   WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-
-  And also this Time keeping library:
+  For this example you'll need Time keeping library:
     https://github.com/PaulStoffregen/Time
 
   This code is based on an example from the Time library:
@@ -44,7 +41,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
 #include <TimeLib.h>
 #include <WidgetRTC.h>
 
@@ -52,7 +48,7 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-SimpleTimer timer;
+BlynkTimer timer;
 
 WidgetRTC rtc;
 

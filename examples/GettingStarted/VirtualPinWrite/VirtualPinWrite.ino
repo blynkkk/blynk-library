@@ -10,7 +10,7 @@
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
@@ -19,11 +19,11 @@
  *************************************************************
 
   This sketch shows how to write values to Virtual Pins
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  Visit this page for more information:
+
+  NOTE:
+  BlynkTimer provides SimpleTimer functionality:
     http://playground.arduino.cc/Code/SimpleTimer
+
   App project setup:
     Value Display widget attached to Virtual Pin V5
  *************************************************************/
@@ -35,13 +35,12 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-SimpleTimer timer;
+BlynkTimer timer;
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
@@ -67,6 +66,6 @@ void setup()
 void loop()
 {
   Blynk.run();
-  timer.run(); // Initiates SimpleTimer
+  timer.run(); // Initiates BlynkTimer
 }
 

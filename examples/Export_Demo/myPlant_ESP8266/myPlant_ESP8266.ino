@@ -73,8 +73,7 @@ void loop() {
  *
  **************************************************************/
 
-#include <SimpleTimer.h>
-SimpleTimer timer; // Initiating timer to perform repeating event
+BlynkTimer timer; // Initiating timer to perform repeating event
 
 static int sensorSoilMoisture = 60;
 static int sensorAirHumidity = 50;

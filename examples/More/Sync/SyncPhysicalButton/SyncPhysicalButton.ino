@@ -10,7 +10,7 @@
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
@@ -20,10 +20,6 @@
 
   This example shows how to synchronize Button widget
   and physical button state.
-
-  WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
 
   App project setup:
     Button widget attached to V2 (Switch mode)
@@ -36,7 +32,6 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
@@ -46,7 +41,7 @@ char auth[] = "YourAuthToken";
 const int ledPin = 7;
 const int btnPin = 8;
 
-SimpleTimer timer;
+BlynkTimer timer;
 void checkPhysicalButton();
 
 int ledState = LOW;
