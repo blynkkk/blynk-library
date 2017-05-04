@@ -15,6 +15,10 @@
  *************************************************************
   This sketch shows how to access EthernetClient directly in Blynk
 
+  1. This gives you full control of the connection process.
+  2. Shows a sensible way of integrating other connectivity hardware,
+     that was not supported by Blynk out-of-the-box.
+
   NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
         DON'T use them in your sketch directly!
 

@@ -15,6 +15,10 @@
  *************************************************************
   This sketch shows how to access WiFiClient directly in Blynk
 
+  1. This gives you full control of the connection process.
+  2. Shows a sensible way of integrating other connectivity hardware,
+     that was not supported by Blynk out-of-the-box.
+
   NOTE: This requires ESP8266 support package:
        https://github.com/esp8266/Arduino
 
