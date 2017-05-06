@@ -37,8 +37,7 @@ SoftwareSerial DebugSerial(10, 11); // RX, TX
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-#include <SimpleTimer.h>
-SimpleTimer timer;
+BlynkTimer timer;
 
 void setup()
 {

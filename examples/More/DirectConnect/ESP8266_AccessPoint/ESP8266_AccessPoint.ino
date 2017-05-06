@@ -7,7 +7,7 @@
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
@@ -44,12 +44,12 @@ WiFiServer wifiServer(8442);
 WiFiClient wifiClient;
 
 // This function tries to reconnect to WiFi network
-void connectWiFi() {  
+void connectWiFi() {
   Serial.print("Configuring access point...");
 
-  if(pass && strlen(pass)){
+  if (pass && strlen(pass)) {
     WiFi.softAP((char*)ssid, (char*)pass);
-  } else{
+  } else {
     WiFi.softAP((char*)ssid);
   }
 
@@ -66,7 +66,7 @@ void setup() {
 
   connectWiFi();
 }
- 
+
 void loop() {
   // If thereis some client
   wifiClient = wifiServer.available();

@@ -10,9 +10,9 @@
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT stdout
 #ifdef RASPBERRY
- #include <BlynkApiWiringPi.h>
+  #include <BlynkApiWiringPi.h>
 #else
- #include <BlynkApiLinux.h>
+  #include <BlynkApiLinux.h>
 #endif
 #include <BlynkSocket.h>
 #include <BlynkOptionsParser.h>
@@ -27,6 +27,18 @@ BLYNK_WRITE(V1)
   printf("Got a value: %s\n", param[0].asStr());
 }
 
+
+void setup()
+{
+
+}
+
+void loop()
+{
+  Blynk.run();
+}
+
+
 int main(int argc, char* argv[])
 {
     const char *auth, *serv;
@@ -35,9 +47,11 @@ int main(int argc, char* argv[])
 
     Blynk.begin(auth, serv, port);
 
+    setup();
     while(true) {
-        Blynk.run();
+        loop();
     }
 
     return 0;
 }
+

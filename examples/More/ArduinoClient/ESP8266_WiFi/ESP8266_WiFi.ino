@@ -4,16 +4,20 @@
   You can easily build graphic interfaces for all your
   projects by simply dragging and dropping widgets.
 
-    Downloads, docs, tutorials: http://www.blynk.cc    
+    Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
   This example code is in public domain.
  *************************************************************
   This sketch shows how to access WiFiClient directly in Blynk
+
+  1. This gives you full control of the connection process.
+  2. Shows a sensible way of integrating other connectivity hardware,
+     that was not supported by Blynk out-of-the-box.
 
   NOTE: This requires ESP8266 support package:
        https://github.com/esp8266/Arduino
@@ -53,7 +57,7 @@ void connectWiFi()
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  if(pass && strlen(pass)) {
+  if (pass && strlen(pass)) {
     WiFi.begin((char*)ssid, (char*)pass);
   } else {
     WiFi.begin((char*)ssid);
@@ -70,14 +74,14 @@ void setup()
 {
   // Debug console
   Serial.begin(9600);
-  
+
   connectWiFi();
-  
+
   connectBlynk();
-  
+
   Blynk.begin(wifiClient, auth);
 }
- 
+
 void loop()
 {
   // Reconnect WiFi
@@ -91,7 +95,7 @@ void loop()
     connectBlynk();
     return;
   }
-  
+
   Blynk.run();
 }
 

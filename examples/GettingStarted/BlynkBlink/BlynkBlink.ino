@@ -1,15 +1,15 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk lets you create beautiful drag-and-drop visual interfaces
   for your projects in 5 minutes. And it works with almost every
   hardware out there.
 
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Follow Us:                  http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license

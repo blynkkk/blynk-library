@@ -209,7 +209,7 @@ void SimpleTimer::restartTimer(int numTimer) {
 }
 
 
-boolean SimpleTimer::isEnabled(int numTimer) {
+bool SimpleTimer::isEnabled(int numTimer) {
     if (numTimer >= MAX_TIMERS) {
         return false;
     }

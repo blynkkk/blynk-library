@@ -4,16 +4,20 @@
   You can easily build graphic interfaces for all your
   projects by simply dragging and dropping widgets.
 
-    Downloads, docs, tutorials: http://www.blynk.cc    
+    Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
   This example code is in public domain.
  *************************************************************
   This sketch shows how to access EthernetClient directly in Blynk
+
+  1. This gives you full control of the connection process.
+  2. Shows a sensible way of integrating other connectivity hardware,
+     that was not supported by Blynk out-of-the-box.
 
   NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
         DON'T use them in your sketch directly!
@@ -27,6 +31,8 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+
+#include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleStream.h>
 
