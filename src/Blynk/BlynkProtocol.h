@@ -351,16 +351,18 @@ bool BlynkProtocol<Transp>::processInput(void)
         uint32_t cmd32;
         memcpy(&cmd32, it.asStr(), sizeof(cmd32));
 
-        if (++it >= param.end())
-            return true;
         char* start = (char*)it.asStr();
-        BlynkParam param2(start, hdr.length - (start - (char*)inputBuffer));
+        unsigned length = hdr.length - (start - (char*)inputBuffer);
+        BlynkParam param2(start, length);
 
         switch (cmd32) {
         case BLYNK_INT_RTC:  BlynkWidgetWriteInternalPinRTC(req, param2);    break;
         case BLYNK_INT_OTA:  BlynkWidgetWriteInternalPinOTA(req, param2);    break;
         case BLYNK_INT_ACON: BlynkWidgetWriteInternalPinACON(req, param2);   break;
         case BLYNK_INT_ADIS: BlynkWidgetWriteInternalPinADIS(req, param2);   break;
+#ifdef DEBUG
+        default:             BLYNK_LOG2(BLYNK_F("Invalid internal cmd:"), param.asStr());
+#endif
         }
     } break;
     case BLYNK_CMD_DEBUG_PRINT: {
