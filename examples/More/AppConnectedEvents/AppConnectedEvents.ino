@@ -19,6 +19,10 @@
  *************************************************************
 
   This sketch shows how to handle App connected/disconnected events.
+  
+  NOTE:
+    Be sure to enable "send app connect command"
+    in your Project Settings!
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
