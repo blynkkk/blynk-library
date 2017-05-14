@@ -37,14 +37,14 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
-// This is called when Smartohone App is opened
+// This is called when Smartphone App is opened
 BLYNK_APP_CONNECTED() {  
-  Serial.println("App Connect");
+  Serial.println("App Connected.");
 }
 
-// This is called when Smartohone App is closed
+// This is called when Smartphone App is closed
 BLYNK_APP_DISCONNECTED() {
-  Serial.println("App Disconnect");
+  Serial.println("App Disconnected.");
 }
 
 
