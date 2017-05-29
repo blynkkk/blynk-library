@@ -52,7 +52,9 @@ enum BlynkCmd
 
     BLYNK_CMD_REDIRECT        = 41,
 
-    BLYNK_CMD_DEBUG_PRINT     = 55
+    BLYNK_CMD_DEBUG_PRINT     = 55,
+
+    BLYNK_CMD_EVENT_LOG       = 60
 };
 
 enum BlynkStatus
