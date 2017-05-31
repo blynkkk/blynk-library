@@ -30,6 +30,7 @@ virtualWriteBinary	KEYWORD2
 syncAll	KEYWORD2
 syncVirtual	KEYWORD2
 setProperty	KEYWORD2
+logEvent	KEYWORD2
 
 # Handler helpers
 BLYNK_READ	KEYWORD2
