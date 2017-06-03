@@ -351,7 +351,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         uint32_t cmd32;
         memcpy(&cmd32, it.asStr(), sizeof(cmd32));
 
-        char* start = (char*)it.asStr();
+        char* start = (char*)(it++).asStr();
         unsigned length = hdr.length - (start - (char*)inputBuffer);
         BlynkParam param2(start, length);
 
