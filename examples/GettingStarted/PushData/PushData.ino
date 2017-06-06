@@ -61,7 +61,7 @@ void setup()
   Blynk.begin(auth);
 
   // Setup a function to be called every second
-  timer.setInterval(1000L, myTimerEvent);
+  timer.setInterval(1000, myTimerEvent);
 }
 
 void loop()
