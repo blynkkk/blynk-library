@@ -28,6 +28,7 @@
 
 
 #include "Blynk/BlynkTimer.h"
+#include <cstring>
 
 
 // Select time function:
@@ -261,7 +262,7 @@ void SimpleTimer::disable(unsigned numTimer) {
 void SimpleTimer::enableAll() {
     // Enable all timers with a callback assigned (used)
     for (int i = 0; i < MAX_TIMERS; i++) {
-        if (timer[i].callback != NULL && numRuns[i] == RUN_FOREVER) {
+        if (timer[i].callback != NULL && timer[i].numRuns == RUN_FOREVER) {
             timer[i].enabled = true;
         }
     }
@@ -270,7 +271,7 @@ void SimpleTimer::enableAll() {
 void SimpleTimer::disableAll() {
     // Disable all timers with a callback assigned (used)
     for (int i = 0; i < MAX_TIMERS; i++) {
-        if (timer[i].callback != NULL && numRuns[i] == RUN_FOREVER) {
+        if (timer[i].callback != NULL && timer[i].numRuns == RUN_FOREVER) {
             timer[i].enabled = false;
         }
     }
