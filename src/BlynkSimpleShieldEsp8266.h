@@ -133,8 +133,9 @@ public:
             BLYNK_LOG1(BLYNK_F("Failed to restart"));
             return false;
         }*/
-        if (!wifi->eAT()) {
+        if (!wifi->kick()) {
              BLYNK_LOG1(BLYNK_F("ESP is not responding"));
+             //TODO: BLYNK_LOG_TROUBLE(BLYNK_F("esp8266-not-responding"));
              return false;
         }
         if (!wifi->setEcho(0)) {
