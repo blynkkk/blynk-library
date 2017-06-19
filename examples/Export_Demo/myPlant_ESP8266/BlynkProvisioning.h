@@ -55,6 +55,7 @@ public:
     case MODE_CONNECTING_CLOUD:  enterConnectCloud();  break;
     case MODE_RUNNING:           Blynk.run();          break;
     case MODE_OTA_UPGRADE:       enterOTA();           break;
+    case MODE_SWITCH_TO_STA:     enterSwitchToSTA();   break;
     default:                     enterError();         break;
     }
   }
