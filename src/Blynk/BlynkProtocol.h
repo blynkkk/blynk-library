@@ -180,9 +180,8 @@ bool BlynkProtocol<Transp>::run(bool avail)
 
     if (state == CONNECTED) {
         if (!tconn) {
-            state = CONNECTING;
             lastHeartbeat = t;
-            BlynkOnDisconnected();
+            internalReconnect();
             return false;
         }
 
