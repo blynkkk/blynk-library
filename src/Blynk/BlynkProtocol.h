@@ -55,6 +55,7 @@ public:
         {
             run();
         }
+        run(); // Workaround for #325: Getting wrong bytes with ESP8266-SSL
         return state == CONNECTED;
     }
 
