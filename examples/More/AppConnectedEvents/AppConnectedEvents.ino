@@ -19,7 +19,7 @@
  *************************************************************
 
   This sketch shows how to handle App connected/disconnected events.
-  
+
   NOTE:
     Be sure to enable "send app connect command"
     in your Project Settings!
@@ -38,7 +38,7 @@
 char auth[] = "YourAuthToken";
 
 // This is called when Smartphone App is opened
-BLYNK_APP_CONNECTED() {  
+BLYNK_APP_CONNECTED() {
   Serial.println("App Connected.");
 }
 
