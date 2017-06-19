@@ -40,7 +40,8 @@ public:
 #ifdef BLYNK_MSG_LIMIT
         , deltaCmd(0)
 #endif
-        , currentMsgId(0)
+        , msgIdOut(0)
+        , msgIdOutOverride(0)
         , state(CONNECTING)
     {}
 
@@ -74,13 +75,20 @@ public:
 #ifdef BLYNK_MSG_LIMIT
         deltaCmd = 1000;
 #endif
-        currentMsgId = 0;
+        msgIdOut = 0;
         lastHeartbeat = lastActivityIn = lastActivityOut = this->getMillis(); // TODO: - 5005UL
     }
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
 
 private:
+
+    void internalReconnect() {
+        state = CONNECTING;
+        conn.disconnect();
+        BlynkOnDisconnected();
+    }
+
     int readHeader(BlynkHeader& hdr);
     uint16_t getNextMsgId();
 
@@ -134,7 +142,8 @@ private:
 #ifdef BLYNK_MSG_LIMIT
     millis_time_t deltaCmd;
 #endif
-    uint16_t currentMsgId;
+    uint16_t msgIdOut;
+    uint16_t msgIdOutOverride;
 protected:
     BlynkState state;
 };
@@ -160,7 +169,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
 #ifdef BLYNK_USE_DIRECT_CONNECT
                 state = CONNECTING;
 #endif
-                //BlynkOnDisconnected();
+                BlynkOnDisconnected();
                 return false;
             }
             //BLYNK_LOG2(BLYNK_F("Proc time: "), micros() - t);
@@ -173,7 +182,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
         if (!tconn) {
             state = CONNECTING;
             lastHeartbeat = t;
-            //BlynkOnDisconnected();
+            BlynkOnDisconnected();
             return false;
         }
 
@@ -183,9 +192,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
 #else
             BLYNK_LOG1(BLYNK_F("Heartbeat timeout"));
 #endif
-            conn.disconnect();
-            state = CONNECTING;
-            //BlynkOnDisconnected();
+            internalReconnect();
             return false;
         } else if ((t - lastActivityIn  > 1000UL * BLYNK_HEARTBEAT ||
                     t - lastActivityOut > 1000UL * BLYNK_HEARTBEAT) &&
@@ -216,6 +223,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
 #ifdef BLYNK_MSG_LIMIT
             deltaCmd = 1000;
 #endif
+            msgIdOut = 1;
             sendCmd(BLYNK_CMD_LOGIN, 1, authkey, strlen(authkey));
             lastLogin = lastActivityOut;
             return true;
@@ -338,9 +346,9 @@ bool BlynkProtocol<Transp>::processInput(void)
     } break;
     case BLYNK_CMD_HARDWARE:
     case BLYNK_CMD_BRIDGE: {
-        currentMsgId = hdr.msg_id;
+        msgIdOutOverride = hdr.msg_id;
         this->processCmd(inputBuffer, hdr.length);
-        currentMsgId = 0;
+        msgIdOutOverride = 0;
     } break;
     case BLYNK_CMD_INTERNAL: {
         BlynkReq req = { 0 };
@@ -497,9 +505,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #ifdef BLYNK_DEBUG
         BLYNK_LOG4(BLYNK_F("Sent "), wlen, '/', full_length);
 #endif
-        conn.disconnect();
-        state = CONNECTING;
-        //BlynkOnDisconnected();
+        internalReconnect();
         return;
     }
 
@@ -509,9 +515,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     //BLYNK_LOG2(BLYNK_F("Delta: "), deltaCmd);
     if (deltaCmd < (1000/BLYNK_MSG_LIMIT)) {
         BLYNK_LOG_TROUBLE(BLYNK_F("flood-error"));
-        conn.disconnect();
-        state = CONNECTING;
-        //BlynkOnDisconnected();
+        internalReconnect();
     }
 #endif
     lastActivityOut = ts;
@@ -521,12 +525,11 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 template <class Transp>
 uint16_t BlynkProtocol<Transp>::getNextMsgId()
 {
-    static uint16_t last = 0;
-    if (currentMsgId != 0)
-        return currentMsgId;
-    if (++last == 0)
-        last = 1;
-    return last;
+    if (msgIdOutOverride != 0)
+        return msgIdOutOverride;
+    if (++msgIdOut == 0)
+        msgIdOut = 1;
+    return msgIdOut;
 }
 
 #endif
