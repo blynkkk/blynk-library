@@ -271,7 +271,8 @@ void SimpleTimer::disableAll() {
     // Disable all timers with a callback assigned (used)
     for (int i = 0; i < MAX_TIMERS; i++) {
         if (timer[i].callback != NULL && timer[i].numRuns == RUN_FOREVER) {
-            timer[i].enabled = false;
+
+          timer[i].enabled = false;
         }
     }
 }
