@@ -72,6 +72,11 @@ void clockDisplay()
   Blynk.virtualWrite(V2, currentDate);
 }
 
+BLYNK_CONNECTED() {
+  // Synchronize time on connection
+  rtc.begin();
+}
+
 void setup()
 {
   // Debug console
@@ -79,12 +84,11 @@ void setup()
 
   Blynk.begin(auth);
 
-  // Begin synchronizing time
-  rtc.begin();
-
   // Other Time library functions can be used, like:
   //   timeStatus(), setSyncInterval(interval)...
   // Read more: http://www.pjrc.com/teensy/td_libs_Time.html
+
+  setSyncInterval(10*60); // Sync interval in seconds (10 minutes)
 
   // Display digital clock every 10 seconds
   timer.setInterval(10000L, clockDisplay);

@@ -81,6 +81,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/GettingStarted/VirtualPinRead
     - PLATFORMIO_CI_SRC=examples/GettingStarted/VirtualPinReply
     - PLATFORMIO_CI_SRC=examples/GettingStarted/VirtualPinWrite
+    - PLATFORMIO_CI_SRC=examples/More/AppConnectedEvents
     - PLATFORMIO_CI_SRC=examples/More/ArduinoClient/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/More/ArduinoClient/ESP8266_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/More/DHT11
