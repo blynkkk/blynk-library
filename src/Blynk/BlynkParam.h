@@ -177,6 +177,10 @@ void BlynkParam::add(const void* b, size_t l)
 inline
 void BlynkParam::add(const char* str)
 {
+    if (str == NULL) {
+        buff[len++] = '\0';
+        return;
+    }
     add(str, strlen(str)+1);
 }
 
