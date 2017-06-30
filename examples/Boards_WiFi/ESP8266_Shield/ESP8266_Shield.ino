@@ -22,8 +22,8 @@
   to connect your project to Blynk.
 
   WARNING!
-    It's rather tricky to get it working, please read this article:
-    https://github.com/blynkkk/blynk-library/wiki/ESP8266-with-AT-firmware
+    It's very tricky to get it working. Please read this article:
+    http://help.blynk.cc/hardware-and-libraries/arduino/esp8266-with-at-firmware
 
   Change WiFi ssid, pass, and Blynk auth token to run :)
   Feel free to apply it to any other example. It's simple!
