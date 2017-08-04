@@ -124,6 +124,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Widgets/Terminal
     - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/AdvancedTimeInput
     - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/SimpleTimeInput
+    - PLATFORMIO_CI_SRC=examples/Widgets/TimeInput/UpdateTimeInputState
     - PLATFORMIO_CI_SRC=examples/Widgets/Timer
     - PLATFORMIO_CI_SRC=examples/Widgets/Twitter
     - PLATFORMIO_CI_SRC=examples/Widgets/WebHook/WebHook_GET
