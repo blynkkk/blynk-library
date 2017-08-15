@@ -6,7 +6,17 @@
  *
  *                  http://www.blynk.io/
  *
- **************************************************************/
+ **************************************************************
+ *
+ * How to trigger an OTA update?
+ *   1. In Arduino IDE menu: Sketch -> Export compiled Binary
+ *   2. Open console, navigate to the sketch directory
+ *   3. Trigger update using HTTP API:
+ *      curl -v -F file=@Template_ESP8266.ino.nodemcu.bin blynk-cloud.com/YourAuthYoken/ota/start
+ *
+ * More about ESP8266 OTA updates:
+ *  https://github.com/esp8266/Arduino/blob/master/doc/ota_updates/readme.md
+ */
 
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
@@ -14,9 +24,7 @@
 String overTheAirURL;
 
 BLYNK_WRITE(InternalPinOTA) {
-  // URL should be something like "http://ota-server:port/firmware.bin?auth=12345"
   overTheAirURL = param.asString();
-  overTheAirURL += String("?auth=") + configStore.cloudToken;
 
   // Disconnect, not to interfere with OTA process
   Blynk.disconnect();
@@ -40,7 +48,8 @@ void enterOTA() {
     BlynkState::set(MODE_CONNECTING_CLOUD);
     break;
   case HTTP_UPDATE_OK:
-    DEBUG_PRINT("Firmware updated.");
+    DEBUG_PRINT("Firmware update: OK.");
+    delay(10);
     restartMCU();
     break;
   }

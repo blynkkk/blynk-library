@@ -3,9 +3,8 @@
   showcases how your app made with Blynk can work
 
   You can download free app here:
-
-  iOS:     TODO
-  Android: http://play.google.com/store/apps/details?id=cc.blynk.appexport.demo
+    iOS:     https://itunes.apple.com/us/app/blynk-myplant/id1163620518?mt=8
+    Android: https://play.google.com/store/apps/details?id=cc.blynk.appexport.demo
 
   If you would like to add these features to your product,
   please contact Blynk for Businesses:
