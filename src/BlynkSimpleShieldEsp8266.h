@@ -184,6 +184,10 @@ public:
         connectWiFi(ssid, pass);
         while(this->connect() != true) {}
     }
+	
+	bool isWiFiConnected(const char* ssid){
+		return strstr(wifi->getNowConecAp().c_str(), ssid) != NULL;
+	}
 
 private:
     ESP8266* wifi;
