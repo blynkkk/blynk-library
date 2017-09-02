@@ -147,9 +147,6 @@
   #define V127 127
 #endif
 
-#define BLYNK_CONCAT(a, b) a ## b
-#define BLYNK_CONCAT2(a, b) BLYNK_CONCAT(a, b)
-
 // Initial syntax:
 #define BLYNK_WRITE_2(pin) \
     void BlynkWidgetWrite ## pin (BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param)

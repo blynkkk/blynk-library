@@ -13,9 +13,14 @@
 
 // General defines
 
+#define BLYNK_CONCAT(a, b) a ## b
+#define BLYNK_CONCAT2(a, b) BLYNK_CONCAT(a, b)
+
 #define BLYNK_STRINGIFY(x) #x
 #define BLYNK_TOSTRING(x) BLYNK_STRINGIFY(x)
+
 #define BLYNK_COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
+
 #define BLYNK_ATTR_PACKED __attribute__ ((__packed__))
 #define BLYNK_NORETURN __attribute__ ((noreturn))
 #define BLYNK_UNUSED __attribute__((__unused__))
