@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 
 REM === Edit these lines to match your need ===
 
-set COMM_PORT=COM1
+set COMM_PORT=COM3
 set COMM_BAUD=9600
 set SERV_ADDR=blynk-cloud.com
 set SERV_PORT=8442
@@ -67,7 +67,7 @@ goto:eof
     echo.
     echo.   The defaults are:
     echo.     -c    /dev/ttyUSB0       (on Linux)
-    echo.           COM1               (on Windows)
+    echo.           COM3               (on Windows)
     echo.           /dev/tty.usbserial (on OSX)
     echo.     -b    9600
     echo.     -s    blynk-cloud.com
