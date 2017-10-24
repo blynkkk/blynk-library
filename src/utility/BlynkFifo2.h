@@ -110,6 +110,12 @@ public:
         return t;
     }
 
+    T peek(void)
+    {
+        while (r == _w);
+        return _b[r];
+    }
+
     int get(T* p, int n, bool t = false)
     {
         int c = n;
