@@ -286,7 +286,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         BLYNK_LOG2(BLYNK_F("Packet too big: "), hdr.length);
 #endif
         // TODO: Flush
-        conn.connect();
+        internalReconnect();
         return true;
     }
 
@@ -384,7 +384,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         BLYNK_LOG2(BLYNK_F("Invalid header type: "), hdr.type);
 #endif
         // TODO: Flush
-        conn.connect();
+        internalReconnect();
     } break;
     }
 
