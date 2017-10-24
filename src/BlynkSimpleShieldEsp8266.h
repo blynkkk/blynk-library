@@ -66,6 +66,8 @@ public:
         client->setOnData(onData, this);
     }
 
+    //TODO: IPAddress
+
     void begin(const char* d,  uint16_t p) {
         domain = d;
         port = p;
