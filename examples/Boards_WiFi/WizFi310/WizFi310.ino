@@ -17,7 +17,7 @@
   This example code is in public domain.
 
  *************************************************************
-  This example shows how to use Arduino WiFi shield
+  This example shows how to use WizFi310
   to connect your project to Blynk.
 
   Note: This requires WizFi310 library
