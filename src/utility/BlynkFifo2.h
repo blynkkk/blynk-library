@@ -112,6 +112,7 @@ public:
 
     T peek(void)
     {
+        int r = _r;
         while (r == _w);
         return _b[r];
     }
