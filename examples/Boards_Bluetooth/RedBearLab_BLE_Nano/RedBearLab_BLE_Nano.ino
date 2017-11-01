@@ -48,6 +48,8 @@ void setup() {
   ble.gap().setDeviceName(device_name);
   ble.gap().setTxPower(4);
 
+  Serial.println("Waiting for connections...");
+
   // Add Blynk service...
   Blynk.begin(auth);
 
@@ -55,8 +57,6 @@ void setup() {
   ble.gap().setAdvertisingInterval(Gap::MSEC_TO_GAP_DURATION_UNITS(1000));
   ble.gap().setAdvertisingTimeout(0);
   ble.startAdvertising();
-
-  Serial.println("Waiting for connections...");
 }
 
 void loop() {

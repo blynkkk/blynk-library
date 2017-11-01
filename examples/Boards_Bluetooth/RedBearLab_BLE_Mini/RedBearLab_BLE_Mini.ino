@@ -39,6 +39,8 @@ void setup()
   // This is for debug prints
   Serial.begin(9600);
 
+  Serial.println("Waiting for connections...");
+
   SerialBLE.begin(57600);       // BLE Mini uses baud 57600
   Blynk.begin(SerialBLE, auth);
 }

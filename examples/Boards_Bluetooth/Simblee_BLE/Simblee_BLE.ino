@@ -42,9 +42,9 @@ void setup()
   // start the BLE stack
   SimbleeBLE.begin();
 
-  Blynk.begin(auth);
+  Serial.println("Waiting for connections...");
 
-  Serial.println("Bluetooth device active, waiting for connections...");
+  Blynk.begin(auth);
 }
 
 

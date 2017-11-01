@@ -42,9 +42,9 @@ void setup()
   // start the BLE stack
   RFduinoBLE.begin();
 
-  Blynk.begin(auth);
-
   Serial.println("Waiting for connections...");
+
+  Blynk.begin(auth);
 }
 
 void loop()

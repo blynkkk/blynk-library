@@ -42,9 +42,9 @@ void setup() {
   Serial.begin(9600);
   delay(5000);
 
-  Blynk.begin(auth);
-
   Serial.println("Waiting for connections...");
+
+  Blynk.begin(auth);
 }
 
 void loop() {

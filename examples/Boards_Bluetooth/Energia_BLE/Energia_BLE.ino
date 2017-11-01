@@ -42,6 +42,8 @@ void setup() {
   ble.setAdvertName("Blynk BLE");
   ble.startAdvert();
 
+  Serial.println("Waiting for connections...");
+
   Blynk.begin(ble, auth);
 }
 

@@ -40,6 +40,8 @@ void setup()
   // Debug console
   DebugSerial.begin(9600);
 
+  DebugSerial.println("Waiting for connections...");
+
   // Blynk will work through Serial
   // Do not read or write this serial manually in your sketch
   Serial.begin(9600);

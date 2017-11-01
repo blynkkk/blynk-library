@@ -55,6 +55,8 @@ void setup() {
   ble.factoryReset(); // Optional
   ble.setMode(BLUEFRUIT_MODE_DATA);
 
+  Serial.println("Waiting for connections...");
+
   Blynk.begin(auth, ble);
 }
 
