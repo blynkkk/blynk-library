@@ -42,29 +42,28 @@ void setup()
   Blynk.begin(auth);
 }
 
-    //as soon as connected update TimeInput widget state
+//as soon as connected update TimeInput widget state
 BLYNK_CONNECTED() {
-    //seconds from the start of a day. 0 - min, 86399 - max
-    int startAt = 5 * 60; //00:05
+  //seconds from the start of a day. 0 - min, 86399 - max
+  int startAt = 5 * 60; //00:05
 
-    //seconds from the start of a day. 0 - min, 86399 - max
-    int stopAt = (60 + 5) * 60; //01:05
+  //seconds from the start of a day. 0 - min, 86399 - max
+  int stopAt = (60 + 5) * 60; //01:05
 
-    //timezone
-    //full list of supported timezones could be found here
-    //https://www.mkyong.com/java/java-display-list-of-timezone-with-gmt/
-    char tz[] = "Europe/Kiev";
+  //timezone
+  //full list of supported timezones could be found here
+  //https://www.mkyong.com/java/java-display-list-of-timezone-with-gmt/
+  char tz[] = "Europe/Kiev";
 
-    Blynk.virtualWrite(V1, startAt, stopAt, tz);
+  Blynk.virtualWrite(V1, startAt, stopAt, tz);
 
-    //you may also pass day
-    //char days[] = "1"; //Monday
-    //Blynk.virtualWrite(V1, startAt, stopAt, tz, days);
+  //you may also pass day
+  //char days[] = "1"; //Monday
+  //Blynk.virtualWrite(V1, startAt, stopAt, tz, days);
 
-    //or days
-    //char days[] = "1,2,3"; //Monday, Tuesday, Wednesday
-    //Blynk.virtualWrite(V1, startAt, stopAt, tz, days);
-
+  //or days
+  //char days[] = "1,2,3"; //Monday, Tuesday, Wednesday
+  //Blynk.virtualWrite(V1, startAt, stopAt, tz, days);
 }
 
 void loop()

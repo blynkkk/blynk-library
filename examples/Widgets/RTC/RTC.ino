@@ -88,7 +88,7 @@ void setup()
   //   timeStatus(), setSyncInterval(interval)...
   // Read more: http://www.pjrc.com/teensy/td_libs_Time.html
 
-  setSyncInterval(10*60); // Sync interval in seconds (10 minutes)
+  setSyncInterval(10 * 60); // Sync interval in seconds (10 minutes)
 
   // Display digital clock every 10 seconds
   timer.setInterval(10000L, clockDisplay);
