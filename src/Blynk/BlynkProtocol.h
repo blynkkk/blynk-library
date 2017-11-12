@@ -468,7 +468,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #endif
             conn.disconnect();
             state = CONNECTING;
-            //BlynkOnDisconnected();
+            BlynkOnDisconnected();
             return;
         }
         wlen += w;
