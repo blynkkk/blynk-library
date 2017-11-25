@@ -12,24 +12,10 @@
 #define BlynkApiWiringPi_h
 
 #include <Blynk/BlynkApi.h>
-#include <wiringPi.h>
 
 #ifndef BLYNK_INFO_DEVICE
     #define BLYNK_INFO_DEVICE  "Raspberry"
 #endif
-
-template<class Proto>
-void BlynkApi<Proto>::Init()
-{
-    wiringPiSetupGpio();
-}
-
-template<class Proto>
-BLYNK_FORCE_INLINE
-millis_time_t BlynkApi<Proto>::getMillis()
-{
-    return millis();
-}
 
 #ifdef BLYNK_NO_INFO
 

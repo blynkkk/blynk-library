@@ -189,7 +189,11 @@ void            BlynkFatal() BLYNK_NORETURN;
         }
         #endif // ARDUINO_ARCH_ARC32
 
-    #elif defined(LINUX) || defined(MBED_LIBRARY_VERSION)
+    #elif defined(MBED_LIBRARY_VERSION)
+
+        //TODO
+
+    #elif defined(LINUX)
 
         #include <assert.h>
         #include <stdio.h>

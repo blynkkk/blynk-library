@@ -17,18 +17,6 @@
     #define BLYNK_INFO_DEVICE  "Linux"
 #endif
 
-template<class Proto>
-void BlynkApi<Proto>::Init()
-{
-}
-
-template<class Proto>
-BLYNK_FORCE_INLINE
-millis_time_t BlynkApi<Proto>::getMillis()
-{
-    return millis();
-}
-
 #ifdef BLYNK_NO_INFO
 
 template<class Proto>
