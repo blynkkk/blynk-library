@@ -150,6 +150,13 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
+#elif defined(ENERGIA)
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_RESET
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
 #elif defined(MBED_LIBRARY_VERSION)
 
     #include "mbed.h"
@@ -183,8 +190,14 @@
     #define _BLYNK_USE_DEFAULT_FREE_RAM
     #define _BLYNK_USE_DEFAULT_RESET
 
-#elseif defined(LINUX) && defined(RASPBERRY)
+#elif defined(LINUX) && defined(RASPBERRY)
+    #include <stdlib.h>
     #include <wiringPi.h>
+
+    void BlynkSystemInit(void)
+    {
+        wiringPiSetupGpio();
+    }
 
     void BlynkReset()
     {
@@ -196,9 +209,10 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elseif defined(LINUX)
+#elif defined(LINUX)
 
     #define _POSIX_C_SOURCE 200809L
+    #include <stdlib.h>
     #include <time.h>
     #include <unistd.h>
 
@@ -219,6 +233,8 @@
         clock_gettime(CLOCK_MONOTONIC, &ts );
         return ( ts.tv_sec * 1000 + ts.tv_nsec / 1000000L );
     }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
 
 #else
 
@@ -268,7 +284,7 @@
 
 void BlynkFatal()
 {
-    delay(10000L);
+    BlynkDelay(10000L);
     BlynkReset();
 }
 
