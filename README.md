@@ -21,6 +21,10 @@ Community Forum: http://community.blynk.cc
 Examples Browser: http://examples.blynk.cc  
 Blynk for Business: http://www.blynk.io
 
+## Contributing
+We accept contributions from our community: stability bugfixes, new hardware support, or any other improvements.  
+[Here](https://github.com/blynkkk/blynk-library/labels/help%20wanted) is a list of what you could help with.
+
 __________
 
 # What is Blynk?
