@@ -46,7 +46,7 @@ public:
         if (!modem->begin()) {
            BLYNK_FATAL(BLYNK_F("Cannot init"));
         }
-#ifdef TINYGSM_MODEM_HAS_GPRS
+
         switch (modem->getSimStatus()) {
         case SIM_ERROR:  BLYNK_FATAL(BLYNK_F("SIM is missing"));    break;
         case SIM_LOCKED: BLYNK_FATAL(BLYNK_F("SIM is PIN-locked")); break;
@@ -66,14 +66,8 @@ public:
             BLYNK_FATAL(BLYNK_F("Connect GPRS failed"));
             return false;
         }
-#endif
-        BLYNK_LOG3(BLYNK_F("Connecting to "), apn, BLYNK_F(" ..."));
-        if (!modem->networkConnect(apn, pass)) {
-            BLYNK_FATAL(BLYNK_F("Connect WiFi failed"));
-            return false;
-        }
 
-        BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
+        BLYNK_LOG1(BLYNK_F("Connected to GPRS"));
         return true;
     }
 
