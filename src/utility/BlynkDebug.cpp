@@ -118,17 +118,13 @@
     #include <Arduino.h>
     #include <libmaple/nvic.h>
 
-    size_t BlynkFreeRam()
-    {
-        return 0;
-    }
-
     void BlynkReset()
     {
         nvic_sys_reset();
         for(;;) {}
     }
 
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
@@ -136,24 +132,13 @@
 
     #include "application.h"
 
-    size_t BlynkFreeRam()
-    {
-        return 0;
-    }
-
     void BlynkReset()
     {
         System.reset();
         for(;;) {} // To make compiler happy
     }
 
-    #define _BLYNK_USE_DEFAULT_MILLIS
-    #define _BLYNK_USE_DEFAULT_DELAY
-
-#elif defined(ENERGIA)
-
     #define _BLYNK_USE_DEFAULT_FREE_RAM
-    #define _BLYNK_USE_DEFAULT_RESET
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
@@ -242,15 +227,10 @@
         #warning "Need to implement board-specific utilities"
     #endif
 
-    size_t BlynkFreeRam()
-    {
-        return 0;
-    }
-
-    void BlynkReset()
-    {
-        for(;;) {} // To make compiler happy
-    }
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_RESET
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
 
 #endif
 
