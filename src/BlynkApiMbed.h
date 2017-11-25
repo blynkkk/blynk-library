@@ -11,43 +11,7 @@
 #ifndef BlynkApiMbed_h
 #define BlynkApiMbed_h
 
-#include "mbed.h"
-
-static Timer  blynk_millis_timer;
-static Ticker blynk_waker;
-
-static
-void blynk_wake() {
-    //pc.puts("(...)");
-}
-
-static
-void delay(unsigned long ms)
-{
-    wait_ms(ms);
-}
-
-static
-unsigned long millis(void)
-{
-    return blynk_millis_timer.read_ms();
-}
-
 #include <Blynk/BlynkApi.h>
-
-template<class Proto>
-void BlynkApi<Proto>::Init()
-{
-    blynk_waker.attach(&blynk_wake, 2.0);
-    blynk_millis_timer.start();
-}
-
-template<class Proto>
-BLYNK_FORCE_INLINE
-millis_time_t BlynkApi<Proto>::getMillis()
-{
-    return blynk_millis_timer.read_ms();
-}
 
 #ifdef BLYNK_NO_INFO
 

@@ -12,19 +12,6 @@
 #define BlynkApiParticle_h
 
 #include "Blynk/BlynkApi.h"
-#include "Particle.h"
-
-template<class Proto>
-void BlynkApi<Proto>::Init()
-{
-}
-
-template<class Proto>
-BLYNK_FORCE_INLINE
-millis_time_t BlynkApi<Proto>::getMillis()
-{
-    return millis();
-}
 
 #ifdef BLYNK_NO_INFO
 

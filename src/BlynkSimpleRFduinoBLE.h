@@ -55,7 +55,7 @@ public:
         uint32_t start = millis();
         while (millis() - start < BLYNK_TIMEOUT_MS) {
             if (available() < len) {
-                ::delay(1);
+                BlynkDelay(1);
             } else {
                 break;
             }

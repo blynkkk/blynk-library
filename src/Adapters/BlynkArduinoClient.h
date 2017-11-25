@@ -89,7 +89,7 @@ public:
             if (w != 0 && w != -1) {
                 sent += w;
             } else {
-                ::delay(50);
+                BlynkDelay(50);
 #if defined(BLYNK_DEBUG) && defined(BLYNK_PRINT)
                 BLYNK_PRINT_TIME();
                 BLYNK_PRINT.print(BLYNK_F("Retry "));

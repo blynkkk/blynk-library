@@ -294,6 +294,13 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
 
     #include <stdio.h>
 
+/*
+extern "C" {
+  int ets_sprintf(char *str, const char *format, ...) __attribute__ ((format (printf, 2, 3)));
+};
+
+#define snprintf(s, n, f, ...) ets_sprintf(s,f, __VA_ARGS__)
+*/
     inline
     void BlynkParam::add(int value)
     {

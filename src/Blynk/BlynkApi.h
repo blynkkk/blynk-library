@@ -27,7 +27,6 @@ class BlynkApi
 {
 public:
     BlynkApi() {
-        Init();
     }
 
 #ifdef DOXYGEN // These API here are only for the documentation
@@ -311,8 +310,6 @@ public:
 #endif
 
 protected:
-    void Init();
-    static millis_time_t getMillis();
     void processCmd(const void* buff, size_t len);
     void sendInfo();
 };

@@ -129,7 +129,7 @@ public:
 
     bool connectWiFi(const char* ssid, const char* pass)
     {
-        ::delay(500);
+        BlynkDelay(500);
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         /*if (!wifi->restart()) {
             BLYNK_LOG1(BLYNK_F("Failed to restart"));

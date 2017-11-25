@@ -32,7 +32,7 @@
 
 // Select time function:
 //static inline unsigned long elapsed() { return micros(); }
-static inline unsigned long elapsed() { return millis(); }
+static inline unsigned long elapsed() { return BlynkMillis(); }
 
 
 SimpleTimer::SimpleTimer()

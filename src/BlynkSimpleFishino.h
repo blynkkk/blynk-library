@@ -46,11 +46,11 @@ public:
         Fishino.setMode(STATION_MODE);
         if (pass && strlen(pass)) {
             while (!Fishino.begin(ssid, pass)) {
-                ::delay(500);
+                BlynkDelay(500);
             }
         } else {
             while (!Fishino.begin(ssid)) {
-                ::delay(500);
+                BlynkDelay(500);
             }
         }
 
@@ -59,7 +59,7 @@ public:
         Fishino.staStartDHCP();
         while(Fishino.status() != STATION_GOT_IP)
         {
-            ::delay(500);
+            BlynkDelay(500);
         }
 
         IPAddress myip = Fishino.localIP();

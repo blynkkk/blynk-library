@@ -55,7 +55,7 @@ public:
             BLYNK_FATAL(BLYNK_F("DHCP Failed!"));
         }
         // give the Ethernet shield a second to initialize:
-        ::delay(1000);
+        BlynkDelay(1000);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG_IP("IP:", myip);
 
@@ -74,7 +74,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Using static IP"));
         Ethernet.begin(SelectMacAddress(auth, mac), local, dns);
         // give the Ethernet shield a second to initialize:
-        ::delay(1000);
+        BlynkDelay(1000);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG_IP("IP:", myip);
 
@@ -95,7 +95,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Using static IP"));
         Ethernet.begin(SelectMacAddress(auth, mac), local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
-        ::delay(1000);
+        BlynkDelay(1000);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG_IP("IP:", myip);
 
@@ -114,7 +114,7 @@ public:
             BLYNK_FATAL(BLYNK_F("DHCP Failed!"));
         }
         // give the Ethernet shield a second to initialize:
-        ::delay(1000);
+        BlynkDelay(1000);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG_IP("IP:", myip);
 
@@ -132,7 +132,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Using static IP"));
         Ethernet.begin(SelectMacAddress(auth, mac), local);
         // give the Ethernet shield a second to initialize:
-        ::delay(1000);
+        BlynkDelay(1000);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG_IP("IP:", myip);
 
@@ -153,7 +153,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Using static IP"));
         Ethernet.begin(SelectMacAddress(auth, mac), local, dns, gateway, subnet);
         // give the Ethernet shield a second to initialize:
-        ::delay(1000);
+        BlynkDelay(1000);
         IPAddress myip = Ethernet.localIP();
         BLYNK_LOG_IP("IP:", myip);
 

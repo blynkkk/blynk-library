@@ -50,9 +50,9 @@ public:
     bool connect(uint32_t timeout = BLYNK_TIMEOUT_MS*3) {
         conn.disconnect();
         state = CONNECTING;
-        millis_time_t started = this->getMillis();
+        millis_time_t started = BlynkMillis();
         while ((state != CONNECTED) &&
-               (this->getMillis() - started < timeout))
+               (BlynkMillis() - started < timeout))
         {
             run();
         }
@@ -76,7 +76,7 @@ public:
         deltaCmd = 1000;
 #endif
         msgIdOut = 0;
-        lastHeartbeat = lastActivityIn = lastActivityOut = this->getMillis(); // TODO: - 5005UL
+        lastHeartbeat = lastActivityIn = lastActivityOut = BlynkMillis(); // TODO: - 5005UL
     }
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
@@ -176,7 +176,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
         }
     }
 
-    const millis_time_t t = this->getMillis();
+    const millis_time_t t = BlynkMillis();
 
     if (state == CONNECTED) {
         if (!tconn) {
@@ -251,7 +251,7 @@ bool BlynkProtocol<Transp>::processInput(void)
     }
 
     if (hdr.type == BLYNK_CMD_RESPONSE) {
-        lastActivityIn = this->getMillis();
+        lastActivityIn = BlynkMillis();
 
 #ifndef BLYNK_USE_DIRECT_CONNECT
         if (state == CONNECTING && (1 == hdr.msg_id)) {
@@ -301,7 +301,7 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     BLYNK_DBG_DUMP(">", inputBuffer, hdr.length);
 
-    lastActivityIn = this->getMillis();
+    lastActivityIn = BlynkMillis();
 
     switch (hdr.type)
     {
@@ -461,7 +461,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         const size_t chunk = BlynkMin(size_t(BLYNK_SEND_CHUNK), full_length - wlen);
         BLYNK_DBG_DUMP("<", buff + wlen, chunk);
         const size_t w = conn.write(buff + wlen, chunk);
-        ::delay(BLYNK_SEND_THROTTLE);
+        BlynkDelay(BLYNK_SEND_THROTTLE);
         if (w == 0) {
 #ifdef BLYNK_DEBUG
             BLYNK_LOG1(BLYNK_F("Cmd error"));
@@ -483,18 +483,18 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 
     BLYNK_DBG_DUMP("<", &hdr, sizeof(hdr));
     size_t wlen = conn.write(&hdr, sizeof(hdr));
-    ::delay(BLYNK_SEND_THROTTLE);
+    BlynkDelay(BLYNK_SEND_THROTTLE);
 
     if (cmd != BLYNK_CMD_RESPONSE) {
         if (length) {
             BLYNK_DBG_DUMP("<", data, length);
             wlen += conn.write(data, length);
-            ::delay(BLYNK_SEND_THROTTLE);
+            BlynkDelay(BLYNK_SEND_THROTTLE);
         }
         if (length2) {
             BLYNK_DBG_DUMP("<", data2, length2);
             wlen += conn.write(data2, length2);
-            ::delay(BLYNK_SEND_THROTTLE);
+            BlynkDelay(BLYNK_SEND_THROTTLE);
         }
     }
 
@@ -508,7 +508,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         return;
     }
 
-    const millis_time_t ts = this->getMillis();
+    const millis_time_t ts = BlynkMillis();
 #if defined BLYNK_MSG_LIMIT && BLYNK_MSG_LIMIT > 0
     BlynkAverageSample<32>(deltaCmd, ts - lastActivityOut);
     //BLYNK_LOG2(BLYNK_F("Delta: "), deltaCmd);

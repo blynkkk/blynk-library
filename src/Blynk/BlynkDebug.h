@@ -12,6 +12,7 @@
 #define BlynkDebug_h
 
 #include <Blynk/BlynkConfig.h>
+
 #include <stddef.h>
 #ifdef ESP8266
     extern "C" {
@@ -29,6 +30,13 @@
     typedef uint32_t millis_time_t;
 #endif
 
+void            BlynkDelay(millis_time_t ms);
+millis_time_t   BlynkMillis();
+size_t          BlynkFreeRam();
+void            BlynkReset() BLYNK_NORETURN;
+void            BlynkFatal() BLYNK_NORETURN;
+
+
 #if defined(SPARK) || defined(PARTICLE)
     #include "application.h"
 #endif
@@ -44,24 +52,6 @@
 #if defined(LINUX)
     #if defined(RASPBERRY)
         #include <wiringPi.h>
-    #else
-        #define _POSIX_C_SOURCE 200809L
-        #include <time.h>
-        #include <unistd.h>
-
-        static inline
-        void delay(unsigned long ms)
-        {
-            usleep(ms * 1000);
-        }
-
-        static
-        millis_time_t millis()
-        {
-            struct timespec ts;
-            clock_gettime(CLOCK_MONOTONIC, &ts );
-            return ( ts.tv_sec * 1000 + ts.tv_nsec / 1000000L );
-        }
     #endif
 #endif
 
@@ -73,7 +63,7 @@
     #elif !defined(ARDUINO) || (ARDUINO < 151)
         #define BLYNK_RUN_YIELD() {}
     #else
-        #define BLYNK_RUN_YIELD() { ::delay(0); }
+        #define BLYNK_RUN_YIELD() { BlynkDelay(0); }
     #endif
 #endif
 
@@ -98,10 +88,6 @@
 #endif
 
 // Diagnostic defines
-
-size_t BlynkFreeRam();
-void BlynkReset() BLYNK_NORETURN;
-void BlynkFatal() BLYNK_NORETURN;
 
 #define BLYNK_FATAL(msg)     { BLYNK_LOG1(msg); BlynkFatal(); }
 #define BLYNK_LOG_RAM()      { BLYNK_LOG2(BLYNK_F("Free RAM: "), BlynkFreeRam()); }
@@ -142,7 +128,7 @@ void BlynkFatal() BLYNK_NORETURN;
         static
         void BLYNK_LOG_TIME() {
             BLYNK_PRINT.print('[');
-            BLYNK_PRINT.print(millis());
+            BLYNK_PRINT.print(BlynkMillis());
             BLYNK_PRINT.print(BLYNK_F("] "));
         }
 
@@ -191,7 +177,7 @@ void BlynkFatal() BLYNK_NORETURN;
             va_start(ap, fmt);
             char buff[128];
             BLYNK_PRINT.print('[');
-            BLYNK_PRINT.print(millis());
+            BLYNK_PRINT.print(BlynkMillis());
             BLYNK_PRINT.print(BLYNK_F("] "));
 #if defined(__AVR__)
             vsnprintf_P(buff, sizeof(buff), fmt, ap);
@@ -213,14 +199,14 @@ void BlynkFatal() BLYNK_NORETURN;
 
         #include <iostream>
         using namespace std;
-        #define BLYNK_LOG(msg, ...)       { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", millis(), ##__VA_ARGS__); }
+        #define BLYNK_LOG(msg, ...)       { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", BlynkMillis(), ##__VA_ARGS__); }
         #define BLYNK_LOG1(p1)            { BLYNK_LOG_TIME(); cout << p1 << endl; }
         #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG_TIME(); cout << p1 << p2 << endl; }
         #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << endl; }
         #define BLYNK_LOG4(p1,p2,p3,p4)   { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << p4 << endl; }
         #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6)   { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << p4 << p5 << p6 << endl; }
 
-        #define BLYNK_LOG_TIME() cout << '[' << millis() << "] ";
+        #define BLYNK_LOG_TIME() cout << '[' << BlynkMillis() << "] ";
 
 #ifdef BLYNK_DEBUG
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);

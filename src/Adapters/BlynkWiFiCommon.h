@@ -51,7 +51,7 @@ public:
             if (status == WL_CONNECTED) {
                 break;
             } else {
-                ::delay(5000);
+                BlynkDelay(5000);
             }
         }
 

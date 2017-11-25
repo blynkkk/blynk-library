@@ -5,24 +5,24 @@
 #include <Blynk/BlynkDebug.h>
 
 millis_time_t blynk_count_millis() {
-    const millis_time_t ms = millis();
+    const millis_time_t ms = BlynkMillis();
     return ms;
 }
 
 uint16_t blynk_count_seconds16() {
-    const millis_time_t ms = millis();
+    const millis_time_t ms = BlynkMillis();
     return (ms / 1000);
 }
 
 uint16_t blynk_count_minutes16()
 {
-    const millis_time_t ms = millis();
+    const millis_time_t ms = BlynkMillis();
     return (ms / (60000L)) & 0xFFFF;
 }
 
 uint8_t blynk_count_hours8()
 {
-    const millis_time_t ms = millis();
+    const millis_time_t ms = BlynkMillis();
     return (ms / (3600000L)) & 0xFF;
 }
 
