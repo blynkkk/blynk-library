@@ -62,7 +62,7 @@ metadata = {
   # RBL
   "RedBear_Duo_WiFi.ino"        : { "skip": True },
   "RedBear_Duo_BLE.ino"         : { "skip": True },
-  "RedBearLab_BLE_Nano.ino"     : { "board": "redBearLabBLENano", "framework": "arduino" },
+  "RedBearLab_BLE_Nano.ino"     : { "skip": True, "board": "redBearLabBLENano", "framework": "arduino" }, # Not for Arduino
   "RedBearLab_BlendMicro.ino"   : { "board": "blendmicro8" },
   "RedBearLab_BLE_Mini.ino"     : { "board": "leonardo" },
 
