@@ -20,7 +20,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Microduino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
+    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBear_Duo_BLE
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Serial_HC05_HC06
@@ -53,7 +53,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_org_UNO_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=WiFi Link' --project-option='build_flags=-DESP_CH_SPI'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000 PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=Adafruit CC3000 Library'"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=esp32dev"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=esp32dev --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Shield PLATFORMIO_CI_EXTRA_ARGS="--board=megaatmega2560"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_Manual_IP PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"

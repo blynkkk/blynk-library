@@ -4,7 +4,7 @@ import fnmatch
 import os
 
 ESP8266 = { "board": "nodemcuv2" }
-ESP32 =   { "board": "esp32dev" }
+ESP32 =   { "board": "esp32dev", "framework": "arduino" }
 
 metadata = {
   "Arduino_Yun.ino"             : { "board": "yun" },
@@ -32,11 +32,10 @@ metadata = {
   "ESP8266_AccessPoint.ino"     : ESP8266,
   "ESP8266_WiFi.ino"            : ESP8266,
 
-  "ESP32_WiFi.ino"              : { "board": "nano32", "framework": "arduino" },
-
   "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
   "Template_ESP8266.ino"        : { "board": "nodemcuv2" , "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
   "Template_MKR1000.ino"        : { "board": "mkr1000USB", "build_flags": "-DUSE_TIMER_FIVE", "lib_deps": "WiFi101"},
+
   "Arduino_MKR1000.ino"         : { "board": "mkr1000USB", "lib_deps": "WiFi101" },
   "Adafruit_Feather_M0_WiFi.ino": { "board": "adafruit_feather_m0", "lib_deps": "SPI, WiFi101" },
   "Arduino_WiFi_Shield_101.ino" : { "board": "uno", "lib_deps": "WiFi101" },
@@ -45,6 +44,7 @@ metadata = {
 
   # ESP32
   "ESP32_WiFi.ino"              : ESP32,
+  "ESP32_BLE.ino"               : ESP32,
 
   # TheAirBoard
   "TheAirBoard_WiFly.ino"       : { "skip": True, "board": "fio" }, # No AirBoard library
@@ -62,7 +62,7 @@ metadata = {
   # RBL
   "RedBear_Duo_WiFi.ino"        : { "skip": True },
   "RedBear_Duo_BLE.ino"         : { "skip": True },
-  "RedBearLab_BLE_Nano.ino"     : { "skip": True, "board": "redBearLabBLENano", "framework": "arduino" }, # Not for Arduino
+  "RedBearLab_BLE_Nano.ino"     : { "board": "redBearLabBLENano", "framework": "arduino" },
   "RedBearLab_BlendMicro.ino"   : { "board": "blendmicro8" },
   "RedBearLab_BLE_Mini.ino"     : { "board": "leonardo" },
 
