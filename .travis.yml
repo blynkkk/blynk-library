@@ -15,9 +15,10 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Arduino_101_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=genuino101"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/BBC_MicroBit PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=SPI'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/DFRobot_Bluno_BLE_Link PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
+    # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Energia_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=..."
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Microduino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
+    # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
@@ -25,6 +26,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Serial_HC05_HC06
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Serial_HM10_HC08 PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Simblee_BLE
+    # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/TheAirBoard_BLE_Link PLATFORMIO_CI_EXTRA_ARGS="--board=fio"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/nRF8001
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Arduino_Ethernet2
@@ -43,13 +45,15 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Energia_Serial_USB PLATFORMIO_CI_EXTRA_ARGS="--board=lplm4f120h5qr"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Teensy3 PLATFORMIO_CI_EXTRA_ARGS="--board=teensy31"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/chipKIT_Uno32 PLATFORMIO_CI_EXTRA_ARGS="--board=uno_pic32"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_MKR1000
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Adafruit_Feather_M0_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=adafruit_feather_m0 --project-option='lib_deps=SPI, WiFi101'"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='lib_deps=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield_101
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_WiFi_Shield_101 PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=WiFi101'"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_Yun PLATFORMIO_CI_EXTRA_ARGS="--board=yun"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Arduino_org_UNO_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=WiFi Link' --project-option='build_flags=-DESP_CH_SPI'"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/CC3000 PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=Adafruit CC3000 Library'"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Digistump_Oak
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nano32 --project-option='framework=arduino' --project-option='lib_ignore=WiFi101'"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP32_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=esp32dev"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Shield PLATFORMIO_CI_EXTRA_ARGS="--board=megaatmega2560"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/ESP8266_Standalone_Manual_IP PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
@@ -64,16 +68,17 @@ env:
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/RedBear_Duo_WiFi
     - PLATFORMIO_CI_SRC=examples/Boards_WiFi/Sparkfun_Blynk_Board PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TheAirBoard_WiFly PLATFORMIO_CI_EXTRA_ARGS="--board=fio"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=tinyduino"
-    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_EXTRA_ARGS="--board=wildfirev3"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/TinyDuino_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=tinyduino --project-option='lib_deps=Adafruit CC3000 Library'"
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V3 PLATFORMIO_CI_EXTRA_ARGS="--board=wildfirev3 --project-option='lib_deps=WildFire-CC3000'"
     # - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WildFire_V4
+    - PLATFORMIO_CI_SRC=examples/Boards_WiFi/WizFi310 PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=WizFi310'"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_GSM
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/SIM800_SIM900 PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101' --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='build_flags=-DUSE_TIMER_FIVE'"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='lib_ignore=WiFi101' --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='lib_deps=WiFi101' --project-option='build_flags=-DUSE_TIMER_FIVE'"
+    - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
@@ -85,7 +90,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/More/AppConnectedEvents
     - PLATFORMIO_CI_SRC=examples/More/ArduinoClient/Arduino_Ethernet
     - PLATFORMIO_CI_SRC=examples/More/ArduinoClient/ESP8266_WiFi PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
-    - PLATFORMIO_CI_SRC=examples/More/DHT11
+    - PLATFORMIO_CI_SRC=examples/More/DHT11 PLATFORMIO_CI_EXTRA_ARGS="--board=uno --project-option='lib_deps=Adafruit Unified Sensor'"
     - PLATFORMIO_CI_SRC=examples/More/DirectConnect/ESP8266_AccessPoint PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/More/DirectConnect/ESP8266_Station PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/More/FormatString
@@ -139,23 +144,21 @@ install:
     #
     # Libraries from PlatformIO Library Registry:
     #
-    # http://platformio.org/lib/show/17/Adafruit-CC3000
     # http://platformio.org/lib/show/28/SPI4Teensy3
+    # http://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
     # http://platformio.org/lib/show/91/UIPEthernet
     # http://platformio.org/lib/show/418/WildFireCore
-    # http://platformio.org/lib/show/420/WildFire-CC3000
     # http://platformio.org/lib/show/65/WiFlyHQ
     # http://platformio.org/lib/show/44/Time
     # http://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
     # http://platformio.org/lib/show/19/Adafruit-DHT
-    # http://platformio.org/lib/show/299/WiFi101
     # http://platformio.org/lib/show/259/BLEPeripheral
     # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
     # http://platformio.org/lib/show/1192/FlashStorage
     # http://platformio.org/lib/show/1285/Timer5
     # http://platformio.org/lib/show/1287/TinyGSM
 
-    - platformio lib -g install 17 28 91 418 420 65 44 31 19 299 259 177 1192 1285 1287
+    - platformio lib -g install 28 31 91 418 65 44 31 19 259 177 1192 1285 1287
     - platformio lib -g install https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build
