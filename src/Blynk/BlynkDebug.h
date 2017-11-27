@@ -213,7 +213,7 @@ void            BlynkFatal() BLYNK_NORETURN;
             bool prev_print = true;
             while (l2--) {
                 const uint8_t c = *octets++ & 0xFF;
-                if (c > 31) {
+                if (c >= 32 && c < 127) {
                     if (!prev_print) { BLYNK_PRINT.putc(']'); }
                     BLYNK_PRINT.putc((char)c);
                     prev_print = true;
@@ -249,7 +249,28 @@ void            BlynkFatal() BLYNK_NORETURN;
 #ifdef BLYNK_DEBUG
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_ASSERT(expr)   assert(expr)
-        #define BLYNK_DBG_DUMP(msg, addr, len) if (len) { fprintf(BLYNK_PRINT, msg); fwrite(addr, len, 1, BLYNK_PRINT); fputc('\n', BLYNK_PRINT); }
+
+        static
+        void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
+            BLYNK_LOG_TIME();
+            fprintf(BLYNK_PRINT, "%s", msg);
+            int l2 = len;
+            const uint8_t* octets = (const uint8_t*)addr;
+            bool prev_print = true;
+            while (l2--) {
+                const uint8_t c = *octets++ & 0xFF;
+                if (c >= 32 && c < 127) {
+                    if (!prev_print) { fputc(']', BLYNK_PRINT); }
+                    fputc((char)c, BLYNK_PRINT);
+                    prev_print = true;
+                } else {
+                    fputc(prev_print?'[':'|', BLYNK_PRINT);
+                    fprintf(BLYNK_PRINT, "%02x", c);
+                    prev_print = false;
+                }
+            }
+            fprintf(BLYNK_PRINT, "%s\n", prev_print?"":"]");
+        }
 #endif
 
     #else
