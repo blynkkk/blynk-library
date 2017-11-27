@@ -12,6 +12,7 @@
 #define BlynkApiMbed_h
 
 #include <Blynk/BlynkApi.h>
+#include <mbed.h>
 
 #ifdef BLYNK_NO_INFO
 

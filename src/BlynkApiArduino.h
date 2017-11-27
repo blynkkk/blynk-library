@@ -12,6 +12,7 @@
 #define BlynkApiArduino_h
 
 #include <Blynk/BlynkApi.h>
+#include <Arduino.h>
 
 #ifdef BLYNK_NO_INFO
 

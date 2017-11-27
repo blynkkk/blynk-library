@@ -12,6 +12,7 @@
 #define BlynkApiParticle_h
 
 #include "Blynk/BlynkApi.h"
+#include "Particle.h"
 
 #ifdef BLYNK_NO_INFO
 
