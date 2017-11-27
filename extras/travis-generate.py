@@ -4,6 +4,7 @@ import fnmatch
 import os
 
 ESP8266 = { "board": "nodemcuv2" }
+ESP32 =   { "board": "esp32dev" }
 
 metadata = {
   "Arduino_Yun.ino"             : { "board": "yun" },
@@ -31,11 +32,19 @@ metadata = {
   "ESP8266_AccessPoint.ino"     : ESP8266,
   "ESP8266_WiFi.ino"            : ESP8266,
 
-  "ESP32_WiFi.ino"              : { "board": "nano32", "framework": "arduino" , "lib_ignore": "WiFi101" },
+  "ESP32_WiFi.ino"              : { "board": "nano32", "framework": "arduino" },
 
-  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "lib_ignore": "WiFi101", "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
-  "Template_ESP8266.ino"        : { "board": "nodemcuv2" , "lib_ignore": "WiFi101", "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
-  "Template_MKR1000.ino"        : { "board": "mkr1000USB", "build_flags": "-DUSE_TIMER_FIVE"},
+  "myPlant_ESP8266.ino"         : { "board": "nodemcuv2", "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
+  "Template_ESP8266.ino"        : { "board": "nodemcuv2" , "build_flags": "-DBOARD_LED_PIN_WS2812 -DUSE_TICKER"},
+  "Template_MKR1000.ino"        : { "board": "mkr1000USB", "build_flags": "-DUSE_TIMER_FIVE", "lib_deps": "WiFi101"},
+  "Arduino_MKR1000.ino"         : { "board": "mkr1000USB", "lib_deps": "WiFi101" },
+  "Adafruit_Feather_M0_WiFi.ino": { "board": "adafruit_feather_m0", "lib_deps": "SPI, WiFi101" },
+  "Arduino_WiFi_Shield_101.ino" : { "board": "uno", "lib_deps": "WiFi101" },
+  "WizFi310.ino"                : { "board": "uno", "lib_deps": "WizFi310" },
+  "Arduino_org_UNO_WiFi.ino"    : { "board": "uno", "lib_deps": "WiFi Link", "build_flags": "-DESP_CH_SPI" },
+
+  # ESP32
+  "ESP32_WiFi.ino"              : ESP32,
 
   # TheAirBoard
   "TheAirBoard_WiFly.ino"       : { "skip": True, "board": "fio" }, # No AirBoard library
@@ -65,20 +74,23 @@ metadata = {
   "Fishino.ino"                 : { "skip": True },  # requires extra lib
   "BBC_MicroBit.ino"            : { "board": "uno", "lib_deps": "SPI" }, #TODO
   "Simblee_BLE.ino"             : { "skip": True },
-  "RFDuino_BLE.ino"             : { "board": "rfduino" },
+  "RFDuino_BLE.ino"             : { "skip": True, "board": "rfduino" }, # TODO
   "DFRobot_Bluno_BLE_Link.ino"  : { "board": "leonardo" },
   "Microduino_BLE.ino"          : { "board": "leonardo" },
-  "TinyDuino_WiFi.ino"          : { "board": "tinyduino" },
-  "WildFire_V3.ino"             : { "board": "wildfirev3" },
+  "TinyDuino_WiFi.ino"          : { "board": "tinyduino", "lib_deps": "Adafruit CC3000 Library" },
+  "CC3000.ino"                  : { "board": "uno", "lib_deps": "Adafruit CC3000 Library" },
+  "WildFire_V3.ino"             : { "board": "wildfirev3", "lib_deps": "WildFire-CC3000"  },
   "WildFire_V4.ino"             : { "skip": True },
   "chipKIT_Uno32.ino"           : { "board": "uno_pic32" },
   "LightBlue_Bean.ino"          : { "board": "lightblue-bean" },
   "Teensy3.ino"                 : { "board": "teensy31" },
   "ATtiny85.ino"                : { "board": "attiny85" },
+  "DHT11.ino"                   : { "board": "uno", "lib_deps": "Adafruit Unified Sensor" },
 
   # Special examples
   "ESP8266.ino"                 : ESP8266,
   "HandleDisconnect.ino"        : ESP8266,
+
 
   # No linux support
   "LinkItONE.ino"               : { "skip": True },
