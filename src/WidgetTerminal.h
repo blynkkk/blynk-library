@@ -10,7 +10,7 @@
 #ifndef WidgetTerminal_h
 #define WidgetTerminal_h
 
-#if !(defined(LINUX) || defined(MBED_LIBRARY_VERSION))
+#if !(defined(LINUX) || defined(__MBED__))
     #define BLYNK_USE_PRINT_CLASS
 #endif
 

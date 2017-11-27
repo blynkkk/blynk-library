@@ -13,9 +13,8 @@
     #include <Arduino.h>
     #include <avr/wdt.h>
 
-    void BlynkSystemInit(void) __attribute__((naked)) __attribute__((section(".init3")));
-
-    void BlynkSystemInit(void)
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
     {
         MCUSR = 0;
         wdt_disable();
@@ -142,7 +141,7 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(MBED_LIBRARY_VERSION)
+#elif defined(__MBED__)
 
     #include "mbed.h"
 
@@ -154,9 +153,8 @@
         //pc.puts("(...)");
     }
 
-    void BlynkSystemInit(void) __attribute__((naked)) __attribute__((section(".init3")));
-
-    void BlynkSystemInit(void)
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
     {
         blynk_waker.attach(&blynk_wake, 2.0);
         blynk_millis_timer.start();
@@ -179,7 +177,8 @@
     #include <stdlib.h>
     #include <wiringPi.h>
 
-    void BlynkSystemInit(void)
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
     {
         wiringPiSetupGpio();
     }

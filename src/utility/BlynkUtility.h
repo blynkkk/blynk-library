@@ -28,7 +28,10 @@ void BlynkAverageSample (T& avg, const T& input) {
     avg -= avg/WSIZE;
     const T add = input/WSIZE;
     // Fix for shorter delays
-    avg += (add > 0) ? add : -1;
+    if (add > 0)
+      avg += add;
+    else
+      avg -= 1;
 }
 
 #define BlynkBitSet(value, bit)   ((value) |= (1UL << (bit)))

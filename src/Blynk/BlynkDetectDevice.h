@@ -25,6 +25,7 @@
 #define BLYNK_NORETURN __attribute__ ((noreturn))
 #define BLYNK_UNUSED __attribute__((__unused__))
 #define BLYNK_DEPRECATED __attribute__ ((deprecated))
+#define BLYNK_CONSTRUCTOR __attribute__((constructor))
 
 // Causes problems on some platforms
 #define BLYNK_FORCE_INLINE inline //__attribute__((always_inline))
@@ -147,7 +148,7 @@
         #define BLYNK_INFO_DEVICE  "Particle"
         #endif
 
-    #elif defined(MBED_LIBRARY_VERSION)
+    #elif defined(__MBED__)
 
         #define BLYNK_INFO_DEVICE  "MBED"
         #define BLYNK_USE_128_VPINS
