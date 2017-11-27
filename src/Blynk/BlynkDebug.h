@@ -189,7 +189,7 @@ void            BlynkFatal() BLYNK_NORETURN;
         }
         #endif // ARDUINO_ARCH_ARC32
 
-    #elif defined(MBED_LIBRARY_VERSION)
+    #elif defined(__MBED__)
 
         #define BLYNK_LOG(msg, ...)       { BLYNK_PRINT.printf("[%ld] " msg "\n", BlynkMillis(), ##__VA_ARGS__); }
         #define BLYNK_LOG1(p1)            { BLYNK_LOG(p1);}
