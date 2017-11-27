@@ -22,7 +22,7 @@
       "tests"
     ]
   },
-  "frameworks": [ "arduino", "energia", "wiringpi" ],
+  "frameworks": "*",
   "platforms": "*",
   "examples": "examples/*/*/*.ino"
 }
