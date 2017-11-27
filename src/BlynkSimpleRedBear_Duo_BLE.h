@@ -189,8 +189,8 @@ public:
     }
 
     size_t read(void* buf, size_t len) {
-        uint32_t start = millis();
-        while (millis() - start < BLYNK_TIMEOUT_MS) {
+        millis_time_t start = BlynkMillis();
+        while (BlynkMillis() - start < BLYNK_TIMEOUT_MS) {
             if (available() < len) {
                 BlynkDelay(1);
                 //blePeripheral->poll();

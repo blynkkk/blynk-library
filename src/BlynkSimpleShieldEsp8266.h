@@ -87,9 +87,9 @@ public:
     }
 
     size_t read(void* buf, size_t len) {
-        uint32_t start = millis();
+        millis_time_t start = BlynkMillis();
         //BLYNK_LOG4("Waiting: ", len, " Occuied: ", buffer.getOccupied());
-        while ((buffer.getOccupied() < len) && (millis() - start < 1500)) {
+        while ((buffer.getOccupied() < len) && (BlynkMillis() - start < 1500)) {
             client->run();
         }
         return buffer.read((uint8_t*)buf, len);
