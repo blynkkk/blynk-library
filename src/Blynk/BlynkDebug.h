@@ -191,7 +191,41 @@ void            BlynkFatal() BLYNK_NORETURN;
 
     #elif defined(MBED_LIBRARY_VERSION)
 
-        //TODO
+        #define BLYNK_LOG(msg, ...)       { BLYNK_PRINT.printf("[%ld] " msg "\n", BlynkMillis(), ##__VA_ARGS__); }
+        #define BLYNK_LOG1(p1)            { BLYNK_LOG(p1);}
+        #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG(p1,p2);}
+        #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG(p1,p2,p3);}
+        #define BLYNK_LOG4(p1,p2,p3,p4)   { BLYNK_LOG(p1,p2,p3,p4);}
+        #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6)   { BLYNK_LOG(p1,p2,p3,p4,p5,p6);}
+
+        #define BLYNK_LOG_TIME() BLYNK_PRINT.printf("[%ld]", BlynkMillis());
+
+#ifdef BLYNK_DEBUG
+        #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
+        #define BLYNK_ASSERT(expr)   assert(expr)
+
+        static
+        void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
+            BLYNK_LOG_TIME();
+            BLYNK_PRINT.printf(msg);
+            int l2 = len;
+            const uint8_t* octets = (const uint8_t*)addr;
+            bool prev_print = true;
+            while (l2--) {
+                const uint8_t c = *octets++ & 0xFF;
+                if (c > 31) {
+                    if (!prev_print) { BLYNK_PRINT.putc(']'); }
+                    BLYNK_PRINT.putc((char)c);
+                    prev_print = true;
+                } else {
+                    BLYNK_PRINT.putc(prev_print?'[':'|');
+                    BLYNK_PRINT.printf("%02x", c);
+                    prev_print = false;
+                }
+            }
+            BLYNK_PRINT.printf("%s\n", prev_print?"":"]");
+        }
+#endif
 
     #elif defined(LINUX)
 
