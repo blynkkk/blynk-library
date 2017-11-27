@@ -155,7 +155,7 @@ install:
     # http://platformio.org/lib/show/1285/Timer5
     # http://platformio.org/lib/show/1287/TinyGSM
 
-    - platformio lib -g install 17 28 91 418 420 65 44 31 19 299 259 177 1192 1285 1287
+    - platformio lib -g install 28 91 418 420 65 44 31 19 299 259 177 1192 1285 1287
     - platformio lib -g install https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build
