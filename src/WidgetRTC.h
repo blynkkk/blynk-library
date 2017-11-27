@@ -11,6 +11,10 @@
 #ifndef WidgetRTC_h
 #define WidgetRTC_h
 
+#if !defined(ARDUINO)
+    #error WidgetRTC is not available on this platform!
+#endif
+
 #include <Blynk/BlynkWidgetBase.h>
 #include <Blynk/BlynkTemplates.h>
 #include <TimeLib.h>

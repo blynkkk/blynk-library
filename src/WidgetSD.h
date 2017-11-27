@@ -11,6 +11,10 @@
 #ifndef WidgetSD_h
 #define WidgetSD_h
 
+#if !defined(ARDUINO)
+    #error WidgetSD is not available on this platform!
+#endif
+
 #include <Blynk/BlynkWidgetBase.h>
 
 class WidgetSD
