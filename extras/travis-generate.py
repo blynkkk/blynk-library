@@ -4,7 +4,7 @@ import fnmatch
 import os
 
 ESP8266 = { "board": "nodemcuv2" }
-ESP32 =   { "board": "esp32dev", "framework": "arduino" }
+ESP32 =   { "board": "esp32dev", "framework": "arduino" } # "lib_deps": "ESP32 BLE Arduino" }
 
 metadata = {
   "Arduino_Yun.ino"             : { "board": "yun" },
@@ -74,7 +74,7 @@ metadata = {
   "Fishino.ino"                 : { "skip": True },  # requires extra lib
   "BBC_MicroBit.ino"            : { "board": "uno", "lib_deps": "SPI" }, #TODO
   "Simblee_BLE.ino"             : { "skip": True },
-  "RFDuino_BLE.ino"             : { "skip": True, "board": "rfduino" }, # TODO
+  "RFDuino_BLE.ino"             : { "board": "rfduino" },
   "DFRobot_Bluno_BLE_Link.ino"  : { "board": "leonardo" },
   "Microduino_BLE.ino"          : { "board": "leonardo" },
   "TinyDuino_WiFi.ino"          : { "board": "tinyduino", "lib_deps": "Adafruit CC3000 Library" },
