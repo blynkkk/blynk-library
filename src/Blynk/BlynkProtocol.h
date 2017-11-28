@@ -56,7 +56,6 @@ public:
         {
             run();
         }
-        run(); // Workaround for #325: Getting wrong bytes with ESP8266-SSL
         return state == CONNECTED;
     }
 
@@ -118,12 +117,6 @@ protected:
             " /____/_/\\_, /_//_/_/\\_\\\n"
             "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE "\n"
         ));
-#endif
-
-#ifdef BLYNK_DEBUG
-        if (size_t ram = BlynkFreeRam()) {
-            BLYNK_LOG2(BLYNK_F("Free RAM: "), ram);
-        }
 #endif
     }
     bool processInput(void);
@@ -261,6 +254,11 @@ bool BlynkProtocol<Transp>::processInput(void)
                 BLYNK_LOG3(BLYNK_F("Ready (ping: "), lastActivityIn-lastHeartbeat, BLYNK_F("ms)."));
                 lastHeartbeat = lastActivityIn;
                 state = CONNECTED;
+#ifdef BLYNK_DEBUG
+                if (size_t ram = BlynkFreeRam()) {
+                    BLYNK_LOG2(BLYNK_F("Free RAM: "), ram);
+                }
+#endif
                 this->sendInfo();
                 BLYNK_RUN_YIELD();
                 BlynkOnConnected();
@@ -282,9 +280,7 @@ bool BlynkProtocol<Transp>::processInput(void)
     }
 
     if (hdr.length > BLYNK_MAX_READBYTES) {
-#ifdef BLYNK_DEBUG
         BLYNK_LOG2(BLYNK_F("Packet too big: "), hdr.length);
-#endif
         // TODO: Flush
         internalReconnect();
         return true;
@@ -316,6 +312,11 @@ bool BlynkProtocol<Transp>::processInput(void)
         if (state == CONNECTING) {
             BLYNK_LOG1(BLYNK_F("Ready"));
             state = CONNECTED;
+#ifdef BLYNK_DEBUG
+            if (size_t ram = BlynkFreeRam()) {
+                BLYNK_LOG2(BLYNK_F("Free RAM: "), ram);
+            }
+#endif
             this->sendInfo();
             BlynkOnConnected();
         }
