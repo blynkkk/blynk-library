@@ -18,7 +18,7 @@ env:
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Energia_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=..."
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/LightBlue_Bean PLATFORMIO_CI_EXTRA_ARGS="--board=lightblue-bean"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/Microduino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
+    # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RFDuino_BLE PLATFORMIO_CI_EXTRA_ARGS="--board=rfduino"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Mini PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     # - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BLE_Nano PLATFORMIO_CI_EXTRA_ARGS="--board=redBearLabBLENano --project-option='framework=arduino'"
     - PLATFORMIO_CI_SRC=examples/Boards_Bluetooth/RedBearLab_BlendMicro PLATFORMIO_CI_EXTRA_ARGS="--board=blendmicro8"
