@@ -30,9 +30,8 @@
 
 #define BLYNK_PRINT Serial
 
-#include <BlynkSimpleSerialBLE.h>
+#include <BlynkSimpleBLEPeripheral.h>
 #include <BLEPeripheral.h>
-#include "BLESerial.h"
 #include <SPI.h>
 
 // You should get Auth Token in the Blynk App.
