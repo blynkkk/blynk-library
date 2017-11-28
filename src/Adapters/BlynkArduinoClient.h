@@ -69,7 +69,7 @@ public:
 
 #ifdef BLYNK_ENC28J60_FIX
     size_t read(void* buf, size_t len) {
-        while (client->available() < len) { }
+        while (client->available() < len) { BLYNK_RUN_YIELD(); }
         return client->read((uint8_t*)buf, len);
     }
 #else
