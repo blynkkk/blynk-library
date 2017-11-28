@@ -34,6 +34,14 @@ void BlynkAverageSample (T& avg, const T& input) {
       avg -= 1;
 }
 
+class BlynkHelperAutoInc {
+public:
+    BlynkHelperAutoInc(uint8_t& counter) : c(counter) { ++c; }
+    ~BlynkHelperAutoInc() { --c; }
+private:
+    uint8_t& c;
+};
+
 #define BlynkBitSet(value, bit)   ((value) |= (1UL << (bit)))
 #define BlynkBitClear(value, bit) ((value) &= ~(1UL << (bit)))
 #define BlynkBitRead(value, bit)  (((value) >> (bit)) & 0x01)
