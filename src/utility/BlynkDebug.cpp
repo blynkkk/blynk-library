@@ -174,6 +174,7 @@
     #define _BLYNK_USE_DEFAULT_RESET
 
 #elif defined(LINUX) && defined(RASPBERRY)
+
     #include <stdlib.h>
     #include <wiringPi.h>
 
@@ -200,6 +201,14 @@
     #include <time.h>
     #include <unistd.h>
 
+    static millis_time_t blynk_startup_time = 0;
+
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
+    {
+        blynk_startup_time = BlynkMillis();
+    }
+
     void BlynkReset()
     {
         exit(1);
@@ -215,7 +224,7 @@
     {
         struct timespec ts;
         clock_gettime(CLOCK_MONOTONIC, &ts );
-        return ( ts.tv_sec * 1000 + ts.tv_nsec / 1000000L );
+        return ( ts.tv_sec * 1000 + ts.tv_nsec / 1000000L ) - blynk_startup_time;
     }
 
     #define _BLYNK_USE_DEFAULT_FREE_RAM
