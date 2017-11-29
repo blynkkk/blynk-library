@@ -148,6 +148,10 @@ bool BlynkProtocol<Transp>::run(bool avail)
 {
     BLYNK_RUN_YIELD();
 
+    if (state == DISCONNECTED) {
+        return false;
+    }
+
     // Detect nesting
     BlynkHelperAutoInc guard(nesting);
     if (msgIdOutOverride || nesting > 2) {
@@ -155,10 +159,6 @@ bool BlynkProtocol<Transp>::run(bool avail)
       BLYNK_LOG1(BLYNK_F("Nested run() skipped"));
 #endif
       return true;
-    }
-
-    if (state == DISCONNECTED) {
-        return false;
     }
 
     const bool tconn = conn.connected();
@@ -272,6 +272,7 @@ bool BlynkProtocol<Transp>::processInput(void)
                 }
 #endif
                 this->sendInfo();
+                BLYNK_RUN_YIELD();
                 BlynkOnConnected();
                 return true;
             case BLYNK_INVALID_TOKEN:
@@ -329,6 +330,7 @@ bool BlynkProtocol<Transp>::processInput(void)
             }
 #endif
             this->sendInfo();
+            BLYNK_RUN_YIELD();
             BlynkOnConnected();
         }
         sendCmd(BLYNK_CMD_RESPONSE, hdr.msg_id, NULL, BLYNK_SUCCESS);
@@ -434,15 +436,15 @@ int BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
-    if (0 == id) {
-        id = getNextMsgId();
-    }
-
     if (!conn.connected() || (cmd != BLYNK_CMD_RESPONSE && cmd != BLYNK_CMD_PING && cmd != BLYNK_CMD_LOGIN && state != CONNECTED) ) {
 #ifdef BLYNK_DEBUG
         BLYNK_LOG2(BLYNK_F("Cmd skipped:"), cmd);
 #endif
         return;
+    }
+
+    if (0 == id) {
+        id = getNextMsgId();
     }
 
 #if defined(BLYNK_MSG_LIMIT) && BLYNK_MSG_LIMIT > 0
