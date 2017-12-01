@@ -155,7 +155,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
     // Detect nesting
     BlynkHelperAutoInc guard(nesting);
     if (msgIdOutOverride || nesting > 2) {
-#ifdef BLYNK_DEBUG
+#ifdef BLYNK_DEBUG_ALL
       BLYNK_LOG1(BLYNK_F("Nested run() skipped"));
 #endif
       return true;
@@ -300,7 +300,7 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     uint8_t inputBuffer[hdr.length+1]; // Add 1 to zero-terminate
     if (hdr.length != conn.read(inputBuffer, hdr.length)) {
-#ifdef DEBUG
+#ifdef BLYNK_DEBUG
         BLYNK_LOG1(BLYNK_F("Can't read body"));
 #endif
         return false;
@@ -383,7 +383,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         case BLYNK_INT_OTA:  BlynkWidgetWriteInternalPinOTA(req, param2);    break;
         case BLYNK_INT_ACON: BlynkWidgetWriteInternalPinACON(req, param2);   break;
         case BLYNK_INT_ADIS: BlynkWidgetWriteInternalPinADIS(req, param2);   break;
-#ifdef DEBUG
+#ifdef BLYNK_DEBUG
         default:             BLYNK_LOG2(BLYNK_F("Invalid internal cmd:"), param.asStr());
 #endif
         }
@@ -437,7 +437,7 @@ template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
     if (!conn.connected() || (cmd != BLYNK_CMD_RESPONSE && cmd != BLYNK_CMD_PING && cmd != BLYNK_CMD_LOGIN && state != CONNECTED) ) {
-#ifdef BLYNK_DEBUG
+#ifdef BLYNK_DEBUG_ALL
         BLYNK_LOG2(BLYNK_F("Cmd skipped:"), cmd);
 #endif
         return;
