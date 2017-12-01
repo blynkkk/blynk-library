@@ -98,6 +98,10 @@ void            BlynkFatal() BLYNK_NORETURN;
 #undef BLYNK_DEBUG
 #endif
 
+#ifdef BLYNK_DEBUG_ALL
+#define BLYNK_DEBUG
+#endif
+
 #ifdef BLYNK_PRINT
 
     #if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
