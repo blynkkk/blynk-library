@@ -47,7 +47,7 @@ public:
 
     void begin() {
         // Create the BLE Device
-        BLEDevice::init("UART Service");
+        BLEDevice::init("Blynk");
 
         // Create the BLE Server
         pServer = BLEDevice::createServer();
