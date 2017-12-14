@@ -20,32 +20,30 @@
 static BlynkTransportSocket _blynkTransport;
 BlynkSocket Blynk(_blynkTransport);
 
+static const char *auth, *serv;
+static uint16_t port;
+
 #include <BlynkWidgets.h>
 
 BLYNK_WRITE(V1)
 {
-  printf("Got a value: %s\n", param[0].asStr());
+    printf("Got a value: %s\n", param[0].asStr());
 }
-
 
 void setup()
 {
-
+    Blynk.begin(auth, serv, port);
 }
 
 void loop()
 {
-  Blynk.run();
+    Blynk.run();
 }
 
 
 int main(int argc, char* argv[])
 {
-    const char *auth, *serv;
-    uint16_t port;
     parse_options(argc, argv, auth, serv, port);
-
-    Blynk.begin(auth, serv, port);
 
     setup();
     while(true) {
