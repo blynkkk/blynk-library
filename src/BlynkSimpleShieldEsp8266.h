@@ -45,7 +45,7 @@ class BlynkTransportShieldEsp8266
         while (len) {
             if (client->getUart()->available()) {
                 uint8_t b = client->getUart()->read();
-                if(!buffer.push(b)) {
+                if(!buffer.put(b)) {
                     BLYNK_LOG1(BLYNK_F("Buffer overflow"));
                 }
                 len--;
@@ -88,11 +88,11 @@ public:
 
     size_t read(void* buf, size_t len) {
         millis_time_t start = BlynkMillis();
-        //BLYNK_LOG4("Waiting: ", len, " Occuied: ", buffer.getOccupied());
-        while ((buffer.getOccupied() < len) && (BlynkMillis() - start < 1500)) {
+        //BLYNK_LOG4("Waiting: ", len, " Buffer: ", buffer.size());
+        while ((buffer.size() < len) && (BlynkMillis() - start < 1500)) {
             client->run();
         }
-        return buffer.read((uint8_t*)buf, len);
+        return buffer.get((uint8_t*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
         if (client->send(BLYNK_ESP8266_MUX, (const uint8_t*)buf, len)) {
@@ -105,8 +105,8 @@ public:
 
     int available() {
         client->run();
-        //BLYNK_LOG2("Still: ", buffer.getOccupied());
-        return buffer.getOccupied();
+        //BLYNK_LOG2("Still: ", buffer.size());
+        return buffer.size();
     }
 
 private:
