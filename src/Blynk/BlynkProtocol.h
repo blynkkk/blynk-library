@@ -37,9 +37,6 @@ public:
         , lastActivityIn(0)
         , lastActivityOut(0)
         , lastHeartbeat(0)
-#ifdef BLYNK_MSG_LIMIT
-        , deltaCmd(0)
-#endif
         , msgIdOut(0)
         , msgIdOutOverride(0)
         , nesting(0)
@@ -72,11 +69,8 @@ public:
     void startSession() {
         conn.connect();
         state = CONNECTING;
-#ifdef BLYNK_MSG_LIMIT
-        deltaCmd = 1000;
-#endif
         msgIdOut = 0;
-        lastHeartbeat = lastActivityIn = lastActivityOut = BlynkMillis(); // TODO: - 5005UL
+        lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() - 5000UL);
     }
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
@@ -95,6 +89,7 @@ private:
 protected:
     void begin(const char* auth) {
         this->authkey = auth;
+        lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() - 5000UL);
 
 #if defined(BLYNK_NO_FANCY_LOGO)
         BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
@@ -133,9 +128,6 @@ private:
         millis_time_t lastHeartbeat;
         millis_time_t lastLogin;
     };
-#ifdef BLYNK_MSG_LIMIT
-    millis_time_t deltaCmd;
-#endif
     uint16_t msgIdOut;
     uint16_t msgIdOutOverride;
     uint8_t  nesting;
@@ -224,9 +216,6 @@ bool BlynkProtocol<Transp>::run(bool avail)
                 return false;
             }
 
-#ifdef BLYNK_MSG_LIMIT
-            deltaCmd = 1000;
-#endif
             msgIdOut = 1;
             sendCmd(BLYNK_CMD_LOGIN, 1, authkey, strlen(authkey));
             lastLogin = lastActivityOut;
@@ -459,6 +448,8 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
                 run();
                 wait_time = allowed_time - BlynkMillis();
             }
+        } else if (nesting == 0) {
+            run();
         }
     }
 #endif
@@ -467,7 +458,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
                                (data  ? length  : 0) +
                                (data2 ? length2 : 0);
 
-#if defined(BLYNK_SEND_ATOMIC) || defined(ESP8266) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
+#if defined(BLYNK_SEND_ATOMIC) || defined(ESP8266) || defined(ESP32) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...
 
     uint8_t buff[full_length];
