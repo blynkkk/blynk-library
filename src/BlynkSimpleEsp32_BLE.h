@@ -21,7 +21,7 @@
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
-#include <utility/BlynkFifo2.h>
+#include <utility/BlynkFifo.h>
 
 #include <BLEDevice.h>
 #include <BLEServer.h>
@@ -163,17 +163,19 @@ public:
 };
 
 
-static BlynkTransportEsp32_BLE _blynkTransport;
-BlynkEsp32_BLE Blynk(_blynkTransport);
+static BlynkTransportEsp32_BLE _blynkTransportBLE;
+BlynkEsp32_BLE Blynk(_blynkTransportBLE);
 
 inline
 void BlynkTransportEsp32_BLE::onConnect(BLEServer* pServer) {
+  BLYNK_LOG1(BLYNK_F("BLE connect"));
   connect();
   Blynk.startSession();
 };
 
 inline
 void BlynkTransportEsp32_BLE::onDisconnect(BLEServer* pServer) {
+  BLYNK_LOG1(BLYNK_F("BLE disconnect"));
   Blynk.disconnect();
   disconnect();
 }
