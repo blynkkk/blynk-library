@@ -59,7 +59,7 @@ public:
         return c;
     }
 
-    int put(const T* p, int n, bool t = false)
+    int put(const T* p, int n, bool blocking = false)
     {
         int c = n;
         while (c)
@@ -67,7 +67,7 @@ public:
             int f;
             while ((f = free()) == 0) // wait for space
             {
-                if (!t) return n - c; // no more space and not blocking
+                if (!blocking) return n - c; // no more space and not blocking
                 /* nothing / just wait */;
             }
             // check free space
@@ -117,7 +117,7 @@ public:
         return _b[r];
     }
 
-    int get(T* p, int n, bool t = false)
+    int get(T* p, int n, bool blocking = false)
     {
         int c = n;
         while (c)
@@ -127,7 +127,7 @@ public:
             {
                 f = size();
                 if (f)  break;        // free space
-                if (!t) return n - c; // no space and not blocking
+                if (!blocking) return n - c; // no space and not blocking
                 /* nothing / just wait */;
             }
             // check available data
