@@ -68,7 +68,7 @@ void enterConfigMode()
           char c = client.read();             // read a byte, then
           Serial.write(c);                    // print it out the serial monitor
           if (c == '\n') {                    // if the byte is a newline character
-  
+
             // if the current line is blank, you got two newline characters in a row.
             // that's the end of the client HTTP request, so send a response:
             if (currentLine.length() == 0) {
@@ -207,11 +207,11 @@ String urlFindArg(const String& url, const String& arg)
 void enterConnectNet() {
   BlynkState::set(MODE_CONNECTING_NET);
   DEBUG_PRINT(String("Connecting to WiFi: ") + configStore.wifiSSID);
-  
+
   WiFi.mode(WIFI_STA);
   if (!WiFi.begin(configStore.wifiSSID, configStore.wifiPass))
     return;
-  
+
   unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))
   {
@@ -221,7 +221,7 @@ void enterConnectNet() {
       return;
     }
   }
-  
+
   if (WiFi.status() == WL_CONNECTED) {
     BlynkState::set(MODE_CONNECTING_CLOUD);
   } else {
