@@ -41,13 +41,15 @@ class BlynkTransportShieldEsp8266
         if (mux_id != BLYNK_ESP8266_MUX) {
             return;
         }
-        //BLYNK_LOG2("Got ", len);
+        //BLYNK_LOG4("Got: ", len, ", Free: ", buffer.free());
+        if (buffer.free() < len) {
+          BLYNK_LOG1(BLYNK_F("Buffer overflow"));
+          return;
+        }
         while (len) {
             if (client->getUart()->available()) {
                 uint8_t b = client->getUart()->read();
-                if(!buffer.put(b)) {
-                    BLYNK_LOG1(BLYNK_F("Buffer overflow"));
-                }
+                buffer.put(b);
                 len--;
             }
         }
