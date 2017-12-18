@@ -41,7 +41,7 @@
   #define BOARD_LED_PIN_G             D7
   #define BOARD_LED_PIN_B             D6
   #define BOARD_LED_INVERSE           false
-  #define BOARD_RGB_BRIGHTNESS        32
+  #define BOARD_LED_BRIGHTNESS        32
 
 #elif defined(USE_SPARKFUN_BLYNK_BOARD)
 
@@ -52,7 +52,7 @@
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
   #define BOARD_LED_PIN_WS2812        4
-  #define BOARD_RGB_BRIGHTNESS        32
+  #define BOARD_LED_BRIGHTNESS        32
 
 #elif defined(USE_WITTY_CLOUD_BOARD)
 
@@ -66,7 +66,7 @@
   #define BOARD_LED_PIN_G             12
   #define BOARD_LED_PIN_B             13
   #define BOARD_LED_INVERSE           false
-  #define BOARD_RGB_BRIGHTNESS        32
+  #define BOARD_LED_BRIGHTNESS        32
 
 #else
   #error "No board selected"
