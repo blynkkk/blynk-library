@@ -16,6 +16,7 @@ enum State {
   MODE_RUNNING,
   MODE_OTA_UPGRADE,
   MODE_SWITCH_TO_STA,
+  MODE_RESET_CONFIG,
   MODE_ERROR,
 
   MODE_MAX_VALUE
@@ -30,6 +31,7 @@ const char* StateStr[MODE_MAX_VALUE] = {
   "RUNNING",
   "OTA_UPGRADE",
   "SWITCH_TO_STA",
+  "RESET_CONFIG",
   "ERROR"
 };
 #endif
