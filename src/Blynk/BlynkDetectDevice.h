@@ -165,6 +165,23 @@
         #define BLYNK_INFO_DEVICE  "chipKIT"
         #endif
 
+    #elif defined(ARDUINO) && defined(ARDUINO_AMEBA)
+        #if defined(BOARD_RTL8710)
+        #define BLYNK_INFO_DEVICE  "RTL8710"
+        #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
+        #elif defined(BOARD_RTL8711AM)
+        #define BLYNK_INFO_DEVICE  "RTL8711AM"
+        #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
+        #elif defined(BOARD_RTL8195A)
+        #define BLYNK_INFO_DEVICE  "RTL8195A"
+        #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
+        #else
+        #define BLYNK_INFO_DEVICE  "Ameba"
+        #endif
+
     #elif defined(ARDUINO) && defined(TEENSYDUINO)
 
         #if   defined(__MK66FX1M0__)
