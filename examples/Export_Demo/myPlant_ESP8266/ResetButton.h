@@ -13,7 +13,7 @@ volatile uint32_t g_buttonPressTime = -1;
 
 void button_action(void)
 {
-  config_reset();
+  BlynkState::set(MODE_RESET_CONFIG);
 }
 
 void button_change(void)

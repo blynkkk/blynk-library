@@ -26,8 +26,8 @@
   //#define BOARD_LED_PIN_G           12
   //#define BOARD_LED_PIN_B           13
   //#define BOARD_LED_PIN_WS2812      4                     // Set if your LED is WS2812 RGB
-  #define BOARD_LED_INVERSE           false                 // true, if you need to inverse LED signal
-  #define BOARD_RGB_BRIGHTNESS        32                    // 0..255 brightness control
+  #define BOARD_LED_INVERSE           false                 // true if LED is common anode, false if common cathode
+  #define BOARD_LED_BRIGHTNESS        32                    // 0..255 brightness control
 
 #elif defined(USE_NODE_MCU_BOARD)
 
@@ -46,11 +46,11 @@
 #elif defined(USE_SPARKFUN_BLYNK_BOARD)
 
   #warning "Sparkfun Blynk board selected"
-  
+
   // Example configuration for SparkFun Blynk Board
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
-  
+
   #define BOARD_LED_PIN_WS2812        4
   #define BOARD_RGB_BRIGHTNESS        32
 
@@ -61,7 +61,7 @@
   // Example configuration for Witty cloud Board
   #define BOARD_BUTTON_PIN            4
   #define BOARD_BUTTON_ACTIVE_LOW     true
-  
+
   #define BOARD_LED_PIN_R             15
   #define BOARD_LED_PIN_G             12
   #define BOARD_LED_PIN_B             13

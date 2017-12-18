@@ -37,9 +37,8 @@ void restartMCU() {
 
 void enterConfigMode()
 {
-  WiFi.disconnect();
   WiFi.mode(WIFI_OFF);
-  delay(1000);
+  delay(100);
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(WIFI_AP_IP, WIFI_AP_IP, WIFI_AP_Subnet);
   WiFi.softAP(PRODUCT_WIFI_SSID);
@@ -123,7 +122,7 @@ void enterConfigMode()
     server.send(200, "application/json", buff);
   });
   server.on("/reset", []() {
-    config_reset();
+    BlynkState::set(MODE_RESET_CONFIG);
     server.send(200, "application/json", R"json({"status":"ok","msg":"Configuration reset"})json");
   });
   server.on("/reboot", []() {
