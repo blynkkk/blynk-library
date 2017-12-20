@@ -7,6 +7,7 @@
 
 #define BOARD_NAME                    "Product Name"        // Name of your product. Should match App Export request info.
 #define BOARD_VENDOR                  "Company Name"        // Name of your company. Should match App Export request info.
+#define BOARD_TEMPLATE_ID             "TMPL0000"
 
 #define PRODUCT_WIFI_SSID             "Our Product"         // Name of the device, to be displayed during configuration. Should match export request info.
 #define BOARD_CONFIG_AP_URL           "our-product"         // Config page will be available in a browser at 'http://our-product.local/'

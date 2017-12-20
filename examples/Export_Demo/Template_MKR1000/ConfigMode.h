@@ -118,9 +118,10 @@ void enterConfigMode()
   case REQ_BOARD_INFO: {
     char buff[256];
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","vendor":"%s","fw_ver":"%s","hw_ver":"%s"})json",
+      R"json({"board":"%s","vendor":"%s","tmpl_id":"%s","fw_ver":"%s","hw_ver":"%s"})json",
       BOARD_NAME,
       BOARD_VENDOR,
+      BOARD_TEMPLATE_ID,
       BOARD_FIRMWARE_VERSION,
       BOARD_HARDWARE_VERSION
     );
