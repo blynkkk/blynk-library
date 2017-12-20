@@ -153,9 +153,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
       return true;
     }
 
-    const bool tconn = conn.connected();
-
-    if (tconn) {
+    if (conn.connected()) {
         while (avail || conn.available() > 0) {
             //BLYNK_LOG2(BLYNK_F("Available: "), conn.available());
             //const unsigned long t = micros();
@@ -174,6 +172,9 @@ bool BlynkProtocol<Transp>::run(bool avail)
     }
 
     const millis_time_t t = BlynkMillis();
+
+    // Update connection status after running commands
+    const bool tconn = conn.connected();
 
     if (state == CONNECTED) {
         if (!tconn) {
@@ -343,8 +344,8 @@ bool BlynkProtocol<Transp>::processInput(void)
         BLYNK_LOG4(BLYNK_F("Redirecting to "), redir_serv, ':', redir_port);
         conn.disconnect();
         conn.begin(redir_serv, redir_port);
-        lastLogin = lastActivityIn - 5000L;  // Reconnect immediately
         state = CONNECTING;
+        lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() - 5000UL);
     } break;
     case BLYNK_CMD_HARDWARE:
     case BLYNK_CMD_BRIDGE: {
@@ -441,7 +442,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         const millis_time_t allowed_time = BlynkMax(lastActivityOut, lastActivityIn) + 1000/BLYNK_MSG_LIMIT;
         long wait_time = allowed_time - BlynkMillis();
         if (wait_time >= 0) {
-#ifdef BLYNK_DEBUG
+#ifdef BLYNK_DEBUG_ALL
             BLYNK_LOG2(BLYNK_F("Waiting:"), wait_time);
 #endif
             while (wait_time >= 0) {
