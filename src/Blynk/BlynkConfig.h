@@ -52,6 +52,9 @@
 #define BLYNK_MAX_SENDBYTES  128
 #endif
 
+// Uncomment to use Let's Encrypt Root CA
+//#define BLYNK_SSL_USE_LETSENCRYPT
+
 // Uncomment to disable built-in analog and digital operations.
 //#define BLYNK_NO_BUILTIN
 
