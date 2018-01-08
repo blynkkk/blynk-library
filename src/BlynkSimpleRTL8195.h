@@ -34,7 +34,6 @@ public:
     void connectWiFi(char* ssid, char* pass)
     {
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
-        //WiFi.mode(WIFI_STA);
         if (pass && strlen(pass)) {
             WiFi.begin(ssid, pass);
         } else {
