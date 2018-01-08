@@ -20,7 +20,9 @@
 
 #if defined(BLYNK_SSL_USE_LETSENCRYPT)
   static const unsigned char BLYNK_DEFAULT_CERT_DER[] PROGMEM =
-  #include <certs/letsencrypt_der.h>
+  #include <certs/dst_der.h>  // TODO: using DST Root CA X3 for now
+  //#include <certs/isrgroot_der.h>
+  //#include <certs/letsencrypt_der.h>
 #else
   static const unsigned char BLYNK_DEFAULT_CERT_DER[] PROGMEM =
   #include <certs/blynkcloud_der.h>
@@ -45,12 +47,20 @@ public:
 
     void setFingerprint(const char* fp) { fingerprint = fp; }
 
-    void setCACert(const uint8_t* caCert, unsigned caCertLen) {
-        this->client->setCACert(caCert, caCertLen);
+    bool setCACert(const uint8_t* caCert, unsigned caCertLen) {
+        bool res = this->client->setCACert(caCert, caCertLen);
+        if (!res) {
+          BLYNK_LOG1("Failed to load root CA certificate!");
+        }
+        return res;
     }
 
-    void setCACert_P(const uint8_t* caCert, unsigned caCertLen) {
-        this->client->setCACert_P(caCert, caCertLen);
+    bool setCACert_P(const uint8_t* caCert, unsigned caCertLen) {
+        bool res = this->client->setCACert_P(caCert, caCertLen);
+        if (!res) {
+          BLYNK_LOG1("Failed to load root CA certificate!");
+        }
+        return res;
     }
 
     bool connect() {
