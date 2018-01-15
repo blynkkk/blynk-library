@@ -64,6 +64,19 @@ public:
     }
 
     bool connect() {
+        // Synchronize time useing SNTP. This is necessary to verify that
+        // the TLS certificates offered by the server are currently valid.
+        configTime(8 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+        time_t now = time(nullptr);
+        while (now < 1000) {
+          delay(500);
+          now = time(nullptr);
+        }
+        struct tm timeinfo;
+        gmtime_r(&now, &timeinfo);
+        BLYNK_LOG2("Got time: ", asctime(&timeinfo));
+
+        // Now try connecting
         if (BlynkArduinoClientGen<Client>::connect()) {
           if (fingerprint && this->client->verify(fingerprint, this->domain)) {
               BLYNK_LOG1(BLYNK_F("Fingerprint OK"));
@@ -108,18 +121,6 @@ public:
 
         IPAddress myip = WiFi.localIP();
         BLYNK_LOG_IP("IP: ", myip);
-
-        // Synchronize time useing SNTP. This is necessary to verify that
-        // the TLS certificates offered by the server are currently valid.
-        configTime(8 * 3600, 0, "pool.ntp.org", "time.nist.gov");
-        time_t now = time(nullptr);
-        while (now < 1000) {
-          delay(500);
-          now = time(nullptr);
-        }
-        struct tm timeinfo;
-        gmtime_r(&now, &timeinfo);
-        BLYNK_LOG2("Got time: ", asctime(&timeinfo));
     }
 
     void config(const char* auth,
