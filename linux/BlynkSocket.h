@@ -12,6 +12,7 @@
 
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <sys/ioctl.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
@@ -70,8 +71,8 @@ public:
         }
 
         struct timeval tv;
-        tv.tv_sec = 1;
-        tv.tv_usec = 0;
+        tv.tv_sec = 0;
+        tv.tv_usec = 1000;
         setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv, sizeof(struct timeval));
 
         int one = 1;
@@ -109,11 +110,27 @@ public:
         return ::write(sockfd, buf, len);
     }
 
-    bool connected() { return sockfd >= 0; }
-    int available() { return BLYNK_MAX_READBYTES; }
+    bool connected() {
+      return sockfd >= 0;
+    }
+
+    int available() {
+        if (!connected()) {
+            return 0;
+        }
+
+        int count = 0;
+        if (0 == ioctl(sockfd, FIONREAD, &count)) {
+            if (!count) {
+                usleep(10000); // not to stall CPU with 100% load
+            }
+            return count;
+        }
+        return 0;
+    }
 
 protected:
-    int    sockfd;
+    int         sockfd;
     const char* domain;
     uint16_t    port;
 };

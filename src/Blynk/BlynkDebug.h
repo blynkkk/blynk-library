@@ -12,6 +12,7 @@
 #define BlynkDebug_h
 
 #include <Blynk/BlynkConfig.h>
+
 #include <stddef.h>
 #ifdef ESP8266
     extern "C" {
@@ -29,6 +30,13 @@
     typedef uint32_t millis_time_t;
 #endif
 
+void            BlynkDelay(millis_time_t ms);
+millis_time_t   BlynkMillis();
+size_t          BlynkFreeRam();
+void            BlynkReset() BLYNK_NORETURN;
+void            BlynkFatal() BLYNK_NORETURN;
+
+
 #if defined(SPARK) || defined(PARTICLE)
     #include "application.h"
 #endif
@@ -41,8 +49,10 @@
     #endif
 #endif
 
-#if !defined(ARDUINO) || (ARDUINO < 151)
-    #define BLYNK_NO_YIELD
+#if defined(LINUX)
+    #if defined(RASPBERRY)
+        #include <wiringPi.h>
+    #endif
 #endif
 
 #if !defined(BLYNK_RUN_YIELD)
@@ -50,8 +60,10 @@
         #define BLYNK_RUN_YIELD() {}
     #elif defined(SPARK) || defined(PARTICLE)
         #define BLYNK_RUN_YIELD() { Particle.process(); }
+    #elif !defined(ARDUINO) || (ARDUINO < 151)
+        #define BLYNK_RUN_YIELD() {}
     #else
-        #define BLYNK_RUN_YIELD() { ::delay(0); }
+        #define BLYNK_RUN_YIELD() { BlynkDelay(0); }
     #endif
 #endif
 
@@ -77,10 +89,6 @@
 
 // Diagnostic defines
 
-size_t BlynkFreeRam();
-void BlynkReset() BLYNK_NORETURN;
-void BlynkFatal() BLYNK_NORETURN;
-
 #define BLYNK_FATAL(msg)     { BLYNK_LOG1(msg); BlynkFatal(); }
 #define BLYNK_LOG_RAM()      { BLYNK_LOG2(BLYNK_F("Free RAM: "), BlynkFreeRam()); }
 #define BLYNK_LOG_FN()       BLYNK_LOG3(BLYNK_F(__FUNCTION__), '@', __LINE__);
@@ -88,6 +96,10 @@ void BlynkFatal() BLYNK_NORETURN;
 
 #ifndef BLYNK_PRINT
 #undef BLYNK_DEBUG
+#endif
+
+#ifdef BLYNK_DEBUG_ALL
+#define BLYNK_DEBUG
 #endif
 
 #ifdef BLYNK_PRINT
@@ -120,7 +132,7 @@ void BlynkFatal() BLYNK_NORETURN;
         static
         void BLYNK_LOG_TIME() {
             BLYNK_PRINT.print('[');
-            BLYNK_PRINT.print(millis());
+            BLYNK_PRINT.print(BlynkMillis());
             BLYNK_PRINT.print(BLYNK_F("] "));
         }
 
@@ -139,7 +151,7 @@ void BlynkFatal() BLYNK_NORETURN;
                 bool prev_print = true;
                 while (l2--) {
                     const uint8_t c = *octets++ & 0xFF;
-                    if (isprint(c)) {
+                    if (c >= 32 && c < 127) {
                         if (!prev_print) { BLYNK_PRINT.print(']'); }
                         BLYNK_PRINT.print((char)c);
                         prev_print = true;
@@ -169,7 +181,7 @@ void BlynkFatal() BLYNK_NORETURN;
             va_start(ap, fmt);
             char buff[128];
             BLYNK_PRINT.print('[');
-            BLYNK_PRINT.print(millis());
+            BLYNK_PRINT.print(BlynkMillis());
             BLYNK_PRINT.print(BLYNK_F("] "));
 #if defined(__AVR__)
             vsnprintf_P(buff, sizeof(buff), fmt, ap);
@@ -181,7 +193,45 @@ void BlynkFatal() BLYNK_NORETURN;
         }
         #endif // ARDUINO_ARCH_ARC32
 
-    #elif defined(LINUX) || defined(MBED_LIBRARY_VERSION)
+    #elif defined(__MBED__)
+
+        #define BLYNK_LOG(msg, ...)       { BLYNK_PRINT.printf("[%ld] " msg "\n", BlynkMillis(), ##__VA_ARGS__); }
+        #define BLYNK_LOG1(p1)            { BLYNK_LOG(p1);}
+        #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG(p1,p2);}
+        #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG(p1,p2,p3);}
+        #define BLYNK_LOG4(p1,p2,p3,p4)   { BLYNK_LOG(p1,p2,p3,p4);}
+        #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6)   { BLYNK_LOG(p1,p2,p3,p4,p5,p6);}
+
+        #define BLYNK_LOG_TIME() BLYNK_PRINT.printf("[%ld]", BlynkMillis());
+
+#ifdef BLYNK_DEBUG
+        #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
+        #define BLYNK_ASSERT(expr)   assert(expr)
+
+        static
+        void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
+            BLYNK_LOG_TIME();
+            BLYNK_PRINT.printf(msg);
+            int l2 = len;
+            const uint8_t* octets = (const uint8_t*)addr;
+            bool prev_print = true;
+            while (l2--) {
+                const uint8_t c = *octets++ & 0xFF;
+                if (c >= 32 && c < 127) {
+                    if (!prev_print) { BLYNK_PRINT.putc(']'); }
+                    BLYNK_PRINT.putc((char)c);
+                    prev_print = true;
+                } else {
+                    BLYNK_PRINT.putc(prev_print?'[':'|');
+                    BLYNK_PRINT.printf("%02x", c);
+                    prev_print = false;
+                }
+            }
+            BLYNK_PRINT.printf("%s\n", prev_print?"":"]");
+        }
+#endif
+
+    #elif defined(LINUX)
 
         #include <assert.h>
         #include <stdio.h>
@@ -191,19 +241,40 @@ void BlynkFatal() BLYNK_NORETURN;
 
         #include <iostream>
         using namespace std;
-        #define BLYNK_LOG(msg, ...)       { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", millis(), ##__VA_ARGS__); }
+        #define BLYNK_LOG(msg, ...)       { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", BlynkMillis(), ##__VA_ARGS__); }
         #define BLYNK_LOG1(p1)            { BLYNK_LOG_TIME(); cout << p1 << endl; }
         #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG_TIME(); cout << p1 << p2 << endl; }
         #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << endl; }
         #define BLYNK_LOG4(p1,p2,p3,p4)   { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << p4 << endl; }
         #define BLYNK_LOG6(p1,p2,p3,p4,p5,p6)   { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << p4 << p5 << p6 << endl; }
 
-        #define BLYNK_LOG_TIME() cout << '[' << millis() << "] ";
+        #define BLYNK_LOG_TIME() cout << '[' << BlynkMillis() << "] ";
 
 #ifdef BLYNK_DEBUG
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_ASSERT(expr)   assert(expr)
-        #define BLYNK_DBG_DUMP(msg, addr, len) if (len) { fprintf(BLYNK_PRINT, msg); fwrite(addr, len, 1, BLYNK_PRINT); fputc('\n', BLYNK_PRINT); }
+
+        static
+        void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
+            BLYNK_LOG_TIME();
+            fprintf(BLYNK_PRINT, "%s", msg);
+            int l2 = len;
+            const uint8_t* octets = (const uint8_t*)addr;
+            bool prev_print = true;
+            while (l2--) {
+                const uint8_t c = *octets++ & 0xFF;
+                if (c >= 32 && c < 127) {
+                    if (!prev_print) { fputc(']', BLYNK_PRINT); }
+                    fputc((char)c, BLYNK_PRINT);
+                    prev_print = true;
+                } else {
+                    fputc(prev_print?'[':'|', BLYNK_PRINT);
+                    fprintf(BLYNK_PRINT, "%02x", c);
+                    prev_print = false;
+                }
+            }
+            fprintf(BLYNK_PRINT, "%s\n", prev_print?"":"]");
+        }
 #endif
 
     #else

@@ -177,6 +177,10 @@ void BlynkParam::add(const void* b, size_t l)
 inline
 void BlynkParam::add(const char* str)
 {
+    if (str == NULL) {
+        buff[len++] = '\0';
+        return;
+    }
     add(str, strlen(str)+1);
 }
 
@@ -281,7 +285,7 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
     void BlynkParam::add(double value)
     {
         char str[33];
-        dtostrf(value, 5, 3, str);
+        dtostrf(value, 5, 7, str);
         add(str);
     }
 #endif
@@ -344,7 +348,7 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
     void BlynkParam::add(double value)
     {
         char str[33];
-        dtostrf_internal(value, 5, 3, str);
+        dtostrf_internal(value, 5, 7, str);
         add(str);
     }
 
@@ -359,7 +363,7 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
     inline
     void BlynkParam::add(double value)
     {
-        len += snprintf(buff+len, buff_size-len, "%2.3f", value)+1;
+        len += snprintf(buff+len, buff_size-len, "%2.7f", value)+1;
     }
 
 #endif

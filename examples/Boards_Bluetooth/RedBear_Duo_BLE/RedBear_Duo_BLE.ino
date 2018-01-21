@@ -1,25 +1,26 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- *
- * This example shows how to use RedBear Duo BLE
- * to connect your project to Blynk.
- *
- * NOTE: BLE support is in beta!
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
+
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+
+  This example shows how to use RedBear Duo BLE
+  to connect your project to Blynk.
+
+  NOTE: BLE support is in beta!
+
+ *************************************************************/
 
 #if defined(ARDUINO)
   SYSTEM_MODE(MANUAL);    // If Arduino - do not connect to Particle cloud
@@ -41,9 +42,9 @@ void setup() {
   Serial.begin(9600);
   delay(5000);
 
-  Blynk.begin(auth);
-
   Serial.println("Waiting for connections...");
+
+  Blynk.begin(auth);
 }
 
 void loop() {

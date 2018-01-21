@@ -1,37 +1,36 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * Blynk library is licensed under MIT license
- * This example code is in public domain.
- *
- **************************************************************
- *
- * This example shows how to use nRF8001 breakout
- * to connect your project to Blynk.
- *
- * For this example you need BLEPeripheral library
- *   from http://librarymanager/all#BLEPeripheral
- *   or https://github.com/sandeepmistry/arduino-BLEPeripheral
- *
- * NOTE: BLE support is in beta!
- *
- **************************************************************/
+/*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
+
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Social networks:            http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
+
+ *************************************************************
+  For this example you need BLEPeripheral library
+    from http://librarymanager/all#BLEPeripheral
+    or https://github.com/sandeepmistry/arduino-BLEPeripheral
+
+  Warning: Bluetooth support is in beta!
+ *************************************************************/
+
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
 
 #define BLYNK_USE_DIRECT_CONNECT
 
-#define BLYNK_PRINT Serial
-
-#include <BlynkSimpleSerialBLE.h>
+#include <BlynkSimpleBLEPeripheral.h>
 #include <BLEPeripheral.h>
-#include "BLESerial.h"
 #include <SPI.h>
 
 // You should get Auth Token in the Blynk App.
@@ -46,7 +45,9 @@ char auth[] = "YourAuthToken";
 // create ble serial instance, see pinouts above
 BLESerial SerialBLE(BLE_REQ, BLE_RDY, BLE_RST);
 
-void setup() {
+void setup()
+{
+  // Debug console
   Serial.begin(9600);
 
   SerialBLE.setLocalName("Blynk");
@@ -54,12 +55,13 @@ void setup() {
   SerialBLE.setAppearance(0x0080);
   SerialBLE.begin();
 
-  Blynk.begin(SerialBLE, auth);
-
   Serial.println("Waiting for connections...");
+
+  Blynk.begin(SerialBLE, auth);
 }
 
-void loop() {
+void loop()
+{
   SerialBLE.poll();
 
   if (SerialBLE) {    // If BLE is connected...

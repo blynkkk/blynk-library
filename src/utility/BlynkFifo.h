@@ -13,83 +13,146 @@
 
 #include <utility/BlynkUtility.h>
 
-template<typename T, unsigned SIZE>
-class BlynkFifo {
-
-    BlynkFifo(const BlynkFifo<T, SIZE> & rb);
-
+template <class T, unsigned N>
+class BlynkFifo
+{
 public:
-
-    BlynkFifo() : fst(0), lst(0), flag(0) {}
-    ~BlynkFifo() {}
-
-    void clear() {
-        fst = 0;
-        lst = 0;
-        flag = 0;
-    }
-
-    size_t write(const T* data, size_t n)
+    BlynkFifo()
     {
-        if ((n = BlynkMin(n, getFree()))) {
-            const size_t ch1 = BlynkMin(n, SIZE - lst);
-            memcpy(buffer + lst, data, ch1 * sizeof(T));
-            lst = (lst + ch1) % SIZE;
-
-            if (ch1 < n) {
-                const size_t ch2 = n - ch1;
-                memcpy(buffer + lst, data + ch1, ch2 * sizeof(T));
-                lst = (lst + ch2) % SIZE;
-            }
-
-            if (fst == lst) {
-                flag = 1;
-            }
-        }
-        return n;
+        clear();
     }
 
-    size_t read(T* dest, size_t n)
+    void clear()
     {
-        if ((n = BlynkMin(n, getOccupied()))) {
-            flag = 0;
+        _r = 0;
+        _w = 0;
+    }
 
-            const size_t ch1 = BlynkMin(n, SIZE - fst);
-            memcpy(dest, buffer + fst, ch1 * sizeof(T));
-            fst = (fst + ch1) % SIZE;
+    ~BlynkFifo(void)
+    {}
 
-            if (ch1 < n) {
-                const size_t ch2 = n - ch1;
-                memcpy(dest + ch1, buffer + fst, ch2 * sizeof(T));
-                fst = (fst + ch2) % SIZE;
+    // writing thread/context API
+    //-------------------------------------------------------------
+
+    bool writeable(void)
+    {
+        return free() > 0;
+    }
+
+    int free(void)
+    {
+        int s = _r - _w;
+        if (s <= 0)
+            s += N;
+        return s - 1;
+    }
+
+    T put(const T& c)
+    {
+        int i = _w;
+        int j = i;
+        i = _inc(i);
+        while (i == _r) // = !writeable()
+            /* nothing / just wait */;
+        _b[j] = c;
+        _w = i;
+        return c;
+    }
+
+    int put(const T* p, int n, bool blocking = false)
+    {
+        int c = n;
+        while (c)
+        {
+            int f;
+            while ((f = free()) == 0) // wait for space
+            {
+                if (!blocking) return n - c; // no more space and not blocking
+                /* nothing / just wait */;
             }
+            // check free space
+            if (c < f) f = c;
+            int w = _w;
+            int m = N - w;
+            // check wrap
+            if (f > m) f = m;
+            memcpy(&_b[w], p, f);
+            _w = _inc(w, f);
+            c -= f;
+            p += f;
         }
-        return n;
+        return n - c;
     }
 
-    bool push(const T& data) {
-        return write(&data, 1) == 1;
+    // reading thread/context API
+    // --------------------------------------------------------
+
+    bool readable(void)
+    {
+        return (_r != _w);
     }
 
-    size_t getOccupied() const {
-        if (lst == fst) {
-            return flag ? SIZE : 0;
-        } else if (lst > fst) {
-            return lst - fst;
-        } else {
-            return SIZE + lst - fst;
+    size_t size(void)
+    {
+        int s = _w - _r;
+        if (s < 0)
+            s += N;
+        return s;
+    }
+
+    T get(void)
+    {
+        int r = _r;
+        while (r == _w) // = !readable()
+            /* nothing / just wait */;
+        T t = _b[r];
+        _r = _inc(r);
+        return t;
+    }
+
+    T peek(void)
+    {
+        int r = _r;
+        while (r == _w);
+        return _b[r];
+    }
+
+    int get(T* p, int n, bool blocking = false)
+    {
+        int c = n;
+        while (c)
+        {
+            int f;
+            for (;;) // wait for data
+            {
+                f = size();
+                if (f)  break;        // free space
+                if (!blocking) return n - c; // no space and not blocking
+                /* nothing / just wait */;
+            }
+            // check available data
+            if (c < f) f = c;
+            int r = _r;
+            int m = N - r;
+            // check wrap
+            if (f > m) f = m;
+            memcpy(p, &_b[r], f);
+            _r = _inc(r, f);
+            c -= f;
+            p += f;
         }
-    }
-
-    size_t getFree() const {
-        return SIZE - getOccupied();
+        return n - c;
     }
 
 private:
-    T buffer[SIZE];
-    size_t fst;
-    size_t lst;
-    uint8_t flag;
+    int _inc(int i, int n = 1)
+    {
+        return (i + n) % N;
+    }
+
+    T             _b[N];
+    volatile int  _w;
+    volatile int  _r;
 };
 
 #endif

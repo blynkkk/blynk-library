@@ -8,26 +8,16 @@
  */
 #include <Blynk/BlynkDebug.h>
 
-#if defined(BLYNK_USE_AVR_WDT)
+#if defined(ARDUINO) && defined(__AVR__) && defined(BLYNK_USE_AVR_WDT)
 
     #include <Arduino.h>
     #include <avr/wdt.h>
 
-    size_t BlynkFreeRam()
-    {
-        extern int __heap_start, *__brkval;
-        int v;
-        return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-    }
-
-    void wdt_init(void) __attribute__((naked)) __attribute__((section(".init3")));
-
-    void wdt_init(void)
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
     {
         MCUSR = 0;
         wdt_disable();
-
-        return;
     }
 
     void BlynkReset()
@@ -39,16 +29,19 @@
         for(;;) {} // To make compiler happy
     }
 
-#elif defined(__AVR__)
-
-    #include <Arduino.h>
-
     size_t BlynkFreeRam()
     {
         extern int __heap_start, *__brkval;
         int v;
         return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
     }
+
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
+#elif defined(ARDUINO) && defined(__AVR__)
+
+    #include <Arduino.h>
 
     void BlynkReset()
     {
@@ -57,7 +50,17 @@
         for(;;) {}
     }
 
-#elif defined(ESP8266)
+    size_t BlynkFreeRam()
+    {
+        extern int __heap_start, *__brkval;
+        int v;
+        return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+    }
+
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
+#elif defined(ARDUINO) && defined(ESP8266)
 
     #include <Arduino.h>
 
@@ -71,6 +74,9 @@
         ESP.restart();
         for(;;) {}
     }
+
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
 
 #elif defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_SAM)
 
@@ -87,30 +93,29 @@
         for(;;) {}
     }
 
-#elif defined (PARTICLE) || defined(SPARK)
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
 
-    #include "application.h"
+#elif defined (ARDUINO_ARCH_ARC32)
 
-    size_t BlynkFreeRam()
+    millis_time_t BlynkMillis()
     {
-        return 0;
+        // TODO: Remove workaround for Intel Curie
+        // https://forum.arduino.cc/index.php?topic=391836.0
+        noInterrupts();
+        uint64_t t = millis();
+        interrupts();
+        return t;
     }
 
-    void BlynkReset()
-    {
-        System.reset();
-        for(;;) {} // To make compiler happy
-    }
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_RESET
+    #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(__STM32F1__) || defined(__STM32F3__)
+#elif defined(ARDUINO) && (defined(__STM32F1__) || defined(__STM32F3__))
 
     #include <Arduino.h>
     #include <libmaple/nvic.h>
-
-    size_t BlynkFreeRam()
-    {
-        return 0;
-    }
 
     void BlynkReset()
     {
@@ -118,25 +123,111 @@
         for(;;) {}
     }
 
-// TODO:
-//#elif defined (TEENSYDUINO)
-//#elif defined (__STM32F4__)
-//#elif defined (ARDUINO_ARCH_ARC32)
-//#elif defined (__RFduino__) || defined (__Simblee__)
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(MBED_LIBRARY_VERSION)
+#elif defined (PARTICLE) || defined(SPARK)
+
+    #include "application.h"
+
+    void BlynkReset()
+    {
+        System.reset();
+        for(;;) {} // To make compiler happy
+    }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
+#elif defined(__MBED__)
 
     #include "mbed.h"
 
-    size_t BlynkFreeRam()
+    static Timer  blynk_millis_timer;
+    static Ticker blynk_waker;
+
+    static
+    void blynk_wake() {
+        //pc.puts("(...)");
+    }
+
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
     {
-        return 0;
+        blynk_waker.attach(&blynk_wake, 2.0);
+        blynk_millis_timer.start();
+    }
+
+    void BlynkDelay(millis_time_t ms)
+    {
+        wait_ms(ms);
+    }
+
+    millis_time_t BlynkMillis()
+    {
+        return blynk_millis_timer.read_ms();
+    }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_RESET
+
+#elif defined(LINUX) && defined(RASPBERRY)
+
+    #include <stdlib.h>
+    #include <wiringPi.h>
+
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
+    {
+        wiringPiSetupGpio();
     }
 
     void BlynkReset()
     {
+        exit(1);
         for(;;) {} // To make compiler happy
     }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
+#elif defined(LINUX)
+
+    #define _POSIX_C_SOURCE 200809L
+    #include <stdlib.h>
+    #include <time.h>
+    #include <unistd.h>
+
+    static millis_time_t blynk_startup_time = 0;
+
+    BLYNK_CONSTRUCTOR
+    static void BlynkSystemInit()
+    {
+        blynk_startup_time = BlynkMillis();
+    }
+
+    void BlynkReset()
+    {
+        exit(1);
+        for(;;) {} // To make compiler happy
+    }
+
+    void BlynkDelay(millis_time_t ms)
+    {
+        usleep(ms * 1000);
+    }
+
+    millis_time_t BlynkMillis()
+    {
+        struct timespec ts;
+        clock_gettime(CLOCK_MONOTONIC, &ts );
+        return ( ts.tv_sec * 1000 + ts.tv_nsec / 1000000L ) - blynk_startup_time;
+    }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
 
 #else
 
@@ -144,20 +235,44 @@
         #warning "Need to implement board-specific utilities"
     #endif
 
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_RESET
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
+#endif
+
+#ifdef _BLYNK_USE_DEFAULT_DELAY
+    void BlynkDelay(millis_time_t ms)
+    {
+        return delay(ms);
+    }
+#endif
+
+#ifdef _BLYNK_USE_DEFAULT_MILLIS
+    millis_time_t BlynkMillis()
+    {
+        return millis();
+    }
+#endif
+
+#ifdef _BLYNK_USE_DEFAULT_FREE_RAM
     size_t BlynkFreeRam()
     {
         return 0;
     }
+#endif
 
+#ifdef _BLYNK_USE_DEFAULT_RESET
     void BlynkReset()
     {
         for(;;) {} // To make compiler happy
     }
-
 #endif
 
 void BlynkFatal()
 {
-    delay(10000L);
+    BlynkDelay(10000L);
     BlynkReset();
 }
+

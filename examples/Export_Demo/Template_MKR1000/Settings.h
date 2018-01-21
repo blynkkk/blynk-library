@@ -7,6 +7,7 @@
 
 #define BOARD_NAME                    "Product Name"        // Name of your product. Should match App Export request info.
 #define BOARD_VENDOR                  "Company Name"        // Name of your company. Should match App Export request info.
+#define BOARD_TEMPLATE_ID             "TMPL0000"
 
 #define PRODUCT_WIFI_SSID             "Our Product"         // Name of the device, to be displayed during configuration. Should match export request info.
 #define BOARD_CONFIG_AP_URL           "our-product"         // Config page will be available in a browser at 'http://our-product.local/'
@@ -27,7 +28,7 @@
   //#define BOARD_LED_PIN_B           13
   //#define BOARD_LED_PIN_WS2812      4                     // Set if your LED is WS2812 RGB
   #define BOARD_LED_INVERSE           false                 // true, if you need to inverse LED signal
-  #define BOARD_RGB_BRIGHTNESS        32                    // 0..255 brightness control
+  #define BOARD_LED_BRIGHTNESS        32                    // 0..255 brightness control
 
 #elif defined(USE_MKR1000_BOARD)
 
@@ -64,7 +65,7 @@
 //#define USE_TIMER_THREE
 #define USE_TIMER_FIVE
 
-#if defined(DEBUG)
+#if defined(APP_DEBUG)
   #define DEBUG_PRINT(...) BLYNK_LOG1(__VA_ARGS__)
 #else
   #define DEBUG_PRINT(...)

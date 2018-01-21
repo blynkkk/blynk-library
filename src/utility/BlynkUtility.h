@@ -28,8 +28,19 @@ void BlynkAverageSample (T& avg, const T& input) {
     avg -= avg/WSIZE;
     const T add = input/WSIZE;
     // Fix for shorter delays
-    avg += (add > 0) ? add : -1;
+    if (add > 0)
+      avg += add;
+    else
+      avg -= 1;
 }
+
+class BlynkHelperAutoInc {
+public:
+    BlynkHelperAutoInc(uint8_t& counter) : c(counter) { ++c; }
+    ~BlynkHelperAutoInc() { --c; }
+private:
+    uint8_t& c;
+};
 
 #define BlynkBitSet(value, bit)   ((value) |= (1UL << (bit)))
 #define BlynkBitClear(value, bit) ((value) &= ~(1UL << (bit)))

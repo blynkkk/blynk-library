@@ -14,8 +14,13 @@
 #include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkDebug.h>
 #include <Blynk/BlynkParam.h>
+#include <Blynk/BlynkTimer.h>
 #include <Blynk/BlynkHandlers.h>
 #include <Blynk/BlynkProtocolDefs.h>
+
+#if defined(BLYNK_EXPERIMENTAL)
+    #include <Blynk/BlynkEveryN.h>
+#endif
 
 /**
  * Represents high-level functions of Blynk
@@ -25,7 +30,6 @@ class BlynkApi
 {
 public:
     BlynkApi() {
-        Init();
     }
 
 #ifdef DOXYGEN // These API here are only for the documentation
@@ -248,6 +252,23 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength());
     }
 
+    template <typename NAME>
+    void logEvent(const NAME& event_name) {
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(event_name);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_LOG, 0, cmd.getBuffer(), cmd.getLength());
+    }
+
+    template <typename NAME, typename DESCR>
+    void logEvent(const NAME& event_name, const DESCR& description) {
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(event_name);
+        cmd.add(description);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_LOG, 0, cmd.getBuffer(), cmd.getLength());
+    }
+
 #if defined(BLYNK_EXPERIMENTAL)
     // Attention!
     // Every function in this section may be changed, removed or renamed.
@@ -292,8 +313,6 @@ public:
 #endif
 
 protected:
-    void Init();
-    static millis_time_t getMillis();
     void processCmd(const void* buff, size_t len);
     void sendInfo();
 };

@@ -13,39 +13,9 @@
 
 #include <Blynk/BlynkApi.h>
 
-#define _POSIX_C_SOURCE 200809L
-#include <time.h>
-#include <unistd.h>
-
 #ifndef BLYNK_INFO_DEVICE
     #define BLYNK_INFO_DEVICE  "Linux"
 #endif
-
-static inline
-void delay(unsigned long ms)
-{
-    usleep(ms * 1000);
-}
-
-static
-millis_time_t millis()
-{
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts );
-    return ( ts.tv_sec * 1000 + ts.tv_nsec / 1000000L );
-}
-
-template<class Proto>
-void BlynkApi<Proto>::Init()
-{
-}
-
-template<class Proto>
-BLYNK_FORCE_INLINE
-millis_time_t BlynkApi<Proto>::getMillis()
-{
-    return millis();
-}
 
 #ifdef BLYNK_NO_INFO
 
@@ -163,7 +133,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     } break;
     default:
         BLYNK_LOG2(BLYNK_F("Invalid HW cmd: "), cmd);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->currentMsgId, NULL, BLYNK_ILLEGAL_COMMAND);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_RESPONSE, static_cast<Proto*>(this)->msgIdOutOverride, NULL, BLYNK_ILLEGAL_COMMAND);
     }
 }
 

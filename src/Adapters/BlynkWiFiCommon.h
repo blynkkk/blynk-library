@@ -51,7 +51,7 @@ public:
             if (status == WL_CONNECTED) {
                 break;
             } else {
-                ::delay(5000);
+                BlynkDelay(5000);
             }
         }
 
@@ -79,7 +79,7 @@ public:
                const char* ssid,
                const char* pass,
                const char* domain = BLYNK_DEFAULT_DOMAIN,
-               uint16_t port      = BLYNK_DEFAULT_PORT)
+               uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
         connectWiFi(ssid, pass);
         config(auth, domain, port);
@@ -90,7 +90,7 @@ public:
                const char* ssid,
                const char* pass,
                IPAddress   ip,
-               uint16_t    port = BLYNK_DEFAULT_PORT)
+               uint16_t    port   = BLYNK_DEFAULT_PORT)
     {
         connectWiFi(ssid, pass);
         config(auth, ip, port);

@@ -3,8 +3,8 @@
         "devices":  "Arduino 101, nRF8001 BLE module, RedBearLab Blend Micro, ...",
         "type":     "ble raw",
         "uuid_svc": "6e400001-b5a3-f393-e0a9-e50e24dcca9e",
-        "uuid_tx":  "6e400002-b5a3-f393-e0a9-e50e24dcca9e",
-        "uuid_rx":  "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
+        "uuid_tx":  "6e400003-b5a3-f393-e0a9-e50e24dcca9e",
+        "uuid_rx":  "6e400002-b5a3-f393-e0a9-e50e24dcca9e"
     },
     "RedBear UART": {
         "devices":  "nRF51822, RedBearLab BLE Nano, RedBearLab BLE Mini ...",

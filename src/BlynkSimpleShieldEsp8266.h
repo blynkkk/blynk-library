@@ -41,13 +41,15 @@ class BlynkTransportShieldEsp8266
         if (mux_id != BLYNK_ESP8266_MUX) {
             return;
         }
-        //BLYNK_LOG2("Got ", len);
+        //BLYNK_LOG4("Got: ", len, ", Free: ", buffer.free());
+        if (buffer.free() < len) {
+          BLYNK_LOG1(BLYNK_F("Buffer overflow"));
+          return;
+        }
         while (len) {
             if (client->getUart()->available()) {
                 uint8_t b = client->getUart()->read();
-                if(!buffer.push(b)) {
-                    BLYNK_LOG1(BLYNK_F("Buffer overflow"));
-                }
+                buffer.put(b);
                 len--;
             }
         }
@@ -65,6 +67,8 @@ public:
         client = esp8266;
         client->setOnData(onData, this);
     }
+
+    //TODO: IPAddress
 
     void begin(const char* d,  uint16_t p) {
         domain = d;
@@ -85,12 +89,12 @@ public:
     }
 
     size_t read(void* buf, size_t len) {
-        uint32_t start = millis();
-        //BLYNK_LOG4("Waiting: ", len, " Occuied: ", buffer.getOccupied());
-        while ((buffer.getOccupied() < len) && (millis() - start < 1500)) {
+        millis_time_t start = BlynkMillis();
+        //BLYNK_LOG4("Waiting: ", len, " Buffer: ", buffer.size());
+        while ((buffer.size() < len) && (BlynkMillis() - start < 1500)) {
             client->run();
         }
-        return buffer.read((uint8_t*)buf, len);
+        return buffer.get((uint8_t*)buf, len);
     }
     size_t write(const void* buf, size_t len) {
         if (client->send(BLYNK_ESP8266_MUX, (const uint8_t*)buf, len)) {
@@ -103,8 +107,8 @@ public:
 
     int available() {
         client->run();
-        //BLYNK_LOG2("Still: ", buffer.getOccupied());
-        return buffer.getOccupied();
+        //BLYNK_LOG2("Still: ", buffer.size());
+        return buffer.size();
     }
 
 private:
@@ -127,12 +131,17 @@ public:
 
     bool connectWiFi(const char* ssid, const char* pass)
     {
-        ::delay(500);
+        BlynkDelay(500);
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         /*if (!wifi->restart()) {
             BLYNK_LOG1(BLYNK_F("Failed to restart"));
             return false;
         }*/
+        if (!wifi->kick()) {
+             BLYNK_LOG1(BLYNK_F("ESP is not responding"));
+             //TODO: BLYNK_LOG_TROUBLE(BLYNK_F("esp8266-not-responding"));
+             return false;
+        }
         if (!wifi->setEcho(0)) {
             BLYNK_LOG1(BLYNK_F("Failed to disable Echo"));
             return false;

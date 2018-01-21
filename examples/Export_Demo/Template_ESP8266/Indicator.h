@@ -9,17 +9,22 @@
  **************************************************************/
 
 #if defined(BOARD_LED_PIN_WS2812)
-  #include <Adafruit_NeoPixel.h>
+  #include <Adafruit_NeoPixel.h>    // Library: https://github.com/adafruit/Adafruit_NeoPixel
+
   Adafruit_NeoPixel rgb = Adafruit_NeoPixel(1, BOARD_LED_PIN_WS2812, NEO_GRB + NEO_KHZ800);
 #endif
 
 void indicator_run();
 
-#if !defined(BOARD_RGB_BRIGHTNESS)
-#define BOARD_RGB_BRIGHTNESS 255
+#if !defined(BOARD_LED_BRIGHTNESS)
+#define BOARD_LED_BRIGHTNESS 255
 #endif
 
-#define DIMM(x)    (((x)*(BOARD_RGB_BRIGHTNESS))/255)
+#if defined(BOARD_LED_PIN_WS2812) || defined(BOARD_LED_PIN_R)
+#define BOARD_LED_IS_RGB
+#endif
+
+#define DIMM(x)    (((x)*(BOARD_LED_BRIGHTNESS))/255)
 #define RGB(r,g,b) (DIMM(r) << 16 | DIMM(g) << 8 | DIMM(b) << 0)
 
 class Indicator {
@@ -33,7 +38,7 @@ public:
     COLOR_RED     = RGB(0xFF, 0x10, 0x08),
     COLOR_MAGENTA = RGB(0xA7, 0x00, 0xFF),
   };
-  
+
   Indicator() {
     m_Counter = 0;
     initLED();
@@ -45,6 +50,7 @@ public:
       if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_INDICATION) { return waveLED(COLOR_WHITE,   1000); }
     }
     switch (BlynkState::get()) {
+    case MODE_RESET_CONFIG:
     case MODE_WAIT_CONFIG:       return beatLED(COLOR_BLUE,    (int[]){ 50, 500 });
     case MODE_CONFIGURING:       return beatLED(COLOR_BLUE,    (int[]){ 200, 200 });
     case MODE_CONNECTING_NET:    return beatLED(COLOR_BLYNK,   (int[]){ 50, 500 });
@@ -62,9 +68,11 @@ public:
 
 protected:
 
-#if defined(BOARD_LED_PIN_WS2812) || defined(BOARD_LED_PIN_R)
+  /*
+   * LED drivers
+   */
 
-#if defined(BOARD_LED_PIN_WS2812)
+#if defined(BOARD_LED_PIN_WS2812)  // Addressable, NeoPixel RGB LED
 
   void initLED() {
     rgb.begin();
@@ -76,7 +84,7 @@ protected:
     rgb.show();
   }
 
-#elif defined(BOARD_LED_PIN_R)
+#elif defined(BOARD_LED_PIN_R)     // Normal RGB LED (common anode or common cathode)
 
   void initLED() {
     pinMode(BOARD_LED_PIN_R, OUTPUT);
@@ -88,21 +96,49 @@ protected:
     uint8_t r = (color & 0xFF0000) >> 16;
     uint8_t g = (color & 0x00FF00) >> 8;
     uint8_t b = (color & 0x0000FF);
-#if BOARD_LED_INVERSE
+    #if BOARD_LED_INVERSE
     analogWrite(BOARD_LED_PIN_R, BOARD_PWM_MAX - r);
     analogWrite(BOARD_LED_PIN_G, BOARD_PWM_MAX - g);
     analogWrite(BOARD_LED_PIN_B, BOARD_PWM_MAX - b);
-#else
+    #else
     analogWrite(BOARD_LED_PIN_R, r);
     analogWrite(BOARD_LED_PIN_G, g);
     analogWrite(BOARD_LED_PIN_B, b);
-#endif
+    #endif
   }
-  
+
+#elif defined(BOARD_LED_PIN)
+
+  void initLED() {
+    pinMode(BOARD_LED_PIN, OUTPUT);
+  }
+
+  void setLED(uint32_t color) {
+    #if BOARD_LED_INVERSE
+    analogWrite(BOARD_LED_PIN, BOARD_PWM_MAX - color);
+    #else
+    analogWrite(BOARD_LED_PIN, color);
+    #endif
+  }
+
+#else
+
+  #warning Invalid LED configuration.
+
 #endif
 
+  /*
+   * Animations
+   */
+
+  uint32_t skipLED() {
+    return 20;
+  }
+
+#if defined(BOARD_LED_IS_RGB)
+
   template<typename T>
-  int beatLED(uint32_t onColor, const T& beat) {
+  uint32_t beatLED(uint32_t onColor, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
     setRGB((m_Counter % 2 == 0) ? onColor : (uint32_t)COLOR_BLACK);
     uint32_t next = beat[m_Counter];
@@ -114,38 +150,26 @@ protected:
     uint8_t redMax = (colorMax & 0xFF0000) >> 16;
     uint8_t greenMax = (colorMax & 0x00FF00) >> 8;
     uint8_t blueMax = (colorMax & 0x0000FF);
-  
+
     // Brightness will rise from 0 to 128, then fall back to 0
     uint8_t brightness = (m_Counter < 128) ? m_Counter : 255 - m_Counter;
-  
+
     // Multiply our three colors by the brightness:
     redMax *= ((float)brightness / 128.0);
     greenMax *= ((float)brightness / 128.0);
     blueMax *= ((float)brightness / 128.0);
     // And turn the LED to that color:
     setRGB((redMax << 16) | (greenMax << 8) | blueMax);
-  
-    // This function relies on the 8-bit, unsigned m_Counter rolling over. 
+
+    // This function relies on the 8-bit, unsigned m_Counter rolling over.
     m_Counter = (m_Counter+1) % 256;
     return breathePeriod / 256;
   }
 
-#elif defined(BOARD_LED_PIN)
-
-  void initLED() {
-    pinMode(BOARD_LED_PIN, OUTPUT);
-  }
-
-  void setLED(uint8_t color) {
-#if BOARD_LED_INVERSE
-    analogWrite(BOARD_LED_PIN, BOARD_PWM_MAX - color);
 #else
-    analogWrite(BOARD_LED_PIN, color);
-#endif
-  }
 
   template<typename T>
-  int beatLED(uint32_t, const T& beat) {
+  uint32_t beatLED(uint32_t, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
     setLED((m_Counter % 2 == 0) ? BOARD_PWM_MAX : 0);
     uint32_t next = beat[m_Counter];
@@ -153,21 +177,17 @@ protected:
     return next;
   }
 
-  uint32_t waveLED(uint32_t, unsigned breathePeriod) {  
+  uint32_t waveLED(uint32_t, unsigned breathePeriod) {
     uint8_t brightness = (m_Counter < 128) ? m_Counter : 255 - m_Counter;
 
     setLED(BOARD_PWM_MAX * ((float)brightness / (BOARD_PWM_MAX/2)));
 
-    // This function relies on the 8-bit, unsigned m_Counter rolling over. 
+    // This function relies on the 8-bit, unsigned m_Counter rolling over.
     m_Counter = (m_Counter+1) % 256;
     return breathePeriod / 256;
   }
 
-#else
-
-  #warning Invalid LED configuration.
-
-#endif 
+#endif
 
 private:
   uint8_t m_Counter;
@@ -175,9 +195,14 @@ private:
 
 Indicator indicator;
 
+/*
+ * Animation timers
+ */
+
 #if defined(USE_TICKER)
 
   #include <Ticker.h>
+
   Ticker blinker;
 
   void indicator_run() {
@@ -186,7 +211,7 @@ Indicator indicator;
       blinker.attach_ms(returnTime, indicator_run);
     }
   }
-  
+
   void indicator_init() {
     blinker.attach_ms(100, indicator_run);
   }

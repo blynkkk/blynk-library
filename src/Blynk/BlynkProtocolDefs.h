@@ -52,7 +52,9 @@ enum BlynkCmd
 
     BLYNK_CMD_REDIRECT        = 41,
 
-    BLYNK_CMD_DEBUG_PRINT     = 55
+    BLYNK_CMD_DEBUG_PRINT     = 55,
+
+    BLYNK_CMD_EVENT_LOG       = 64
 };
 
 enum BlynkStatus
@@ -91,7 +93,7 @@ struct BlynkHeader
 }
 BLYNK_ATTR_PACKED;
 
-#if !defined(ESP32) && (defined(ARDUINO) || defined(ESP8266) || defined(PARTICLE) || defined(MBED_LIBRARY_VERSION))
+#if !defined(htons) && (defined(ARDUINO) || defined(ESP8266) || defined(PARTICLE) || defined(__MBED__))
     #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         #define htons(x) ( ((x)<<8) | (((x)>>8)&0xFF) )
         #define htonl(x) ( ((x)<<24 & 0xFF000000UL) | \

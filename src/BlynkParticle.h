@@ -93,7 +93,7 @@ public:
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t port      = BLYNK_DEFAULT_PORT)
     {
-        ::delay(3000); // Give the board time to settle
+        BlynkDelay(3000); // Give the board time to settle
         config(auth, domain, port);
         while(this->connect() != true) {}
     }
@@ -102,7 +102,7 @@ public:
                 IPAddress addr,
                 uint16_t port      = BLYNK_DEFAULT_PORT)
     {
-        ::delay(3000); // Give the board time to settle
+        BlynkDelay(3000); // Give the board time to settle
         config(auth, addr, port);
         while(this->connect() != true) {}
     }

@@ -50,7 +50,7 @@ public:
             while (addr == 0) {
                 if (!cc3000.getHostByName((char*)host, &addr)) {
                     BLYNK_LOG1(BLYNK_F("Couldn't locate server"));
-                    ::delay(500);
+                    BlynkDelay(500);
                 }
             }
         }
@@ -138,7 +138,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Getting IP..."));
         while (!cc3000.checkDHCP())
         {
-            ::delay(100);
+            BlynkDelay(100);
         }
 
         uint32_t ipAddress, netmask, gateway, dhcpserv, dnsserv;

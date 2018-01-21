@@ -69,7 +69,7 @@ public:
 
 #ifdef BLYNK_ENC28J60_FIX
     size_t read(void* buf, size_t len) {
-        while (client->available() < len) { }
+        while (client->available() < len) { BLYNK_RUN_YIELD(); }
         return client->read((uint8_t*)buf, len);
     }
 #else
@@ -89,7 +89,7 @@ public:
             if (w != 0 && w != -1) {
                 sent += w;
             } else {
-                ::delay(50);
+                BlynkDelay(50);
 #if defined(BLYNK_DEBUG) && defined(BLYNK_PRINT)
                 BLYNK_PRINT_TIME();
                 BLYNK_PRINT.print(BLYNK_F("Retry "));

@@ -45,6 +45,7 @@ const ConfigStore configDefault = {
 
 void config_load()
 {
+  memset(&configStore, 0, sizeof(configStore));
   EEPROM.get(EEPROM_CONFIG_START, configStore);
   if (configStore.magic != configDefault.magic) {
     DEBUG_PRINT("Using default config.");
@@ -67,7 +68,7 @@ bool config_init()
   return true;
 }
 
-void config_reset()
+void enterResetConfig()
 {
   DEBUG_PRINT("Resetting configuration!");
   configStore = configDefault;

@@ -21,7 +21,7 @@
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
-#include <utility/BlynkFifo2.h>
+#include <utility/BlynkFifo.h>
 #include <CurieBLE.h>
 
 class BlynkTransportCurieBLE

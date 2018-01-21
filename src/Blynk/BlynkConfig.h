@@ -25,7 +25,7 @@
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "0.4.4"
+#define BLYNK_VERSION        "0.5.0"
 
 // Heartbeat period in seconds.
 #ifndef BLYNK_HEARTBEAT
@@ -37,9 +37,9 @@
 #define BLYNK_TIMEOUT_MS     2000UL
 #endif
 
-// Limit the amount of outgoing commands.
+// Limit the amount of outgoing commands per second.
 #ifndef BLYNK_MSG_LIMIT
-#define BLYNK_MSG_LIMIT      20
+#define BLYNK_MSG_LIMIT      15
 #endif
 
 // Limit the incoming command length.
@@ -51,6 +51,9 @@
 #ifndef BLYNK_MAX_SENDBYTES
 #define BLYNK_MAX_SENDBYTES  128
 #endif
+
+// Uncomment to use Let's Encrypt Root CA
+//#define BLYNK_SSL_USE_LETSENCRYPT
 
 // Uncomment to disable built-in analog and digital operations.
 //#define BLYNK_NO_BUILTIN

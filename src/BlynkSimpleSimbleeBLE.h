@@ -21,7 +21,7 @@
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
-#include <utility/BlynkFifo2.h>
+#include <utility/BlynkFifo.h>
 #include <SimbleeBLE.h>
 
 class BlynkTransportSimbleeBLE
@@ -52,10 +52,10 @@ public:
     }
 
     size_t read(void* buf, size_t len) {
-        uint32_t start = millis();
-        while (millis() - start < BLYNK_TIMEOUT_MS) {
+        millis_time_t start = BlynkMillis();
+        while (BlynkMillis() - start < BLYNK_TIMEOUT_MS) {
             if (available() < len) {
-                ::delay(1);
+                BlynkDelay(1);
             } else {
                 break;
             }

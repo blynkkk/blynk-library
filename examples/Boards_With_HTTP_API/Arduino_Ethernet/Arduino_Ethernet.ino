@@ -1,28 +1,29 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * This example code is in public domain.
- *
- **************************************************************
- * Project setup in the Blynk app:
- *   Value Display widget on V2
- *
- * NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
- *       DON'T use them in your sketch directly!
- *
- * WARNING: If you have an SD card, you may need to disable it
- *       by setting pin 4 to HIGH. Read more here:
- *       https://www.arduino.cc/en/Main/ArduinoEthernetShield
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
+
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Follow us:                  http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  This example code is in public domain.
+
+ *************************************************************
+  Project setup in the Blynk app:
+    Value Display widget on V2
+
+  NOTE: Pins 10, 11, 12 and 13 are reserved for Ethernet module.
+        DON'T use them in your sketch directly!
+
+  WARNING: If you have an SD card, you may need to disable it
+        by setting pin 4 to HIGH. Read more here:
+        https://www.arduino.cc/en/Main/ArduinoEthernetShield
+
+ *************************************************************/
 
 #include <SPI.h>
 #include <Ethernet.h>

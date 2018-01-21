@@ -9,7 +9,7 @@ arduino_ide_path = os.environ['ARDUINO_IDE_PATH']
 energia_ide_path = os.environ['ENERGIA_IDE_PATH']
 
 ''' Arduino Board Manager URLs:
-http://arduino.esp8266.com/stable/package_esp8266com_index.json
+https://github.com/esp8266/Arduino/releases/download/2.4.0-rc2/package_esp8266com_index.json
 https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
 https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
 http://digistump.com/package_digistump_index.json

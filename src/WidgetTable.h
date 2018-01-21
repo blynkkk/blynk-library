@@ -49,6 +49,11 @@ public:
         Blynk.virtualWrite(mPin, "add", index, name, value);
     }
 
+    template <typename T1, typename T2>
+    void updateRow(int index, const T1& name, const T2& value) {
+        Blynk.virtualWrite(mPin, "update", index, name, value);
+    }
+
     void pickRow(int index) {
         Blynk.virtualWrite(mPin, "pick", index);
     }

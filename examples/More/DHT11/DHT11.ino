@@ -1,25 +1,28 @@
 /*************************************************************
+  Download latest Blynk library here:
+    https://github.com/blynkkk/blynk-library/releases/latest
+
   Blynk is a platform with iOS and Android apps to control
   Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build graphic interfaces for all your
   projects by simply dragging and dropping widgets.
 
     Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
   This example code is in public domain.
 
  *************************************************************
+
   This example shows how value can be pushed from Arduino to
   the Blynk App.
 
   WARNING :
-  For this example you'll need SimpleTimer library:
-    https://github.com/jfturcot/SimpleTimer
-  and Adafruit DHT sensor libraries:
+  For this example you'll need Adafruit DHT sensor libraries:
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/DHT-sensor-library
 
@@ -31,10 +34,10 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-#include <SimpleTimer.h>
 #include <DHT.h>
 
 // You should get Auth Token in the Blynk App.
@@ -49,7 +52,7 @@ char auth[] = "YourAuthToken";
 //#define DHTTYPE DHT21   // DHT 21, AM2301
 
 DHT dht(DHTPIN, DHTTYPE);
-SimpleTimer timer;
+BlynkTimer timer;
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
 // In the app, Widget's reading frequency should be set to PUSH. This means
@@ -85,6 +88,6 @@ void setup()
 void loop()
 {
   Blynk.run();
-  timer.run(); // Initiates SimpleTimer
+  timer.run();
 }
 

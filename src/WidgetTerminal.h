@@ -10,7 +10,7 @@
 #ifndef WidgetTerminal_h
 #define WidgetTerminal_h
 
-#if !(defined(LINUX) || defined(MBED_LIBRARY_VERSION))
+#if !(defined(LINUX) || defined(__MBED__))
     #define BLYNK_USE_PRINT_CLASS
 #endif
 
@@ -77,7 +77,7 @@ public:
 #endif
 
 private:
-    uint8_t mOutBuf[BLYNK_MAX_SENDBYTES];
+    uint8_t mOutBuf[64];
     uint8_t mOutQty;
 };
 

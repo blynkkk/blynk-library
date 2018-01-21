@@ -41,7 +41,7 @@ public:
             WiFi.begin(ssid);
         }
         while (WiFi.status() != WL_CONNECTED) {
-            ::delay(500);
+            BlynkDelay(500);
         }
         BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
 

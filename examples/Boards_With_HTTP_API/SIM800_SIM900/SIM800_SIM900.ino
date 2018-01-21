@@ -1,33 +1,34 @@
-/**************************************************************
- * Blynk is a platform with iOS and Android apps to control
- * Arduino, Raspberry Pi and the likes over the Internet.
- * You can easily build graphic interfaces for all your
- * projects by simply dragging and dropping widgets.
- *
- *   Downloads, docs, tutorials: http://www.blynk.cc
- *   Blynk community:            http://community.blynk.cc
- *   Social networks:            http://www.fb.com/blynkapp
- *                               http://twitter.com/blynk_app
- *
- * This example code is in public domain.
- *
- **************************************************************
- * Project setup in the Blynk app:
- *   Value Display widget on V2
- *
- * Attention!
- *   1. Using your phone:
- *       Disable PIN code on the SIM card
- *       Check your ballance
- *       Check that APN,User,Pass are correct and you have internet
- *   2. Ensure the sim card is correctly inserted into the module
- *   3. Provide a good, stable power supply (up to 2A)
- *      (4.0-4.2V or 5V according to your module documentation)
- *   4. Provide good serial connection
- *      (Hardware Serial is recommended)
- *   5. Check if GSM antenna is attached
- *
- **************************************************************/
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
+
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Follow us:                  http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  This example code is in public domain.
+
+ *************************************************************
+  Project setup in the Blynk app:
+    Value Display widget on V2
+
+  Attention!
+    1. Using your phone:
+        Disable PIN code on the SIM card
+        Check your ballance
+        Check that APN,User,Pass are correct and you have internet
+    2. Ensure the sim card is correctly inserted into the module
+    3. Provide a good, stable power supply (up to 2A)
+       (4.0-4.2V or 5V according to your module documentation)
+    4. Provide good serial connection
+       (Hardware Serial is recommended)
+    5. Check if GSM antenna is attached
+
+ *************************************************************/
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).

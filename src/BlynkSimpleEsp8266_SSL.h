@@ -15,13 +15,25 @@
 #error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
 #endif
 
-#define BLYNK_DEFAULT_FINGERPRINT "FD C0 7D 8D 47 97 F7 E3 07 05 D3 4E E3 BB 8E 3D C0 EA BE 1C"
+// Fingerprint is not used by default
+//#define BLYNK_DEFAULT_FINGERPRINT "FD C0 7D 8D 47 97 F7 E3 07 05 D3 4E E3 BB 8E 3D C0 EA BE 1C"
+
+#if defined(BLYNK_SSL_USE_LETSENCRYPT)
+  static const unsigned char BLYNK_DEFAULT_CERT_DER[] PROGMEM =
+  #include <certs/dst_der.h>  // TODO: using DST Root CA X3 for now
+  //#include <certs/isrgroot_der.h>
+  //#include <certs/letsencrypt_der.h>
+#else
+  static const unsigned char BLYNK_DEFAULT_CERT_DER[] PROGMEM =
+  #include <certs/blynkcloud_der.h>
+#endif
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
+#include <time.h>
 
 template <typename Client>
 class BlynkArduinoClientSecure
@@ -35,15 +47,46 @@ public:
 
     void setFingerprint(const char* fp) { fingerprint = fp; }
 
+    bool setCACert(const uint8_t* caCert, unsigned caCertLen) {
+        bool res = this->client->setCACert(caCert, caCertLen);
+        if (!res) {
+          BLYNK_LOG1("Failed to load root CA certificate!");
+        }
+        return res;
+    }
+
+    bool setCACert_P(const uint8_t* caCert, unsigned caCertLen) {
+        bool res = this->client->setCACert_P(caCert, caCertLen);
+        if (!res) {
+          BLYNK_LOG1("Failed to load root CA certificate!");
+        }
+        return res;
+    }
+
     bool connect() {
+        // Synchronize time useing SNTP. This is necessary to verify that
+        // the TLS certificates offered by the server are currently valid.
+        configTime(8 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+        time_t now = time(nullptr);
+        while (now < 1000) {
+          delay(500);
+          now = time(nullptr);
+        }
+        struct tm timeinfo;
+        gmtime_r(&now, &timeinfo);
+        BLYNK_LOG2("Got time: ", asctime(&timeinfo));
+
+        // Now try connecting
         if (BlynkArduinoClientGen<Client>::connect()) {
-          if (fingerprint && !this->client->verify(fingerprint, this->domain)) {
-              BLYNK_LOG1(BLYNK_F("Certificate doesn't match"));
-              return false;
-          } else {
+          if (fingerprint && this->client->verify(fingerprint, this->domain)) {
+              BLYNK_LOG1(BLYNK_F("Fingerprint OK"));
+              return true;
+          } else if (this->client->verifyCertChain(this->domain)) {
               BLYNK_LOG1(BLYNK_F("Certificate OK"));
+              return true;
           }
-          return true;
+          BLYNK_LOG1(BLYNK_F("Certificate not validated"));
+          return false;
         }
         return false;
     }
@@ -72,7 +115,7 @@ public:
             WiFi.begin(ssid);
         }
         while (WiFi.status() != WL_CONNECTED) {
-            ::delay(500);
+            BlynkDelay(500);
         }
         BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
 
@@ -83,21 +126,31 @@ public:
     void config(const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t    port   = BLYNK_DEFAULT_PORT_SSL,
-                const char* fingerprint = BLYNK_DEFAULT_FINGERPRINT)
+                const char* fingerprint = NULL)
     {
         Base::begin(auth);
         this->conn.begin(domain, port);
-        this->conn.setFingerprint(fingerprint);
+
+        if (fingerprint) {
+          this->conn.setFingerprint(fingerprint);
+        } else {
+          this->conn.setCACert_P(BLYNK_DEFAULT_CERT_DER, sizeof(BLYNK_DEFAULT_CERT_DER));
+        }
     }
 
     void config(const char* auth,
                 IPAddress   ip,
                 uint16_t    port = BLYNK_DEFAULT_PORT_SSL,
-                const char* fingerprint = BLYNK_DEFAULT_FINGERPRINT)
+                const char* fingerprint = NULL)
     {
         Base::begin(auth);
         this->conn.begin(ip, port);
-        this->conn.setFingerprint(fingerprint);
+
+        if (fingerprint) {
+          this->conn.setFingerprint(fingerprint);
+        } else {
+          this->conn.setCACert_P(BLYNK_DEFAULT_CERT_DER, sizeof(BLYNK_DEFAULT_CERT_DER));
+        }
     }
 
     void begin(const char* auth,
@@ -105,7 +158,7 @@ public:
                const char* pass,
                const char* domain = BLYNK_DEFAULT_DOMAIN,
                uint16_t    port   = BLYNK_DEFAULT_PORT_SSL,
-               const char* fingerprint = BLYNK_DEFAULT_FINGERPRINT)
+               const char* fingerprint = NULL)
     {
         connectWiFi(ssid, pass);
         config(auth, domain, port, fingerprint);
@@ -117,7 +170,7 @@ public:
                const char* pass,
                IPAddress   ip,
                uint16_t    port   = BLYNK_DEFAULT_PORT_SSL,
-               const char* fingerprint = BLYNK_DEFAULT_FINGERPRINT)
+               const char* fingerprint = NULL)
     {
         connectWiFi(ssid, pass);
         config(auth, ip, port, fingerprint);

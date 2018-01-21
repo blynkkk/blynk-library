@@ -42,8 +42,8 @@ public:
     size_t read(void* buf, size_t len) {
         char* beg = (char*)buf;
         char* end = beg + len;
-        millis_time_t startMillis = millis();
-        while ((beg < end) && (millis() - startMillis < BLYNK_TIMEOUT_MS)) {
+        millis_time_t startMillis = BlynkMillis();
+        while ((beg < end) && (BlynkMillis() - startMillis < BLYNK_TIMEOUT_MS)) {
             int c = stream->read();
             if (c < 0)
                 continue;

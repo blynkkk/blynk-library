@@ -38,7 +38,7 @@ public:
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         LWiFi.begin();
         while(!LWiFi.connect(ssid, LWiFiLoginInfo((LWiFiEncryption)wifi_auth, pass))){
-            ::delay(1000);
+            BlynkDelay(1000);
         }
     }
 
