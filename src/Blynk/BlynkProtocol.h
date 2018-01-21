@@ -433,10 +433,6 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
         return;
     }
 
-    if (0 == id) {
-        id = getNextMsgId();
-    }
-
 #if defined(BLYNK_MSG_LIMIT) && BLYNK_MSG_LIMIT > 0
     if (cmd >= BLYNK_CMD_TWEET && cmd <= BLYNK_CMD_HARDWARE) {
         const millis_time_t allowed_time = BlynkMax(lastActivityOut, lastActivityIn) + 1000/BLYNK_MSG_LIMIT;
@@ -458,6 +454,10 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     const size_t full_length = (sizeof(BlynkHeader)) +
                                (data  ? length  : 0) +
                                (data2 ? length2 : 0);
+
+    if (0 == id) {
+      id = getNextMsgId();
+    }
 
 #if defined(BLYNK_SEND_ATOMIC) || defined(ESP8266) || defined(ESP32) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)
     // Those have more RAM and like single write at a time...
