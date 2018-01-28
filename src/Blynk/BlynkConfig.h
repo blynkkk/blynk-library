@@ -18,7 +18,7 @@
  ***************************************************/
 
 #define BLYNK_DEFAULT_DOMAIN     "blynk-cloud.com"
-#define BLYNK_DEFAULT_PORT       8442
+#define BLYNK_DEFAULT_PORT       80
 #define BLYNK_DEFAULT_PORT_SSL   8441
 
 /***************************************************
