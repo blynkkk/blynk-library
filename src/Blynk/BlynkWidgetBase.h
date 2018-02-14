@@ -32,6 +32,11 @@ public:
         Blynk.setProperty(mPin, "color", args...);
     }
 
+    template<typename... Args>
+    void setMin(Args... args) {
+        Blynk.setProperty(mPin, "min", args...);
+    }
+
 protected:
     uint8_t mPin;
 };
