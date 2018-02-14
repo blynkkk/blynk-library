@@ -37,6 +37,11 @@ public:
         Blynk.setProperty(mPin, "min", args...);
     }
 
+    template<typename... Args>
+    void setMax(Args... args) {
+        Blynk.setProperty(mPin, "max", args...);
+    }
+
 protected:
     uint8_t mPin;
 };
