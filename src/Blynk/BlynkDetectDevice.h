@@ -91,13 +91,13 @@
         #elif defined(ENERGIA_ARCH_TIVAC)
             #define BLYNK_INFO_DEVICE  "LaunchPad"
 
-        #elif defined(ENERGIA_ARCH_CC3200)
+        #elif defined(ENERGIA_ARCH_CC3200EMT) || defined(ENERGIA_ARCH_CC3200)
             #define BLYNK_INFO_CONNECTION  "CC3200"
             #define BLYNK_SEND_CHUNK 64
             #define BLYNK_BUFFERS_SIZE 1024
 
             #if   defined(ENERGIA_CC3200_LAUNCHXL) //TODO: This is a bug in Energia IDE
-            #define BLYNK_INFO_DEVICE  "CC32000 LaunchXL"
+            #define BLYNK_INFO_DEVICE  "CC3200 LaunchXL"
             #elif defined(ENERGIA_RedBearLab_CC3200)
             #define BLYNK_INFO_DEVICE  "RBL CC3200"
             #elif defined(ENERGIA_RedBearLab_WiFiMini)
@@ -105,6 +105,13 @@
             #elif defined(ENERGIA_RedBearLab_WiFiMicro)
             #define BLYNK_INFO_DEVICE  "RBL WiFi Micro"
             #endif
+        #elif defined(ENERGIA_ARCH_CC3220EMT) || defined(ENERGIA_ARCH_CC3220)
+            #define BLYNK_INFO_CONNECTION  "CC3220"
+            #define BLYNK_SEND_CHUNK 64
+            #define BLYNK_BUFFERS_SIZE 1024
+
+            #define BLYNK_INFO_DEVICE  "CC3220"
+            #define BLYNK_INFO_CPU     "CC3220"
         #endif
 
         #if !defined(BLYNK_INFO_DEVICE)
