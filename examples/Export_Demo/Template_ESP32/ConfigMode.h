@@ -32,7 +32,7 @@ const char* config_form = R"html(
   <label>Password:  </label><input type="text" name="pass" length=32><br/>
   <label>Auth token:</label><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[a-zA-Z0-9]{32}" maxlength="32" required="required"><br/>
   <label>Host: </label><input type="text" name="host" length=32><br/>
-  <label>Port: </label><input type="number" name="port" value="8442" min="1" max="65535"><br/>
+  <label>Port: </label><input type="number" name="port" value="80" min="1" max="65535"><br/>
   <input type='submit' value="Apply">
 </form>
 </html>
