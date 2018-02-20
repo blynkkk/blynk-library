@@ -41,7 +41,7 @@ void button_init()
 #if BOARD_BUTTON_ACTIVE_LOW
   pinMode(BOARD_BUTTON_PIN, INPUT_PULLUP);
 #else
-  pinMode(BOARD_BUTTON_PIN, INPUT);
+  pinMode(BOARD_BUTTON_PIN, INPUT_PULLDOWN);
 #endif
   attachInterrupt(BOARD_BUTTON_PIN, button_change, CHANGE);
 }
