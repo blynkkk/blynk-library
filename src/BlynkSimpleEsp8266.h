@@ -33,10 +33,12 @@ public:
     {
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         WiFi.mode(WIFI_STA);
-        if (pass && strlen(pass)) {
-            WiFi.begin(ssid, pass);
-        } else {
-            WiFi.begin(ssid);
+        if (WiFi.status() != WL_CONNECTED) {
+            if (pass && strlen(pass)) {
+                WiFi.begin(ssid, pass);
+            } else {
+                WiFi.begin(ssid);
+            }
         }
         while (WiFi.status() != WL_CONNECTED) {
             BlynkDelay(500);
