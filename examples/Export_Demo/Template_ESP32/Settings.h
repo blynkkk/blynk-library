@@ -30,6 +30,18 @@
   #define BOARD_LED_INVERSE           false                 // true if LED is common anode, false if common cathode
   #define BOARD_LED_BRIGHTNESS        32                    // 0..255 brightness control
 
+#elif defined(USE_WROVER_BOARD)
+
+  // Custom board configuration
+  #define BOARD_BUTTON_PIN            15                    // Pin where user button is attached
+  #define BOARD_BUTTON_ACTIVE_LOW     true                  // true if button is "active-low"
+
+  #define BOARD_LED_PIN_R             0                     // Set R,G,B pins - if your LED is PWM RGB 
+  #define BOARD_LED_PIN_G             2
+  #define BOARD_LED_PIN_B             4
+  #define BOARD_LED_INVERSE           false                 // true if LED is common anode, false if common cathode
+  #define BOARD_LED_BRIGHTNESS        32                    // 0..255 brightness control
+
 #else
   #error "No board selected"
 #endif
