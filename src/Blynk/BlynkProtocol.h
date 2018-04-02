@@ -147,9 +147,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
     // Detect nesting
     BlynkHelperAutoInc guard(nesting);
     if (msgIdOutOverride || nesting > 2) {
-#ifdef BLYNK_DEBUG_ALL
-      BLYNK_LOG1(BLYNK_F("Nested run() skipped"));
-#endif
+      //BLYNK_LOG1(BLYNK_F("Nested run() skipped"));
       return true;
     }
 
@@ -440,7 +438,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #if defined(BLYNK_MSG_LIMIT) && BLYNK_MSG_LIMIT > 0
     if (cmd >= BLYNK_CMD_TWEET && cmd <= BLYNK_CMD_HARDWARE) {
         const millis_time_t allowed_time = BlynkMax(lastActivityOut, lastActivityIn) + 1000/BLYNK_MSG_LIMIT;
-        long wait_time = allowed_time - BlynkMillis();
+        int32_t wait_time = allowed_time - BlynkMillis();
         if (wait_time >= 0) {
 #ifdef BLYNK_DEBUG_ALL
             BLYNK_LOG2(BLYNK_F("Waiting:"), wait_time);
