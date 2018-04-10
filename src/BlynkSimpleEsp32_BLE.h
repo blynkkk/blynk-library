@@ -15,8 +15,8 @@
 #define BLYNK_INFO_CONNECTION "Esp32_BLE"
 #endif
 
-#ifndef BLYNK_ESP32_BLE_DEVICENAME
-#define BLYNK_ESP32_BLE_DEVICENAME "Blynk"
+#ifndef BLE_DEVICE_NAME
+#define BLE_DEVICE_NAME "Blynk"
 #endif
 
 
@@ -52,7 +52,7 @@ public:
 
     void begin() {
         // Create the BLE Device
-        BLEDevice::init(BLYNK_ESP32_BLE_DEVICENAME);
+        BLEDevice::init(BLE_DEVICE_NAME);
 
         // Create the BLE Server
         pServer = BLEDevice::createServer();
