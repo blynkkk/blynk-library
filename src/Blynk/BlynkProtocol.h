@@ -78,9 +78,13 @@ public:
 private:
 
     void internalReconnect() {
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        conn.connect(); // forces flushing the buffer to resync
+#else
         state = CONNECTING;
         conn.disconnect();
         BlynkOnDisconnected();
+#endif
     }
 
     int readHeader(BlynkHeader& hdr);
