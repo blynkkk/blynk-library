@@ -51,6 +51,11 @@ public:
             mOutQty = 0;
         }
     }
+    
+    void clear() {
+        flush();
+        Blynk.virtualWrite(mPin, "clr");
+    }
 
 #ifdef BLYNK_USE_PRINT_CLASS
 
