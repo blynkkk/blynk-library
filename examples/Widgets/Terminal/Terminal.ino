@@ -67,6 +67,9 @@ void setup()
 
   Blynk.begin(auth);
 
+  // Clear the terminal content
+  terminal.clear();
+
   // This will print Blynk Software version to the Terminal Widget when
   // your hardware gets connected to Blynk Server
   terminal.println(F("Blynk v" BLYNK_VERSION ": Device started"));
