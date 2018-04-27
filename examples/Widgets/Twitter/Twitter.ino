@@ -48,7 +48,7 @@ void tweetUptime()
 
   // Actually send the message.
   // Note:
-  //   We allow 1 tweet per 15 seconds for now.
+  //   We allow 1 tweet per 5 seconds for now.
   //   Twitter doesn't allow identical subsequent messages.
   Blynk.tweet(String("Running for ") + uptime + " minutes.");
 }
