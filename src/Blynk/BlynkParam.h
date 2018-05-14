@@ -332,7 +332,7 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
 
 #ifndef BLYNK_NO_FLOAT
 
-#if defined(ESP8266)
+#if defined(BLYNK_USE_INTERNAL_DTOSTRF)
 
     extern char* dtostrf_internal(double number, signed char width, unsigned char prec, char *s);
 
