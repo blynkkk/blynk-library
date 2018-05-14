@@ -26,7 +26,7 @@ template<class Proto>
 BLYNK_FORCE_INLINE
 void BlynkApi<Proto>::sendInfo()
 {
-    static const char profile[] BLYNK_PROGMEM =
+    static const char profile[] BLYNK_PROGMEM = "blnkinf\0"
 #ifdef BOARD_FIRMWARE_VERSION
         BLYNK_PARAM_KV("ver"    , BOARD_FIRMWARE_VERSION)
 #else
@@ -48,14 +48,14 @@ void BlynkApi<Proto>::sendInfo()
 #endif
         BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
     ;
-    const size_t profile_len = sizeof(profile)-1;
+    const size_t profile_len = sizeof(profile)-8-1;
 
 #ifdef BLYNK_HAS_PROGMEM
     char mem[profile_len];
-    memcpy_P(mem, profile, profile_len);
+    memcpy_P(mem, profile+8, profile_len);
     static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, mem, profile_len);
 #else
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile, profile_len);
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile+8, profile_len);
 #endif
     return;
 }
