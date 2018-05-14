@@ -32,7 +32,6 @@
 #define BLYNK_PRINT Serial
 
 
-#include <SPI.h>
 #include <WiFiLink.h>
 #include <BlynkSimpleWiFiLink.h>
 
