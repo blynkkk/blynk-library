@@ -13,6 +13,8 @@
 
 // General defines
 
+#define BLYNK_NEWLINE "\r\n"
+
 #define BLYNK_CONCAT(a, b) a ## b
 #define BLYNK_CONCAT2(a, b) BLYNK_CONCAT(a, b)
 
@@ -109,6 +111,8 @@
             #define BLYNK_INFO_CONNECTION  "CC3220"
             #define BLYNK_SEND_CHUNK 64
             #define BLYNK_BUFFERS_SIZE 1024
+
+            #define BLYNK_USE_INTERNAL_DTOSTRF
 
             #define BLYNK_INFO_DEVICE  "CC3220"
             #define BLYNK_INFO_CPU     "CC3220"
@@ -218,7 +222,7 @@
 
     #elif defined(ARDUINO)
 
-        #if defined(ESP8266) || defined(ESP32)
+        #if defined(ARDUINO_ARCH_SAMD) || defined(ESP32) || defined(ESP8266)
             #define BLYNK_USE_128_VPINS
             #define BLYNK_BUFFERS_SIZE 1024
         #endif
@@ -267,19 +271,25 @@
         #elif defined(ARDUINO_AVR_ROBOT_CONTROL)
         #define BLYNK_INFO_DEVICE  "Robot Control"
 
-        /* Arduino SAM/SAMD */
+        /* Arduino SAM */
         #elif defined(ARDUINO_SAM_DUE)
         #define BLYNK_INFO_DEVICE  "Arduino Due"
         #define BLYNK_USE_128_VPINS
         #define BLYNK_BUFFERS_SIZE 1024
+
+        /* Arduino SAMD */
         #elif defined(ARDUINO_SAMD_ZERO)
         #define BLYNK_INFO_DEVICE  "Arduino Zero"
-        #define BLYNK_USE_128_VPINS
-        #define BLYNK_BUFFERS_SIZE 1024
         #elif defined(ARDUINO_SAMD_MKR1000)
         #define BLYNK_INFO_DEVICE  "Arduino MKR1000"
-        #define BLYNK_USE_128_VPINS
-        #define BLYNK_BUFFERS_SIZE 1024
+        #elif defined(ARDUINO_SAMD_MKRZERO)
+        #define BLYNK_INFO_DEVICE  "MKRZERO"
+        #elif defined(ARDUINO_SAMD_MKRGSM1400)
+        #define BLYNK_INFO_DEVICE  "MKR GSM 1400"
+        #elif defined(ARDUINO_SAMD_MKRWAN1300)
+        #define BLYNK_INFO_DEVICE  "MKR WAN 1300"
+        #elif defined(ARDUINO_SAMD_MKRFox1200)
+        #define BLYNK_INFO_DEVICE  "MKR FOX 1200"
 
         /* Intel */
         #elif defined(ARDUINO_GALILEO)
@@ -413,6 +423,17 @@
         #endif
         #define BLYNK_INFO_DEVICE  "Arduino"
         #endif
+
+    #elif defined(PART_CC3220sf)
+        #define BLYNK_INFO_DEVICE  "TI CC3220SF"
+        #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
+
+        #define BLYNK_USE_INTERNAL_DTOSTRF
+
+    #else
+
+        #define BLYNK_INFO_DEVICE  "Custom platform"
 
     #endif
 
