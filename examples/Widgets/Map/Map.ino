@@ -48,7 +48,7 @@ void setup()
   // If you want to remove all points:
   //myMap.clear();
 
-  int index = 1;
+  int index = 0;
   float lat = 51.5074;
   float lon = 0.1278;
   myMap.location(index, lat, lon, "value");
