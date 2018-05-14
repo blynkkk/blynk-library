@@ -71,8 +71,9 @@ void SimpleTimer::run() {
 
             if ((current_millis - timer[i].prev_millis) >= timer[i].delay) {
 
+                unsigned long skipTimes = (current_millis - timer[i].prev_millis) / timer[i].delay;
                 // update time
-                timer[i].prev_millis += timer[i].delay;
+                timer[i].prev_millis += timer[i].delay * skipTimes;
 
                 // check if the timer callback has to be executed
                 if (timer[i].enabled) {
