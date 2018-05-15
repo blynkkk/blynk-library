@@ -424,8 +424,8 @@
         #define BLYNK_INFO_DEVICE  "Arduino"
         #endif
 
-    #elif defined(PART_CC3220sf)
-        #define BLYNK_INFO_DEVICE  "TI CC3220SF"
+    #elif defined(TI_CC3220)
+        #define BLYNK_INFO_DEVICE  "TI CC3220"
         #define BLYNK_USE_128_VPINS
         #define BLYNK_BUFFERS_SIZE 1024
 
