@@ -32,6 +32,7 @@ void BlynkApi<Proto>::sendInfo()
     static const char profile[] BLYNK_PROGMEM = "blnkinf\0"
 #ifdef BOARD_FIRMWARE_VERSION
         BLYNK_PARAM_KV("ver"    , BOARD_FIRMWARE_VERSION)
+        BLYNK_PARAM_KV("blynk"  , BLYNK_VERSION)
 #else
         BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
 #endif
@@ -50,8 +51,9 @@ void BlynkApi<Proto>::sendInfo()
         BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
         BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
+        "\0"
     ;
-    const size_t profile_len = sizeof(profile)-8-1;
+    const size_t profile_len = sizeof(profile)-8-2;
 
     char mem_dyn[32];
     BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
