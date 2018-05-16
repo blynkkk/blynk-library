@@ -10,7 +10,7 @@
 #ifndef WidgetTerminal_h
 #define WidgetTerminal_h
 
-#if !(defined(LINUX) || defined(__MBED__))
+#if defined(ARDUINO) && !(defined(LINUX) || defined(__MBED__))
     #define BLYNK_USE_PRINT_CLASS
 #endif
 
@@ -45,32 +45,38 @@ public:
         return 1;
     }
 
-    void flush() {
+    virtual void flush() {
         if (mOutQty) {
             Blynk.virtualWriteBinary(mPin, mOutBuf, mOutQty);
             mOutQty = 0;
         }
+    }
+    
+    void clear() {
+        flush();
+        Blynk.virtualWrite(mPin, "clr");
     }
 
 #ifdef BLYNK_USE_PRINT_CLASS
 
     using Print::write;
 
-    size_t write(const void* buff, size_t len) {
+    virtual size_t write(const void* buff, size_t len) {
         return write((char*)buff, len);
     }
 
 #else
 
-    size_t write(const void* buff, size_t len) {
+    virtual size_t write(const void* buff, size_t len) {
         uint8_t* buf = (uint8_t*)buff;
-        while (len--) {
+        size_t left = len;
+        while (left--) {
             write(*buf++);
         }
         return len;
     }
 
-    size_t write(const char* str) {
+    virtual size_t write(const char* str) {
         return write(str, strlen(str));
     }
 

@@ -47,8 +47,12 @@ void notifyOnButtonPress()
     Serial.println("Button is pressed.");
 
     // Note:
-    //   We allow 1 notification per 15 seconds for now.
+    //   We allow 1 notification per 5 seconds for now.
     Blynk.notify("Yaaay... button is pressed!");
+
+    // You can also use {DEVICE_NAME} placeholder for device name,
+    // that will be replaced by your device name on the server side.
+    //Blynk.notify("Yaaay... {DEVICE_NAME}  button is pressed!");
   }
 }
 

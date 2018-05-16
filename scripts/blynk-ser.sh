@@ -12,9 +12,9 @@ TO_TYPE="SSL"   # TCP, SSL
 COMM_BAUD=9600
 SERV_ADDR=blynk-cloud.com
 SERV_PORT_SSL=8441
-SERV_PORT_TCP=8442
+SERV_PORT_TCP=80
 SERV_PORT_2WAY=8443
-LSTN_PORT=8442
+LSTN_PORT=80
 
 SRVR_CERT="$SCRIPTPATH/certs/server.crt"
 CLNT_CERT="$SCRIPTPATH/certs/client.pem"
@@ -32,7 +32,7 @@ usage="
                      COM1                  (on Windows)
       -b,--baud      9600
       -s,--server    blynk-cloud.com
-      -p,--port      8442
+      -p,--port      80
 
     If the specified serial port is not found, it will ask to enter another one.
     The script also tries to reestablish connection if it was lost.

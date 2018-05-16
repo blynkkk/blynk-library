@@ -1,9 +1,11 @@
 #include <Blynk/BlynkDebug.h>
 #include <utility/BlynkDateTime.h>
 
-#if defined(ESP8266) && !defined(BLYNK_NO_FLOAT)
+#if !defined(BLYNK_NO_FLOAT) && defined(BLYNK_USE_INTERNAL_DTOSTRF)
+
 #include <string.h>
 #include <math.h>
+#include <stdio.h>
 
 char* dtostrf_internal(double number, signed char BLYNK_UNUSED width, unsigned char prec, char *s) {
     if(isnan(number)) {

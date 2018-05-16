@@ -59,11 +59,11 @@ __________
 
 ### Implementations for other platforms
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
-* [Node.js + Espruino](https://github.com/vshymanskyy/blynk-library-js)
-* [MicroPython WiPy](https://github.com/wipy/wipy/tree/master/lib/blynk)
+* [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
+* [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
 * [OpenWrt](https://github.com/vshymanskyy/blynk-library-openwrt)
 * [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
-* [Node-RED](https://github.com/tzapu/node-red-contrib-blynk-websockets)
+* [Node-RED](https://www.npmjs.com/package/node-red-contrib-blynk-ws)
 * [LabVIEW](https://github.com/juncaofish/NI-LabVIEWInterfaceforBlynk)
 * [C#](https://github.com/sverrefroy/BlynkLibrary)
 

@@ -25,7 +25,7 @@ except getopt.GetoptError:
 
 # Default options
 SERVER = "blynk-cloud.com"
-PORT = 8442
+PORT = 80
 NODELAY = 1     # TCP_NODELAY
 SNDBUF = 0      # No SNDBUF override
 RCVBUF = 0      # No RCVBUF override

@@ -9,6 +9,7 @@
 
  *************************************************************/
 
+//#define USE_WROVER_BOARD
 #define USE_CUSTOM_BOARD          // See "Custom board configuration" in Settings.h
 
 #define APP_DEBUG        // Comment this out to disable debug prints

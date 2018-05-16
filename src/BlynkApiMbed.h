@@ -26,8 +26,16 @@ template<class Proto>
 BLYNK_FORCE_INLINE
 void BlynkApi<Proto>::sendInfo()
 {
-    static const char profile[] BLYNK_PROGMEM =
+    static const char profile[] BLYNK_PROGMEM = "blnkinf\0"
+#ifdef BOARD_FIRMWARE_VERSION
+        BLYNK_PARAM_KV("ver"    , BOARD_FIRMWARE_VERSION)
+        BLYNK_PARAM_KV("blynk"  , BLYNK_VERSION)
+#else
         BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
+#endif
+#ifdef BOARD_TEMPLATE_ID
+        BLYNK_PARAM_KV("tmpl"   , BOARD_TEMPLATE_ID)
+#endif
         BLYNK_PARAM_KV("h-beat" , BLYNK_TOSTRING(BLYNK_HEARTBEAT))
         BLYNK_PARAM_KV("buff-in", BLYNK_TOSTRING(BLYNK_MAX_READBYTES))
 #ifdef BLYNK_INFO_DEVICE
@@ -40,15 +48,16 @@ void BlynkApi<Proto>::sendInfo()
         BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
         BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
+        "\0"
     ;
-    const size_t profile_len = sizeof(profile)-1;
+    const size_t profile_len = sizeof(profile)-8-2;
 
 #ifdef BLYNK_HAS_PROGMEM
     char mem[profile_len];
-    memcpy_P(mem, profile, profile_len);
+    memcpy_P(mem, profile+8, profile_len);
     static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, mem, profile_len);
 #else
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile, profile_len);
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile+8, profile_len);
 #endif
     return;
 }

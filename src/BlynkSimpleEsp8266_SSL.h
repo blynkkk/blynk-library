@@ -66,15 +66,17 @@ public:
     bool connect() {
         // Synchronize time useing SNTP. This is necessary to verify that
         // the TLS certificates offered by the server are currently valid.
-        configTime(8 * 3600, 0, "pool.ntp.org", "time.nist.gov");
+        configTime(0, 0, "pool.ntp.org", "time.nist.gov");
         time_t now = time(nullptr);
-        while (now < 1000) {
+        while (now < 100000) {
           delay(500);
           now = time(nullptr);
         }
         struct tm timeinfo;
         gmtime_r(&now, &timeinfo);
-        BLYNK_LOG2("Got time: ", asctime(&timeinfo));
+        String ntpTime = asctime(&timeinfo);
+        ntpTime.trim();
+        BLYNK_LOG2("NTP time: ", ntpTime);
 
         // Now try connecting
         if (BlynkArduinoClientGen<Client>::connect()) {
@@ -109,10 +111,12 @@ public:
     {
         BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
         WiFi.mode(WIFI_STA);
-        if (pass && strlen(pass)) {
-            WiFi.begin(ssid, pass);
-        } else {
-            WiFi.begin(ssid);
+        if (WiFi.status() != WL_CONNECTED) {
+            if (pass && strlen(pass)) {
+                WiFi.begin(ssid, pass);
+            } else {
+                WiFi.begin(ssid);
+            }
         }
         while (WiFi.status() != WL_CONNECTED) {
             BlynkDelay(500);

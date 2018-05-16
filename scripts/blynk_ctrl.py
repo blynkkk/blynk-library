@@ -73,7 +73,7 @@ parser.add_argument('--dump',         action="store_true", dest='dump',         
 
 parser.set_defaults(
     server='blynk-cloud.com',
-    port=8442,
+    port=80,
     dump=False,
     nodelay=True,
     bridge=64,

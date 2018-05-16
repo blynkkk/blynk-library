@@ -23,6 +23,20 @@ const T& BlynkMax(const T& a, const T& b)
     return (b < a) ? a : b;
 }
 
+
+template <class T>
+T BlynkMathMap(T x, T in_min, T in_max, T out_min, T out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+template <class T>
+T BlynkMathClamp(T val, T low, T high)
+{
+  return (val < low) ? low : ((val > high) ? high : val);
+}
+
+
 template <unsigned WSIZE, typename T>
 void BlynkAverageSample (T& avg, const T& input) {
     avg -= avg/WSIZE;

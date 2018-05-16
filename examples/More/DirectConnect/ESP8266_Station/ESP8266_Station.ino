@@ -40,7 +40,7 @@ char auth[] = "YourAuthToken";
 const char* ssid = "YourNetworkName";
 const char* pass = "YourPassword";
 
-WiFiServer wifiServer(8442);
+WiFiServer wifiServer(80);
 WiFiClient wifiClient;
 
 // This function tries to reconnect to WiFi network

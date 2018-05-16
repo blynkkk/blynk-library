@@ -98,24 +98,24 @@ protected:
 #if defined(BLYNK_NO_FANCY_LOGO)
         BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
 #elif defined(BLYNK_FANCY_LOGO_3D)
-        BLYNK_LOG1(BLYNK_F("\n"
-            "   ____     ___                      __\n"
-            "  /\\  _`\\  /\\_ \\                    /\\ \\  _\n"
-            "  \\ \\ \\_\\ \\\\//\\ \\    __  __     ___ \\ \\ \\/ \\\n"
-            "   \\ \\  _ <  \\ \\ \\  /\\ \\/\\ \\  /' _ `\\\\ \\ , <\n"
-            "    \\ \\ \\_\\ \\ \\_\\ \\_\\ \\ \\_\\ \\ /\\ \\/\\ \\\\ \\ \\\\`\\\n"
-            "     \\ \\____/ /\\____\\\\/`____ \\\\ \\_\\ \\_\\\\ \\_\\\\_\\\n"
-            "      \\/___/  \\/____/ `/___/\\ \\\\/_/\\/_/ \\/_//_/\n"
-            "                         /\\___/\n"
-            "                         \\/__/   " BLYNK_VERSION " on " BLYNK_INFO_DEVICE "\n"
+        BLYNK_LOG1(BLYNK_F(BLYNK_NEWLINE
+            "   ____     ___                      __" BLYNK_NEWLINE
+            "  /\\  _`\\  /\\_ \\                    /\\ \\  _" BLYNK_NEWLINE
+            "  \\ \\ \\_\\ \\\\//\\ \\    __  __     ___ \\ \\ \\/ \\" BLYNK_NEWLINE
+            "   \\ \\  _ <  \\ \\ \\  /\\ \\/\\ \\  /' _ `\\\\ \\ , <" BLYNK_NEWLINE
+            "    \\ \\ \\_\\ \\ \\_\\ \\_\\ \\ \\_\\ \\ /\\ \\/\\ \\\\ \\ \\\\`\\" BLYNK_NEWLINE
+            "     \\ \\____/ /\\____\\\\/`____ \\\\ \\_\\ \\_\\\\ \\_\\\\_\\" BLYNK_NEWLINE
+            "      \\/___/  \\/____/ `/___/\\ \\\\/_/\\/_/ \\/_//_/" BLYNK_NEWLINE
+            "                         /\\___/" BLYNK_NEWLINE
+            "                         \\/__/   " BLYNK_VERSION " on " BLYNK_INFO_DEVICE BLYNK_NEWLINE
         ));
 #else
-        BLYNK_LOG1(BLYNK_F("\n"
-            "    ___  __          __\n"
-            "   / _ )/ /_ _____  / /__\n"
-            "  / _  / / // / _ \\/  '_/\n"
-            " /____/_/\\_, /_//_/_/\\_\\\n"
-            "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE "\n"
+        BLYNK_LOG1(BLYNK_F(BLYNK_NEWLINE
+            "    ___  __          __" BLYNK_NEWLINE
+            "   / _ )/ /_ _____  / /__" BLYNK_NEWLINE
+            "  / _  / / // / _ \\/  '_/" BLYNK_NEWLINE
+            " /____/_/\\_, /_//_/_/\\_\\" BLYNK_NEWLINE
+            "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE BLYNK_NEWLINE
         ));
 #endif
     }
@@ -151,9 +151,7 @@ bool BlynkProtocol<Transp>::run(bool avail)
     // Detect nesting
     BlynkHelperAutoInc guard(nesting);
     if (msgIdOutOverride || nesting > 2) {
-#ifdef BLYNK_DEBUG_ALL
-      BLYNK_LOG1(BLYNK_F("Nested run() skipped"));
-#endif
+      //BLYNK_LOG1(BLYNK_F("Nested run() skipped"));
       return true;
     }
 
@@ -449,7 +447,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
 #if defined(BLYNK_MSG_LIMIT) && BLYNK_MSG_LIMIT > 0
     if (cmd >= BLYNK_CMD_TWEET && cmd <= BLYNK_CMD_HARDWARE) {
         const millis_time_t allowed_time = BlynkMax(lastActivityOut, lastActivityIn) + 1000/BLYNK_MSG_LIMIT;
-        long wait_time = allowed_time - BlynkMillis();
+        int32_t wait_time = allowed_time - BlynkMillis();
         if (wait_time >= 0) {
 #ifdef BLYNK_DEBUG_ALL
             BLYNK_LOG2(BLYNK_F("Waiting:"), wait_time);

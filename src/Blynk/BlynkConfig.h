@@ -18,14 +18,14 @@
  ***************************************************/
 
 #define BLYNK_DEFAULT_DOMAIN     "blynk-cloud.com"
-#define BLYNK_DEFAULT_PORT       8442
+#define BLYNK_DEFAULT_PORT       80
 #define BLYNK_DEFAULT_PORT_SSL   8441
 
 /***************************************************
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "0.5.0"
+#define BLYNK_VERSION        "0.5.2"
 
 // Heartbeat period in seconds.
 #ifndef BLYNK_HEARTBEAT
