@@ -100,9 +100,9 @@ protected:
             "  / _  / / // / _ \\/  '_/" BLYNK_NEWLINE
             " /____/_/\\_, /_//_/_/\\_\\" BLYNK_NEWLINE
             "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE BLYNK_NEWLINE
+            BLYNK_NEWLINE
+            "  Give Blynk a Github star! => https://github.com/blynkkk/blynk-library" BLYNK_NEWLINE
         ));
-
-        BLYNK_LOG1(BLYNK_F("Give Blynk a Github star! => https://github.com/blynkkk/blynk-library"));
 #endif
     }
     bool processInput(void);
