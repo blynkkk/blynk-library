@@ -74,14 +74,9 @@ public:
         // Start the service
         pService->start();
 
-        BLEAdvertising* advertising = pServer->getAdvertising();
-
-        BLEAdvertisementData advertisingData;
-        advertisingData.setCompleteServices(BLEUUID(SERVICE_UUID));
-        advertising->setAdvertisementData(advertisingData);
-
         // Start advertising
-        advertising->start();
+        pServer->getAdvertising()->addServiceUUID(pService->getUUID());
+        pServer->getAdvertising()->start();
     }
 
     bool connect() {
