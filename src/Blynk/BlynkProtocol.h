@@ -78,9 +78,13 @@ public:
 private:
 
     void internalReconnect() {
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        conn.connect(); // forces flushing the buffer to resync
+#else
         state = CONNECTING;
         conn.disconnect();
         BlynkOnDisconnected();
+#endif
     }
 
     int readHeader(BlynkHeader& hdr);
@@ -230,7 +234,12 @@ bool BlynkProtocol<Transp>::processInput(void)
 #ifdef BLYNK_DEBUG
         BLYNK_LOG2(BLYNK_F("Bad hdr len: "), ret);
 #endif
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        internalReconnect();
+        return true;
+#else
         return false;
+#endif
     }
 
     if (hdr.type == BLYNK_CMD_RESPONSE) {
