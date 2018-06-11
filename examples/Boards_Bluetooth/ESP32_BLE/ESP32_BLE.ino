@@ -43,6 +43,8 @@ void setup()
 
   Serial.println("Waiting for connections...");
 
+  Blynk.setDeviceName("Blynk");
+
   Blynk.begin(auth);
 }
 
