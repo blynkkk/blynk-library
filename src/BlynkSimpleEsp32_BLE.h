@@ -15,11 +15,6 @@
 #define BLYNK_INFO_CONNECTION "Esp32_BLE"
 #endif
 
-#ifndef BLE_DEVICE_NAME
-#define BLE_DEVICE_NAME "Blynk"
-#endif
-
-
 #define BLYNK_SEND_ATOMIC
 #define BLYNK_SEND_CHUNK 20
 //#define BLYNK_SEND_THROTTLE 20
@@ -45,14 +40,19 @@ class BlynkTransportEsp32_BLE :
 public:
     BlynkTransportEsp32_BLE()
         : mConn (false)
+        , mName ("Blynk")
     {}
+
+    void setDeviceName(const char* name) {
+        mName = name;
+    }
 
     // IP redirect not available
     void begin(char BLYNK_UNUSED *h, uint16_t BLYNK_UNUSED p) {}
 
     void begin() {
         // Create the BLE Device
-        BLEDevice::init(BLE_DEVICE_NAME);
+        BLEDevice::init(mName);
 
         // Create the BLE Server
         pServer = BLEDevice::createServer();
@@ -79,14 +79,9 @@ public:
         // Start the service
         pService->start();
 
-        BLEAdvertising* advertising = pServer->getAdvertising();
-
-        BLEAdvertisementData advertisingData;
-        advertisingData.setCompleteServices(BLEUUID(SERVICE_UUID));
-        advertising->setAdvertisementData(advertisingData);
-
         // Start advertising
-        advertising->start();
+        pServer->getAdvertising()->addServiceUUID(pService->getUUID());
+        pServer->getAdvertising()->start();
     }
 
     bool connect() {
@@ -145,6 +140,7 @@ private:
 
 private:
     bool mConn;
+    const char* mName;
 
     BLEServer *pServer;
     BLEService *pService;
@@ -161,6 +157,7 @@ class BlynkEsp32_BLE
 public:
     BlynkEsp32_BLE(BlynkTransportEsp32_BLE& transp)
         : Base(transp)
+
     {}
 
     void begin(const char* auth)
@@ -169,6 +166,11 @@ public:
         state = DISCONNECTED;
         conn.begin();
     }
+
+    void setDeviceName(const char* name) {
+        conn.setDeviceName(name);
+    }
+
 };
 
 
