@@ -12,6 +12,8 @@
 
 #if defined(ARDUINO) && !(defined(LINUX) || defined(__MBED__))
     #define BLYNK_USE_PRINT_CLASS
+#elif defined(SPARK) || defined(PARTICLE)
+    #define BLYNK_USE_PRINT_CLASS
 #endif
 
 #include <Blynk/BlynkWidgetBase.h>
