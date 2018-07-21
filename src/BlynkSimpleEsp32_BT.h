@@ -74,7 +74,7 @@ class BlynkTransportEsp32_BT
         return;
       }
 
-      if (esp_bredr_tx_power_set(ESP_PWR_LVL_N0, ESP_PWR_LVL_P9) != ESP_OK)
+      if (esp_bredr_tx_power_set(ESP_PWR_LVL_N2, ESP_PWR_LVL_P7) != ESP_OK)
       {
         BLYNK_LOG1(BLYNK_F("esp_bredr_tx_power_set failed"));
       };
