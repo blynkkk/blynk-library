@@ -28,7 +28,6 @@
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
-#define BLYNK_DEBUG
 
 #include <SPI.h>
 #include <WiFiNINA.h>
@@ -47,7 +46,6 @@ void setup()
 {
   // Debug console
   Serial.begin(9600);
-  while (!Serial) {}
 
   Blynk.begin(auth, ssid, pass);
   // You can also specify server:
