@@ -195,7 +195,7 @@ void            BlynkFatal() BLYNK_NORETURN;
 
     #elif defined(__MBED__)
 
-        #define BLYNK_LOG(msg, ...)       { BLYNK_PRINT.printf("[%ld] " msg "\n", BlynkMillis(), ##__VA_ARGS__); }
+        #define BLYNK_LOG(msg, ...)       { BLYNK_PRINT.printf("[%ld] " msg BLYNK_NEWLINE, BlynkMillis(), ##__VA_ARGS__); }
         #define BLYNK_LOG1(p1)            { BLYNK_LOG(p1);}
         #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG(p1,p2);}
         #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG(p1,p2,p3);}
@@ -227,7 +227,7 @@ void            BlynkFatal() BLYNK_NORETURN;
                     prev_print = false;
                 }
             }
-            BLYNK_PRINT.printf("%s\n", prev_print?"":"]");
+            BLYNK_PRINT.printf("%s" BLYNK_NEWLINE, prev_print?"":"]");
         }
 #endif
 
@@ -241,7 +241,7 @@ void            BlynkFatal() BLYNK_NORETURN;
 
         #include <iostream>
         using namespace std;
-        #define BLYNK_LOG(msg, ...)       { fprintf(BLYNK_PRINT, "[%ld] " msg "\n", BlynkMillis(), ##__VA_ARGS__); }
+        #define BLYNK_LOG(msg, ...)       { fprintf(BLYNK_PRINT, "[%ld] " msg BLYNK_NEWLINE, BlynkMillis(), ##__VA_ARGS__); }
         #define BLYNK_LOG1(p1)            { BLYNK_LOG_TIME(); cout << p1 << endl; }
         #define BLYNK_LOG2(p1,p2)         { BLYNK_LOG_TIME(); cout << p1 << p2 << endl; }
         #define BLYNK_LOG3(p1,p2,p3)      { BLYNK_LOG_TIME(); cout << p1 << p2 << p3 << endl; }
@@ -273,7 +273,7 @@ void            BlynkFatal() BLYNK_NORETURN;
                     prev_print = false;
                 }
             }
-            fprintf(BLYNK_PRINT, "%s\n", prev_print?"":"]");
+            fprintf(BLYNK_PRINT, "%s" BLYNK_NEWLINE, prev_print?"":"]");
         }
 #endif
 
