@@ -281,7 +281,7 @@
         #elif defined(ARDUINO_SAMD_ZERO)
         #define BLYNK_INFO_DEVICE  "Arduino Zero"
         #elif defined(ARDUINO_SAMD_MKR1000)
-        #define BLYNK_INFO_DEVICE  "Arduino MKR1000"
+        #define BLYNK_INFO_DEVICE  "MKR1000"
         #elif defined(ARDUINO_SAMD_MKRZERO)
         #define BLYNK_INFO_DEVICE  "MKRZERO"
         #elif defined(ARDUINO_SAMD_MKRGSM1400)
@@ -290,6 +290,10 @@
         #define BLYNK_INFO_DEVICE  "MKR WAN 1300"
         #elif defined(ARDUINO_SAMD_MKRFox1200)
         #define BLYNK_INFO_DEVICE  "MKR FOX 1200"
+        #elif defined(ARDUINO_SAMD_MKRWIFI1010)
+        #define BLYNK_INFO_DEVICE  "MKR WiFi 1010"
+        #elif defined(ARDUINO_SAMD_MKRVIDOR4000)
+        #define BLYNK_INFO_DEVICE  "MKR Vidor 4000"
 
         /* Intel */
         #elif defined(ARDUINO_GALILEO)
