@@ -229,6 +229,39 @@
 
     #define _BLYNK_USE_DEFAULT_FREE_RAM
 
+#elif defined(TI_CC3220)
+
+    #include <string.h>
+    #include <stdlib.h>
+    #include <stdarg.h>
+    #include <unistd.h>
+
+    #include <ti/devices/cc32xx/inc/hw_types.h>
+
+    #include <ti/sysbios/knl/Clock.h>
+    #include <ti/drivers/net/wifi/device.h>
+    #include <ti/devices/cc32xx/driverlib/prcm.h>
+
+    void BlynkReset()
+    {
+	    sl_Stop(200);
+	    for(;;) {
+    	    PRCMHibernateCycleTrigger();
+        }
+    }
+
+    void BlynkDelay(millis_time_t ms)
+    {
+        usleep(ms * 1000);
+    }
+
+    millis_time_t BlynkMillis()
+    {
+        return Clock_getTicks();
+    }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+
 #else
 
     #if defined(BLYNK_DEBUG_ALL)
