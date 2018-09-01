@@ -24,14 +24,14 @@ const T& BlynkMax(const T& a, const T& b)
 }
 
 
-template <class T>
-T BlynkMathMap(T x, T in_min, T in_max, T out_min, T out_max)
+template <class T, class T2>
+T BlynkMathMap(T x, T2 in_min, T2 in_max, T2 out_min, T2 out_max)
 {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-template <class T>
-T BlynkMathClamp(T val, T low, T high)
+template <class T, class T2>
+T BlynkMathClamp(T val, T2 low, T2 high)
 {
   return (val < low) ? low : ((val > high) ? high : val);
 }
