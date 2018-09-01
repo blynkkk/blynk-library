@@ -15,6 +15,12 @@
 #error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
 #endif
 
+#include <version.h>
+
+#if ESP_SDK_VERSION_NUMBER < 0x020200
+#error Please update your ESP8266 Arduino Core
+#endif
+
 // Fingerprint is not used by default
 //#define BLYNK_DEFAULT_FINGERPRINT "FD C0 7D 8D 47 97 F7 E3 07 05 D3 4E E3 BB 8E 3D C0 EA BE 1C"
 
