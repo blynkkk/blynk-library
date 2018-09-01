@@ -15,6 +15,12 @@
 #error This code is intended to run on the ESP8266 platform! Please check your Tools->Board setting.
 #endif
 
+#include <version.h>
+
+#if ESP_SDK_VERSION_NUMBER < 0x020200
+#error Please update your ESP8266 Arduino Core
+#endif
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
