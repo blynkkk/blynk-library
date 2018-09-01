@@ -75,6 +75,20 @@ public:
 
     void sendCmd(uint8_t cmd, uint16_t id = 0, const void* data = NULL, size_t length = 0, const void* data2 = NULL, size_t length2 = 0);
 
+    void printBanner() {
+#if defined(BLYNK_NO_FANCY_LOGO)
+        BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
+#else
+        BLYNK_LOG1(BLYNK_F(BLYNK_NEWLINE
+            "    ___  __          __" BLYNK_NEWLINE
+            "   / _ )/ /_ _____  / /__" BLYNK_NEWLINE
+            "  / _  / / // / _ \\/  '_/" BLYNK_NEWLINE
+            " /____/_/\\_, /_//_/_/\\_\\" BLYNK_NEWLINE
+            "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE BLYNK_NEWLINE
+        ));
+#endif
+    }
+
 private:
 
     void internalReconnect() {
@@ -90,21 +104,9 @@ protected:
     void begin(const char* auth) {
         this->authkey = auth;
         lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() - 5000UL);
-
-#if defined(BLYNK_NO_FANCY_LOGO)
-        BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE));
-#else
-        BLYNK_LOG1(BLYNK_F(BLYNK_NEWLINE
-            "    ___  __          __" BLYNK_NEWLINE
-            "   / _ )/ /_ _____  / /__" BLYNK_NEWLINE
-            "  / _  / / // / _ \\/  '_/" BLYNK_NEWLINE
-            " /____/_/\\_, /_//_/_/\\_\\" BLYNK_NEWLINE
-            "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE BLYNK_NEWLINE
-            BLYNK_NEWLINE
-            "  Give Blynk a Github star! => https://github.com/blynkkk/blynk-library" BLYNK_NEWLINE
-        ));
-#endif
+		printBanner();
     }
+
     bool processInput(void);
 
     Transp& conn;
