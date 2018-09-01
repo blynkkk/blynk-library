@@ -15,6 +15,12 @@
 #define BLYNK_INFO_CONNECTION "WiFi"
 #endif
 
+#ifdef BLYNK_USE_SSL
+  #define BLYNK_SERVER_PORT BLYNK_DEFAULT_PORT_SSL
+#else
+  #define BLYNK_SERVER_PORT BLYNK_DEFAULT_PORT
+#endif
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
@@ -30,10 +36,10 @@ public:
 
     void connectWiFi(const char* ssid, const char* pass)
     {
-        int status = WL_IDLE_STATUS;
+        int status = WiFi.status();
         // check for the presence of the shield:
-        if (WiFi.status() == WL_NO_SHIELD) {
-            BLYNK_FATAL("WiFi shield not present");
+        if (status == WL_NO_SHIELD || status == WL_NO_MODULE) {
+            BLYNK_FATAL("WiFi module not found");
         }
 
 #ifdef BLYNK_DEBUG
@@ -41,17 +47,20 @@ public:
 #endif
 
         // attempt to connect to Wifi network:
-        while (true) {
+        while (status != WL_CONNECTED) {
             BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
             if (pass && strlen(pass)) {
                 status = WiFi.begin((char*)ssid, (char*)pass);
             } else {
                 status = WiFi.begin((char*)ssid);
             }
-            if (status == WL_CONNECTED) {
-                break;
-            } else {
-                BlynkDelay(5000);
+
+            millis_time_t started = BlynkMillis();
+            while ((status != WL_CONNECTED) &&
+                  (BlynkMillis() - started < 10000))
+            {
+                BlynkDelay(100);
+                status = WiFi.status();
             }
         }
 
@@ -61,7 +70,7 @@ public:
 
     void config(const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
-                uint16_t    port   = BLYNK_DEFAULT_PORT)
+                uint16_t    port   = BLYNK_SERVER_PORT)
     {
         Base::begin(auth);
         this->conn.begin(domain, port);
@@ -69,7 +78,7 @@ public:
 
     void config(const char* auth,
                 IPAddress   ip,
-                uint16_t    port = BLYNK_DEFAULT_PORT)
+                uint16_t    port = BLYNK_SERVER_PORT)
     {
         Base::begin(auth);
         this->conn.begin(ip, port);
@@ -79,7 +88,7 @@ public:
                const char* ssid,
                const char* pass,
                const char* domain = BLYNK_DEFAULT_DOMAIN,
-               uint16_t    port   = BLYNK_DEFAULT_PORT)
+               uint16_t    port   = BLYNK_SERVER_PORT)
     {
         connectWiFi(ssid, pass);
         config(auth, domain, port);
@@ -90,7 +99,7 @@ public:
                const char* ssid,
                const char* pass,
                IPAddress   ip,
-               uint16_t    port   = BLYNK_DEFAULT_PORT)
+               uint16_t    port   = BLYNK_SERVER_PORT)
     {
         connectWiFi(ssid, pass);
         config(auth, ip, port);
