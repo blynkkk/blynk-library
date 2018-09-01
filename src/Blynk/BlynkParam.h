@@ -57,7 +57,7 @@ public:
 
 public:
     explicit
-    BlynkParam(void* addr, size_t length)
+    BlynkParam(const void* addr, size_t length)
         : buff((char*)addr), len(length), buff_size(length)
     {}
 
