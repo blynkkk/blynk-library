@@ -25,6 +25,8 @@ static uint16_t port;
 
 #include <BlynkWidgets.h>
 
+BlynkTimer tmr;
+
 BLYNK_WRITE(V1)
 {
     printf("Got a value: %s\n", param[0].asStr());
@@ -33,11 +35,15 @@ BLYNK_WRITE(V1)
 void setup()
 {
     Blynk.begin(auth, serv, port);
+    tmr.setInterval(1000, [](){
+      Blynk.virtualWrite(V0, BlynkMillis()/1000);
+    });
 }
 
 void loop()
 {
     Blynk.run();
+    tmr.run();
 }
 
 
