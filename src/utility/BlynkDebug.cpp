@@ -82,9 +82,12 @@
 
     #include <Arduino.h>
 
+    extern "C" char *sbrk(int i);
+
     size_t BlynkFreeRam()
     {
-        return 0;
+        char stack_dummy = 0;
+        return &stack_dummy - sbrk(0);
     }
 
     void BlynkReset()
