@@ -16,7 +16,7 @@ struct ConfigStore {
   uint8_t   flagSelfTest:1;
 
   char      wifiSSID[34];
-  char      wifiPass[34];
+  char      wifiPass[64];
 
   char      cloudToken[34];
   char      cloudHost[34];
