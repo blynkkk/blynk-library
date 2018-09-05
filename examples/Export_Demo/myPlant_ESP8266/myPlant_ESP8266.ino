@@ -29,7 +29,6 @@ void setup() {
   delay(500);
   Serial.begin(115200);
 
-
   /**************************************************************
    *
    * Workflow to connect the device to WiFi network.
@@ -47,7 +46,6 @@ void setup() {
    * to connect. User can RESET the board and re-initiate provisioning
    *
    * Explore the Settings.h for parameters
-   * Read the documentation for more info: http://
    *
    **************************************************************/
 
