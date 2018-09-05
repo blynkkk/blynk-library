@@ -24,7 +24,6 @@ void BlynkState::set(State m) {
   if (state != m) {
     DEBUG_PRINT(String(StateStr[state]) + " => " + StateStr[m]);
     state = m;
-    indicator.updateState();
   }
 }
 

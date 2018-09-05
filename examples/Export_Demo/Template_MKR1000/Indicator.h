@@ -45,11 +45,19 @@ public:
   }
 
   uint32_t run() {
+    State currState = BlynkState::get();
+
+    // Reset counter if indicator state changes
+    if (m_PrevState != currState) {
+      m_PrevState = currState;
+      m_Counter = 0;
+    }
+
     if (g_buttonPressed) {
       if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_ACTION)     { return beatLED(COLOR_WHITE,   (int[]){ 100, 100 }); }
       if (millis() - g_buttonPressTime > BUTTON_HOLD_TIME_INDICATION) { return waveLED(COLOR_WHITE,   1000); }
     }
-    switch (BlynkState::get()) {
+    switch (currState) {
     case MODE_RESET_CONFIG:
     case MODE_WAIT_CONFIG:       return beatLED(COLOR_BLUE,    (int[]){ 50, 500 });
     case MODE_CONFIGURING:       return beatLED(COLOR_BLUE,    (int[]){ 200, 200 });
@@ -59,11 +67,6 @@ public:
     case MODE_OTA_UPGRADE:       return beatLED(COLOR_MAGENTA, (int[]){ 50, 50 });
     default:                     return beatLED(COLOR_RED,     (int[]){ 80, 100, 80, 1000 } );
     }
-  }
-
-  void updateState() {
-    m_Counter = 0;
-    indicator_run();
   }
 
 protected:
@@ -141,7 +144,7 @@ protected:
   uint32_t beatLED(uint32_t onColor, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
     setRGB((m_Counter % 2 == 0) ? onColor : (uint32_t)COLOR_BLACK);
-    uint32_t next = beat[m_Counter];
+    uint32_t next = beat[m_Counter % cnt];
     m_Counter = (m_Counter+1) % cnt;
     return next;
   }
@@ -172,7 +175,7 @@ protected:
   uint32_t beatLED(uint32_t, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
     setLED((m_Counter % 2 == 0) ? BOARD_PWM_MAX : 0);
-    uint32_t next = beat[m_Counter];
+    uint32_t next = beat[m_Counter % cnt];
     m_Counter = (m_Counter+1) % cnt;
     return next;
   }
@@ -191,6 +194,7 @@ protected:
 
 private:
   uint8_t m_Counter;
+  State   m_PrevState;
 };
 
 Indicator indicator;
