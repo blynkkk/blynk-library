@@ -38,7 +38,7 @@ public:
     {
         int status = WiFi.status();
         // check for the presence of the shield:
-        if (status == WL_NO_SHIELD || status == WL_NO_MODULE) {
+        if (status == WL_NO_SHIELD) {
             BLYNK_FATAL("WiFi module not found");
         }
 
