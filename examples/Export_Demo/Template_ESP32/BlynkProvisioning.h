@@ -9,6 +9,7 @@
  **************************************************************/
 
 #include "Settings.h"
+#include <BlynkSimpleEsp32.h>
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"

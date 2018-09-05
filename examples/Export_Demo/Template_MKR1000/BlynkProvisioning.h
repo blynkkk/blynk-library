@@ -9,6 +9,9 @@
  **************************************************************/
 
 #include "Settings.h"
+#include <SPI.h>
+#include <WiFi101.h>
+#include <BlynkSimpleMKR1000.h>
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"

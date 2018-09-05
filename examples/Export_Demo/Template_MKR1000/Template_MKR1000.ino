@@ -18,9 +18,7 @@
 #define APP_DEBUG        // Comment this out to disable debug prints
 
 #define BLYNK_PRINT Serial
-#include <SPI.h>
-#include <WiFi101.h>
-#include <BlynkSimpleMKR1000.h>
+
 #include "BlynkProvisioning.h"
 
 void setup() {

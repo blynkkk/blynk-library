@@ -13,6 +13,7 @@ extern "C" {
 }
 
 #include "Settings.h"
+#include <BlynkSimpleEsp8266.h>
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"
