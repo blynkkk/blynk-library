@@ -19,15 +19,17 @@ void button_action(void)
 void button_change(void)
 {
 #if BOARD_BUTTON_ACTIVE_LOW
-  g_buttonPressed = !digitalRead(BOARD_BUTTON_PIN);
+  bool buttonState = !digitalRead(BOARD_BUTTON_PIN);
 #else
-  g_buttonPressed = digitalRead(BOARD_BUTTON_PIN);
+  bool buttonState = digitalRead(BOARD_BUTTON_PIN);
 #endif
 
-  if (g_buttonPressed) {
+  if (buttonState && !g_buttonPressed) {
+    g_buttonPressed = true;
     DEBUG_PRINT("Hold the button to reset configuration...");
     g_buttonPressTime = millis();
-  } else {
+  } else if (!buttonState && g_buttonPressed) {
+    g_buttonPressed = false;
     uint32_t buttonHoldTime = millis() - g_buttonPressTime;
     if (buttonHoldTime >= BUTTON_HOLD_TIME_ACTION) {
       button_action();
