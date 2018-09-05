@@ -206,7 +206,7 @@ Indicator indicator;
 
 #if defined(USE_TICKER)
 
-  #include <ESP32Ticker.h>    // Library: https://github.com/bertmelis/Ticker-esp32
+  #include <Ticker.h>
 
   Ticker blinker;
 
