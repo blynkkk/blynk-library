@@ -42,6 +42,8 @@
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
 
+unsigned count = 0;
+
 void emailOnButtonPress()
 {
   // *** WARNING: You are limited to send ONLY ONE E-MAIL PER 5 SECONDS! ***
@@ -54,7 +56,12 @@ void emailOnButtonPress()
   if (isButtonPressed) // You can write any condition to trigger e-mail sending
   {
     Serial.println("Button is pressed."); // This can be seen in the Serial Monitor
-    Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
+
+    count++;
+
+    String body = String("You pushed the button ") + count + " times.";
+
+    Blynk.email("your_email@mail.com", "Subject: Button Logger", body);
 
     // Or, if you want to use the email specified in the App (like for App Export):
     //Blynk.email("Subject: Button Logger", "You just pushed the button...");
