@@ -175,7 +175,7 @@ protected:
   uint32_t beatLED(uint32_t, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
     setLED((m_Counter % 2 == 0) ? BOARD_PWM_MAX : 0);
-    uint32_t next = beat[m_Counter];
+    uint32_t next = beat[m_Counter % cnt];
     m_Counter = (m_Counter+1) % cnt;
     return next;
   }
