@@ -150,8 +150,9 @@ void enterConnectNet() {
   DEBUG_PRINT(String("Connecting to WiFi: ") + configStore.wifiSSID);
   
   WiFi.mode(WIFI_STA);
-  if (!WiFi.begin(configStore.wifiSSID, configStore.wifiPass))
+  if (!WiFi.begin(configStore.wifiSSID, configStore.wifiPass)) {
     return;
+  }
   
   unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))

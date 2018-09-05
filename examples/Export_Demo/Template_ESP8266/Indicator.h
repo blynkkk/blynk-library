@@ -107,7 +107,7 @@ protected:
     #endif
   }
 
-#elif defined(BOARD_LED_PIN)
+#elif defined(BOARD_LED_PIN)       // Single color LED
 
   void initLED() {
     pinMode(BOARD_LED_PIN, OUTPUT);
