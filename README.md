@@ -62,6 +62,7 @@ __________
 ### Implementations for other platforms
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
+* [Lua, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
 * [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
 * [OpenWrt](https://github.com/vshymanskyy/blynk-library-openwrt)
 * [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
