@@ -19,6 +19,7 @@
 
 #define BLYNK_PRINT Serial
 
+#include <BlynkSimpleEsp8266.h>   //It doesn't compile without it.
 #include "BlynkProvisioning.h"
 
 void setup() {
