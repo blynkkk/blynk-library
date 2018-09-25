@@ -12,7 +12,7 @@ If you like **Blynk** - give it a star, or fork it and contribute!
 [![GitHub forks](https://img.shields.io/github/forks/blynkkk/blynk-library.svg?style=social&label=Fork)](https://github.com/blynkkk/blynk-library/network)
 __________
 
-# What is Blynk?
+## What is Blynk?
 Blynk provides iOS and Android apps to control any hardware over the Internet or directly using Bluetooth. You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets, right on your smartphone. Blynk is the most popular IoT platform used by design studios, makers, educators, and equipment vendors all over the world.
 
 ![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
@@ -21,7 +21,7 @@ Blynk provides iOS and Android apps to control any hardware over the Internet or
 ## Download
 **Blynk [Arduino Library](https://github.com/blynkkk/blynk-library/releases/latest)**
 
-**Apps: [Google Play](https://play.google.com/store/apps/details?id=cc.blynk) / [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)**
+**Blynk App: [Google Play](https://play.google.com/store/apps/details?id=cc.blynk) / [App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)**
 
 **Blynk [Server](https://github.com/blynkkk/blynk-server)**
 
@@ -33,7 +33,7 @@ Community Forum: http://community.blynk.cc
 Examples Browser: http://examples.blynk.cc  
 Blynk for Business: http://www.blynk.io
 
-### Quickstart: Arduino + Ethernet shield
+## Quickstart: Arduino + Ethernet shield
 
 * Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk))
 * Get the Auth Token from the app
@@ -45,7 +45,7 @@ Blynk for Business: http://www.blynk.io
 Please find examples on how to use different types of connections (transports) and how to do make something great with Blynk.
 You can easily apply any type of board/connection to all examples.
 
-### Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
+## Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
 
 Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).  
 Check out our Examples Browser: http://examples.blynk.cc
