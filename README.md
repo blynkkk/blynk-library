@@ -17,8 +17,7 @@ Blynk provides iOS and Android apps to control any hardware over the Internet or
 You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets, right on your smartphone.
 Blynk is the most popular IoT platform used by design studios, makers, educators, and equipment vendors all over the world.
 
-![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
-![Widgets Box](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/widgets_box.png)
+![Blynk Banner](https://github.com/blynkkk/blynkkk.github.io/blob/master/images/GithubBanner.jpg)
 
 ## Download
 **Blynk [Arduino Library](https://github.com/blynkkk/blynk-library/releases/latest)**
