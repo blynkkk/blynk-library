@@ -13,7 +13,9 @@ If you like **Blynk** - give it a star, or fork it and contribute!
 __________
 
 ## What is Blynk?
-Blynk provides iOS and Android apps to control any hardware over the Internet or directly using Bluetooth. You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets, right on your smartphone. Blynk is the most popular IoT platform used by design studios, makers, educators, and equipment vendors all over the world.
+Blynk provides iOS and Android apps to control any hardware over the Internet or directly using Bluetooth.
+You can easily build graphic interfaces for all your projects by simply dragging and dropping widgets, right on your smartphone.
+Blynk is the most popular IoT platform used by design studios, makers, educators, and equipment vendors all over the world.
 
 ![Dashboard](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/dash.png)
 ![Widgets Box](https://github.com/blynkkk/blynk-server/blob/master/docs/overview/widgets_box.png)
@@ -59,9 +61,9 @@ __________
 ### Implementations for other platforms
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
-* [Lua, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
+* [Lua, OpenWrt, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
 * [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
-* [OpenWrt](https://github.com/vshymanskyy/blynk-library-openwrt)
+* [OpenWrt packages](https://github.com/vshymanskyy/blynk-library-openwrt)
 * [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
 * [Node-RED](https://www.npmjs.com/package/node-red-contrib-blynk-ws)
 * [LabVIEW](https://github.com/juncaofish/NI-LabVIEWInterfaceforBlynk)
