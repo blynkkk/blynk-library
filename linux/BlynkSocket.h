@@ -29,7 +29,7 @@ class BlynkTransportSocket
 {
 public:
     BlynkTransportSocket()
-        : sockfd(-1), domain(NULL), port(NULL)
+        : sockfd(-1), domain(NULL), port(0)
     {}
 
     void begin(const char* h, uint16_t p) {
