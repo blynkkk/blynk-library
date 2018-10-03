@@ -332,30 +332,14 @@
         #define BLYNK_INFO_DEVICE  "BLE Nano"
 
         /* ESP8266 */
-        #elif defined(ARDUINO_ESP8266_ESP01)
-        #define BLYNK_INFO_DEVICE  "ESP8266"
-        #elif defined(ARDUINO_ESP8266_ESP12)
-        #define BLYNK_INFO_DEVICE  "ESP-12"
         #elif defined(ARDUINO_ESP8266_NODEMCU)
         #define BLYNK_INFO_DEVICE  "NodeMCU"
-        #elif defined(ARDUINO_ESP8266_THING)
-        #define BLYNK_INFO_DEVICE  "Esp Thing"
-        #elif defined(ARDUINO_ESP8266_THING_DEV)
-        #define BLYNK_INFO_DEVICE  "Esp Thing Dev"
+        #elif defined(ARDUINO_ARCH_ESP8266)
+        #define BLYNK_INFO_DEVICE  "ESP8266"
 
         /* ESP32 */
-        #elif defined(ARDUINO_ESP32_DEV)
+        #elif defined(ARDUINO_ARCH_ESP32)
         #define BLYNK_INFO_DEVICE  "ESP32"
-        #elif defined(ARDUINO_ESP320)
-        #define BLYNK_INFO_DEVICE  "SweetPeas ESP320"
-        #elif defined(ARDUINO_NANO32)
-        #define BLYNK_INFO_DEVICE  "ESP32 Nano32"
-        #elif defined(ARDUINO_LoLin32)
-        #define BLYNK_INFO_DEVICE  "LoLin32"
-        #elif defined(ARDUINO_ESPea32)
-        #define BLYNK_INFO_DEVICE  "ESPea32"
-        #elif defined(ARDUINO_QUANTUM)
-        #define BLYNK_INFO_DEVICE  "Noduino Quantum"
 
         /* STM32 */
         #elif defined(ARDUINO_ARCH_STM32F1)
