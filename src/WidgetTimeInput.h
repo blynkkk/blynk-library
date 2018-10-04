@@ -30,7 +30,7 @@ public:
         mStartMode = TIME_UNDEFINED;
         mStopMode = TIME_UNDEFINED;
         mTZ[0] = '\0';
-        mWeekdays = -1; // All set
+        mWeekdays = 0; // All unset by default
         mTZ_Offset = 0;
 
         BlynkParam::iterator it = param.begin();
