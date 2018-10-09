@@ -94,7 +94,6 @@ void enterConfigMode()
   IPAddress myIP = WiFi.localIP();
   DEBUG_PRINT(String("AP SSID: ") + ssidBuff);
   DEBUG_PRINT(String("AP IP:   ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
-  DEBUG_PRINT(String("AP URL:  ") + BOARD_CONFIG_AP_URL + ".local");
 
   server.begin();
 

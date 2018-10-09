@@ -36,9 +36,6 @@ public:
     DEBUG_PRINT("Hardware v" + String(BOARD_HARDWARE_VERSION));
     DEBUG_PRINT("Firmware v" + String(BOARD_FIRMWARE_VERSION));
 
-    // TODO: randomSeed(getChipId());
-    // https://gist.github.com/mgk/c9ec87436d2d679e5d08
-
     indicator_init();
     button_init();
     config_init();
