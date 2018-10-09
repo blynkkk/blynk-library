@@ -11,20 +11,15 @@
 #ifndef BlynkProtocolDefs_h
 #define BlynkProtocolDefs_h
 
+// Command definitions from:
+//   https://github.com/blynkkk/blynk-server/blob/master/server/core/src/main/java/cc/blynk/server/core/protocol/enums/Command.java
+
 enum BlynkCmd
 {
     BLYNK_CMD_RESPONSE       = 0,
-    BLYNK_CMD_REGISTER       = 1,
-    BLYNK_CMD_LOGIN          = 2,
-    BLYNK_CMD_SAVE_PROF      = 3,
-    BLYNK_CMD_LOAD_PROF      = 4,
-    BLYNK_CMD_GET_TOKEN      = 5,
+
+    BLYNK_CMD_LOGIN          = 29,
     BLYNK_CMD_PING           = 6,
-    BLYNK_CMD_ACTIVATE       = 7,
-    BLYNK_CMD_DEACTIVATE     = 8,
-    BLYNK_CMD_REFRESH        = 9,
-    BLYNK_CMD_GET_GRAPH_DATA = 10,
-    BLYNK_CMD_GET_GRAPH_DATA_RESPONSE = 11,
 
     BLYNK_CMD_TWEET          = 12,
     BLYNK_CMD_EMAIL          = 13,
@@ -36,25 +31,9 @@ enum BlynkCmd
     BLYNK_CMD_PROPERTY       = 19,
     BLYNK_CMD_HARDWARE       = 20,
 
-    BLYNK_CMD_CREATE_DASH    = 21,
-    BLYNK_CMD_SAVE_DASH      = 22,
-    BLYNK_CMD_DELETE_DASH    = 23,
-    BLYNK_CMD_LOAD_PROF_GZ   = 24,
-    BLYNK_CMD_SYNC           = 25,
-    BLYNK_CMD_SHARING        = 26,
-    BLYNK_CMD_ADD_PUSH_TOKEN = 27,
-
-    //sharing commands
-    BLYNK_CMD_GET_SHARED_DASH = 29,
-    BLYNK_CMD_GET_SHARE_TOKEN = 30,
-    BLYNK_CMD_REFRESH_SHARE_TOKEN = 31,
-    BLYNK_CMD_SHARE_LOGIN     = 32,
-
-    BLYNK_CMD_REDIRECT        = 41,
-
-    BLYNK_CMD_DEBUG_PRINT     = 55,
-
-    BLYNK_CMD_EVENT_LOG       = 64
+    BLYNK_CMD_REDIRECT       = 41,
+    BLYNK_CMD_DEBUG_PRINT    = 55,
+    BLYNK_CMD_EVENT_LOG      = 64
 };
 
 enum BlynkStatus
