@@ -19,15 +19,51 @@ DNSServer dnsServer;
 const byte DNS_PORT = 53;
 
 const char* config_form = R"html(
-<!DOCTYPE HTML><html>
-<form method='get' action='config'>
-  <label>WiFi SSID: </label><input type="text" name="ssid" length=32 required="required"><br/>
-  <label>Password:  </label><input type="text" name="pass" length=32><br/>
-  <label>Auth token:</label><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[a-zA-Z0-9]{32}" maxlength="32" required="required"><br/>
-  <label>Host: </label><input type="text" name="host" length=32><br/>
-  <label>Port: </label><input type="number" name="port" value="80" min="1" max="65535"><br/>
-  <input type='submit' value="Apply">
-</form>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>WiFi setup</title>
+  <style>
+  body {
+    background-color: #fcfcfc;
+    box-sizing: border-box;
+  }
+  body, input {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 20px;
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  td { padding:0 0 0 5px; }
+  label { white-space:nowrap; }
+  input { width: 20em; }
+  input[name="port"] { width: 5em; }
+  input[type="submit"], img { margin: auto; display: block; width: 30%; }
+  </style>
+</head> 
+<body>
+<div class="centered">
+  <form method="get" action="config">
+    <table>
+    <tr><td><label for="ssid">WiFi SSID:</label></td>  <td><input type="text" name="ssid" length=64 required="required"></td></tr>
+    <tr><td><label for="pass">Password:</label></td>   <td><input type="text" name="pass" length=64></td></tr>
+    <tr><td><label for="blynk">Auth token:</label></td><td><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[a-zA-Z0-9]{32}" maxlength="32" required="required"></td></tr>
+    <tr><td><label for="host">Host:</label></td>       <td><input type="text" name="host" length=64></td></tr>
+    <tr><td><label for="port">Port:</label></td>       <td><input type="number" name="port" value="80" min="1" max="65535"></td></tr>
+    </table><br/>
+    <input type="submit" value="Apply">
+  </form>
+</div>
+</body>
 </html>
 )html";
 
@@ -37,14 +73,19 @@ void restartMCU() {
 
 void enterConfigMode()
 {
+  randomSeed(ESP.getChipId());
+  const uint32_t unique = random(0xFFFFF);
+  char ssidBuff[64];
+  snprintf(ssidBuff, sizeof(ssidBuff), "%s-%05X", PRODUCT_WIFI_SSID, unique);
+
   WiFi.mode(WIFI_OFF);
   delay(100);
   WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(WIFI_AP_IP, WIFI_AP_IP, WIFI_AP_Subnet);
-  WiFi.softAP(PRODUCT_WIFI_SSID);
+  WiFi.softAP(ssidBuff);
   delay(500);
   IPAddress myIP = WiFi.softAPIP();
-  DEBUG_PRINT(String("AP SSID: ") + PRODUCT_WIFI_SSID);
+  DEBUG_PRINT(String("AP SSID: ") + ssidBuff);
   DEBUG_PRINT(String("AP IP:   ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
 
   if (myIP == (uint32_t)0)
@@ -148,12 +189,12 @@ void enterConfigMode()
 void enterConnectNet() {
   BlynkState::set(MODE_CONNECTING_NET);
   DEBUG_PRINT(String("Connecting to WiFi: ") + configStore.wifiSSID);
-  
+
   WiFi.mode(WIFI_STA);
   if (!WiFi.begin(configStore.wifiSSID, configStore.wifiPass)) {
     return;
   }
-  
+
   unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))
   {
@@ -163,7 +204,7 @@ void enterConnectNet() {
       return;
     }
   }
-  
+
   if (WiFi.status() == WL_CONNECTED) {
     BlynkState::set(MODE_CONNECTING_CLOUD);
   } else {
