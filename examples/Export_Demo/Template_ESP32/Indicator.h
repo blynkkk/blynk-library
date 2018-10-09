@@ -24,7 +24,7 @@ void indicator_run();
 #define BOARD_LED_IS_RGB
 #endif
 
-#define DIMM(x)    (((x)*(BOARD_LED_BRIGHTNESS))/255)
+#define DIMM(x)    ((x)*(BOARD_LED_BRIGHTNESS)/255)
 #define RGB(r,g,b) (DIMM(r) << 16 | DIMM(g) << 8 | DIMM(b) << 0)
 
 class Indicator {
