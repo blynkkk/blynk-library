@@ -104,7 +104,9 @@ protected:
     void begin(const char* auth) {
         this->authkey = auth;
         lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() - 5000UL);
-		printBanner();
+#if !defined(BLYNK_NO_DEFAULT_BANNER)
+        printBanner();
+#endif
     }
 
     bool processInput(void);
