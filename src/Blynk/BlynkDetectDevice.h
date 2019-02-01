@@ -82,6 +82,7 @@
 
         #define BLYNK_NO_YIELD
         #define BLYNK_USE_128_VPINS
+        #define BLYNK_USE_INTERNAL_DTOSTRF
 
         #if   defined(ENERGIA_ARCH_MSP430)
             #define BLYNK_INFO_DEVICE  "LaunchPad MSP430"
@@ -111,8 +112,6 @@
             #define BLYNK_INFO_CONNECTION  "CC3220"
             #define BLYNK_SEND_CHUNK 64
             #define BLYNK_BUFFERS_SIZE 1024
-
-            #define BLYNK_USE_INTERNAL_DTOSTRF
 
             #define BLYNK_INFO_DEVICE  "CC3220"
             #define BLYNK_INFO_CPU     "CC3220"
