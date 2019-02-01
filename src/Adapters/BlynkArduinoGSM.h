@@ -11,7 +11,7 @@
 #define BlynkArduinoGSM_h
 
 #ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "GSMCom"
+#define BLYNK_INFO_CONNECTION  "MKRGSM"
 #endif
 
 #ifndef BLYNK_HEARTBEAT

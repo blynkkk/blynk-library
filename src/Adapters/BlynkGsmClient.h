@@ -12,7 +12,25 @@
 #define BlynkGsmClient_h
 
 #ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "SIMCom"
+  #if defined(TINY_GSM_MODEM_SIM800)
+    #define BLYNK_INFO_CONNECTION  "SIM800"
+  #elif defined(TINY_GSM_MODEM_SIM900)
+    #define BLYNK_INFO_CONNECTION  "SIM900"
+  #elif defined(TINY_GSM_MODEM_UBLOX)
+    #define BLYNK_INFO_CONNECTION  "UBLOX"
+  #elif defined(TINY_GSM_MODEM_BG96)
+    #define BLYNK_INFO_CONNECTION  "BG96"
+  #elif defined(TINY_GSM_MODEM_A6)
+    #define BLYNK_INFO_CONNECTION  "A6"
+  #elif defined(TINY_GSM_MODEM_A7)
+    #define BLYNK_INFO_CONNECTION  "A7"
+  #elif defined(TINY_GSM_MODEM_M590)
+    #define BLYNK_INFO_CONNECTION  "M590"
+  #elif defined(TINY_GSM_MODEM_XBEE)
+    #define BLYNK_INFO_CONNECTION  "XBEE"
+  #else
+    #define BLYNK_INFO_CONNECTION  "TinyGSM"
+  #endif
 #endif
 
 #ifndef BLYNK_HEARTBEAT

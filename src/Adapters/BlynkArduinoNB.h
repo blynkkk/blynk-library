@@ -11,7 +11,7 @@
 #define BlynkArduinoNB_h
 
 #ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "NBCom"
+#define BLYNK_INFO_CONNECTION  "MKRNB"
 #endif
 
 #ifndef BLYNK_HEARTBEAT
