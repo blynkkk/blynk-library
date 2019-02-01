@@ -28,14 +28,8 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-// Select your modem:
-#define TINY_GSM_MODEM_SIM800
-//#define TINY_GSM_MODEM_SIM900
-//#define TINY_GSM_MODEM_M590
-//#define TINY_GSM_MODEM_A6
-//#define TINY_GSM_MODEM_A7
-//#define TINY_GSM_MODEM_BG96
-//#define TINY_GSM_MODEM_XBEE
+// Arduino MKR GSM 1400 uses U-blox modem
+#define TINY_GSM_MODEM_UBLOX
 
 // Default heartbeat interval for GSM is 60
 // If you want override this value, uncomment and set this option:
@@ -54,14 +48,7 @@ char apn[]  = "YourAPN";
 char user[] = "";
 char pass[] = "";
 
-// Hardware Serial on Mega, Leonardo, Micro
-#define SerialAT Serial1
-
-// or Software Serial on Uno, Nano
-//#include <SoftwareSerial.h>
-//SoftwareSerial SerialAT(2, 3); // RX, TX
-
-TinyGsm modem(SerialAT);
+TinyGsm modem(SerialGSM);
 
 void setup()
 {
@@ -71,7 +58,7 @@ void setup()
   delay(10);
 
   // Set GSM module baud rate
-  SerialAT.begin(115200);
+  SerialGSM.begin(115200);
   delay(3000);
 
   // Restart takes quite some time
