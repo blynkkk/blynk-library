@@ -11,15 +11,8 @@
 #ifndef BlynkSimpleSIM800_h
 #define BlynkSimpleSIM800_h
 
-#ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "SIM800"
-#endif
+#warning "BlynkSimpleSIM800.h is deprecated. Please use BlynkSimpleTinyGSM.h"
 
-#include <Adapters/BlynkGsmClient.h>
-
-static BlynkArduinoClient _blynkTransport;
-BlynkSIM Blynk(_blynkTransport);
-
-#include <BlynkWidgets.h>
+#include <BlynkSimpleTinyGSM.h>
 
 #endif
