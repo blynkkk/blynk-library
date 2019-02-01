@@ -271,6 +271,10 @@
         #elif defined(ARDUINO_AVR_ROBOT_CONTROL)
         #define BLYNK_INFO_DEVICE  "Robot Control"
 
+        /* Arduino megaAVR */
+        #elif defined(ARDUINO_AVR_UNO_WIFI_REV2)
+        #define BLYNK_INFO_DEVICE  "Arduino UNO WiFi Rev2"
+
         /* Arduino SAM */
         #elif defined(ARDUINO_SAM_DUE)
         #define BLYNK_INFO_DEVICE  "Arduino Due"
@@ -284,6 +288,8 @@
         #define BLYNK_INFO_DEVICE  "MKR1000"
         #elif defined(ARDUINO_SAMD_MKRZERO)
         #define BLYNK_INFO_DEVICE  "MKRZERO"
+        #elif defined(ARDUINO_SAMD_MKRNB1500)
+        #define BLYNK_INFO_DEVICE  "MKR NB 1500"
         #elif defined(ARDUINO_SAMD_MKRGSM1400)
         #define BLYNK_INFO_DEVICE  "MKR GSM 1400"
         #elif defined(ARDUINO_SAMD_MKRWAN1300)
