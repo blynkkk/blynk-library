@@ -11,10 +11,6 @@
 #ifndef BlynkSimpleTinyGSM_h
 #define BlynkSimpleTinyGSM_h
 
-#ifndef BLYNK_INFO_CONNECTION
-#define BLYNK_INFO_CONNECTION  "TinyGSM"
-#endif
-
 #include <Adapters/BlynkGsmClient.h>
 
 static BlynkArduinoClient _blynkTransport;
