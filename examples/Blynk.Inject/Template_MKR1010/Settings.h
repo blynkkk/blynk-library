@@ -30,7 +30,7 @@
   #define BOARD_LED_INVERSE           false                 // true, if you need to inverse LED signal
   #define BOARD_LED_BRIGHTNESS        64                    // 0..255 brightness control
 
-#elif defined(USE_MKR1000_BOARD)
+#elif defined(USE_MKR1010_BOARD)
 
   // Example configuration for MKR1000 Board
   #define BOARD_BUTTON_PIN            0
