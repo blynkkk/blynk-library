@@ -13,7 +13,7 @@
 
  *************************************************************/
 
-#define USE_MKR1000_BOARD
+#define USE_MKR1010_BOARD
 
 #define APP_DEBUG        // Comment this out to disable debug prints
 
