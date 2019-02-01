@@ -18,7 +18,7 @@
 
  *************************************************************
   Attention! Please check out TinyGSM guide:
-    http://tiny.cc/tiny-gsm-readme
+    https://tiny.cc/tinygsm-readme
 
   Change GPRS apm, user, pass, and Blynk auth token to run :)
   Feel free to apply it to any other example. It's simple!
