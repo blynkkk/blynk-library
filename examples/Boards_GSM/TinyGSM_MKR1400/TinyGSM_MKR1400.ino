@@ -59,7 +59,18 @@ void setup()
 
   // Set GSM module baud rate
   SerialGSM.begin(115200);
-  delay(3000);
+
+  pinMode(GSM_DTR, OUTPUT);
+  digitalWrite(GSM_DTR, LOW);
+  delay(5);
+
+  // Turn on the GSM module by triggering GSM_RESETN pin
+  pinMode(GSM_RESETN, OUTPUT);
+  digitalWrite(GSM_RESETN, HIGH);
+  delay(100);
+  digitalWrite(GSM_RESETN, LOW);
+
+  delay(1000);
 
   // Restart takes quite some time
   // To skip it, call init() instead of restart()
