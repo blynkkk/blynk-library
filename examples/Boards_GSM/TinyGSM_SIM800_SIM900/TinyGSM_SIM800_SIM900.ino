@@ -35,13 +35,16 @@
 //#define TINY_GSM_MODEM_SIM900
 //#define TINY_GSM_MODEM_M590
 //#define TINY_GSM_MODEM_A6
+//#define TINY_GSM_MODEM_A7
+//#define TINY_GSM_MODEM_BG96
+//#define TINY_GSM_MODEM_XBEE
 
 // Default heartbeat interval for GSM is 60
 // If you want override this value, uncomment and set this option:
 //#define BLYNK_HEARTBEAT 30
 
 #include <TinyGsmClient.h>
-#include <BlynkSimpleSIM800.h>
+#include <BlynkSimpleTinyGSM.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
