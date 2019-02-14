@@ -11,9 +11,8 @@ TO_TYPE="SSL"   # TCP, SSL
 
 COMM_BAUD=9600
 SERV_ADDR=blynk-cloud.com
-SERV_PORT_SSL=8441
+SERV_PORT_SSL=443
 SERV_PORT_TCP=80
-SERV_PORT_2WAY=8443
 LSTN_PORT=80
 
 SRVR_CERT="$SCRIPTPATH/certs/server.crt"
@@ -135,7 +134,6 @@ while true; do
       if [ -n "$1" ]; then
         SERV_PORT_SSL=$1
         SERV_PORT_TCP=$1
-        SERV_PORT_2WAY=$1
         shift
       fi
       ;;
