@@ -23,7 +23,7 @@
 #define BLYNK_PRINT Serial
 
 #include <MKRNB.h>
-#include <BlynkSimpleMKNB.h>
+#include <BlynkSimpleMKRNB.h>
 
 NBClient client;
 GPRS gprs;
