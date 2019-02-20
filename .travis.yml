@@ -35,7 +35,7 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Energia_Ethernet PLATFORMIO_CI_EXTRA_ARGS="--board=lptm4c1294ncpdt"
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Intel_Galileo
     # - PLATFORMIO_CI_SRC=examples/Boards_Ethernet/Seeed_EthernetV2_0
-    - PLATFORMIO_CI_SRC=examples/Boards_GSM/SIM800_SIM900 PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
+    - PLATFORMIO_CI_SRC=examples/Boards_GSM/TinyGSM_SIM800_SIM900 PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/ATtiny85 PLATFORMIO_CI_EXTRA_ARGS="--board=attiny85"
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_Serial_USB
     - PLATFORMIO_CI_SRC=examples/Boards_USB_Serial/Arduino_SoftwareSerial
@@ -158,9 +158,13 @@ install:
     # https://platformio.org/lib/show/1192/FlashStorage
     # https://platformio.org/lib/show/1285/Timer5
     # https://platformio.org/lib/show/1287/TinyGSM
+    # https://platformio.org/lib/show/870/WiFi
+    # https://platformio.org/lib/show/871/GSM
     # https://platformio.org/lib/show/872/Ethernet
+    # https://platformio.org/lib/show/883/Servo
+    # https://platformio.org/lib/show/945/Bridge
 
-    - platformio lib -g install 28 31 91 418 65 44 31 19 259 177 1192 1285 1287 872
+    - platformio lib -g install 28 31 91 418 65 44 31 19 259 177 1192 1285 1287 870 871 872 883 945
     - platformio lib -g install https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build
