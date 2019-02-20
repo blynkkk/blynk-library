@@ -76,9 +76,10 @@ env:
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/Arduino_GSM
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2"
     - PLATFORMIO_CI_SRC=examples/Boards_With_HTTP_API/SIM800_SIM900 PLATFORMIO_CI_EXTRA_ARGS="--board=leonardo"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='lib_deps=WiFi101' --project-option='build_flags=-DUSE_TIMER_FIVE'"
-    - PLATFORMIO_CI_SRC=examples/Export_Demo/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
+    - PLATFORMIO_CI_SRC=examples/Blynk.Inject/Template_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
+    - PLATFORMIO_CI_SRC=examples/Blynk.Inject/Template_ESP32 PLATFORMIO_CI_EXTRA_ARGS="--board=esp32dev --project-option='framework=arduino'"
+    - PLATFORMIO_CI_SRC=examples/Blynk.Inject/Template_MKR1000 PLATFORMIO_CI_EXTRA_ARGS="--board=mkr1000USB --project-option='lib_deps=WiFi101' --project-option='build_flags=-DUSE_TIMER_FIVE'"
+    - PLATFORMIO_CI_SRC=examples/Blynk.Inject/myPlant_ESP8266 PLATFORMIO_CI_EXTRA_ARGS="--board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'"
     - PLATFORMIO_CI_SRC=examples/GettingStarted/BlynkBlink
     - PLATFORMIO_CI_SRC=examples/GettingStarted/GetData
     - PLATFORMIO_CI_SRC=examples/GettingStarted/PushData
@@ -144,21 +145,22 @@ install:
     #
     # Libraries from PlatformIO Library Registry:
     #
-    # http://platformio.org/lib/show/28/SPI4Teensy3
-    # http://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
-    # http://platformio.org/lib/show/91/UIPEthernet
-    # http://platformio.org/lib/show/418/WildFireCore
-    # http://platformio.org/lib/show/65/WiFlyHQ
-    # http://platformio.org/lib/show/44/Time
-    # http://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
-    # http://platformio.org/lib/show/19/Adafruit-DHT
-    # http://platformio.org/lib/show/259/BLEPeripheral
-    # http://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
-    # http://platformio.org/lib/show/1192/FlashStorage
-    # http://platformio.org/lib/show/1285/Timer5
-    # http://platformio.org/lib/show/1287/TinyGSM
+    # https://platformio.org/lib/show/28/SPI4Teensy3
+    # https://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
+    # https://platformio.org/lib/show/91/UIPEthernet
+    # https://platformio.org/lib/show/418/WildFireCore
+    # https://platformio.org/lib/show/65/WiFlyHQ
+    # https://platformio.org/lib/show/44/Time
+    # https://platformio.org/lib/show/31/Adafruit%20Unified%20Sensor
+    # https://platformio.org/lib/show/19/Adafruit-DHT
+    # https://platformio.org/lib/show/259/BLEPeripheral
+    # https://platformio.org/lib/show/177/Adafruit_BluefruitLE_nRF51
+    # https://platformio.org/lib/show/1192/FlashStorage
+    # https://platformio.org/lib/show/1285/Timer5
+    # https://platformio.org/lib/show/1287/TinyGSM
+    # https://platformio.org/lib/show/872/Ethernet
 
-    - platformio lib -g install 28 31 91 418 65 44 31 19 259 177 1192 1285 1287
+    - platformio lib -g install 28 31 91 418 65 44 31 19 259 177 1192 1285 1287 872
     - platformio lib -g install https://github.com/vshymanskyy/BlynkESP8266.git
 
 script: make travis-build
