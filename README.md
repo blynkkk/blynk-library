@@ -12,19 +12,18 @@ If you like **Blynk** - give it a star, or fork it and contribute!
 [![GitHub forks](https://img.shields.io/github/forks/blynkkk/blynk-library.svg?style=social&label=Fork)](https://github.com/blynkkk/blynk-library/network)
 __________
 
-## What is Blynk?
-### Blynk is **the most popular Internet of Things platform** for connecting hardware to the cloud, designing apps to control them, and managing your deployed products at scale. 
+### Blynk is **the most popular Internet of Things platform** for connecting any hardware to the cloud, designing apps to control them, and managing your deployed products at scale. 
 
 - With Blynk Library you can connect **over 400 hardware models** (including ESP8266, ESP32, NodeMCU, all Arduinos, Raspberry Pi, Particle, Texas Instruments, etc.)to the Blynk Cloud.
 Full list of supported hardware can be found [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).
 
-- With Blynk apps for **iOS** and **Android** apps you can easily build graphic interfaces for all of your projects by simply dragging and dropping widgets on your smartphone. It's a purely WYSIWG experience: no coding on iOS or Android required. 
+- With Blynk apps for **iOS** and **Android** apps you can easily drag-n-drop graphic interfaces for any DIY or commercial project. It's a pure WYSIWG experience: no coding on iOS or Android required. 
 
-- Hardware can connect to Blynk Cloud (open-source server) over the Internet using hardware connectivity on board, or with the use of various shields (Ethernet, WiFi, GSM, LTE, etc). Blynk Cloud is available for every user of Blynk **for free**. Direct connection over Bluetooth is also possible. 
+- Hardware can connect to Blynk Cloud (open-source server) over the Internet using hardware connectivity available on your board (like ESP32), or with the use of various shields (Ethernet, WiFi, GSM, LTE, etc). Blynk Cloud is available for every user of Blynk **for free**. Direct connection over Bluetooth is also possible. 
 
 ![Blynk Banner](https://github.com/blynkkk/blynkkk.github.io/blob/master/images/GithubBanner.jpg)
 
-## Download
+## Downloads
 
 **Blynk [Arduino Library](https://github.com/blynkkk/blynk-library/releases/latest)**
 
@@ -32,14 +31,8 @@ Full list of supported hardware can be found [here](https://github.com/blynkkk/b
 [<img src="https://cdn.rawgit.com/simple-icons/simple-icons/develop/icons/googleplay.svg" width="18" height="18" /> Google Play](https://play.google.com/store/apps/details?id=cc.blynk) | 
 [<img src="https://cdn.rawgit.com/simple-icons/simple-icons/develop/icons/apple.svg" width="18" height="18" /> App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)**
 
-Optionally you can install **Blynk [Local Server](https://github.com/blynkkk/blynk-server)** and run everything locally. However, Blynk Cloud **is free** for anyone who is using Blynk for personal (non-commercial) use.
+Optionally you can install **Blynk [Local Server](https://github.com/blynkkk/blynk-server)** and run everything locally. However, **Blynk Cloud is free** for anyone who is using Blynk for personal (non-commercial) use.
 
-## Documentation
-Social: [Webpage](https://blynk.io) / [Facebook](http://www.fb.com/blynkapp) / [Twitter](http://twitter.com/blynk_app) / [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)  
-Help Center: http://help.blynk.cc  
-Documentation: http://docs.blynk.cc/#blynk-firmware  
-Community (Forum): http://community.blynk.cc  
-Code Examples Browser: http://examples.blynk.cc
 
 ## Quickstart: Arduino + Ethernet shield
 
@@ -50,21 +43,23 @@ Code Examples Browser: http://examples.blynk.cc
 * Update Auth Token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
 
-Please find examples on how to use different types of connections (transports) and how to do make something great with Blynk.
-You can easily apply any type of board/connection to all examples.
+When you are connected - check the included examples on how to use different types of connections (transports) and explore Blynk features. You can combine any example for your hardware + transport + features.
 
 ## Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
 
 Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).  
 Check out our Examples Browser: http://examples.blynk.cc
 
-## Contributing
-We accept contributions from our community: stability bugfixes, new hardware support, or any other improvements.  
-[Here](https://github.com/blynkkk/blynk-library/labels/help%20wanted) is a list of what you could help with.
+## Documentation and other helpful links
 
-__________
+Documentation: http://docs.blynk.cc/#blynk-firmware - full information on Blynk features
+Community (Forum): http://community.blynk.cc - join a 500,000 Blynk community 
+Help Center: http://help.blynk.cc - helpful articles on various Blynk aspects 
+Code Examples Browser: http://examples.blynk.cc - browse examples to explore Blynk possibilities
 
-### Implementations for other platforms
+Social: [Webpage](https://blynk.io) / [Facebook](http://www.fb.com/blynkapp) / [Twitter](http://twitter.com/blynk_app) / [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)  
+
+## Blynk libraries for other platforms
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
 * [Lua, OpenWrt, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
@@ -74,6 +69,10 @@ __________
 * [Node-RED](https://www.npmjs.com/package/node-red-contrib-blynk-ws)
 * [LabVIEW](https://github.com/juncaofish/NI-LabVIEWInterfaceforBlynk)
 * [C#](https://github.com/sverrefroy/BlynkLibrary)
+
+## Contributing
+We accept contributions from our community: stability bugfixes, new hardware support, or any other improvements.  
+[Here](https://github.com/blynkkk/blynk-library/labels/help%20wanted) is a list of what you could help with.
 
 ### License
 This project is released under The MIT License (MIT)
