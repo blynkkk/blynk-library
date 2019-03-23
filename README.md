@@ -60,10 +60,10 @@ Code Examples Browser: http://examples.blynk.cc - browse examples to explore Bly
 Social: [Webpage](https://blynk.io) / [Facebook](http://www.fb.com/blynkapp) / [Twitter](http://twitter.com/blynk_app) / [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)  
 
 ## Blynk libraries for other platforms
-* [Particle](https://github.com/vshymanskyy/blynk-library-spark)
+* [Python, MicroPython](https://github.com/blynkkk/lib-python)
 * [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
+* [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Lua, OpenWrt, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
-* [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
 * [OpenWrt packages](https://github.com/vshymanskyy/blynk-library-openwrt)
 * [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
 * [Node-RED](https://www.npmjs.com/package/node-red-contrib-blynk-ws)
