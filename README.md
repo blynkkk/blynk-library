@@ -52,12 +52,28 @@ Check out our Examples Browser: http://examples.blynk.cc
 
 ## Documentation and other helpful links
 
-Documentation: http://docs.blynk.cc/#blynk-firmware - full information on Blynk features
-Community (Forum): http://community.blynk.cc - join a 500,000 Blynk community 
-Help Center: http://help.blynk.cc - helpful articles on various Blynk aspects 
-Code Examples Browser: http://examples.blynk.cc - browse examples to explore Blynk possibilities
+[Full Blynk Documentation](http://docs.blynk.cc/#blynk-firmware) - a complete guide on Blynk features
 
-Social: [Webpage](https://blynk.io) / [Facebook](http://www.fb.com/blynkapp) / [Twitter](http://twitter.com/blynk_app) / [Kickstarter](https://www.kickstarter.com/projects/167134865/blynk-build-an-app-for-your-arduino-project-in-5-m/description)  
+[Community (Forum)](http://community.blynk.cc) - join a 500,000 Blynk community to ask questions and share ideas
+
+[Help Center](http://help.blynk.cc) - helpful articles on various Blynk aspects
+
+[Code Examples Browser](http://examples.blynk.cc) - browse examples to explore Blynk possibilities
+
+[Official Website](https://blynk.io) 
+
+**Social Media:**
+
+[Facebook](https://www.fb.com/blynkapp)
+
+[Twitter](https://twitter.com/blynk_app)
+
+[Youtube](https://www.youtube.com/blynk)
+
+[Instagram](https://www.instagram.com/blynk.iot/)
+
+[LinkedIn](https://www.linkedin.com/company/b-l-y-n-k/)
+
 
 ## Blynk libraries for other platforms
 * [Python, MicroPython](https://github.com/blynkkk/lib-python)
