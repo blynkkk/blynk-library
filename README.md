@@ -61,7 +61,10 @@ Social: [Webpage](https://blynk.io) / [Facebook](http://www.fb.com/blynkapp) / [
 
 ## Blynk libraries for other platforms
 * [Python, MicroPython](https://github.com/blynkkk/lib-python)
+
+## Libraries by community
 * [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
+* [Python](https://github.com/vshymanskyy/blynk-library-python)
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Lua, OpenWrt, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
 * [OpenWrt packages](https://github.com/vshymanskyy/blynk-library-openwrt)
