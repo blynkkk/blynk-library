@@ -3,6 +3,9 @@
 
 #include <BLEPeripheral.h>
 
+void BLESerial_onConnect(BLECentral& central);
+void BLESerial_onDisconnect(BLECentral& central);
+
 class BLESerial : public BLEPeripheral, public Stream
 {
   public:
@@ -55,6 +58,9 @@ BLESerial::BLESerial(unsigned char req, unsigned char rdy, unsigned char rst) :
   addAttribute(this->_rxCharacteristic);
   this->_rxCharacteristic.setEventHandler(BLEWritten, BLESerial::_received);
   addAttribute(this->_txCharacteristic);
+    
+  this->setEventHandler(BLEConnected, BLESerial_onConnect);
+  this->setEventHandler(BLEDisconnected, BLESerial_onDisconnect);
 }
 
 inline
@@ -144,6 +150,16 @@ void BLESerial::_received(const uint8_t* data, size_t size) {
 inline
 void BLESerial::_received(BLECentral& /*central*/, BLECharacteristic& rxCharacteristic) {
   BLESerial::_instance->_received(rxCharacteristic.value(), rxCharacteristic.valueLength());
+}
+
+void BLESerial_onConnect(BLECentral& central) {
+ BLYNK_LOG1("Device connected");
+ Blynk.startSession();
+}
+
+void BLESerial_onDisconnect(BLECentral& central) {
+ BLYNK_LOG1("Device disconnected");
+ Blynk.disconnect();
 }
 
 #endif
