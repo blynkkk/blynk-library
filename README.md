@@ -74,13 +74,9 @@ Check out our Examples Browser: http://examples.blynk.cc
 
 [LinkedIn](https://www.linkedin.com/company/b-l-y-n-k/)
 
-
-## Blynk libraries for other platforms
-* [Python, MicroPython](https://github.com/blynkkk/lib-python)
-
 ## Libraries by community
 * [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
-* [Python](https://github.com/vshymanskyy/blynk-library-python)
+* [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
 * [Particle](https://github.com/vshymanskyy/blynk-library-spark)
 * [Lua, OpenWrt, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
 * [OpenWrt packages](https://github.com/vshymanskyy/blynk-library-openwrt)
