@@ -16,6 +16,7 @@ void button_action(void)
   BlynkState::set(MODE_RESET_CONFIG);
 }
 
+ICACHE_RAM_ATTR
 void button_change(void)
 {
 #if BOARD_BUTTON_ACTIVE_LOW

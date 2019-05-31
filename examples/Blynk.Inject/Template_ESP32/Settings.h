@@ -63,7 +63,7 @@
 #define LEDC_BASE_FREQ     12000
 
 #define WIFI_NET_CONNECT_TIMEOUT      30000
-#define WIFI_CLOUD_CONNECT_TIMEOUT    15000
+#define WIFI_CLOUD_CONNECT_TIMEOUT    30000
 #define WIFI_AP_CONFIG_PORT           80
 #define WIFI_AP_IP                    IPAddress(192, 168, 4, 1)
 #define WIFI_AP_Subnet                IPAddress(255, 255, 255, 0)

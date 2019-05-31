@@ -56,7 +56,7 @@ const char* config_form = R"html(
     <tr><td><label for="pass">Password:</label></td>   <td><input type="text" name="pass" length=64></td></tr>
     <tr><td><label for="blynk">Auth token:</label></td><td><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[a-zA-Z0-9]{32}" maxlength="32" required="required"></td></tr>
     <tr><td><label for="host">Host:</label></td>       <td><input type="text" name="host" length=64></td></tr>
-    <tr><td><label for="port">Port:</label></td>       <td><input type="number" name="port" value="80" min="1" max="65535"></td></tr>
+    <tr><td><label for="port_ssl">Port:</label></td>   <td><input type="number" name="port_ssl" value="443" min="1" max="65535"></td></tr>
     </table><br/>
     <input type="submit" value="Apply">
   </form>
@@ -71,17 +71,20 @@ void restartMCU() {
 
 void enterConfigMode()
 {
-  randomSeed(ESP.getEfuseMac() & 0xFFFFFF);
-  const uint32_t unique = random(0xFFFFF);
+  uint32_t chipId = ESP.getEfuseMac() & 0xFFFFFF;
+
+  //randomSeed(chipId);
+  const uint32_t unique = chipId & 0xFFFFF; //random(0xFFFFF);
   char ssidBuff[64];
   snprintf(ssidBuff, sizeof(ssidBuff), "%s-%05X", PRODUCT_WIFI_SSID, unique);
 
   WiFi.mode(WIFI_OFF);
   delay(100);
-  WiFi.mode(WIFI_AP);
+  WiFi.mode(WIFI_AP_STA);
   WiFi.softAPConfig(WIFI_AP_IP, WIFI_AP_IP, WIFI_AP_Subnet);
   WiFi.softAP(ssidBuff);
   delay(500);
+
   IPAddress myIP = WiFi.softAPIP();
   DEBUG_PRINT(String("AP SSID: ") + ssidBuff);
   DEBUG_PRINT(String("AP IP:   ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
@@ -109,10 +112,10 @@ void enterConfigMode()
     }
     String token = server.arg("blynk");
     String host  = server.arg("host");
-    String port  = server.arg("port");
+    String port  = server.arg("port_ssl");
+    bool save  = server.arg("save").toInt();
 
     String content;
-    unsigned statusCode;
 
     DEBUG_PRINT(String("WiFi SSID: ") + ssid + " Pass: " + pass);
     DEBUG_PRINT(String("Blynk cloud: ") + token + " @ " + host + ":" + port);
@@ -129,29 +132,89 @@ void enterConfigMode()
         configStore.cloudPort = port.toInt();
       }
 
-      content = R"json({"status":"ok","msg":"Configuration saved"})json";
-      statusCode = 200;
-      server.send(statusCode, "application/json", content);
+      if (save) {
+        configStore.flagConfig = true;
+        config_save();
+
+        content = R"json({"status":"ok","msg":"Configuration saved"})json";
+      } else {
+        content = R"json({"status":"ok","msg":"Trying to connect..."})json";
+      }
+      server.send(200, "application/json", content);
 
       BlynkState::set(MODE_SWITCH_TO_STA);
     } else {
       DEBUG_PRINT("Configuration invalid");
       content = R"json({"status":"error","msg":"Configuration invalid"})json";
-      statusCode = 404;
-      server.send(statusCode, "application/json", content);
+      server.send(404, "application/json", content);
     }
   });
   server.on("/board_info.json", []() {
+    const char* tmpl = BOARD_TEMPLATE_ID;
     char buff[256];
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","vendor":"%s","tmpl_id":"%s","fw_ver":"%s","hw_ver":"%s"})json",
+      R"json({"board":"%s","vendor":"%s","tmpl_id":"%s","fw_ver":"%s","hw_ver":"%s","wifi_scan":true})json",
       BOARD_NAME,
       BOARD_VENDOR,
-      BOARD_TEMPLATE_ID,
+      tmpl ? tmpl : "Unknown",
       BOARD_FIRMWARE_VERSION,
       BOARD_HARDWARE_VERSION
     );
     server.send(200, "application/json", buff);
+  });
+  server.on("/wifi_scan.json", []() {
+    int wifi_nets = WiFi.scanNetworks(true, true);
+    while (wifi_nets == -1) {
+      delay(20);
+      wifi_nets = WiFi.scanComplete();
+    }
+    DEBUG_PRINT(String("Found networks: ") + wifi_nets);
+
+    String result = "[\n";
+    if (wifi_nets) {
+      
+      // Sort networks
+      int indices[wifi_nets];
+      for (int i = 0; i < wifi_nets; i++) {
+        indices[i] = i;
+      }
+      for (int i = 0; i < wifi_nets; i++) {
+        for (int j = i + 1; j < wifi_nets; j++) {
+          if (WiFi.RSSI(indices[j]) > WiFi.RSSI(indices[i])) {
+            std::swap(indices[i], indices[j]);
+          }
+        }
+      }
+      char buff[256];
+      for (int i = 0; i < wifi_nets; i++){
+        int id = indices[i];
+
+        const char* sec;
+        switch (WiFi.encryptionType(id)) {
+        case WIFI_AUTH_WEP:          sec = "WEP"; break;
+        case WIFI_AUTH_WPA_PSK:      sec = "WPA/PSK"; break;
+        case WIFI_AUTH_WPA2_PSK:     sec = "WPA2/PSK"; break;
+        case WIFI_AUTH_WPA_WPA2_PSK: sec = "WPA/WPA2/PSK"; break;
+        case WIFI_AUTH_OPEN:         sec = "OPEN"; break;
+        default:                     sec = "unknown"; break;
+        }
+
+        snprintf(buff, sizeof(buff),
+          R"json(  {"ssid":"%s","bssid":"%s","rssi":%i,"sec":"%s","ch":%i})json",
+          WiFi.SSID(id).c_str(),
+          WiFi.BSSIDstr(id).c_str(),
+          WiFi.RSSI(id),
+          sec,
+          WiFi.channel(id)
+        );
+
+        result += buff;
+        if (i != wifi_nets-1) result += ",\n";
+      }
+      server.send(200, "application/json", result + "\n]");
+    } else {
+      server.send(200, "application/json", "[]");
+    }
   });
   server.on("/reset", []() {
     BlynkState::set(MODE_RESET_CONFIG);
@@ -164,6 +227,7 @@ void enterConfigMode()
   server.begin();
 
   while (BlynkState::is(MODE_WAIT_CONFIG) || BlynkState::is(MODE_CONFIGURING)) {
+    delay(10);
     dnsServer.processNextRequest();
     server.handleClient();
     if (BlynkState::is(MODE_WAIT_CONFIG) && WiFi.softAPgetStationNum() > 0) {
@@ -185,7 +249,7 @@ void enterConnectNet() {
   unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))
   {
-    delay(100);
+    delay(10);
     if (!BlynkState::is(MODE_CONNECTING_NET)) {
       WiFi.disconnect();
       return;
@@ -210,20 +274,22 @@ void enterConnectCloud() {
   while ((timeoutMs > millis()) &&
         (Blynk.connected() == false))
   {
+    delay(10);
     Blynk.run();
     if (!BlynkState::is(MODE_CONNECTING_CLOUD)) {
       Blynk.disconnect();
       return;
     }
   }
-  
-  if (Blynk.connected()) {
+
+  if (Blynk.isTokenInvalid()) {
+    BlynkState::set(MODE_WAIT_CONFIG);
+  } else if (Blynk.connected()) {
     BlynkState::set(MODE_RUNNING);
 
     if (!configStore.flagConfig) {
       configStore.flagConfig = true;
       config_save();
-      DEBUG_PRINT("Configuration stored to flash");
     }
   } else {
     BlynkState::set(MODE_ERROR);
@@ -235,8 +301,9 @@ void enterSwitchToSTA() {
 
   DEBUG_PRINT("Switching to STA...");
 
-  WiFi.mode(WIFI_OFF);
   delay(1000);
+  WiFi.mode(WIFI_OFF);
+  delay(100);
   WiFi.mode(WIFI_STA);
 
   BlynkState::set(MODE_CONNECTING_NET);

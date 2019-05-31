@@ -21,7 +21,7 @@
 
 inline
 void BlynkState::set(State m) {
-  if (state != m) {
+  if (state != m && m < MODE_MAX_VALUE) {
     DEBUG_PRINT(String(StateStr[state]) + " => " + StateStr[m]);
     state = m;
   }

@@ -14,12 +14,14 @@
 
 #define APP_DEBUG        // Comment this out to disable debug prints
 
+#define BLYNK_SSL_USE_LETSENCRYPT   // Comment this out, if using public Blynk Cloud
+
 #define BLYNK_PRINT Serial
 
 #include "BlynkProvisioning.h"
 
 void setup() {
-  delay(500);
+  delay(100);
   Serial.begin(115200);
 
   BlynkProvisioning.begin();

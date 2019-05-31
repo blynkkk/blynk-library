@@ -10,7 +10,7 @@
 
 struct ConfigStore {
   uint32_t  magic;
-  char      version[9];
+  char      version[15];
   uint8_t   flagConfig:1;
   uint8_t   flagApFail:1;
   uint8_t   flagSelfTest:1;
@@ -57,6 +57,7 @@ void config_load()
 bool config_save()
 {
   flash.write(configStore);
+  DEBUG_PRINT("Configuration stored to flash");
   return true;
 }
 

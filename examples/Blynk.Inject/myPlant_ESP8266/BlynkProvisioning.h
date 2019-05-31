@@ -13,7 +13,7 @@ extern "C" {
 }
 
 #include "Settings.h"
-#include <BlynkSimpleEsp8266.h>
+#include <BlynkSimpleEsp8266_SSL.h>
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"
@@ -23,7 +23,7 @@ extern "C" {
 
 inline
 void BlynkState::set(State m) {
-  if (state != m) {
+  if (state != m && m < MODE_MAX_VALUE) {
     DEBUG_PRINT(String(StateStr[state]) + " => " + StateStr[m]);
     state = m;
   }

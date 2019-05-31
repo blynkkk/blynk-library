@@ -14,13 +14,15 @@
   Adafruit_NeoPixel rgb = Adafruit_NeoPixel(1, BOARD_LED_PIN_WS2812, NEO_GRB + NEO_KHZ800);
 #endif
 
+#include <utility/wifi_drv.h>
+
 void indicator_run();
 
 #if !defined(BOARD_LED_BRIGHTNESS)
 #define BOARD_LED_BRIGHTNESS 255
 #endif
 
-#if defined(BOARD_LED_PIN_WS2812) || defined(BOARD_LED_PIN_R)
+#if defined(BOARD_LED_PIN_WS2812) || defined(BOARD_LED_PIN_R) || defined(BOARD_LED_NINA_PIN_R)
 #define BOARD_LED_IS_RGB
 #endif
 
@@ -40,6 +42,9 @@ public:
   };
 
   Indicator() {
+  }
+
+  void init() {
     m_Counter = 0;
     initLED();
   }
@@ -61,12 +66,13 @@ public:
     case MODE_RESET_CONFIG:
     case MODE_WAIT_CONFIG:       return beatLED(COLOR_BLUE,    (int[]){ 50, 500 });
     case MODE_CONFIGURING:       return beatLED(COLOR_BLUE,    (int[]){ 200, 200 });
-    case MODE_CONNECTING_NET:    return beatLED(COLOR_BLYNK,   (int[]){ 50, 500 });
-    case MODE_CONNECTING_CLOUD:  return beatLED(COLOR_BLYNK,   (int[]){ 100, 100 });
-    case MODE_RUNNING:           return waveLED(COLOR_BLYNK,   5000);
+    //case MODE_CONNECTING_NET:    return beatLED(COLOR_BLYNK,   (int[]){ 50, 500 });
+    //case MODE_CONNECTING_CLOUD:  return beatLED(COLOR_BLYNK,   (int[]){ 100, 100 });
+    case MODE_RUNNING:           return setLED(COLOR_BLYNK);
     case MODE_OTA_UPGRADE:       return beatLED(COLOR_MAGENTA, (int[]){ 50, 50 });
-    default:                     return beatLED(COLOR_RED,     (int[]){ 80, 100, 80, 1000 } );
+    //default:                     return beatLED(COLOR_RED,     (int[]){ 80, 100, 80, 1000 } );
     }
+    return skipLED();
   }
 
 protected:
@@ -110,6 +116,29 @@ protected:
     #endif
   }
 
+#elif defined(BOARD_LED_NINA_PIN_R)
+
+  void initLED() {
+    WiFiDrv::pinMode(BOARD_LED_NINA_PIN_R, OUTPUT);
+    WiFiDrv::pinMode(BOARD_LED_NINA_PIN_G, OUTPUT);
+    WiFiDrv::pinMode(BOARD_LED_NINA_PIN_B, OUTPUT);
+  }
+
+  void setRGB(uint32_t color) {
+    uint8_t r = (color & 0xFF0000) >> 16;
+    uint8_t g = (color & 0x00FF00) >> 8;
+    uint8_t b = (color & 0x0000FF);
+    #if BOARD_LED_INVERSE
+    WiFiDrv::analogWrite(BOARD_LED_NINA_PIN_R, BOARD_PWM_MAX - r);
+    WiFiDrv::analogWrite(BOARD_LED_NINA_PIN_G, BOARD_PWM_MAX - g);
+    WiFiDrv::analogWrite(BOARD_LED_NINA_PIN_B, BOARD_PWM_MAX - b);
+    #else
+    WiFiDrv::analogWrite(BOARD_LED_NINA_PIN_R, r);
+    WiFiDrv::analogWrite(BOARD_LED_NINA_PIN_G, g);
+    WiFiDrv::analogWrite(BOARD_LED_NINA_PIN_B, b);
+    #endif
+  }
+
 #elif defined(BOARD_LED_PIN)       // Single color LED
 
   void initLED() {
@@ -136,6 +165,14 @@ protected:
 
   uint32_t skipLED() {
     return 20;
+  }
+
+  uint32_t setLED(uint32_t onColor) {
+    if (m_Counter == 0) {
+      setRGB(onColor);
+      m_Counter = 1;
+    }
+    return skipLED();
   }
 
 #if defined(BOARD_LED_IS_RGB)
@@ -217,6 +254,7 @@ Indicator indicator;
   }
 
   void indicator_init() {
+    indicator.init();
     blinker.attach_ms(100, indicator_run);
   }
 
@@ -232,6 +270,7 @@ Indicator indicator;
   }
 
   void indicator_init() {
+    indicator.init();
     Timer1.initialize(100*1000);
     Timer1.attachInterrupt(indicator_run);
   }
@@ -248,6 +287,7 @@ Indicator indicator;
   }
 
   void indicator_init() {
+    indicator.init();
     Timer3.initialize(100*1000);
     Timer3.attachInterrupt(indicator_run);
   }
@@ -265,6 +305,7 @@ Indicator indicator;
   }
 
   void indicator_init() {
+    indicator.init();
     MyTimer5.begin(1000/10);
     MyTimer5.attachInterrupt(indicator_run);
     MyTimer5.start();

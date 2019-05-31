@@ -31,12 +31,14 @@ String overTheAirURL;
 BLYNK_WRITE(InternalPinOTA) {
   overTheAirURL = param.asString();
 
+  Blynk.logEvent("sys_ota_upgrade");
+
+  delay(500);
   // Disconnect, not to interfere with OTA process
   Blynk.disconnect();
 
   // Start OTA
   BlynkState::set(MODE_OTA_UPGRADE);
-  delay(500);
 }
 
 void enterOTA() {
