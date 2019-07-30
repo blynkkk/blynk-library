@@ -33,13 +33,11 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial1
 
-
 #include <BlynkSimpleStream.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
-
 
 void setup()
 {
