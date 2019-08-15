@@ -3,6 +3,9 @@
 
 #include <BLEPeripheral.h>
 
+void BLESerial_onConnect(BLECentral& central);
+void BLESerial_onDisconnect(BLECentral& central);
+
 class BLESerial : public BLEPeripheral, public Stream
 {
   public:
@@ -26,23 +29,17 @@ class BLESerial : public BLEPeripheral, public Stream
 
     size_t _rxHead;
     size_t _rxTail;
-    size_t _rxCount() const;
-    uint8_t _rxBuffer[BLE_ATTRIBUTE_MAX_VALUE_LENGTH];
+    uint8_t _rxBuffer[BLYNK_MAX_READBYTES*2];
     size_t _txCount;
     uint8_t _txBuffer[BLE_ATTRIBUTE_MAX_VALUE_LENGTH];
 
-    BLEService _uartService = BLEService("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
-    BLEDescriptor _uartNameDescriptor = BLEDescriptor("2901", "UART");
-    BLECharacteristic _rxCharacteristic = BLECharacteristic("6E400002-B5A3-F393-E0A9-E50E24DCCA9E", BLEWriteWithoutResponse, BLE_ATTRIBUTE_MAX_VALUE_LENGTH);
-    BLEDescriptor _rxNameDescriptor = BLEDescriptor("2901", "RX - Receive Data (Write)");
-    BLECharacteristic _txCharacteristic = BLECharacteristic("6E400003-B5A3-F393-E0A9-E50E24DCCA9E", BLENotify, BLE_ATTRIBUTE_MAX_VALUE_LENGTH);
-    BLEDescriptor _txNameDescriptor = BLEDescriptor("2901", "TX - Transfer Data (Notify)");
+    BLEService _uartService = BLEService("713D0000-503E-4C75-BA94-3148F18D941E");
+    BLECharacteristic _rxCharacteristic = BLECharacteristic("713D0003-503E-4C75-BA94-3148F18D941E", BLEWrite, BLE_ATTRIBUTE_MAX_VALUE_LENGTH);
+    BLECharacteristic _txCharacteristic = BLECharacteristic("713D0002-503E-4C75-BA94-3148F18D941E", BLENotify, BLE_ATTRIBUTE_MAX_VALUE_LENGTH);
 
     void _received(const uint8_t* data, size_t size);
     static void _received(BLECentral& /*central*/, BLECharacteristic& rxCharacteristic);
 };
-
-// #define BLE_SERIAL_DEBUG
 
 BLESerial* BLESerial::_instance = NULL;
 
@@ -56,21 +53,18 @@ BLESerial::BLESerial(unsigned char req, unsigned char rdy, unsigned char rst) :
   BLESerial::_instance = this;
 
   addAttribute(this->_uartService);
-  addAttribute(this->_uartNameDescriptor);
   setAdvertisedServiceUuid(this->_uartService.uuid());
   addAttribute(this->_rxCharacteristic);
-  addAttribute(this->_rxNameDescriptor);
   this->_rxCharacteristic.setEventHandler(BLEWritten, BLESerial::_received);
   addAttribute(this->_txCharacteristic);
-  addAttribute(this->_txNameDescriptor);
+    
+  this->setEventHandler(BLEConnected, BLESerial_onConnect);
+  this->setEventHandler(BLEDisconnected, BLESerial_onDisconnect);
 }
 
 inline
 void BLESerial::begin(...) {
   BLEPeripheral::begin();
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.println(F("BLESerial::begin()"));
-  #endif
 }
 
 inline
@@ -94,10 +88,7 @@ inline
 int BLESerial::available(void) {
   BLEPeripheral::poll();
   int retval = (this->_rxHead - this->_rxTail + sizeof(this->_rxBuffer)) % sizeof(this->_rxBuffer);
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.print(F("BLESerial::available() = "));
-    Serial.println(retval);
-  #endif
+
   return retval;
 }
 
@@ -106,12 +97,7 @@ int BLESerial::peek(void) {
   BLEPeripheral::poll();
   if (this->_rxTail == this->_rxHead) return -1;
   uint8_t byte = this->_rxBuffer[ (this->_rxTail + 1) % sizeof(this->_rxBuffer)];
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.print(F("BLESerial::peek() = "));
-    Serial.print((char) byte);
-    Serial.print(F(" 0x"));
-    Serial.println(byte, HEX);
-  #endif
+
   return byte;
 }
 
@@ -121,12 +107,7 @@ int BLESerial::read(void) {
   if (this->_rxTail == this->_rxHead) return -1;
   this->_rxTail = (this->_rxTail + 1) % sizeof(this->_rxBuffer);
   uint8_t byte = this->_rxBuffer[this->_rxTail];
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.print(F("BLESerial::read() = "));
-    Serial.print((char) byte);
-    Serial.print(F(" 0x"));
-    Serial.println(byte, HEX);
-  #endif
+
   return byte;
 }
 
@@ -137,9 +118,6 @@ void BLESerial::flush(void) {
   this->_flushed = millis();
   this->_txCount = 0;
   BLEPeripheral::poll();
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.println(F("BLESerial::flush()"));
-  #endif
 }
 
 inline
@@ -148,42 +126,39 @@ size_t BLESerial::write(uint8_t byte) {
   if (this->_txCharacteristic.subscribed() == false) return 0;
   this->_txBuffer[this->_txCount++] = byte;
   if (this->_txCount == sizeof(this->_txBuffer)) flush();
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.print(F("BLESerial::write("));
-    Serial.print((char) byte);
-    Serial.print(F(" 0x"));
-    Serial.print(byte, HEX);
-    Serial.println(F(") = 1"));
-  #endif
+
   return 1;
 }
 
 inline
 BLESerial::operator bool() {
   bool retval = BLEPeripheral::connected();
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.print(F("BLESerial::operator bool() = "));
-    Serial.println(retval);
-  #endif
+  
   return retval;
 }
 
 inline
 void BLESerial::_received(const uint8_t* data, size_t size) {
-  for (int i = 0; i < size; i++) {
+  // BLYNK_DBG_DUMP(">> ", data, size);
+  for (size_t i = 0; i < size; i++) {
     this->_rxHead = (this->_rxHead + 1) % sizeof(this->_rxBuffer);
     this->_rxBuffer[this->_rxHead] = data[i];
   }
-  #ifdef BLE_SERIAL_DEBUG
-    Serial.print(F("BLESerial::received("));
-    for (int i = 0; i < size; i++) Serial.print((char) data[i]);
-    Serial.println(F(")"));
-  #endif
 }
 
 inline
 void BLESerial::_received(BLECentral& /*central*/, BLECharacteristic& rxCharacteristic) {
   BLESerial::_instance->_received(rxCharacteristic.value(), rxCharacteristic.valueLength());
+}
+
+void BLESerial_onConnect(BLECentral& central) {
+ BLYNK_LOG1("Device connected");
+ Blynk.startSession();
+}
+
+void BLESerial_onDisconnect(BLECentral& central) {
+ BLYNK_LOG1("Device disconnected");
+ Blynk.disconnect();
 }
 
 #endif
