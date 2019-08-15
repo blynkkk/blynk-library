@@ -105,7 +105,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
     case BLYNK_HW_PM: {
         while (it < param.end()) {
-            pin = BLYNK_DECODE_PIN(it);
+            const uint8_t pin = BLYNK_DECODE_PIN(it);
             ++it;
             if (!strcmp(it.asStr(), "in")) {
                 pinMode(pin, INPUT);
