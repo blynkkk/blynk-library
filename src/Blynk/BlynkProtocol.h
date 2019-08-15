@@ -335,7 +335,10 @@ bool BlynkProtocol<Transp>::processInput(void)
         BlynkParam::iterator it = param.begin();
         if (it >= param.end())
             return false;
+
         strncpy(redir_serv, it.asStr(), 32);
+        redir_serv[31] = '\0';
+
         if (++it < param.end())
             redir_port = it.asLong();
         BLYNK_LOG4(BLYNK_F("Redirecting to "), redir_serv, ':', redir_port);
