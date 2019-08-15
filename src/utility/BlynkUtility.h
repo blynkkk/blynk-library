@@ -36,6 +36,13 @@ T BlynkMathClamp(T val, T2 low, T2 high)
   return (val < low) ? low : ((val > high) ? high : val);
 }
 
+template <class T, class T2>
+T BlynkMathClampMap(T x, T2 in_min, T2 in_max, T2 out_min, T2 out_max)
+{
+  x = BlynkMathClamp(x, in_min, in_max);
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 
 template <unsigned WSIZE, typename T>
 void BlynkAverageSample (T& avg, const T& input) {
@@ -46,6 +53,21 @@ void BlynkAverageSample (T& avg, const T& input) {
       avg += add;
     else
       avg -= 1;
+}
+
+static inline
+uint32_t BlynkCRC32(const void* data, size_t length, uint32_t previousCrc32 = 0)
+{
+  const uint32_t Polynomial = 0xEDB88320;
+  uint32_t crc = ~previousCrc32;
+  unsigned char* current = (unsigned char*)data;
+  while (length--) {
+    crc ^= *current++;
+    for (unsigned int j = 0; j < 8; j++) {
+      crc = (crc >> 1) ^ (-int(crc & 1) & Polynomial);
+    }
+  }
+  return ~crc;
 }
 
 class BlynkHelperAutoInc {
