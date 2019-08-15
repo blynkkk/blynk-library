@@ -84,13 +84,6 @@ public:
         config(stream, auth);
         while(this->connect() != true) {}
     }
-
-    // Please use Blynk.begin(Stream, "auth")
-    BLYNK_DEPRECATED
-    void begin(const char* auth, Stream& stream) {
-        config(stream, auth);
-        while(this->connect() != true) {}
-    }
 };
 
 #endif
