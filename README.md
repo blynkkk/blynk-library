@@ -66,6 +66,9 @@ Check out our Examples Browser: http://examples.blynk.cc
 [Instagram](https://www.instagram.com/blynk.iot/) | 
 [LinkedIn](https://www.linkedin.com/company/b-l-y-n-k/)
 
+## Blynk libraries for other platforms
+* [Python, MicroPython](https://github.com/blynkkk/lib-python)
+
 ## Libraries by community
 * [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
 * [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
