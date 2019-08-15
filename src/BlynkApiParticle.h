@@ -39,6 +39,9 @@ void BlynkApi<Proto>::sendInfo()
 #ifdef BLYNK_INFO_CONNECTION
         BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
+#ifdef BOARD_FIRMWARE_TYPE
+        BLYNK_PARAM_KV("fw-type", BOARD_FIRMWARE_TYPE)
+#endif
 #ifdef BOARD_FIRMWARE_VERSION
         BLYNK_PARAM_KV("fw"     , BOARD_FIRMWARE_VERSION)
 #endif
@@ -50,7 +53,12 @@ void BlynkApi<Proto>::sendInfo()
     char mem_dyn[64];
     BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
 #ifdef BOARD_TEMPLATE_ID
-    profile_dyn.add_key("tmpl", BOARD_TEMPLATE_ID);
+    {
+        const char* tmpl = BOARD_TEMPLATE_ID;
+        if (tmpl && strlen(tmpl)) {
+            profile_dyn.add_key("tmpl", tmpl);
+        }
+    }
 #endif
 
 #ifdef BLYNK_HAS_PROGMEM
@@ -91,7 +99,7 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
     if (++it >= param.end())
         return;
 
-    uint8_t pin = BLYNK_DECODE_PIN(it);
+    const uint8_t pin = BLYNK_DECODE_PIN(it);
 
     switch(cmd16) {
 

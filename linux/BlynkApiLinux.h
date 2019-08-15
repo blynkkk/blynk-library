@@ -42,6 +42,9 @@ void BlynkApi<Proto>::sendInfo()
 #ifdef BLYNK_INFO_CONNECTION
         BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
+#ifdef BOARD_FIRMWARE_TYPE
+        BLYNK_PARAM_KV("fw-type", BOARD_FIRMWARE_TYPE)
+#endif
 #ifdef BOARD_FIRMWARE_VERSION
         BLYNK_PARAM_KV("fw"     , BOARD_FIRMWARE_VERSION)
 #endif
@@ -54,7 +57,12 @@ void BlynkApi<Proto>::sendInfo()
     BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
     profile_dyn.add_key("conn", "Socket");
 #ifdef BOARD_TEMPLATE_ID
-    profile_dyn.add_key("tmpl", BOARD_TEMPLATE_ID);
+    {
+        const char* tmpl = BOARD_TEMPLATE_ID;
+        if (tmpl && strlen(tmpl)) {
+            profile_dyn.add_key("tmpl", tmpl);
+        }
+    }
 #endif
 
     static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile+8, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
