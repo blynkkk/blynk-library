@@ -51,7 +51,10 @@ public:
         , fingerprint(NULL)
     {}
 
-    void setFingerprint(const char* fp) { fingerprint = fp; }
+    void setFingerprint(const char* fp) {
+      fingerprint = fp;
+      this->client->setFingerprint(fp);
+    }
 
     bool setCACert(const uint8_t* caCert, unsigned caCertLen) {
         bool res = this->client->setCACert(caCert, caCertLen);
