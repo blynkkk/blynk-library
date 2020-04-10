@@ -58,6 +58,14 @@ public:
         Blynk.virtualWrite(mPin, "pick", index);
     }
 
+    void selectRow(int index) {
+        Blynk.virtualWrite(mPin, "select", index);
+    }
+
+    void deselectRow(int index) {
+        Blynk.virtualWrite(mPin, "deselect", index);
+    }
+
 private:
     ItemOrderChange  mOnOrderChange;
     ItemSelectChange mOnSelectChange;
