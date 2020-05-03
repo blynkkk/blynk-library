@@ -24,6 +24,7 @@
 #endif
 
 #define BLYNK_SEND_ATOMIC
+#define BLYNK_RETRY_SEND
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
