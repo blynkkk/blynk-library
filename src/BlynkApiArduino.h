@@ -157,9 +157,10 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
         rsp.add("aw");
         rsp.add(pin);
 #ifdef ARDUINO_ARCH_SPRESENSE
-        pin = pin + A0 - 14;
-#endif
+        rsp.add(analogRead(pin + A0 - 14));
+#else
         rsp.add(analogRead(pin));
+#endif
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-1);
     } break;
 
