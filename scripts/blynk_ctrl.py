@@ -26,6 +26,8 @@ examples:
  Author:   Volodymyr Shymanskyy
  License:  The MIT license
 '''
+from __future__ import print_function
+
 import socket, struct
 import sys, time
 import argparse
@@ -42,7 +44,7 @@ def opAction(op, expand=False, minargs=1):
         def __call__(self, parser, namespace, values, option_string=None):
             if len(values) < minargs:
                 raise argparse.ArgumentError(self, "not enough parameters")
-            
+
             if expand:
                 pin = values[0]
                 for v in values[1:]:
@@ -95,7 +97,7 @@ if not args.target and args.token:
 
 if not args.token:
     parser.error("token not specified!")
-    
+
 if args.dump:
     log.setLevel(logging.DEBUG)
 
@@ -122,7 +124,7 @@ def compose(msg_type, *args):
     msg_id = genMsgId()
     msg_len = len(data)
     log.debug(" < %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join(map(str, args)))
-    return hdr.pack(msg_type, msg_id, msg_len) + data
+    return hdr.pack(msg_type, msg_id, msg_len) + data.encode('utf-8')
 
 static_msg_id = 0
 def genMsgId():
@@ -143,7 +145,7 @@ def receive(sock, length):
             return ''
         d.append(r)
         l += len(r)
-    return ''.join(d)
+    return b''.join(d)
 
 # Main code
 try:
@@ -154,7 +156,7 @@ except:
 
 if args.nodelay:
     conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-    
+
 # Authenticate
 conn.sendall(compose(MsgType.LOGIN, args.token))
 data = receive(conn, hdr.size)
@@ -179,14 +181,14 @@ def do_read(cmd, pin):
         if msg_type == MsgType.RSP:
             log.debug(" > %2d,%2d    : status %2d", msg_type, msg_id, msg_len)
         elif msg_type == MsgType.HW or msg_type == MsgType.BRIDGE:
-            data = receive(conn, msg_len).split("\0")
+            data = receive(conn, msg_len).decode('utf-8').split("\0")
             log.debug(" > %2d,%2d,%2d : %s", msg_type, msg_id, msg_len, "=".join(data))
             if data[0] == cmd[0]+'w' and data[1] == pin:
                 data = data[2:]
                 if len(data) > 1:
-                    print data
+                    print(data)
                 else:
-                    print data[0]
+                    print(data[0])
                 break
 
 for op in args.ops:
@@ -206,7 +208,7 @@ for op in args.ops:
     elif cmd == 'delay':
         time.sleep(op[0])
     else:
-        log.warning("Wrong command:", cmd)
+        log.warning("Wrong command: {}".format(cmd))
 
     if args.delayAll:
         time.sleep(args.delayAll)
