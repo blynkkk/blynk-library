@@ -38,6 +38,7 @@
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
 char auth[] = "YourAuthToken";
+BlynkTimer timer;
 
 void notifyOnButtonPress()
 {
@@ -72,5 +73,5 @@ void setup()
 void loop()
 {
   Blynk.run();
+  timer.run();
 }
-
