@@ -70,19 +70,21 @@ public:
     }
 
     bool connect() {
-        // Synchronize time useing SNTP. This is necessary to verify that
-        // the TLS certificates offered by the server are currently valid.
-        configTime(0, 0, "pool.ntp.org", "time.nist.gov");
-        time_t now = time(nullptr);
-        while (now < 100000) {
-          delay(500);
-          now = time(nullptr);
+        if (time(nullptr) < 100000) {
+            // Synchronize time useing SNTP. This is necessary to verify that
+            // the TLS certificates offered by the server are currently valid.
+            configTime(0, 0, "pool.ntp.org", "time.nist.gov");
+            time_t now = time(nullptr);
+            while (now < 100000) {
+                delay(500);
+                now = time(nullptr);
+            }
+            struct tm timeinfo;
+            gmtime_r(&now, &timeinfo);
+            String ntpTime = asctime(&timeinfo);
+            ntpTime.trim();
+            BLYNK_LOG2("NTP time: ", ntpTime);
         }
-        struct tm timeinfo;
-        gmtime_r(&now, &timeinfo);
-        String ntpTime = asctime(&timeinfo);
-        ntpTime.trim();
-        BLYNK_LOG2("NTP time: ", ntpTime);
 
         // Now try connecting
         if (BlynkArduinoClientGen<Client>::connect()) {
