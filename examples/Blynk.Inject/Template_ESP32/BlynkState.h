@@ -23,7 +23,7 @@ enum State {
 };
 
 #if defined(APP_DEBUG)
-const char* StateStr[MODE_MAX_VALUE] = {
+const char* StateStr[MODE_MAX_VALUE+1] = {
   "WAIT_CONFIG",
   "CONFIGURING",
   "CONNECTING_NET",
@@ -32,13 +32,15 @@ const char* StateStr[MODE_MAX_VALUE] = {
   "OTA_UPGRADE",
   "SWITCH_TO_STA",
   "RESET_CONFIG",
-  "ERROR"
+  "ERROR",
+
+  "INIT"
 };
 #endif
 
 namespace BlynkState
 {
-  volatile State state;
+  volatile State state = MODE_MAX_VALUE;
 
   State get()        { return state; }
   bool  is (State m) { return (state == m); }

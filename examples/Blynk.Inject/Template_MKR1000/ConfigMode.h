@@ -78,17 +78,21 @@ void restartMCU() {
   NVIC_SystemReset();
 }
 
-void enterConfigMode()
-{
-  byte mac[6];
-  memset(mac, 0, sizeof(mac));
+void getWiFiName(char* buff, size_t len) {
+  byte mac[6] = { 0, };
   WiFi.macAddress(mac);
   uint32_t chipId = *(uint32_t*)(mac+2) & 0xFFFFFF;
 
   randomSeed(chipId);
   const uint32_t unique = random(0xFFFFF);
+
+  snprintf(buff, len, "%s-%05X", PRODUCT_WIFI_SSID, unique);
+}
+
+void enterConfigMode()
+{
   char ssidBuff[64];
-  snprintf(ssidBuff, sizeof(ssidBuff), "%s-%05X", PRODUCT_WIFI_SSID, unique);
+  getWiFiName(ssidBuff, sizeof(ssidBuff));
 
   WiFi.beginAP(ssidBuff);
   mdnsResponder.begin(BOARD_CONFIG_AP_URL);
@@ -127,6 +131,7 @@ void enterConfigMode()
     content = config_form;
   } break;
   case REQ_CONFIG: {
+    DEBUG_PRINT("Applying configuration...");
     String ssid = urlFindArg(config_line, "ssid");
     String ssidManual = urlFindArg(config_line, "ssidManual");
     String pass = urlFindArg(config_line, "pass");
@@ -137,11 +142,13 @@ void enterConfigMode()
     String host  = urlFindArg(config_line, "host");
     String port  = urlFindArg(config_line, "port");
 
+    bool save  = urlFindArg(config_line, "save").toInt();
+
     DEBUG_PRINT(String("WiFi SSID: ") + ssid + " Pass: " + pass);
     DEBUG_PRINT(String("Blynk cloud: ") + token + " @ " + host + ":" + port);
 
     if (token.length() == 32 && ssid.length() > 0) {
-      configStore.flagConfig = false;
+      configStore.setFlag(CONFIG_FLAG_VALID, false);
       CopyString(ssid, configStore.wifiSSID);
       CopyString(pass, configStore.wifiPass);
       CopyString(token, configStore.cloudToken);
@@ -152,7 +159,14 @@ void enterConfigMode()
         configStore.cloudPort = port.toInt();
       }
 
-      content = R"json({"status":"ok","msg":"Configuration saved"})json";
+      if (save) {
+        configStore.setFlag(CONFIG_FLAG_VALID, true);
+        config_save();
+
+        content = R"json({"status":"ok","msg":"Configuration saved"})json";
+      } else {
+        content = R"json({"status":"ok","msg":"Trying to connect..."})json";
+      }
 
       BlynkState::set(MODE_SWITCH_TO_STA);
     } else {
@@ -162,15 +176,20 @@ void enterConfigMode()
     content_type = "application/json";
   } break;
   case REQ_BOARD_INFO: {
+    DEBUG_PRINT("Sending board info...");
     const char* tmpl = BOARD_TEMPLATE_ID;
-    char buff[256];
+    char ssidBuff[64];
+    getWiFiName(ssidBuff, sizeof(ssidBuff));
+    char buff[512];
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","vendor":"%s","tmpl_id":"%s","fw_ver":"%s","hw_ver":"%s"})json",
+      R"json({"board":"%s","vendor":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","hw_ver":"%s","ssid":"%s"})json",
       BOARD_NAME,
       BOARD_VENDOR,
       tmpl ? tmpl : "Unknown",
+      BOARD_FIRMWARE_TYPE,
       BOARD_FIRMWARE_VERSION,
-      BOARD_HARDWARE_VERSION
+      BOARD_HARDWARE_VERSION,
+      ssidBuff
     );
     content = buff;
     content_type = "application/json";
@@ -279,7 +298,6 @@ void enterConnectNet() {
 void enterConnectCloud() {
   BlynkState::set(MODE_CONNECTING_CLOUD);
 
-  Blynk.disconnect();
   Blynk.config(configStore.cloudToken, configStore.cloudHost, configStore.cloudPort);
   Blynk.connect(0);
 
@@ -295,13 +313,17 @@ void enterConnectCloud() {
     }
   }
 
+  if (millis() > timeoutMs) {
+    DEBUG_PRINT("Timeout");
+  }
+
   if (Blynk.isTokenInvalid()) {
     BlynkState::set(MODE_WAIT_CONFIG);
   } else if (Blynk.connected()) {
     BlynkState::set(MODE_RUNNING);
 
-    if (!configStore.flagConfig) {
-      configStore.flagConfig = true;
+    if (!configStore.getFlag(CONFIG_FLAG_VALID)) {
+      configStore.setFlag(CONFIG_FLAG_VALID, true);
       config_save();
     }
   } else {

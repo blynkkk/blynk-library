@@ -18,14 +18,16 @@
 #define APP_DEBUG        // Comment this out to disable debug prints
 
 #define BLYNK_PRINT Serial
+//#define BLYNK_DEBUG
 
 #include "BlynkProvisioning.h"
 
 void setup() {
-  delay(500);
+  delay(100);
   Serial.begin(115200);
 
   BlynkProvisioning.begin();
+
 }
 
 void loop() {

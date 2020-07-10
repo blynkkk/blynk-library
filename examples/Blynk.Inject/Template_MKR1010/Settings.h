@@ -5,12 +5,16 @@
 #define BOARD_FIRMWARE_VERSION        "1.0.1"
 #define BOARD_HARDWARE_VERSION        "1.0.0"
 
+#define BOARD_FIRMWARE_TYPE           "FW01"                // Unique identifier of a firmware
 #define BOARD_NAME                    "Product Name"        // Name of your product. Should match App Export request info.
 #define BOARD_VENDOR                  "Company Name"        // Name of your company. Should match App Export request info.
 #define BOARD_TEMPLATE_ID             "TMPL0000"            // ID of the Tile Template. Can be found in Tile Template Settings
 
 #define PRODUCT_WIFI_SSID             "Our Product"         // Name of the device, to be displayed during configuration. Should match export request info.
 #define BOARD_CONFIG_AP_URL           "our-product"         // Config page will be available in a browser at 'http://our-product.local/'
+
+#define BOARD_DEFAULT_SERVER          "blynk-cloud.com"     // Default server to connect to (Blynk App may override it)
+#define BOARD_DEFAULT_PORT            443                   // Default port
 
 /*
  * Board configuration (see examples below).
@@ -64,6 +68,8 @@
 //#define USE_TIMER_ONE
 //#define USE_TIMER_THREE
 #define USE_TIMER_FIVE
+
+#define BLYNK_NO_DEFAULT_BANNER
 
 #if defined(APP_DEBUG)
   #define DEBUG_PRINT(...) BLYNK_LOG1(__VA_ARGS__)

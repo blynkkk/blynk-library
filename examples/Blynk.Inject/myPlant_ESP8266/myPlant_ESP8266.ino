@@ -24,6 +24,7 @@
 #define BLYNK_SSL_USE_LETSENCRYPT   // Comment this out, if using public Blynk Cloud
 
 #define BLYNK_PRINT Serial
+//#define BLYNK_DEBUG
 
 #include "BlynkProvisioning.h"
 

@@ -34,6 +34,8 @@ void button_change(void)
     uint32_t buttonHoldTime = millis() - g_buttonPressTime;
     if (buttonHoldTime >= BUTTON_HOLD_TIME_ACTION) {
       button_action();
+    } else {
+      // User action
     }
     g_buttonPressTime = -1;
   }
