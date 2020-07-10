@@ -269,6 +269,14 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_LOG, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
+    template <typename NAME>
+    void clearEvent(const NAME& event_name) {
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(event_name);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_CLEAR, 0, cmd.getBuffer(), cmd.getLength()-1);
+    }
+
 #if defined(BLYNK_EXPERIMENTAL)
     // Attention!
     // Every function in this section may be changed, removed or renamed.
