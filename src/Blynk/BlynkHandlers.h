@@ -233,6 +233,7 @@ BLYNK_WRITE(InternalPinACON);
 BLYNK_WRITE(InternalPinADIS);
 BLYNK_WRITE(InternalPinRTC);
 BLYNK_WRITE(InternalPinOTA);
+BLYNK_WRITE(InternalPinMETA);
 
 // Aliases
 #define BLYNK_APP_CONNECTED()    BLYNK_WRITE(InternalPinACON)

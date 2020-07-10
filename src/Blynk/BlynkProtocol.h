@@ -373,6 +373,7 @@ bool BlynkProtocol<Transp>::processInput(void)
         case BLYNK_INT_OTA:  BlynkWidgetWriteInternalPinOTA(req, param2);    break;
         case BLYNK_INT_ACON: BlynkWidgetWriteInternalPinACON(req, param2);   break;
         case BLYNK_INT_ADIS: BlynkWidgetWriteInternalPinADIS(req, param2);   break;
+        case BLYNK_INT_META: BlynkWidgetWriteInternalPinMETA(req, param2);   break;
 #ifdef BLYNK_DEBUG
         default:             BLYNK_LOG2(BLYNK_F("Invalid internal cmd:"), param.asStr());
 #endif

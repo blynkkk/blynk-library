@@ -33,6 +33,8 @@ class BlynkTime {
 public:
     static const uint32_t MAX_TIME = 86400L;
 
+    static BlynkTime invalid() { return BlynkTime(); }
+
     BlynkTime() : mTime(-1) {}
 
     BlynkTime(const BlynkTime& t) : mTime(t.mTime) {}
@@ -71,6 +73,7 @@ public:
     bool isValid()  const { return mTime < MAX_TIME; }
     operator bool() const { return isValid(); }
 
+    bool operator != (const BlynkTime& t) const { return mTime != t.mTime; }
     bool operator == (const BlynkTime& t) const { return mTime == t.mTime; }
     bool operator >= (const BlynkTime& t) const { return mTime >= t.mTime; }
     bool operator <= (const BlynkTime& t) const { return mTime <= t.mTime; }
@@ -158,6 +161,7 @@ public:
     bool isValid()  const { return mTime != 0; }
     operator bool() const { return isValid(); }
 
+    bool operator != (const BlynkDateTime& t) const { return mTime == t.mTime; }
     bool operator == (const BlynkDateTime& t) const { return mTime == t.mTime; }
     bool operator >= (const BlynkDateTime& t) const { return mTime >= t.mTime; }
     bool operator <= (const BlynkDateTime& t) const { return mTime <= t.mTime; }

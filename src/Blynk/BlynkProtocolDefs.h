@@ -34,7 +34,8 @@ enum BlynkCmd
 
     BLYNK_CMD_REDIRECT       = 41,
     BLYNK_CMD_DEBUG_PRINT    = 55,
-    BLYNK_CMD_EVENT_LOG      = 64
+    BLYNK_CMD_EVENT_LOG      = 64,
+    BLYNK_CMD_EVENT_CLEAR    = 65
 };
 
 enum BlynkStatus
@@ -114,5 +115,6 @@ BLYNK_ATTR_PACKED;
 #define BLYNK_INT_OTA  BLYNK_STR_32('o','t','a',0)
 #define BLYNK_INT_ACON BLYNK_STR_32('a','c','o','n')
 #define BLYNK_INT_ADIS BLYNK_STR_32('a','d','i','s')
+#define BLYNK_INT_META BLYNK_STR_32('m','e','t','a')
 
 #endif
