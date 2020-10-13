@@ -34,6 +34,10 @@
   #include <certs/blynkcloud_der.h>
 #endif
 
+#ifndef BLYNK_USE_SSL
+  #define BLYNK_USE_SSL
+#endif
+
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
@@ -51,7 +55,14 @@ public:
         , fingerprint(NULL)
     {}
 
-    void setFingerprint(const char* fp) { fingerprint = fp; }
+    void setFingerprint(const char* fp) {
+        fingerprint = fp;
+
+#if defined(ESP8266)
+        // Fingerprint must be forwarded to the secure WiFi client
+        BlynkArduinoClientGen<Client>::setFingerprint(fp);
+#endif
+    }
 
     bool setCACert(const uint8_t* caCert, unsigned caCertLen) {
         bool res = this->client->setCACert(caCert, caCertLen);

@@ -38,6 +38,12 @@ public:
     void setClient(Client* c) {
         client = c;
         client->setTimeout(BLYNK_TIMEOUT_MS);
+
+#if defined(ESP8266) && defined(BLYNK_USE_SSL)
+        // Default (16384, 512) values can cause OOM errors,
+        // these smaller values seem to be working fine.
+        client->setBufferSizes(8192, 512);
+#endif
     }
 
     void begin(IPAddress a, uint16_t p) {
@@ -49,6 +55,11 @@ public:
     void begin(const char* d, uint16_t p) {
         domain = d;
         port = p;
+    }
+
+    void setFingerprint(const char* fp) {
+        // Latest version of WiFiClientSecureBearSSL requires setFingerprint() to be called
+        client->setFingerprint(fp);
     }
 
     bool connect() {
