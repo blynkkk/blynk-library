@@ -49,11 +49,12 @@ public:
     #if defined(BLYNK_SSL_TX_BUF_SIZE)
         static const int SslTxBufSize = BLYNK_SSL_TX_BUF_SIZE;
     #else
-        static const int SslTxBufsize = 256;
+        static const int SslTxBufsize = 512;
     #endif
 
         // Default (16384, 512) values can cause OOM errors,
         // these smaller values seem to be working fine.
+        // Minimum value for both is 512.
         client->setBufferSizes(SslRxBufSize, SslTxBufSize);
 #endif
     }
