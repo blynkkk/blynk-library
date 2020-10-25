@@ -40,9 +40,21 @@ public:
         client->setTimeout(BLYNK_TIMEOUT_MS);
 
 #if defined(ESP8266) && defined(BLYNK_USE_SSL)
+    #if defined(BLYNK_SSL_RX_BUF_SIZE)
+        static const int SslRxBufSize = BLYNK_SSL_RX_BUF_SIZE;
+    #else
+        static const int SslRxBufsize = 1024;
+    #endif
+
+    #if defined(BLYNK_SSL_TX_BUF_SIZE)
+        static const int SslTxBufSize = BLYNK_SSL_TX_BUF_SIZE;
+    #else
+        static const int SslTxBufsize = 256;
+    #endif
+
         // Default (16384, 512) values can cause OOM errors,
         // these smaller values seem to be working fine.
-        client->setBufferSizes(8192, 512);
+        client->setBufferSizes(SslRxBufSize, SslTxBufSize);
 #endif
     }
 
