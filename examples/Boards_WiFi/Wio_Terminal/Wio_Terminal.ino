@@ -33,7 +33,7 @@
 #define BLYNK_PRINT Serial
 
 
-#include <AtWiFi.h>
+#include <rpcWiFi.h>
 #include <WiFiClient.h>
 #include <BlynkSimpleWioTerminal.h>
 

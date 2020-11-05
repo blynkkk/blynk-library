@@ -3,7 +3,7 @@
  * @author     Anson He (Seeed Studio)
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2020 Anson He
- * @date       Sept 2019
+ * @date       Nov 2020
  * @brief
  *
  */
@@ -27,7 +27,6 @@
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLE2902.h>
-#include "Seeed_erpcUnified.h"
 
 #define SERVICE_UUID           "713D0000-503E-4C75-BA94-3148F18D941E"
 #define CHARACTERISTIC_UUID_RX "713D0003-503E-4C75-BA94-3148F18D941E"

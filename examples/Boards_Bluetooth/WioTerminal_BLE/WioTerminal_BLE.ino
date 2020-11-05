@@ -31,7 +31,6 @@
 #include <BlynkSimpleWioTerminal_BLE.h>
 #include <BLEDevice.h>
 #include <BLEServer.h>
-#include <Seeed_erpcUnified.h>
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).

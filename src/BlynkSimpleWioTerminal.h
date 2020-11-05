@@ -2,8 +2,8 @@
  * @file       BlynkSimpleWioTerminal.h
  * @author     Anson He (Seeed Studio)
  * @license    This project is released under the MIT License (MIT)
- * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
- * @date       Sept 2019
+ * @copyright  Copyright (c) 2020 Anson He
+ * @date       Nov 2020
  * @brief
  *
  */
@@ -20,7 +20,8 @@
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
-#include <AtWiFi.h>
+#include <rpcWiFi.h>
+
 
 class BlynkWifi
     : public BlynkProtocol<BlynkArduinoClient>
