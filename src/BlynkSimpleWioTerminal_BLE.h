@@ -92,7 +92,6 @@ public:
     }
 
     void disconnect() {
-        pServer->startAdvertising(); // Restart Advertising
         mConn = false;
     }
 
