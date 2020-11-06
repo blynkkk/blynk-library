@@ -24,7 +24,7 @@
 #include <Blynk/BlynkProtocol.h>
 #include <utility/BlynkFifo.h>
 
-#include <BLEDevice.h>
+#include <rpcBLEDevice.h>
 #include <BLEServer.h>
 #include <BLE2902.h>
 

@@ -29,7 +29,7 @@
 #define BLYNK_USE_DIRECT_CONNECT
 
 #include <BlynkSimpleWioTerminal_BLE.h>
-#include <BLEDevice.h>
+#include <rpcBLEDevice.h>
 #include <BLEServer.h>
 
 // You should get Auth Token in the Blynk App.
