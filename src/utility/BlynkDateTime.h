@@ -161,7 +161,7 @@ public:
     bool isValid()  const { return mTime != 0; }
     operator bool() const { return isValid(); }
 
-    bool operator != (const BlynkDateTime& t) const { return mTime == t.mTime; }
+    bool operator != (const BlynkDateTime& t) const { return mTime != t.mTime; }
     bool operator == (const BlynkDateTime& t) const { return mTime == t.mTime; }
     bool operator >= (const BlynkDateTime& t) const { return mTime >= t.mTime; }
     bool operator <= (const BlynkDateTime& t) const { return mTime <= t.mTime; }
