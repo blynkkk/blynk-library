@@ -34,7 +34,9 @@ public:
         const char* asString() const    { return ptr; }
         int         asInt() const       { if(!isValid()) return 0; return atoi(ptr); }
         long        asLong() const      { if(!isValid()) return 0; return atol(ptr); }
-        //long long   asLongLong() const  { return atoll(ptr); }
+#ifndef BLYNK_NO_LONGLONG
+        long long   asLongLong() const  { return atoll(ptr); }
+#endif
 #ifndef BLYNK_NO_FLOAT
         double      asDouble() const    { if(!isValid()) return 0; return atof(ptr); }
         float       asFloat() const     { if(!isValid()) return 0; return atof(ptr); }
@@ -71,7 +73,9 @@ public:
     const char* asString() const    { return buff; }
     int         asInt() const       { return atoi(buff); }
     long        asLong() const      { return atol(buff); }
-    //long long   asLongLong() const  { return atoll(buff); }
+#ifndef BLYNK_NO_LONGLONG
+    long long   asLongLong() const  { return atoll(buff); }
+#endif
 #ifndef BLYNK_NO_FLOAT
     double      asDouble() const    { return atof(buff); }
     float       asFloat() const     { return atof(buff); }
