@@ -17,7 +17,7 @@
 
 #if defined(BLYNK_SSL_USE_LETSENCRYPT)
   static const char BLYNK_DEFAULT_ROOT_CA[] =
-  #include <certs/letsencrypt_pem.h>
+  #include <certs/dst_pem.h>
 #else
   static const char BLYNK_DEFAULT_ROOT_CA[] =
   #include <certs/blynkcloud_pem.h>
