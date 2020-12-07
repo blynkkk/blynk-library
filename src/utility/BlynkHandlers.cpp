@@ -37,6 +37,7 @@ BLYNK_DISCONNECTED() __attribute__((weak, alias("BlynkNoOpCbk")));
 BLYNK_ON_WRITE_IMPL(InternalPinACON);
 BLYNK_ON_WRITE_IMPL(InternalPinADIS);
 BLYNK_ON_WRITE_IMPL(InternalPinRTC);
+BLYNK_ON_WRITE_IMPL(InternalPinUTC);
 BLYNK_ON_WRITE_IMPL(InternalPinOTA);
 BLYNK_ON_WRITE_IMPL(InternalPinMETA);
 
