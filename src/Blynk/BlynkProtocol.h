@@ -370,6 +370,7 @@ bool BlynkProtocol<Transp>::processInput(void)
 
         switch (cmd32) {
         case BLYNK_INT_RTC:  BlynkWidgetWriteInternalPinRTC(req, param2);    break;
+        case BLYNK_INT_UTC:  BlynkWidgetWriteInternalPinUTC(req, param2);    break;
         case BLYNK_INT_OTA:  BlynkWidgetWriteInternalPinOTA(req, param2);    break;
         case BLYNK_INT_ACON: BlynkWidgetWriteInternalPinACON(req, param2);   break;
         case BLYNK_INT_ADIS: BlynkWidgetWriteInternalPinADIS(req, param2);   break;
