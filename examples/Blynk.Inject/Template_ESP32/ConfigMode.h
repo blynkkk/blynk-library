@@ -63,7 +63,7 @@ const char* config_form = R"html(
     <table>
     <tr><td><label for="ssid">WiFi SSID:</label></td>  <td><input type="text" name="ssid" length=64 required="required"></td></tr>
     <tr><td><label for="pass">Password:</label></td>   <td><input type="text" name="pass" length=64></td></tr>
-    <tr><td><label for="blynk">Auth token:</label></td><td><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[_-a-zA-Z0-9]{32}" maxlength="32" required="required"></td></tr>
+    <tr><td><label for="blynk">Auth token:</label></td><td><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[-_a-zA-Z0-9]{32}" maxlength="32" required="required"></td></tr>
     <tr><td><label for="host">Host:</label></td>       <td><input type="text" name="host" length=64></td></tr>
     <tr><td><label for="port_ssl">Port:</label></td>   <td><input type="number" name="port_ssl" value="443" min="1" max="65535"></td></tr>
     </table><br/>
