@@ -112,6 +112,7 @@ BLYNK_ATTR_PACKED;
 #define BLYNK_HW_VR BLYNK_STR_16('v','r')
 
 #define BLYNK_INT_RTC  BLYNK_STR_32('r','t','c',0)
+#define BLYNK_INT_UTC  BLYNK_STR_32('u','t','c',0)
 #define BLYNK_INT_OTA  BLYNK_STR_32('o','t','a',0)
 #define BLYNK_INT_ACON BLYNK_STR_32('a','c','o','n')
 #define BLYNK_INT_ADIS BLYNK_STR_32('a','d','i','s')
