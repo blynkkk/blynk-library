@@ -122,7 +122,12 @@ void enterConfigMode()
   });
   server.on("/update", HTTP_POST, []() {
     server.sendHeader("Connection", "close");
-    server.send(200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
+    if (!Update.hasError()) {
+      server.send(200, "text/plain", "OK");
+    } else {
+      server.send(500, "text/plain", "FAIL");
+    }
+    delay(1000);
     restartMCU();
   }, []() {
     HTTPUpload& upload = server.upload();
@@ -383,6 +388,7 @@ void enterConnectCloud() {
 
   unsigned long timeoutMs = millis() + WIFI_CLOUD_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) &&
+        (!Blynk.isTokenInvalid()) &&
         (Blynk.connected() == false))
   {
     delay(10);

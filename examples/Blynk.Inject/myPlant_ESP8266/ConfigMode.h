@@ -356,6 +356,7 @@ void enterConnectCloud() {
 
   unsigned long timeoutMs = millis() + WIFI_CLOUD_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) &&
+        (!Blynk.isTokenInvalid()) &&
         (Blynk.connected() == false))
   {
     delay(10);

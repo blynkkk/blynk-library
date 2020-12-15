@@ -43,34 +43,25 @@ WiFiClient* connectSSL(const String& host, const int port)
   WiFiUDP::stopAll();
   WiFiClient::stopAll();
 
+  time_t now = time(nullptr);
   if (time(nullptr) < 100000) {
     // Synchronize time useing SNTP. This is necessary to verify that
     // the TLS certificates offered by the server are currently valid
     configTime(0, 0, "pool.ntp.org", "time.nist.gov");
-    time_t now = time(nullptr);
+
     while (now < 100000) {
-        delay(500);
+        delay(100);
         now = time(nullptr);
     }
-    struct tm timeinfo;
-    gmtime_r(&now, &timeinfo);
-    String timestr = asctime(&timeinfo);
-    timestr.trim();
-    DEBUG_PRINT(String("NTP time: ") + timestr);
   }
 
   // Reuse Secure WIFI Client on ESP8266
   //WiFiClientSecure* clientSSL = &_blynkWifiClient;
   WiFiClientSecure* clientSSL = new WiFiClientSecure();
 
-  clientSSL->setCACert_P(BLYNK_DEFAULT_CERT_DER, sizeof(BLYNK_DEFAULT_CERT_DER));
+  clientSSL->setTrustAnchors(&BlynkCert);
   if (!clientSSL->connect(host.c_str(), port)) {
     OTA_FATAL(F("Connection failed"));
-  }
-  if (clientSSL->verifyCertChain(host.c_str())) {
-    DEBUG_PRINT(F("Certificate OK"));
-  } else {
-    OTA_FATAL(F("Certificate check failed"));
   }
   return clientSSL;
 }
