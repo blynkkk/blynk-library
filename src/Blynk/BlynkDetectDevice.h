@@ -231,6 +231,10 @@
             #define BLYNK_NO_LONG_LONG
         #endif
 
+        #if defined(ARDUINO_ARCH_SAMD)
+            #define BLYNK_USE_INTERNAL_DTOSTRF
+        #endif
+
         /* Arduino AVR */
         #if   defined(ARDUINO_AVR_NANO)
         #define BLYNK_INFO_DEVICE  "Arduino Nano"
