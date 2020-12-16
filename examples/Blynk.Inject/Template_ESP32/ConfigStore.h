@@ -11,12 +11,12 @@
 #define CONFIG_FLAG_VALID       0x01
 #define CONFIG_FLAG_STATIC_IP   0x02
 
-#define BLYNK_PROV_ERR_NONE     0
-#define BLYNK_PROV_ERR_CONFIG   700
-#define BLYNK_PROV_ERR_NETWORK  701
-#define BLYNK_PROV_ERR_CLOUD    702
-#define BLYNK_PROV_ERR_TOKEN    703
-#define BLYNK_PROV_ERR_INTERNAL 704
+#define BLYNK_PROV_ERR_NONE     0      // All good
+#define BLYNK_PROV_ERR_CONFIG   700    // Invalid config from app (malformed token,etc)
+#define BLYNK_PROV_ERR_NETWORK  701    // Could not connect to the router
+#define BLYNK_PROV_ERR_CLOUD    702    // Could not connect to the cloud
+#define BLYNK_PROV_ERR_TOKEN    703    // Invalid token error (after connection)
+#define BLYNK_PROV_ERR_INTERNAL 704    // Other issues (i.e. hardware failure)
 
 struct ConfigStore {
   uint32_t  magic;
