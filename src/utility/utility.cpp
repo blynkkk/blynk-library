@@ -64,7 +64,7 @@ char* dtostrf_internal(double number, signed char BLYNK_UNUSED width, unsigned c
 
 #endif
 
-#if !defined(BLYNK_NO_LONG_LONG) && defined(BLYNK_USE_INTERNAL_ATOLL)
+#if !defined(BLYNK_NO_LONGLONG) && defined(BLYNK_USE_INTERNAL_ATOLL)
 
 long long atoll_internal(char *instr)
 {

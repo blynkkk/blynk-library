@@ -19,8 +19,13 @@
 #define BLYNK_PARAM_KV(k, v) k "\0" v "\0"
 #define BLYNK_PARAM_PLACEHOLDER_64 "PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder"
 
+#if !defined(BLYNK_NO_FLOAT)
 extern char*        dtostrf_internal(double number, signed char width, unsigned char prec, char *s);
+#endif
+
+#if !defined(BLYNK_NO_LONGLONG)
 extern long long    atoll_internal(char *s);
+#endif
 
 class BlynkParam
 {
@@ -37,12 +42,12 @@ public:
         const char* asString() const    { return ptr; }
         int         asInt() const       { if(!isValid()) return 0; return atoi(ptr); }
         long        asLong() const      { if(!isValid()) return 0; return atol(ptr); }
-#if defined(BLYNK_USE_INTERNAL_ATOLL) && !defined(BLYNK_NO_LONG_LONG)
-        long long   asLongLong() const  { return atoll(ptr); }
-#elif !defined(BLYNK_NO_LONG_LONG)
+#if !defined(BLYNK_NO_LONGLONG) && defined(BLYNK_USE_INTERNAL_ATOLL)
+        long long   asLongLong() const  { return atoll_internal(ptr); }
+#elif !defined(BLYNK_NO_LONGLONG)
         long long   asLongLong() const  { return atoll(ptr); }
 #endif
-#ifndef BLYNK_NO_FLOAT
+#if !defined(BLYNK_NO_FLOAT)
         double      asDouble() const    { if(!isValid()) return 0; return atof(ptr); }
         float       asFloat() const     { if(!isValid()) return 0; return atof(ptr); }
 #endif
@@ -78,12 +83,12 @@ public:
     const char* asString() const    { return buff; }
     int         asInt() const       { return atoi(buff); }
     long        asLong() const      { return atol(buff); }
-#if defined(BLYNK_USE_INTERNAL_ATOLL) && !defined(BLYNK_NO_LONG_LONG)
-    long long   asLongLong() const  { return atoll(ptr); }
-#elif !defined(BLYNK_NO_LONG_LONG)
-    long long   asLongLong() const  { return atoll(ptr); }
+#if !defined(BLYNK_NO_LONGLONG) && defined(BLYNK_USE_INTERNAL_ATOLL)
+    long long   asLongLong() const  { return atoll_internal(buff); }
+#elif !defined(BLYNK_NO_LONGLONG)
+    long long   asLongLong() const  { return atoll(buff); }
 #endif
-#ifndef BLYNK_NO_FLOAT
+#if !defined(BLYNK_NO_FLOAT)
     double      asDouble() const    { return atof(buff); }
     float       asFloat() const     { return atof(buff); }
 #endif
