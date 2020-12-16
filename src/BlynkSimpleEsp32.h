@@ -46,6 +46,7 @@ public:
         BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
 
         IPAddress myip = WiFi.localIP();
+        (void)myip; // Eliminate warnings about unused myip
         BLYNK_LOG_IP("IP: ", myip);
     }
 
