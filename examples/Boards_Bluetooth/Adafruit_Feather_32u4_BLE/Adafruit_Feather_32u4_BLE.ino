@@ -57,7 +57,7 @@ void setup() {
 
   Serial.println("Waiting for connections...");
 
-  Blynk.begin(auth, ble);
+  Blynk.begin(ble, auth);
 }
 
 void loop() {

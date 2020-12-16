@@ -43,7 +43,7 @@ void setup()
   // Blynk will work through Serial1
   // Do not read or write this serial manually in your sketch
   Serial1.begin(9600);
-  Blynk.begin(auth, Serial1);
+  Blynk.begin(Serial1, auth);
 }
 
 void loop()
