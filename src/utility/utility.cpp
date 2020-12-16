@@ -64,6 +64,19 @@ char* dtostrf_internal(double number, signed char BLYNK_UNUSED width, unsigned c
 
 #endif
 
+#if !defined(BLYNK_NO_LONG_LONG) && defined(BLYNK_USE_INTERNAL_ATOLL)
+
+long long atoll_internal(char *instr)
+{
+    long long retval = 0;
+    for (; *instr; instr++) {
+        retval = 10*retval + (*instr - '0');
+    }
+    return retval;
+}
+
+#endif
+
 #define YEAR_0                  1900
 #define YEAR_EPOCH              1970
 #define SECS_IN_DAY             (24L * 60L * 60L)

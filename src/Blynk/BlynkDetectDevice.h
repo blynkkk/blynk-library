@@ -88,7 +88,7 @@
             #define BLYNK_INFO_DEVICE  "LaunchPad MSP430"
             #define BLYNK_INFO_CPU     "MSP430"
             #define BLYNK_NO_FLOAT
-            #define BLYNK_NO_LONG_LONG
+            #define BLYNK_NO_LONGLONG
         #elif defined(ENERGIA_ARCH_MSP432)
             #define BLYNK_INFO_DEVICE  "LaunchPad MSP432"
             #define BLYNK_INFO_CPU     "MSP432"
@@ -228,7 +228,7 @@
         #endif
 
         #if defined(ARDUINO_ARCH_AVR)
-            #define BLYNK_NO_LONG_LONG
+            #define BLYNK_USE_INTERNAL_ATOLL
         #endif
 
         #if defined(ARDUINO_ARCH_SAMD)

@@ -19,6 +19,9 @@
 #define BLYNK_PARAM_KV(k, v) k "\0" v "\0"
 #define BLYNK_PARAM_PLACEHOLDER_64 "PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder"
 
+extern char*        dtostrf_internal(double number, signed char width, unsigned char prec, char *s);
+extern long long    atoll_internal(char *s);
+
 class BlynkParam
 {
 public:
@@ -34,7 +37,9 @@ public:
         const char* asString() const    { return ptr; }
         int         asInt() const       { if(!isValid()) return 0; return atoi(ptr); }
         long        asLong() const      { if(!isValid()) return 0; return atol(ptr); }
-#ifndef BLYNK_NO_LONGLONG
+#if defined(BLYNK_USE_INTERNAL_ATOLL) && !defined(BLYNK_NO_LONG_LONG)
+        long long   asLongLong() const  { return atoll(ptr); }
+#elif !defined(BLYNK_NO_LONG_LONG)
         long long   asLongLong() const  { return atoll(ptr); }
 #endif
 #ifndef BLYNK_NO_FLOAT
@@ -73,8 +78,10 @@ public:
     const char* asString() const    { return buff; }
     int         asInt() const       { return atoi(buff); }
     long        asLong() const      { return atol(buff); }
-#ifndef BLYNK_NO_LONGLONG
-    long long   asLongLong() const  { return atoll(buff); }
+#if defined(BLYNK_USE_INTERNAL_ATOLL) && !defined(BLYNK_NO_LONG_LONG)
+    long long   asLongLong() const  { return atoll(ptr); }
+#elif !defined(BLYNK_NO_LONG_LONG)
+    long long   asLongLong() const  { return atoll(ptr); }
 #endif
 #ifndef BLYNK_NO_FLOAT
     double      asDouble() const    { return atof(buff); }
@@ -341,8 +348,6 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
 #ifndef BLYNK_NO_FLOAT
 
 #if defined(BLYNK_USE_INTERNAL_DTOSTRF)
-
-    extern char* dtostrf_internal(double number, signed char width, unsigned char prec, char *s);
 
     inline
     void BlynkParam::add(float value)
