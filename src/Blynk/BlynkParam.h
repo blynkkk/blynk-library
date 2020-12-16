@@ -24,7 +24,7 @@ extern char*        dtostrf_internal(double number, signed char width, unsigned 
 #endif
 
 #if !defined(BLYNK_NO_LONGLONG)
-extern long long    atoll_internal(char *s);
+extern long long    atoll_internal(const char *s);
 #endif
 
 class BlynkParam

@@ -140,7 +140,7 @@ install:
     # ChipKIT issue: install 32-bit support for GCC PIC32
     - sudo apt-get install libc6-i386
 
-    - pip install -U https://github.com/platformio/platformio/archive/develop.zip
+    - pip install -U platformio
 
     #
     # Libraries from PlatformIO Library Registry:
