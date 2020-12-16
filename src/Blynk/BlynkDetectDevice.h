@@ -88,6 +88,7 @@
             #define BLYNK_INFO_DEVICE  "LaunchPad MSP430"
             #define BLYNK_INFO_CPU     "MSP430"
             #define BLYNK_NO_FLOAT
+            #define BLYNK_NO_LONG_LONG
         #elif defined(ENERGIA_ARCH_MSP432)
             #define BLYNK_INFO_DEVICE  "LaunchPad MSP432"
             #define BLYNK_INFO_CPU     "MSP432"
@@ -224,6 +225,10 @@
         #if defined(ARDUINO_ARCH_SAMD) || defined(ESP32) || defined(ESP8266)
             #define BLYNK_USE_128_VPINS
             #define BLYNK_BUFFERS_SIZE 1024
+        #endif
+
+        #if defined(ARDUINO_ARCH_AVR)
+            #define BLYNK_NO_LONG_LONG
         #endif
 
         /* Arduino AVR */
