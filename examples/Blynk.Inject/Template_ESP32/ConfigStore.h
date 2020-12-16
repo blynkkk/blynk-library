@@ -8,8 +8,15 @@
  *
  **************************************************************/
 
-#define CONFIG_FLAG_VALID      0x01
-#define CONFIG_FLAG_STATIC_IP  0x02
+#define CONFIG_FLAG_VALID       0x01
+#define CONFIG_FLAG_STATIC_IP   0x02
+
+#define BLYNK_PROV_ERR_NONE     0
+#define BLYNK_PROV_ERR_CONFIG   700
+#define BLYNK_PROV_ERR_NETWORK  701
+#define BLYNK_PROV_ERR_CLOUD    702
+#define BLYNK_PROV_ERR_TOKEN    703
+#define BLYNK_PROV_ERR_INTERNAL 704
 
 struct ConfigStore {
   uint32_t  magic;
@@ -28,6 +35,8 @@ struct ConfigStore {
   uint32_t  staticGW;
   uint32_t  staticDNS;
   uint32_t  staticDNS2;
+
+  int       last_error;
 
   void setFlag(uint8_t mask, bool value) {
     if (value) {
@@ -55,7 +64,8 @@ const ConfigStore configDefault = {
   "invalid token",
   BOARD_DEFAULT_SERVER,
   BOARD_DEFAULT_PORT,
-  0
+  0,
+  BLYNK_PROV_ERR_NONE
 };
 
 template<typename T, int size>
@@ -131,5 +141,15 @@ void enterResetConfig()
   configStore = configDefault;
   config_save();
   BlynkState::set(MODE_WAIT_CONFIG);
+}
+
+void config_set_last_error(int error) {
+  // Only set error if not provisioned
+  if (!configStore.getFlag(CONFIG_FLAG_VALID)) {
+    configStore = configDefault;
+    configStore.last_error = error;
+    BLYNK_LOG2("Last error code: ", error);
+    config_save();
+  }
 }
 
