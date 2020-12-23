@@ -69,6 +69,9 @@ public:
     button_init();
     config_init();
 
+    WiFi.persistent(false);
+    WiFi.enableSTA(true);   // Needed to get MAC
+
     printDeviceBanner();
 
     if (configStore.getFlag(CONFIG_FLAG_VALID)) {

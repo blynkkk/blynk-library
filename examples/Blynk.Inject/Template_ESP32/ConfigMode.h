@@ -97,6 +97,7 @@ void enterConfigMode()
   WiFi.mode(WIFI_OFF);
   delay(100);
   WiFi.mode(WIFI_AP_STA);
+  delay(1000);
   WiFi.softAPConfig(WIFI_AP_IP, WIFI_AP_IP, WIFI_AP_Subnet);
   WiFi.softAP(ssidBuff);
   delay(500);
