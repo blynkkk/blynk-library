@@ -102,6 +102,7 @@ public:
 
     void*  getBuffer() const { return (void*)buff; }
     size_t getLength() const { return len; }
+    size_t getBuffSize() const { return buff_size; }
 
     // Modification
     void add(int value);
