@@ -15,13 +15,8 @@
 #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting.
 #endif
 
-#if defined(BLYNK_SSL_USE_LETSENCRYPT)
-  static const char BLYNK_DEFAULT_ROOT_CA[] =
-  #include <certs/letsencrypt_pem.h>
-#else
-  static const char BLYNK_DEFAULT_ROOT_CA[] =
-  #include <certs/blynkcloud_pem.h>
-#endif
+static const char BLYNK_DEFAULT_ROOT_CA[] =
+#include <certs/letsencrypt_pem.h>
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>

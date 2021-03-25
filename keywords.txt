@@ -22,9 +22,6 @@ config	KEYWORD2
 run	KEYWORD2
 connect	KEYWORD2
 connected	KEYWORD2
-tweet	KEYWORD2
-notify	KEYWORD2
-email	KEYWORD2
 virtualWrite	KEYWORD2
 virtualWriteBinary	KEYWORD2
 syncAll	KEYWORD2

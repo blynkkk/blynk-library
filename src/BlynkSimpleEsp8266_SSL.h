@@ -21,13 +21,8 @@
 #error Please update your ESP8266 Arduino Core
 #endif
 
-#if defined(BLYNK_SSL_USE_LETSENCRYPT)
-  static const char BLYNK_DEFAULT_ROOT_CA[] PROGMEM =
-  #include <certs/letsencrypt_pem.h>
-#else
-  static const char BLYNK_DEFAULT_ROOT_CA[] PROGMEM =
-  #include <certs/blynkcloud_pem.h>
-#endif
+static const char BLYNK_DEFAULT_ROOT_CA[] PROGMEM =
+#include <certs/letsencrypt_pem.h>
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
