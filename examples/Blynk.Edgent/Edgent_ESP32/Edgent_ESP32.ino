@@ -1,4 +1,5 @@
 
+// Fill-in information from your Blynk Template here
 #define BLYNK_TEMPLATE_ID             ""
 #define BLYNK_DEVICE_NAME             ""
 
