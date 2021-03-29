@@ -16,7 +16,9 @@
 /***************************************************
  * Change these settings to match your need
  ***************************************************/
-#ifndef BLYNK_DEFAULT_DOMAIN
+#ifdef BLYNK_TEMPLATE_ID
+#define BLYNK_DEFAULT_DOMAIN     "blynk.cloud"
+#else
 #define BLYNK_DEFAULT_DOMAIN     "blynk-cloud.com"
 #endif
 
@@ -27,7 +29,9 @@
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "1.0.0-beta.2"
+#define BLYNK_VERSION        "1.0.0-beta.3"
+
+#define BLYNK_NEW_LIBRARY
 
 // Heartbeat period in seconds.
 #ifndef BLYNK_HEARTBEAT

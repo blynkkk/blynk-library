@@ -7,6 +7,11 @@ extern "C" {
 
 #include "Settings.h"
 #include <BlynkSimpleEsp32_SSL.h>
+
+#ifndef BLYNK_NEW_LIBRARY
+#error "Old version of Blynk library is in use. Please replace it with the new one."
+#endif
+
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"
