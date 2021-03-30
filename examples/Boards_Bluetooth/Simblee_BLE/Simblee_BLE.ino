@@ -22,9 +22,13 @@
 
  *************************************************************/
 
-//#define BLYNK_USE_DIRECT_CONNECT
+#define BLYNK_USE_DIRECT_CONNECT
 
 #define BLYNK_PRINT Serial
+
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
 
 #include <BlynkSimpleSimbleeBLE.h>
 #include <SimbleeBLE.h>

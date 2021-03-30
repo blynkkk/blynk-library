@@ -22,9 +22,15 @@
 
  *************************************************************/
 
+#define BLYNK_USE_DIRECT_CONNECT
+
 //#define BLYNK_DEBUG
 #define BLYNK_PRINT Serial
 #define BLYNK_RUN_YIELD() { ble.handleEvents(); }
+
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
 
 #include <BLE.h>
 #include <BlynkSimpleSerialBLE.h>
