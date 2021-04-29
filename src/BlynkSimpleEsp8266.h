@@ -133,7 +133,7 @@ public:
 		}
         config(auth, ip, port);
 		return this->connect();
-    }
+    } 
 
 };
 
