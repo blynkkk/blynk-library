@@ -11,6 +11,11 @@ CXX ?= g++
 CXXFLAGS += -I ../src/ -I ./ -DLINUX
 LDFLAGS += -lrt -lpthread
 
+ifeq ($(PREFIX),)
+	PREFIX := /usr/local
+endif
+FULLPREFIX=${DESTDIR}/${PREFIX}
+
 ifeq ($(build),debug)
 	CXXFLAGS += -c -g2 -O0 \
 		-Wall -Weffc++ \
@@ -34,12 +39,12 @@ ifeq ($(build),debug)
 		-Wunused-function  -Wunused-label  \
 		-Wunused-value  -Wunused-variable \
 		-Wvolatile-register-var  -Wwrite-strings
-	
-	# Disable some warnings
+
+# Disable some warnings
 	CXXFLAGS += -Wno-variadic-macros -Wno-unused-parameter -Wno-vla
-	
-	# Uncomment this to get pedantic warnings:
-	#CXXFLAGS += -pedantic -Wvariadic-macros -Wunused-parameter -Waggregate-return -Wcast-qual -Wpadded
+
+# Uncomment this to get pedantic warnings:
+#CXXFLAGS += -pedantic -Wvariadic-macros -Wunused-parameter -Waggregate-return -Wcast-qual -Wpadded
 else
 	CXXFLAGS += -c -O3 -w
 	LDFLAGS += -s
@@ -50,21 +55,64 @@ ifeq ($(target),raspberry)
 	LDFLAGS += -lwiringPi
 endif
 
-SOURCES=main.cpp \
-	../src/utility/BlynkDebug.cpp \
-	../src/utility/BlynkHandlers.cpp \
-	../src/utility/BlynkTimer.cpp
+LIBSOURCES=	../src/utility/BlynkDebug.cpp \
+            ../src/utility/BlynkHandlers.cpp \
+            ../src/utility/BlynkTimer.cpp
 
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=blynk
+USRHEADERS= *.h
+COREHEADERS=  ../src/Blynk/*.h
+UTILHEADERS= ../src/utility/*.h
 
-all: $(SOURCES) $(EXECUTABLE)
+ALLSOURCES=main.cpp $(LIBSOURCES)
+
+ALLOBJECTS=$(ALLSOURCES:.cpp=.o)
+EXECUTABLE=blynk-demo
+
+LIBOBJECTS=$(LIBSOURCES:.cpp=.o)
+LIBRARY=libblynk.so
+
+PKGCONFIG=libblynk.pc
+
+all: $(ALLSOURCES) $(EXECUTABLE) $(LIBRARY)
+
+library: $(LIBRARY) $(PKGCONFIG)
 
 clean:
-	-rm $(OBJECTS) $(EXECUTABLE)
+	-rm -f $(ALLOBJECTS) $(EXECUTABLE) $(LIBRARY) $(PKGCONFIG)
 
-$(EXECUTABLE): $(OBJECTS) 
-	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
+$(EXECUTABLE): $(ALLOBJECTS) $(LIBRARY)
+	$(CXX) $(ALLOBJECTS) $(LDFLAGS) -o $@
+
+$(LIBRARY): $(LIBOBJECTS)
+	$(CXX) $(LIBOBJECTS) $(LDFLAGS) -shared -o $(LIBRARY)
+
+install: $(LIBRARY) $(PKGCONFIG)
+	install -d $(FULLPREFIX)/lib/libblynk/
+	install -m 755 $(LIBRARY) $(FULLPREFIX)/lib/libblynk/
+	install -d $(FULLPREFIX)/include/libblynk/
+	install -m 644 ${USRHEADERS} $(FULLPREFIX)/include/libblynk/
+	install -d $(FULLPREFIX)/include/libblynk/Blynk/
+	install -m 644 ${COREHEADERS} $(FULLPREFIX)/include/libblynk/Blynk/
+	install -d $(FULLPREFIX)/include/libblynk/utility/
+	install -m 644 ${UTILHEADERS} $(FULLPREFIX)/include/libblynk/utility/
+	install -d $(FULLPREFIX)/lib/pkgconfig/
+	install -m 644 ${PKGCONFIG} $(FULLPREFIX)/lib/pkgconfig/
+	echo "$(FULLPREFIX)/lib/libblynk" >/etc/ld.so.conf.d/libblynk.conf
+	ldconfig ${FULLPREFIX}
+
+uninstall:
+	rm -rf ${FULLPREFIX}/lib/libblynk/
+	rm -rf ${FULLPREFIX}/include/libblynk/
+	rm -f ${FULLPREFIX}/lib/pkgconfig/${PKGCONFIG}
+	rm -f /etc/ld.so.conf.d/libblynk.conf
+	ldconfig ${FULLPREFIX}
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) -fPIC $< -o $@
+
+$(PKGCONFIG):
+	echo "Name: Blynk Library"  >>$(PKGCONFIG)
+	echo "Description: C Utility Library"  >>$(PKGCONFIG)
+	echo "Version: 0.0" >>$(PKGCONFIG)
+	echo "Cflags: -I${FULLPREFIX}/include/libblynk/"  >>$(PKGCONFIG)
+	echo "Libs: -L${FULLPREFIX}/lib/libblynk -lblynk"  >>$(PKGCONFIG)

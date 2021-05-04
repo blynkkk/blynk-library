@@ -22,3 +22,11 @@ We have also provided a build script, you can try just running (inside of the "l
 ```bash
 $ ./build.sh raspberry
 ```
+
+To build a dynamic library that can be installed system-wide, try:
+```bash
+$ make target=raspberry libblynk.so
+$ sudo make install
+```
+
+Then see ./library-test/ for a small sample code on how to use the library in your own project.
