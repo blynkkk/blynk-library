@@ -51,6 +51,10 @@
 
 #define BLYNK_PRINT Serial // Enables Serial Monitor
 
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
+
 // Following includes are for Arduino Ethernet Shield (W5100)
 // If you're using another shield, see Boards_* examples
 #include <SPI.h>

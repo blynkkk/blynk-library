@@ -27,6 +27,10 @@
 
 #define BLYNK_USE_DIRECT_CONNECT
 
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
+
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <BlynkSimpleStream.h>

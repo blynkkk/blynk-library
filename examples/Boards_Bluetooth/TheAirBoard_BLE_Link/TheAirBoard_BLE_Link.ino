@@ -24,12 +24,16 @@
              USB HOWTO: http://tiny.cc/BlynkUSB
  *************************************************************/
 
-//#define BLYNK_USE_DIRECT_CONNECT
+#define BLYNK_USE_DIRECT_CONNECT
 
 #include <SoftwareSerial.h>
 SoftwareSerial DebugSerial(10, 11); // RX, TX
 
 #define BLYNK_PRINT DebugSerial
+
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
 
 #include <BlynkSimpleSerialBLE.h>
 

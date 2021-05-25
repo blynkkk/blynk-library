@@ -11,6 +11,26 @@
 #ifndef BlynkApi_h
 #define BlynkApi_h
 
+// back-compat
+
+#ifdef BOARD_FIRMWARE_TYPE
+    #define BLYNK_FIRMWARE_TYPE         BOARD_FIRMWARE_TYPE
+#endif
+
+#ifdef BOARD_FIRMWARE_VERSION
+    #define BLYNK_FIRMWARE_VERSION      BOARD_FIRMWARE_VERSION
+#endif
+
+#ifdef BOARD_TEMPLATE_ID
+    #define BLYNK_TEMPLATE_ID           BOARD_TEMPLATE_ID
+#endif
+
+// end of back-compat
+
+#if !defined(BLYNK_FIRMWARE_TYPE) && defined(BLYNK_TEMPLATE_ID)
+    #define BLYNK_FIRMWARE_TYPE         BLYNK_TEMPLATE_ID
+#endif
+
 #include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkDebug.h>
 #include <Blynk/BlynkParam.h>
@@ -144,12 +164,10 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_SYNC, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    /**
-     * Tweets a message
-     *
-     * @param msg Text of the message
-     */
+
+    // Please use Blynk.logEvent("event", "Description")
     template<typename T>
+    BLYNK_DEPRECATED
     void tweet(const T& msg) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
@@ -157,12 +175,9 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    /**
-     * Sends a push notification to the App
-     *
-     * @param msg Text of the message
-     */
+    // Please use Blynk.logEvent("event", "Description")
     template<typename T>
+    BLYNK_DEPRECATED
     void notify(const T& msg) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
@@ -170,12 +185,9 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    /**
-     * Sends an SMS
-     *
-     * @param msg Text of the message
-     */
+    // Please use Blynk.logEvent("event", "Description")
     template<typename T>
+    BLYNK_DEPRECATED
     void sms(const T& msg) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
@@ -183,14 +195,9 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_SMS, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    /**
-     * Sends an email message
-     *
-     * @param email   Email to send to
-     * @param subject Subject of message
-     * @param msg     Text of the message
-     */
+    // Please use Blynk.logEvent("event", "Description")
     template <typename T1, typename T2>
+    BLYNK_DEPRECATED
     void email(const char* email, const T1& subject, const T2& msg) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
@@ -200,13 +207,9 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    /**
-     * Sends an email message
-     *
-     * @param subject Subject of message
-     * @param msg     Text of the message
-     */
+    // Please use Blynk.logEvent("event", "Description")
     template <typename T1, typename T2>
+    BLYNK_DEPRECATED
     void email(const T1& subject, const T2& msg) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));

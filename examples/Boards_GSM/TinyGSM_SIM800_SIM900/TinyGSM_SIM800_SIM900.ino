@@ -28,6 +28,10 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
+
 // Select your modem:
 #define TINY_GSM_MODEM_SIM800
 //#define TINY_GSM_MODEM_SIM900

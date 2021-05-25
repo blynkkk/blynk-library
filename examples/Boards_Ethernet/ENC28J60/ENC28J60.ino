@@ -35,6 +35,9 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
 
 #include <UIPEthernet.h>
 #include <BlynkSimpleUIPEthernet.h>

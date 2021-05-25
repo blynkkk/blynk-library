@@ -27,6 +27,9 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT DebugSerial
 
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
 
 // You could use a spare Hardware Serial on boards that have it (like Mega)
 #include <SoftwareSerial.h>

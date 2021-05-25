@@ -35,6 +35,9 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
 
 // These are the interrupt and control pins for СС3000
 #define ADAFRUIT_CC3000_IRQ   3

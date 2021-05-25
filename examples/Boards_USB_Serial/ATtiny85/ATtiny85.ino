@@ -42,6 +42,9 @@ SoftwareSerial SwSerial(3, 4);
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT DebugSerial
 
+/* Fill-in your Template ID (only if using Blynk.Cloud) */
+//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+
 
 #include <BlynkSimpleStream.h>
 
@@ -60,7 +63,7 @@ void setup()
   // Blynk will work through SoftwareSerial
   // Do not read or write this serial manually in your sketch
   SwSerial.begin(9600);
-  Blynk.begin(SwSerial, auth);
+  Blynk.begin(SwSerial, AUTH_TOKEN);
 
   // Sometimes you need to calibrate your ATtiny timer
   //OSCCAL = 175;

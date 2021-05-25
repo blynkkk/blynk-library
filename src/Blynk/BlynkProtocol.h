@@ -327,17 +327,17 @@ bool BlynkProtocol<Transp>::processInput(void)
     } break;
     case BLYNK_CMD_REDIRECT: {
         if (!redir_serv) {
-             redir_serv = (char*)malloc(32);
+             redir_serv = (char*)malloc(64);
         }
         BlynkParam param(inputBuffer, hdr.length);
-        uint16_t redir_port = BLYNK_DEFAULT_PORT; // TODO: Fixit
+        uint16_t redir_port = BLYNK_DEFAULT_PORT;
 
         BlynkParam::iterator it = param.begin();
         if (it >= param.end())
             return false;
 
-        strncpy(redir_serv, it.asStr(), 32);
-        redir_serv[31] = '\0';
+        strncpy(redir_serv, it.asStr(), 64);
+        redir_serv[63] = '\0';
 
         if (++it < param.end())
             redir_port = it.asLong();
