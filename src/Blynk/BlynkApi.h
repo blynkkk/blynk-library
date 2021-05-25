@@ -169,35 +169,53 @@ public:
     template<typename T>
     BLYNK_DEPRECATED
     void tweet(const T& msg) {
-        logEvent("notify", msg);
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     // Please use Blynk.logEvent("event", "Description")
     template<typename T>
     BLYNK_DEPRECATED
     void notify(const T& msg) {
-        logEvent("notify", msg);
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     // Please use Blynk.logEvent("event", "Description")
     template<typename T>
     BLYNK_DEPRECATED
     void sms(const T& msg) {
-        logEvent("notify", msg);
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_SMS, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     // Please use Blynk.logEvent("event", "Description")
     template <typename T1, typename T2>
     BLYNK_DEPRECATED
     void email(const char* email, const T1& subject, const T2& msg) {
-        logEvent("notify", msg);
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(email);
+        cmd.add(subject);
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     // Please use Blynk.logEvent("event", "Description")
     template <typename T1, typename T2>
     BLYNK_DEPRECATED
     void email(const T1& subject, const T2& msg) {
-        logEvent("notify", msg);
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(subject);
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
