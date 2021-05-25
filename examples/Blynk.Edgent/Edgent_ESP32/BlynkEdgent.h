@@ -12,6 +12,10 @@ extern "C" {
 #error "Old version of Blynk library is in use. Please replace it with the new one."
 #endif
 
+#if !defined(BLYNK_TEMPLATE_ID) || !defined(BLYNK_DEVICE_NAME)
+#error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_DEVICE_NAME"
+#endif
+
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"
