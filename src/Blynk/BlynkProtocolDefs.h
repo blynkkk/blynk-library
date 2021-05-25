@@ -63,7 +63,10 @@ enum BlynkStatus
     BLYNK_TIMEOUT                = 16,
 
     BLYNK_NOT_SUPPORTED_VERSION  = 20,
-    BLYNK_ENERGY_LIMIT           = 21
+    BLYNK_ENERGY_LIMIT           = 21,
+
+    BLYNK_OPERATION_ACCEPT       = 23,
+    BLYNK_OPERATION_DECLINE      = 24,
 };
 
 struct BlynkHeader
@@ -116,6 +119,8 @@ BLYNK_ATTR_PACKED;
 #define BLYNK_INT_RTC  BLYNK_STR_32('r','t','c',0)
 #define BLYNK_INT_UTC  BLYNK_STR_32('u','t','c',0)
 #define BLYNK_INT_OTA  BLYNK_STR_32('o','t','a',0)
+#define BLYNK_INT_VFS  BLYNK_STR_32('v','f','s',0)
+#define BLYNK_INT_DBG  BLYNK_STR_32('d','b','g',0)
 #define BLYNK_INT_ACON BLYNK_STR_32('a','c','o','n')
 #define BLYNK_INT_ADIS BLYNK_STR_32('a','d','i','s')
 #define BLYNK_INT_META BLYNK_STR_32('m','e','t','a')

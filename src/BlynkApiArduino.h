@@ -169,25 +169,13 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 #endif
 
     case BLYNK_HW_VR: {
-        BlynkReq req = { pin };
-        WidgetReadHandler handler = GetReadHandler(pin);
-        if (handler && (handler != BlynkWidgetRead)) {
-            handler(req);
-        } else {
-            BlynkWidgetReadDefault(req);
-        }
+        callReadHandler(pin);
     } break;
     case BLYNK_HW_VW: {
         ++it;
         char* start = (char*)it.asStr();
         BlynkParam param2(start, len - (start - (char*)buff));
-        BlynkReq req = { pin };
-        WidgetWriteHandler handler = GetWriteHandler(pin);
-        if (handler && (handler != BlynkWidgetWrite)) {
-            handler(req, param2);
-        } else {
-            BlynkWidgetWriteDefault(req, param2);
-        }
+        callWriteHandler(pin, param2);
     } break;
     default:
         BLYNK_LOG2(BLYNK_F("Invalid HW cmd: "), cmd);
