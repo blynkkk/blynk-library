@@ -5,12 +5,12 @@
 
 String overTheAirURL;
 
-extern BlynkTimer timer;
+extern BlynkTimer edgentTimer;
 
 BLYNK_WRITE(InternalPinOTA) {
   overTheAirURL = param.asString();
 
-  timer.setTimeout(2000L, [](){
+  edgentTimer.setTimeout(2000L, [](){
     // Start OTA
     Blynk.logEvent("sys_ota", "OTA started");
 

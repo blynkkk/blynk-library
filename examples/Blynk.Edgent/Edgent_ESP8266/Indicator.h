@@ -31,6 +31,9 @@ public:
   };
 
   Indicator() {
+  }
+
+  void init() {
     m_Counter = 0;
     initLED();
   }
@@ -118,6 +121,12 @@ protected:
 #else
 
   #warning Invalid LED configuration.
+
+  void initLED() {
+  }
+
+  void setLED(uint32_t color) {
+  }
 
 #endif
 
@@ -208,6 +217,7 @@ Indicator indicator;
   }
 
   void indicator_init() {
+    indicator.init();
     blinker.attach_ms(100, indicator_run);
   }
 
@@ -223,6 +233,7 @@ Indicator indicator;
   }
 
   void indicator_init() {
+    indicator.init();
     Timer1.initialize(100*1000);
     Timer1.attachInterrupt(indicator_run);
   }
@@ -239,8 +250,28 @@ Indicator indicator;
   }
 
   void indicator_init() {
+    indicator.init();
     Timer3.initialize(100*1000);
     Timer3.attachInterrupt(indicator_run);
+  }
+
+#elif defined(USE_TIMER_FIVE)
+
+  #include <Timer5.h>    // Library: https://github.com/michael71/Timer5
+
+  int indicator_counter = -1;
+  void indicator_run() {
+    indicator_counter -= 10;
+    if (indicator_counter < 0) {
+      indicator_counter = indicator.run();
+    }
+  }
+
+  void indicator_init() {
+    indicator.init();
+    MyTimer5.begin(1000/10);
+    MyTimer5.attachInterrupt(indicator_run);
+    MyTimer5.start();
   }
 
 #else

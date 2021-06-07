@@ -1,12 +1,3 @@
-/**************************************************************
- * This is a DEMO. You can use it only for development and testing.
- *
- * If you would like to add these features to your product,
- * please contact Blynk for Business:
- *
- *                  http://www.blynk.io/
- *
- **************************************************************/
 
 volatile bool     g_buttonPressed = false;
 volatile uint32_t g_buttonPressTime = -1;

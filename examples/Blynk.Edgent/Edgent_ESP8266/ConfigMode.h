@@ -225,6 +225,7 @@ void enterConfigMode()
       wifi_nets = WiFi.scanComplete();
     }
     DEBUG_PRINT(String("Found networks: ") + wifi_nets);
+
     if (wifi_nets) {
       server.setContentLength(CONTENT_LENGTH_UNKNOWN);
       server.send(200, "application/json", "[\n");

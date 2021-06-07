@@ -110,9 +110,9 @@ public:
 };
 
 Edgent BlynkEdgent;
-BlynkTimer timer;
+BlynkTimer edgentTimer;
 
 void app_loop() {
-    timer.run();
+    edgentTimer.run();
 }
 

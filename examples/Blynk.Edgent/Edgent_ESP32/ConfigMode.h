@@ -269,8 +269,8 @@ void enterConfigMode()
     }
     DEBUG_PRINT(String("Found networks: ") + wifi_nets);
 
-    String result = "[\n";
     if (wifi_nets) {
+      String result = "[\n";
       
       // Sort networks
       int indices[wifi_nets];

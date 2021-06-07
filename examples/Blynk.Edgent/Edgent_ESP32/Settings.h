@@ -66,6 +66,7 @@
 #define USE_TICKER
 //#define USE_TIMER_ONE
 //#define USE_TIMER_THREE
+//#define USE_TIMER_FIVE
 
 #define BLYNK_NO_DEFAULT_BANNER
 
