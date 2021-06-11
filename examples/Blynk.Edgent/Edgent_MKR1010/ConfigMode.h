@@ -1,5 +1,6 @@
 
 #include <WiFiClient.h>
+#include <utility>
 
 WiFiServer server(WIFI_AP_CONFIG_PORT);
 
@@ -125,9 +126,7 @@ String scanNetworks()
     int wifi_nets = WiFi.scanNetworks();
     DEBUG_PRINT(String("Found networks: ") + wifi_nets);
 
-    if (wifi_nets) {
-      String result = "[\n";
-      
+    if (wifi_nets > 0) {
       // Sort networks
       int indices[wifi_nets];
       for (int i = 0; i < wifi_nets; i++) {
@@ -144,6 +143,7 @@ String scanNetworks()
       wifi_nets = BlynkMin(15, wifi_nets); // Show top 15 networks
 
       // TODO: skip empty names
+      String result = "[\n";
 
       char buff[256];
       for (int i = 0; i < wifi_nets; i++){
@@ -198,6 +198,7 @@ void enterConfigMode()
   server.begin();
 
   while(BlynkState::is(MODE_WAIT_CONFIG)) {
+    app_loop();
 
     WiFiClient client = server.available();   // listen for incoming clients
 
@@ -206,6 +207,7 @@ void enterConfigMode()
       String config_line = "";
       Request req = REQ_ROOT;
       while (client.connected()) {            // loop while the client's connected
+        app_loop();
         if (client.available()) {             // if there's bytes to read from the client,
           char c = client.read();             // read a byte, then
           //Serial.write(c);                    // print it out the serial monitor
@@ -306,12 +308,11 @@ void enterConfigMode()
     WiFi.macAddress(mac);
     
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","hw_ver":"%s","ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","last_error":%d,"wifi_scan":true,"static_ip":true})json",
+      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","last_error":%d,"wifi_scan":true,"static_ip":true})json",
       BLYNK_DEVICE_NAME,
       tmpl ? tmpl : "Unknown",
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
-      BOARD_HARDWARE_VERSION,
       ssidBuff,
       mac[5], mac[4], mac[3], mac[2], mac[1], mac[0],
       configStore.last_error

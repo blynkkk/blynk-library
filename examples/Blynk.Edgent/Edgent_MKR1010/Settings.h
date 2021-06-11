@@ -1,8 +1,3 @@
-/*
- * General options
- */
-
-#define BOARD_HARDWARE_VERSION        "1.0.0"
 
 /*
  * Board configuration (see examples below).
@@ -36,6 +31,7 @@
 //#define USE_TIMER_ONE
 //#define USE_TIMER_THREE
 //#define USE_TIMER_FIVE
+//#define USE_PTHREAD
 
 #define BLYNK_NO_DEFAULT_BANNER
 

@@ -1,15 +1,20 @@
 
 String overTheAirURL;
 
+extern BlynkTimer edgentTimer;
+
 BLYNK_WRITE(InternalPinOTA) {
   overTheAirURL = param.asString();
 
-  delay(500);
-  // Disconnect, not to interfere with OTA process
-  Blynk.disconnect();
+  edgentTimer.setTimeout(2000L, [](){
+    // Start OTA
+    Blynk.logEvent("sys_ota", "OTA started");
 
-  // Start OTA
-  BlynkState::set(MODE_OTA_UPGRADE);
+    // Disconnect, not to interfere with OTA process
+    Blynk.disconnect();
+
+    BlynkState::set(MODE_OTA_UPGRADE);
+  });
 }
 
 void enterOTA() {
