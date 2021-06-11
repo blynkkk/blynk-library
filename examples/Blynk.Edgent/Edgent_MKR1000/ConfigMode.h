@@ -1,8 +1,10 @@
 
 #include <WiFiClient.h>
+#include <WiFiMDNSResponder.h>
 #include <utility>
 
 WiFiServer server(80);
+WiFiMDNSResponder mdnsResponder;
 
 String urlDecode(const String& text);
 String urlFindArg(const String& url, const String& arg);
@@ -158,12 +160,10 @@ String scanNetworks()
 
         const char* sec;
         switch (WiFi.encryptionType(id)) {
-        case AUTH_MODE_SHARED_KEY:   sec = "WEP"; break;
-        case AUTH_MODE_WPA:          sec = "WPA"; break;
-        case AUTH_MODE_WPA2:         sec = "WPA2"; break;
-        case AUTH_MODE_WPA_PSK:      sec = "WPA/PSK"; break;
-        case AUTH_MODE_WPA2_PSK:     sec = "WPA2/PSK"; break;
-        case AUTH_MODE_OPEN_SYSTEM:  sec = "OPEN"; break;
+        case ENC_TYPE_WEP:           sec = "WEP"; break;
+        case ENC_TYPE_TKIP:          sec = "WPA/WPA2"; break;
+        case ENC_TYPE_CCMP:          sec = "WPA/WPA2"; break;
+        case ENC_TYPE_NONE:          sec = "OPEN"; break;
         default:                     sec = "unknown"; break;
         }
 
@@ -195,17 +195,33 @@ void enterConfigMode()
 
   String networks = scanNetworks();
 
+  WiFi.end();
+  WiFi.config(WIFI_AP_IP);
   WiFi.beginAP(ssidBuff);
+  mdnsResponder.begin(CONFIG_AP_URL);
 
   delay(500);
   IPAddress myIP = WiFi.localIP();
   DEBUG_PRINT(String("AP SSID: ") + ssidBuff);
   DEBUG_PRINT(String("AP IP:   ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
+  DEBUG_PRINT(String("AP URL:  ") + CONFIG_AP_URL + ".local");
 
-  server.begin();
+  int status = WiFi.status();
 
   while(BlynkState::is(MODE_WAIT_CONFIG)) {
+    // Workaround for https://github.com/arduino-libraries/WiFi101/issues/46
+    if (status != WiFi.status()) {
+      status = WiFi.status();
+
+      if (status == WL_AP_CONNECTED) {
+        Serial.println("Device connected to AP");
+        server.begin(); 
+      } else {
+        Serial.println("Device disconnected from AP");
+      } 
+    }
     app_loop();
+    mdnsResponder.poll();
 
     WiFiClient client = server.available();   // listen for incoming clients
 
@@ -379,13 +395,16 @@ void enterConnectNet() {
   BlynkState::set(MODE_CONNECTING_NET);
   DEBUG_PRINT(String("Connecting to WiFi: ") + configStore.wifiSSID);
 
+  // This is needed, otherwise WiFi.hostname() hangs
   WiFi.end();
+  delay(100);
+  WiFi.begin();
 
   char ssidBuff[64];
   getWiFiName(ssidBuff, sizeof(ssidBuff));
   String hostname(ssidBuff);
   hostname.replace(" ", "-");
-  WiFi.setHostname(hostname.c_str());
+  WiFi.hostname(hostname.c_str());
 
   if (configStore.getFlag(CONFIG_FLAG_STATIC_IP)) {
         WiFi.config(configStore.staticIP,

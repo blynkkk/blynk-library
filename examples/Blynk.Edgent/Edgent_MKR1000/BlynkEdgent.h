@@ -5,8 +5,8 @@ extern "C" {
 
 #include "Settings.h"
 #include <SPI.h>
-#include <WiFiNINA.h>
-#include <BlynkSimpleWiFiNINA.h>
+#include <WiFi101.h>
+#include <BlynkSimpleMKR1000.h>
 
 #ifndef BLYNK_NEW_LIBRARY
 #error "Old version of Blynk library is in use. Please replace it with the new one."
@@ -66,6 +66,9 @@ class Edgent {
 public:
   void begin()
   {
+    // Required to get MAC
+    WiFi.begin();
+
     indicator_init();
     button_init();
     config_init();

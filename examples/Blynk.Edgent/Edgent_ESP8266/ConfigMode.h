@@ -71,9 +71,14 @@ void restartMCU() {
 
 
 void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
-  uint32_t chipId = ESP.getChipId();
-  randomSeed(chipId);
-  const uint32_t unique = random(0xFFFFF) & 0xFFFFF;
+  byte mac[6] = { 0, };
+  WiFi.macAddress(mac);
+
+  uint32_t unique = 0;
+  for (int i=0; i<4; i++) {
+    unique = BlynkCRC32(&mac, sizeof(mac), unique);
+  }
+  unique &= 0xFFFFF;
 
   if (withPrefix) {
     snprintf(buff, len, "Blynk %s-%05X", BLYNK_DEVICE_NAME, unique);
