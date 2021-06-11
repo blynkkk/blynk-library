@@ -35,7 +35,6 @@
 #include <Blynk/BlynkDebug.h>
 #include <Blynk/BlynkParam.h>
 #include <Blynk/BlynkTimer.h>
-#include <Blynk/BlynkConsole.h>
 #include <Blynk/BlynkHandlers.h>
 #include <Blynk/BlynkProtocolDefs.h>
 

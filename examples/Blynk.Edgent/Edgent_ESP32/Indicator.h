@@ -226,6 +226,25 @@ Indicator indicator;
     blinker.attach_ms(100, indicator_run);
   }
 
+#elif defined(USE_PTHREAD)
+
+  #include <pthread.h>
+
+  pthread_t blinker;
+
+  void* indicator_thread(void*) {
+    while (true) {
+      uint32_t returnTime = indicator.run();
+      returnTime = BlynkMathClamp(returnTime, 1, 10000);
+      vTaskDelay(returnTime);
+    }
+  }
+
+  void indicator_init() {
+    indicator.init();
+    pthread_create(&blinker, NULL, indicator_thread, NULL);
+  }
+
 #elif defined(USE_TIMER_ONE)
 
   #include <TimerOne.h>

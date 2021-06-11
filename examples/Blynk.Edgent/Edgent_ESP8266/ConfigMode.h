@@ -73,12 +73,12 @@ void restartMCU() {
 void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   uint32_t chipId = ESP.getChipId();
   randomSeed(chipId);
-  const uint32_t unique = random(0xFFFFF);
+  const uint32_t unique = random(0xFFFFF) & 0xFFFFF;
 
   if (withPrefix) {
-    snprintf(buff, len, "Blynk %s-%05X", BLYNK_DEVICE_NAME, unique & 0xFFFFF);
+    snprintf(buff, len, "Blynk %s-%05X", BLYNK_DEVICE_NAME, unique);
   } else {
-    snprintf(buff, len, "%s-%05X", BLYNK_DEVICE_NAME, unique & 0xFFFFF);      
+    snprintf(buff, len, "%s-%05X", BLYNK_DEVICE_NAME, unique);
   }
 }
 
@@ -205,12 +205,11 @@ void enterConfigMode()
     getWiFiName(ssidBuff, sizeof(ssidBuff));
     char buff[512];
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","hw_ver":"%s","ssid":"%s","bssid":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
+      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
       BLYNK_DEVICE_NAME,
       tmpl ? tmpl : "Unknown",
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
-      BOARD_HARDWARE_VERSION,
       ssidBuff,
       WiFi.softAPmacAddress().c_str(),
       configStore.last_error
@@ -220,16 +219,16 @@ void enterConfigMode()
   server.on("/wifi_scan.json", []() {
     DEBUG_PRINT("Scanning networks...");
     int wifi_nets = WiFi.scanNetworks(true, true);
-    while (wifi_nets == -1) {
+    const uint32_t t = millis();
+    while (wifi_nets < 0 &&
+           millis() - t < 20000)
+    {
       delay(20);
       wifi_nets = WiFi.scanComplete();
     }
     DEBUG_PRINT(String("Found networks: ") + wifi_nets);
 
-    if (wifi_nets) {
-      server.setContentLength(CONTENT_LENGTH_UNKNOWN);
-      server.send(200, "application/json", "[\n");
-      
+    if (wifi_nets > 0) {
       // Sort networks
       int indices[wifi_nets];
       for (int i = 0; i < wifi_nets; i++) {
@@ -246,6 +245,9 @@ void enterConfigMode()
       wifi_nets = BlynkMin(15, wifi_nets); // Show top 15 networks
 
       // TODO: skip empty names
+      server.setContentLength(CONTENT_LENGTH_UNKNOWN);
+      server.send(200, "application/json", "[\n");
+
 
       char buff[256];
       for (int i = 0; i < wifi_nets; i++){
