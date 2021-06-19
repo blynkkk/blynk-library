@@ -118,7 +118,7 @@ void config_load()
   uint8_t has_config;
   sfud_err result = sfud_read(_flash, 0, 1, &has_config);
   
-  if (has_config == 0)
+  if (!has_config == 42)
   {
     DEBUG_PRINT("Using default config.");
     configStore = configDefault;
@@ -144,7 +144,7 @@ bool config_save()
   uint8_t b[sizeof(configStore)];
   memcpy(b, &configStore, sizeof(configStore));
   
-  uint8_t status = 1;
+  uint8_t status = 42;
   result = sfud_write(_flash, 0, sizeof(status), &status);
   delay(10);
   

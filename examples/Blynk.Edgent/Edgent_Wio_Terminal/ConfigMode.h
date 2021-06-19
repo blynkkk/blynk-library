@@ -255,6 +255,7 @@ void enterConfigMode()
       server.send(500, "application/json", content);
     }
   });
+  
   server.on("/board_info.json", []() {
     DEBUG_PRINT("Sending board info...");
     const char* tmpl = BLYNK_TEMPLATE_ID;
@@ -272,8 +273,10 @@ void enterConfigMode()
       WiFi.softAPmacAddress().c_str(),
       configStore.last_error
     );
+    DEBUG_PRINT(buff);
     server.send(200, "application/json", buff);
   });
+  
   server.on("/wifi_scan.json", []() {
     DEBUG_PRINT("Scanning networks...");
     int wifi_nets = WiFi.scanNetworks(true, true);
