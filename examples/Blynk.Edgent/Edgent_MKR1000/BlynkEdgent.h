@@ -6,7 +6,20 @@ extern "C" {
 #include "Settings.h"
 #include <SPI.h>
 #include <WiFi101.h>
-#include <BlynkSimpleMKR1000.h>
+
+#define BLYNK_SEND_ATOMIC
+//#define BLYNK_USE_SSL
+
+#include <Blynk.h>
+#include <Adapters/BlynkWiFiCommon.h>
+
+WiFiSSLClient _blynkWifiClient;
+//WiFiClient _blynkWifiClient;
+
+BlynkArduinoClient _blynkTransport(_blynkWifiClient);
+BlynkWifiCommon Blynk(_blynkTransport);
+
+#include <BlynkWidgets.h>
 
 #ifndef BLYNK_NEW_LIBRARY
 #error "Old version of Blynk library is in use. Please replace it with the new one."
@@ -41,10 +54,10 @@ void printDeviceBanner()
   DEBUG_PRINT("--------------------------");
   DEBUG_PRINT(String("Product:  ") + BLYNK_DEVICE_NAME);
   DEBUG_PRINT(String("Firmware: ") + BLYNK_FIRMWARE_VERSION " (build " __DATE__ " " __TIME__ ")");
-  DEBUG_PRINT(String("WiFi FW:  ") + WiFi.firmwareVersion());
   if (configStore.getFlag(CONFIG_FLAG_VALID)) {
     DEBUG_PRINT(String("Token:    ...") + (configStore.cloudToken+28));
   }
+  DEBUG_PRINT(String("WiFi FW:  ") + WiFi.firmwareVersion());
   DEBUG_PRINT("--------------------------");
 }
 
