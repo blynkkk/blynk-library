@@ -15,7 +15,7 @@
 void setup()
 {
   Serial.begin(115200);
-  delay(100);
+  delay(2000);
 
   BlynkEdgent.begin();
 }

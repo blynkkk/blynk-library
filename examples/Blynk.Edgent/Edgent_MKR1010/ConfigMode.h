@@ -56,7 +56,7 @@ const char* config_form = R"html(
     <tr><td><label for="pass">Password:</label></td>   <td><input type="text" name="pass" length=64></td></tr>
     <tr><td><label for="blynk">Auth token:</label></td><td><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[-_a-zA-Z0-9]{32}" maxlength="32" required="required"></td></tr>
     <tr><td><label for="host">Host:</label></td>       <td><input type="text" name="host" length=64></td></tr>
-    <tr><td><label for="port">Port:</label></td>       <td><input type="number" name="port" value="80" min="1" max="65535"></td></tr>
+    <tr><td><label for="port_ssl">Port:</label></td>   <td><input type="number" name="port_ssl" value="443" min="1" max="65535"></td></tr>
     </table><br/>
     <input type="submit" value="Apply">
   </form>
@@ -241,7 +241,7 @@ void enterConfigMode()
     }
     String token = urlFindArg(config_line, "blynk");
     String host  = urlFindArg(config_line, "host");
-    String port  = urlFindArg(config_line, "port");
+    String port  = urlFindArg(config_line, "port_ssl");
 
     String ip   = urlFindArg(config_line, "ip");
     String mask = urlFindArg(config_line, "mask");

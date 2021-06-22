@@ -18,7 +18,7 @@
 
 #define CONFIG_AP_URL                 "blynk.setup"
 #define CONFIG_DEFAULT_SERVER         "blynk.cloud"
-#define CONFIG_DEFAULT_PORT           80
+#define CONFIG_DEFAULT_PORT           443
 
 #define WIFI_NET_CONNECT_TIMEOUT      30000
 #define WIFI_CLOUD_CONNECT_TIMEOUT    60000

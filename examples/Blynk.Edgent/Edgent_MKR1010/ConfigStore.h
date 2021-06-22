@@ -98,8 +98,11 @@ static bool config_load_blnkopt()
   return true;
 }
 
+// Offset is derived EEPROM_EMULATION_RESERVATION in ArduinoOTA library
+// See InternalStorage.debugPrint() output
+
 #include <FlashStorage.h>
-FlashStorage(flash, ConfigStore);
+FlashStorageClass<ConfigStore> flash((void*)0x3C000);
 
 void config_load()
 {
