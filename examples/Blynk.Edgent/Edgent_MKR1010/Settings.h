@@ -7,6 +7,9 @@
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
+  #define BOARD_LED_PIN               6
+  #define BOARD_LED_INVERSE           false
+
 /*
  * Advanced options
  */
@@ -29,7 +32,7 @@
 //#define USE_TICKER
 //#define USE_TIMER_ONE
 //#define USE_TIMER_THREE
-//#define USE_TIMER_FIVE
+#define USE_TIMER_FIVE
 //#define USE_PTHREAD
 
 #define BLYNK_NO_DEFAULT_BANNER

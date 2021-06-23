@@ -1,6 +1,7 @@
 
 extern "C" {
   void app_loop();
+  void restartMCU();
 }
 
 #include "Settings.h"
@@ -57,6 +58,7 @@ void printDeviceBanner()
   if (configStore.getFlag(CONFIG_FLAG_VALID)) {
     DEBUG_PRINT(String("Token:    ...") + (configStore.cloudToken+28));
   }
+  DEBUG_PRINT(String("Device:   ") + BLYNK_INFO_DEVICE);
   DEBUG_PRINT(String("WiFi FW:  ") + WiFi.firmwareVersion());
   DEBUG_PRINT("--------------------------");
 }
