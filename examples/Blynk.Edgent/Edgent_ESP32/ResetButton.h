@@ -18,7 +18,7 @@ void button_change(void)
   if (buttonState && !g_buttonPressed) {
     g_buttonPressTime = millis();
     g_buttonPressed = true;
-    DEBUG_PRINT("Hold the button to reset configuration...");
+    DEBUG_PRINT("Hold the button for 10 seconds to reset configuration...");
   } else if (!buttonState && g_buttonPressed) {
     g_buttonPressed = false;
     uint32_t buttonHoldTime = millis() - g_buttonPressTime;

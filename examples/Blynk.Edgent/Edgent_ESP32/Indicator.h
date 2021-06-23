@@ -15,8 +15,9 @@ void indicator_run();
 #define BOARD_LED_IS_RGB
 #endif
 
-#define DIMM(x)    ((x)*(BOARD_LED_BRIGHTNESS)/255)
+#define DIMM(x)    ((uint32_t)(x)*(BOARD_LED_BRIGHTNESS)/255)
 #define RGB(r,g,b) (DIMM(r) << 16 | DIMM(g) << 8 | DIMM(b) << 0)
+#define TO_PWM(x)  ((uint32_t)(x)*(BOARD_PWM_MAX)/255)
 
 class Indicator {
 public:
@@ -98,13 +99,13 @@ protected:
     uint8_t g = (color & 0x00FF00) >> 8;
     uint8_t b = (color & 0x0000FF);
     #if BOARD_LED_INVERSE
-    ledcWrite(LEDC_CHANNEL_1, BOARD_PWM_MAX - r);
-    ledcWrite(LEDC_CHANNEL_2, BOARD_PWM_MAX - g);
-    ledcWrite(LEDC_CHANNEL_3, BOARD_PWM_MAX - b);
+    ledcWrite(LEDC_CHANNEL_1, TO_PWM(255 - r));
+    ledcWrite(LEDC_CHANNEL_2, TO_PWM(255 - g));
+    ledcWrite(LEDC_CHANNEL_3, TO_PWM(255 - b));
     #else
-    ledcWrite(LEDC_CHANNEL_1, r);
-    ledcWrite(LEDC_CHANNEL_2, g);
-    ledcWrite(LEDC_CHANNEL_3, b);
+    ledcWrite(LEDC_CHANNEL_1, TO_PWM(r));
+    ledcWrite(LEDC_CHANNEL_2, TO_PWM(g));
+    ledcWrite(LEDC_CHANNEL_3, TO_PWM(b));
     #endif
   }
 
@@ -117,9 +118,9 @@ protected:
 
   void setLED(uint32_t color) {
     #if BOARD_LED_INVERSE
-    ledcWrite(LEDC_CHANNEL_1, BOARD_PWM_MAX - color);
+    ledcWrite(LEDC_CHANNEL_1, TO_PWM(255 - color));
     #else
-    ledcWrite(LEDC_CHANNEL_1, color);
+    ledcWrite(LEDC_CHANNEL_1, TO_PWM(color));
     #endif
   }
 
@@ -179,16 +180,16 @@ protected:
   template<typename T>
   uint32_t beatLED(uint32_t, const T& beat) {
     const uint8_t cnt = sizeof(beat)/sizeof(beat[0]);
-    setLED((m_Counter % 2 == 0) ? DIMM(BOARD_PWM_MAX) : 0);
+    setLED((m_Counter % 2 == 0) ? BOARD_LED_BRIGHTNESS : 0);
     uint32_t next = beat[m_Counter % cnt];
     m_Counter = (m_Counter+1) % cnt;
     return next;
   }
 
   uint32_t waveLED(uint32_t, unsigned breathePeriod) {
-    uint8_t brightness = (m_Counter < 128) ? m_Counter : 255 - m_Counter;
+    uint32_t brightness = (m_Counter < 128) ? m_Counter : 255 - m_Counter;
 
-    setLED(BOARD_PWM_MAX * (DIMM((float)brightness) / (BOARD_PWM_MAX/2)));
+    setLED(DIMM(brightness*2));
 
     // This function relies on the 8-bit, unsigned m_Counter rolling over.
     m_Counter = (m_Counter+1) % 256;

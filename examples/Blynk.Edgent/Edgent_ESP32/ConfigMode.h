@@ -7,6 +7,10 @@
 #include <nvs.h>
 #include <nvs_flash.h>
 
+WebServer server(80);
+DNSServer dnsServer;
+const byte DNS_PORT = 53;
+
 #ifdef BLYNK_USE_SPIFFS
   #include "SPIFFS.h"
 #else
@@ -49,7 +53,7 @@
     <tr><td><label for="ssid">WiFi SSID:</label></td>  <td><input type="text" name="ssid" length=64 required="required"></td></tr>
     <tr><td><label for="pass">Password:</label></td>   <td><input type="text" name="pass" length=64></td></tr>
     <tr><td><label for="blynk">Auth token:</label></td><td><input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[-_a-zA-Z0-9]{32}" maxlength="32" required="required"></td></tr>
-    <tr><td><label for="host">Host:</label></td>       <td><input type="text" name="host" length=64></td></tr>
+    <tr><td><label for="host">Host:</label></td>       <td><input type="text" name="host" value="blynk.cloud" length=64></td></tr>
     <tr><td><label for="port_ssl">Port:</label></td>   <td><input type="number" name="port_ssl" value="443" min="1" max="65535"></td></tr>
     </table><br/>
     <input type="submit" value="Apply">
@@ -59,10 +63,6 @@
 </html>
 )html";
 #endif
-
-WebServer server(WIFI_AP_CONFIG_PORT);
-DNSServer dnsServer;
-const byte DNS_PORT = 53;
 
 static const char serverUpdateForm[] PROGMEM =
   R"(<html><body>
@@ -370,7 +370,6 @@ void enterConnectNet() {
   getWiFiName(ssidBuff, sizeof(ssidBuff));
   String hostname(ssidBuff);
   hostname.replace(" ", "-");
-
   WiFi.setHostname(hostname.c_str());
 
   if (configStore.getFlag(CONFIG_FLAG_STATIC_IP)) {
@@ -394,6 +393,7 @@ void enterConnectNet() {
   {
     delay(10);
     app_loop();
+
     if (!BlynkState::is(MODE_CONNECTING_NET)) {
       WiFi.disconnect();
       return;

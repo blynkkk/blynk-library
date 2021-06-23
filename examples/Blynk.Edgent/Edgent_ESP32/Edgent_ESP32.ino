@@ -12,6 +12,7 @@
 
 // Uncomment your board, or configure a custom board in Settings.h
 //#define USE_WROVER_BOARD
+//#define USE_TTGO_T7
 
 #include "BlynkEdgent.h"
 

@@ -5,8 +5,6 @@
 
 #if defined(USE_NODE_MCU_BOARD)
 
-  #warning "NodeMCU board selected"
-
   // Example configuration for NodeMCU v1.0 Board
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
@@ -17,10 +15,8 @@
 
 #elif defined(USE_WEMOS_D1_MINI)
 
-  #warning "WeMos D1 Mini board selected"
-
-  // WeMos D1 Mini does not have a built-in button
-  // Connect a button to gpio0 (D3)
+  // This board does not have a built-in button
+  // Connect a button to gpio0 (D3) <> GND
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
@@ -30,8 +26,6 @@
 
 #elif defined(USE_SPARKFUN_BLYNK_BOARD)
 
-  #warning "Sparkfun Blynk board selected"
-
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
@@ -39,8 +33,6 @@
   #define BOARD_LED_BRIGHTNESS        64
 
 #elif defined(USE_WITTY_CLOUD_BOARD)
-
-  #warning "Witty Cloud board selected"
 
   #define BOARD_BUTTON_PIN            4
   #define BOARD_BUTTON_ACTIVE_LOW     true
@@ -53,12 +45,13 @@
 
 #else
 
-  // Custom board configuration
+  #warning "Custom board configuration is used"
+
   #define BOARD_BUTTON_PIN            0                     // Pin where user button is attached
   #define BOARD_BUTTON_ACTIVE_LOW     true                  // true if button is "active-low"
 
-  #define BOARD_LED_PIN               15                    // Set LED pin - if you have a single-color LED attached
-  //#define BOARD_LED_PIN_R           15                    // Set R,G,B pins - if your LED is PWM RGB 
+  #define BOARD_LED_PIN               4                     // Set LED pin - if you have a single-color LED attached
+  //#define BOARD_LED_PIN_R           15                    // Set R,G,B pins - if your LED is PWM RGB
   //#define BOARD_LED_PIN_G           12
   //#define BOARD_LED_PIN_B           13
   //#define BOARD_LED_PIN_WS2812      4                     // Set if your LED is WS2812 RGB
