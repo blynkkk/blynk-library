@@ -3,20 +3,8 @@
  * Board configuration (see examples below).
  */
 
-#if defined(USE_NODE_MCU_BOARD)
+#if defined(USE_NODE_MCU_BOARD) || defined(USE_WEMOS_D1_MINI)
 
-  // Example configuration for NodeMCU v1.0 Board
-  #define BOARD_BUTTON_PIN            0
-  #define BOARD_BUTTON_ACTIVE_LOW     true
-
-  #define BOARD_LED_PIN               16
-  #define BOARD_LED_INVERSE           true
-  #define BOARD_LED_BRIGHTNESS        255
-
-#elif defined(USE_WEMOS_D1_MINI)
-
-  // This board does not have a built-in button
-  // Connect a button to gpio0 (D3) <> GND
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
