@@ -11,17 +11,27 @@
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
-  #define BOARD_LED_PIN_R             D8
-  #define BOARD_LED_PIN_G             D7
-  #define BOARD_LED_PIN_B             D6
-  #define BOARD_LED_INVERSE           false
-  #define BOARD_LED_BRIGHTNESS        64
+  #define BOARD_LED_PIN               16
+  #define BOARD_LED_INVERSE           true
+  #define BOARD_LED_BRIGHTNESS        255
+
+#elif defined(USE_WEMOS_D1_MINI)
+
+  #warning "WeMos D1 Mini board selected"
+
+  // WeMos D1 Mini does not have a built-in button
+  // Connect a button to gpio0 (D3)
+  #define BOARD_BUTTON_PIN            0
+  #define BOARD_BUTTON_ACTIVE_LOW     true
+
+  #define BOARD_LED_PIN               2
+  #define BOARD_LED_INVERSE           true
+  #define BOARD_LED_BRIGHTNESS        255
 
 #elif defined(USE_SPARKFUN_BLYNK_BOARD)
 
   #warning "Sparkfun Blynk board selected"
 
-  // Example configuration for SparkFun Blynk Board
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
@@ -32,7 +42,6 @@
 
   #warning "Witty Cloud board selected"
 
-  // Example configuration for Witty cloud Board
   #define BOARD_BUTTON_PIN            4
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
@@ -74,7 +83,6 @@
 
 #define WIFI_NET_CONNECT_TIMEOUT      30000
 #define WIFI_CLOUD_CONNECT_TIMEOUT    60000
-#define WIFI_AP_CONFIG_PORT           80
 #define WIFI_AP_IP                    IPAddress(192, 168, 4, 1)
 #define WIFI_AP_Subnet                IPAddress(255, 255, 255, 0)
 //#define WIFI_CAPTIVE_PORTAL_ENABLE

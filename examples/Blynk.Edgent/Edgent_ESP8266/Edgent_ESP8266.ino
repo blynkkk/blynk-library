@@ -14,6 +14,7 @@
 //#define USE_SPARKFUN_BLYNK_BOARD
 //#define USE_NODE_MCU_BOARD
 //#define USE_WITTY_CLOUD_BOARD
+//#define USE_WEMOS_D1_MINI
 
 #include "BlynkEdgent.h"
 

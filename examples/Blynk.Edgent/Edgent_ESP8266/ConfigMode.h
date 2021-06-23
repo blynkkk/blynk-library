@@ -4,6 +4,12 @@
 #include <ESP8266HTTPUpdateServer.h>
 #include <DNSServer.h>
 
+ESP8266WebServer server(80);
+ESP8266HTTPUpdateServer httpUpdater;
+DNSServer dnsServer;
+const byte DNS_PORT = 53;
+
+
 #ifdef BLYNK_USE_SPIFFS
   #include <FS.h>
 #else
@@ -56,11 +62,6 @@
 </html>
 )html";
 #endif
-
-ESP8266WebServer server(WIFI_AP_CONFIG_PORT);
-ESP8266HTTPUpdateServer httpUpdater;
-DNSServer dnsServer;
-const byte DNS_PORT = 53;
 
 void restartMCU() {
   ESP.restart();
@@ -362,6 +363,7 @@ void enterConnectNet() {
   {
     delay(10);
     app_loop();
+
     if (!BlynkState::is(MODE_CONNECTING_NET)) {
       WiFi.disconnect();
       return;
