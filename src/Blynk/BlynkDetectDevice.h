@@ -401,6 +401,12 @@
         #define BLYNK_USE_128_VPINS
         #define BLYNK_BUFFERS_SIZE 1024
 
+         /* Seeed studio */
+        #elif defined(SEEED_WIO_TERMINAL)
+        #define BLYNK_INFO_DEVICE "Seeed Wio Terminal"
+        #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
+
         /* Simblee */
         #elif defined(__Simblee__)
         #define BLYNK_INFO_DEVICE  "Simblee"

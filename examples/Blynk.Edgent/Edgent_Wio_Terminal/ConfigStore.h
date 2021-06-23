@@ -1,14 +1,4 @@
-/**
- * @file       ConfigStore.h
- * @author     Blynk Inc.
- * @modified   Dmitry Maslov (Seeed Studio)
- * @license    This project is released under the MIT License (MIT)
- * @copyright  Copyright (c) 2021 Blynk Inc.
- * @date       May 2021
- * @brief
- *
- */
- 
+
 #define CONFIG_FLAG_VALID       0x01
 #define CONFIG_FLAG_STATIC_IP   0x02
 
@@ -50,7 +40,6 @@ struct ConfigStore {
   bool getFlag(uint8_t mask) {
     return (flags & mask) == mask;
   }
-  
 } __attribute__((packed));
 
 ConfigStore configStore;
@@ -174,7 +163,6 @@ void enterResetConfig()
   DEBUG_PRINT("Resetting configuration!");
   configStore = configDefault;
   config_save();
-  //eraseMcuConfig();
   BlynkState::set(MODE_WAIT_CONFIG);
 }
 
@@ -190,3 +178,4 @@ void config_set_last_error(int error) {
     config_save();
   }
 }
+

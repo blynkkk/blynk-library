@@ -1,20 +1,11 @@
-/**
- * @file       BlynkState.h
- * @author     Blynk Inc.
- * @license    This project is released under the MIT License (MIT)
- * @copyright  Copyright (c) 2021 Blynk Inc.
- * @date       May 2021
- * @brief
- *
- */
- 
+
 enum State {
   MODE_WAIT_CONFIG,
   MODE_CONFIGURING,
   MODE_CONNECTING_NET,
   MODE_CONNECTING_CLOUD,
   MODE_RUNNING,
-  //MODE_OTA_UPGRADE,
+  MODE_OTA_UPGRADE,
   MODE_SWITCH_TO_STA,
   MODE_RESET_CONFIG,
   MODE_ERROR,
@@ -29,7 +20,7 @@ const char* StateStr[MODE_MAX_VALUE+1] = {
   "CONNECTING_NET",
   "CONNECTING_CLOUD",
   "RUNNING",
-  //"OTA_UPGRADE",
+  "OTA_UPGRADE",
   "SWITCH_TO_STA",
   "RESET_CONFIG",
   "ERROR",
@@ -46,3 +37,4 @@ namespace BlynkState
   bool  is (State m) { return (state == m); }
   void  set(State m);
 };
+

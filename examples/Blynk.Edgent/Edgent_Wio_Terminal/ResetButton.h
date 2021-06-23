@@ -1,14 +1,4 @@
-/**
- * @file       ResetButton.h
- * @author     Blynk Inc.
- * @modified   Dmitry Maslov (Seeed Studio)
- * @license    This project is released under the MIT License (MIT)
- * @copyright  Copyright (c) 2021 Blynk Inc.
- * @date       May 2021
- * @brief
- *
- */
- 
+
 volatile bool     g_buttonPressed = false;
 volatile uint32_t g_buttonPressTime = -1;
 
@@ -50,3 +40,4 @@ void button_init()
 #endif
   attachInterrupt(BOARD_BUTTON_PIN, button_change, CHANGE);
 }
+

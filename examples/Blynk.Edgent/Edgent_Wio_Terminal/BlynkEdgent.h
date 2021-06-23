@@ -1,24 +1,18 @@
-/**
- * @file       BlynkEdgent.h
- * @author     Blynk Inc.
- * @license    This project is released under the MIT License (MIT)
- * @copyright  Copyright (c) 2021 Blynk Inc.
- * @date       May 2021
- * @brief
- *
- */
- 
+
 extern "C" {
   void app_loop();
-  void eraseMcuConfig();
   void restartMCU();
 }
 
 #include "Settings.h"
-#include <BlynkSimpleWioTerminal.h>
+#include <BlynkSimpleWioTerminal_SSL.h>
 
 #ifndef BLYNK_NEW_LIBRARY
 #error "Old version of Blynk library is in use. Please replace it with the new one."
+#endif
+
+#if !defined(BLYNK_TEMPLATE_ID) || !defined(BLYNK_DEVICE_NAME)
+#error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_DEVICE_NAME"
 #endif
 
 #include "BlynkState.h"
@@ -27,6 +21,7 @@ extern "C" {
 #include "ConfigMode.h"
 #include "Indicator.h"
 //#include "OTA.h"
+#include "Console.h"
 
 inline
 void BlynkState::set(State m) {
@@ -44,7 +39,6 @@ void printDeviceBanner()
   Blynk.printBanner();
   DEBUG_PRINT("--------------------------");
   DEBUG_PRINT(String("Product:  ") + BLYNK_DEVICE_NAME);
-  DEBUG_PRINT(String("Hardware: ") + BOARD_HARDWARE_VERSION);
   DEBUG_PRINT(String("Firmware: ") + BLYNK_FIRMWARE_VERSION " (build " __DATE__ " " __TIME__ ")");
   if (configStore.getFlag(CONFIG_FLAG_VALID)) {
     DEBUG_PRINT(String("Token:    ...") + (configStore.cloudToken+28));
@@ -75,9 +69,7 @@ public:
     //indicator_init();
     button_init();
     config_init();
-
-    WiFi.persistent(false);
-    WiFi.enableSTA(true);   // Needed to get MAC
+    console_init();
 
     printDeviceBanner();
 
@@ -99,7 +91,7 @@ public:
     case MODE_CONNECTING_NET:    enterConnectNet();    break;
     case MODE_CONNECTING_CLOUD:  enterConnectCloud();  break;
     case MODE_RUNNING:           runBlynkWithChecks(); break;
-    //case MODE_OTA_UPGRADE:       enterOTA();           break;
+    case MODE_OTA_UPGRADE:       enterError();         break; // TODO: enterOTA
     case MODE_SWITCH_TO_STA:     enterSwitchToSTA();   break;
     case MODE_RESET_CONFIG:      enterResetConfig();   break;
     default:                     enterError();         break;
@@ -109,8 +101,9 @@ public:
 };
 
 Edgent BlynkEdgent;
-BlynkTimer timer;
+BlynkTimer edgentTimer;
 
 void app_loop() {
-    timer.run();
+    edgentTimer.run();
+    edgentConsole.run();
 }

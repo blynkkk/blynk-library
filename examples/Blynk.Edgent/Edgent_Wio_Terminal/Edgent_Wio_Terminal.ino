@@ -1,17 +1,15 @@
-/**
- * @file       Edgent_Wio_Terminal.ino
- * @author     Blynk Inc.
- * @modified   Dmitry Maslov (Seeed Studio)
- * @license    This project is released under the MIT License (MIT)
- * @copyright  Copyright (c) 2021 Blynk Inc.
- * @date       May 2021
- * @brief
- *
+/*
+ * Required libraries:
+ *  - Seeed Arduino rpcunified
+ *  - Seeed Arduino rpcWiFi
+ *  - Seeed Arduino SFUD
+ *  - Seeed Arduino FS
+ *  - Seeed Arduino mbedtls
  */
 
 // Fill-in information from your Blynk Template here
-#define BLYNK_TEMPLATE_ID ""
-#define BLYNK_DEVICE_NAME ""
+//#define BLYNK_TEMPLATE_ID           "TMPLxxxxxx"
+//#define BLYNK_DEVICE_NAME           "Device"
 
 #define BLYNK_FIRMWARE_VERSION        "0.1.0"
 
