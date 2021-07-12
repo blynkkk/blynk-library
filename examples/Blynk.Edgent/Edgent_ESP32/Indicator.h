@@ -85,13 +85,13 @@ protected:
 #elif defined(BOARD_LED_PIN_R)     // Normal RGB LED (common anode or common cathode)
 
   void initLED() {
-    ledcAttachPin(BOARD_LED_PIN_R, LEDC_CHANNEL_1);
-    ledcAttachPin(BOARD_LED_PIN_G, LEDC_CHANNEL_2);
-    ledcAttachPin(BOARD_LED_PIN_B, LEDC_CHANNEL_3);
+    ledcAttachPin(BOARD_LED_PIN_R, BOARD_LEDC_CHANNEL_1);
+    ledcAttachPin(BOARD_LED_PIN_G, BOARD_LEDC_CHANNEL_2);
+    ledcAttachPin(BOARD_LED_PIN_B, BOARD_LEDC_CHANNEL_3);
 
-    ledcSetup(LEDC_CHANNEL_1, LEDC_BASE_FREQ, LEDC_TIMER_BITS);
-    ledcSetup(LEDC_CHANNEL_2, LEDC_BASE_FREQ, LEDC_TIMER_BITS);
-    ledcSetup(LEDC_CHANNEL_3, LEDC_BASE_FREQ, LEDC_TIMER_BITS);
+    ledcSetup(BOARD_LEDC_CHANNEL_1, BOARD_LEDC_BASE_FREQ, BOARD_LEDC_TIMER_BITS);
+    ledcSetup(BOARD_LEDC_CHANNEL_2, BOARD_LEDC_BASE_FREQ, BOARD_LEDC_TIMER_BITS);
+    ledcSetup(BOARD_LEDC_CHANNEL_3, BOARD_LEDC_BASE_FREQ, BOARD_LEDC_TIMER_BITS);
   }
 
   void setRGB(uint32_t color) {
@@ -99,28 +99,28 @@ protected:
     uint8_t g = (color & 0x00FF00) >> 8;
     uint8_t b = (color & 0x0000FF);
     #if BOARD_LED_INVERSE
-    ledcWrite(LEDC_CHANNEL_1, TO_PWM(255 - r));
-    ledcWrite(LEDC_CHANNEL_2, TO_PWM(255 - g));
-    ledcWrite(LEDC_CHANNEL_3, TO_PWM(255 - b));
+    ledcWrite(BOARD_LEDC_CHANNEL_1, TO_PWM(255 - r));
+    ledcWrite(BOARD_LEDC_CHANNEL_2, TO_PWM(255 - g));
+    ledcWrite(BOARD_LEDC_CHANNEL_3, TO_PWM(255 - b));
     #else
-    ledcWrite(LEDC_CHANNEL_1, TO_PWM(r));
-    ledcWrite(LEDC_CHANNEL_2, TO_PWM(g));
-    ledcWrite(LEDC_CHANNEL_3, TO_PWM(b));
+    ledcWrite(BOARD_LEDC_CHANNEL_1, TO_PWM(r));
+    ledcWrite(BOARD_LEDC_CHANNEL_2, TO_PWM(g));
+    ledcWrite(BOARD_LEDC_CHANNEL_3, TO_PWM(b));
     #endif
   }
 
 #elif defined(BOARD_LED_PIN)       // Single color LED
 
   void initLED() {
-    ledcSetup(LEDC_CHANNEL_1, LEDC_BASE_FREQ, LEDC_TIMER_BITS);
-    ledcAttachPin(BOARD_LED_PIN, LEDC_CHANNEL_1);
+    ledcSetup(BOARD_LEDC_CHANNEL_1, BOARD_LEDC_BASE_FREQ, BOARD_LEDC_TIMER_BITS);
+    ledcAttachPin(BOARD_LED_PIN, BOARD_LEDC_CHANNEL_1);
   }
 
   void setLED(uint32_t color) {
     #if BOARD_LED_INVERSE
-    ledcWrite(LEDC_CHANNEL_1, TO_PWM(255 - color));
+    ledcWrite(BOARD_LEDC_CHANNEL_1, TO_PWM(255 - color));
     #else
-    ledcWrite(LEDC_CHANNEL_1, TO_PWM(color));
+    ledcWrite(BOARD_LEDC_CHANNEL_1, TO_PWM(color));
     #endif
   }
 
