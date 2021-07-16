@@ -27,10 +27,6 @@ void setup()
 {
   Serial.begin(115200);
   delay(100);
-  
-#ifdef APP_DEBUG 
-  while (!Serial) {delay(10);}
-#endif
 
   BlynkEdgent.begin();
 }
