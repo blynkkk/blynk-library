@@ -5,6 +5,9 @@
  *  - Seeed Arduino SFUD
  *  - Seeed Arduino FS
  *  - Seeed Arduino mbedtls
+ *  
+ * Please also update the WiFi module firmware:
+ *   https://wiki.seeedstudio.com/Wio-Terminal-Network-Overview
  */
 
 // Fill-in information from your Blynk Template here

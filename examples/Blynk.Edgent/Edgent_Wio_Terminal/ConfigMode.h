@@ -86,15 +86,82 @@ void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   }
 }
 
+String scanNetworks()
+{
+    DEBUG_PRINT("Scanning networks...");
+    int wifi_nets = WiFi.scanNetworks(true, true);
+    const uint32_t t = millis();
+    while (wifi_nets < 0 &&
+           millis() - t < 20000)
+    {
+      delay(20);
+      wifi_nets = WiFi.scanComplete();
+    }
+    DEBUG_PRINT(String("Found networks: ") + wifi_nets);
+
+    if (wifi_nets > 0) {
+      // Sort networks
+      int indices[wifi_nets];
+      for (int i = 0; i < wifi_nets; i++) {
+        indices[i] = i;
+      }
+      for (int i = 0; i < wifi_nets; i++) {
+        for (int j = i + 1; j < wifi_nets; j++) {
+          if (WiFi.RSSI(indices[j]) > WiFi.RSSI(indices[i])) {
+            std::swap(indices[i], indices[j]);
+          }
+        }
+      }
+
+      wifi_nets = BlynkMin(15, wifi_nets); // Show top 15 networks
+
+      // TODO: skip empty names
+      String result = "[\n";
+
+      char buff[256];
+      for (int i = 0; i < wifi_nets; i++){
+        int id = indices[i];
+
+        const char* sec;
+        switch (WiFi.encryptionType(id)) {
+        case WIFI_AUTH_WEP:          sec = "WEP"; break;
+        case WIFI_AUTH_WPA_PSK:      sec = "WPA/PSK"; break;
+        case WIFI_AUTH_WPA2_PSK:     sec = "WPA2/PSK"; break;
+        case WIFI_AUTH_WPA_WPA2_PSK: sec = "WPA/WPA2/PSK"; break;
+        case WIFI_AUTH_OPEN:         sec = "OPEN"; break;
+        default:                     sec = "unknown"; break;
+        }
+
+        snprintf(buff, sizeof(buff),
+          R"json(  {"ssid":"%s","bssid":"%s","rssi":%i,"sec":"%s","ch":%i})json",
+          WiFi.SSID(id).c_str(),
+          WiFi.BSSIDstr(id).c_str(),
+          WiFi.RSSI(id),
+          sec,
+          WiFi.channel(id)
+        );
+
+        result += buff;
+        if (i != wifi_nets-1) result += ",\n";
+      }
+      return result + "\n]";
+    } else {
+      return "[]";
+    }
+}
 
 void handleRoot() {
   server.send(200, "text/html", config_form);
 }
 
+String networks = "[]";
+
 void enterConfigMode()
 {
   char ssidBuff[64];
   getWiFiName(ssidBuff, sizeof(ssidBuff));
+
+  networks = scanNetworks();
 
   WiFi.mode(WIFI_OFF);
   delay(100);
@@ -213,66 +280,7 @@ void enterConfigMode()
     server.send(200, "application/json", buff);
   });
   server.on("/wifi_scan.json", []() {
-    DEBUG_PRINT("Scanning networks...");
-    int wifi_nets = WiFi.scanNetworks(true, true);
-    const uint32_t t = millis();
-    while (wifi_nets < 0 &&
-           millis() - t < 20000)
-    {
-      delay(20);
-      wifi_nets = WiFi.scanComplete();
-    }
-    DEBUG_PRINT(String("Found networks: ") + wifi_nets);
-
-    if (wifi_nets > 0) {
-      // Sort networks
-      int indices[wifi_nets];
-      for (int i = 0; i < wifi_nets; i++) {
-        indices[i] = i;
-      }
-      for (int i = 0; i < wifi_nets; i++) {
-        for (int j = i + 1; j < wifi_nets; j++) {
-          if (WiFi.RSSI(indices[j]) > WiFi.RSSI(indices[i])) {
-            std::swap(indices[i], indices[j]);
-          }
-        }
-      }
-
-      wifi_nets = BlynkMin(15, wifi_nets); // Show top 15 networks
-
-      // TODO: skip empty names
-      String result = "[\n";
-
-      char buff[256];
-      for (int i = 0; i < wifi_nets; i++){
-        int id = indices[i];
-
-        const char* sec;
-        switch (WiFi.encryptionType(id)) {
-        case WIFI_AUTH_WEP:          sec = "WEP"; break;
-        case WIFI_AUTH_WPA_PSK:      sec = "WPA/PSK"; break;
-        case WIFI_AUTH_WPA2_PSK:     sec = "WPA2/PSK"; break;
-        case WIFI_AUTH_WPA_WPA2_PSK: sec = "WPA/WPA2/PSK"; break;
-        case WIFI_AUTH_OPEN:         sec = "OPEN"; break;
-        default:                     sec = "unknown"; break;
-        }
-
-        snprintf(buff, sizeof(buff),
-          R"json(  {"ssid":"%s","bssid":"%s","rssi":%i,"sec":"%s","ch":%i})json",
-          WiFi.SSID(id).c_str(),
-          WiFi.BSSIDstr(id).c_str(),
-          WiFi.RSSI(id),
-          sec,
-          WiFi.channel(id)
-        );
-
-        result += buff;
-        if (i != wifi_nets-1) result += ",\n";
-      }
-      server.send(200, "application/json", result + "\n]");
-    } else {
-      server.send(200, "application/json", "[]");
-    }
+    server.send(200, "application/json", networks);
   });
   server.on("/reset", []() {
     BlynkState::set(MODE_RESET_CONFIG);

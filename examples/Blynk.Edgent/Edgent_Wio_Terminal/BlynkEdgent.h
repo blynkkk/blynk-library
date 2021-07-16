@@ -44,7 +44,6 @@ void printDeviceBanner()
     DEBUG_PRINT(String("Token:    ...") + (configStore.cloudToken+28));
   }
   DEBUG_PRINT(String("Device:   ") + BLYNK_INFO_DEVICE);
-  DEBUG_PRINT(String("MAC:      ") + WiFi.macAddress());
   DEBUG_PRINT(String("WiFi FW:  ") + rpc_system_version());
   DEBUG_PRINT("--------------------------");
 }
