@@ -20,7 +20,7 @@ extern "C" {
 #include "ResetButton.h"
 #include "ConfigMode.h"
 #include "Indicator.h"
-//#include "OTA.h"
+#include "OTA.h"
 #include "Console.h"
 
 inline
@@ -91,7 +91,7 @@ public:
     case MODE_CONNECTING_NET:    enterConnectNet();    break;
     case MODE_CONNECTING_CLOUD:  enterConnectCloud();  break;
     case MODE_RUNNING:           runBlynkWithChecks(); break;
-    case MODE_OTA_UPGRADE:       enterError();         break; // TODO: enterOTA
+    case MODE_OTA_UPGRADE:       enterOTA();           break;
     case MODE_SWITCH_TO_STA:     enterSwitchToSTA();   break;
     case MODE_RESET_CONFIG:      enterResetConfig();   break;
     default:                     enterError();         break;

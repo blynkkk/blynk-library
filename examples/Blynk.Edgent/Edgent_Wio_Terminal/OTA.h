@@ -1,7 +1,10 @@
 
-#include <WiFi.h>
-#include <Update.h>
-#include <HTTPClient.h>
+#include <ArduinoOTA.h> // only for InternalStorage
+#include <ArduinoHttpClient.h>
+
+#define OTA_FATAL(...) { BLYNK_LOG1(__VA_ARGS__); delay(1000); restartMCU(); }
+
+#define USE_SSL
 
 String overTheAirURL;
 
@@ -10,7 +13,7 @@ extern BlynkTimer edgentTimer;
 BLYNK_WRITE(InternalPinOTA) {
   overTheAirURL = param.asString();
 
-  //overTheAirURL.replace("http://", "https://");
+  overTheAirURL.replace("https://", "http://");
 
   edgentTimer.setTimeout(2000L, [](){
     // Start OTA
@@ -23,55 +26,115 @@ BLYNK_WRITE(InternalPinOTA) {
   });
 }
 
+bool parseURL(String url, String& protocol, String& host, int& port, String& uri)
+{
+  int index = url.indexOf(':');
+  if(index < 0) {
+    return false;
+  }
+
+  protocol = url.substring(0, index);
+  url.remove(0, (index + 3)); // remove protocol part
+
+  index = url.indexOf('/');
+  String server = url.substring(0, index);
+  url.remove(0, index);       // remove server part
+
+  index = server.indexOf(':');
+  if(index >= 0) {
+    host = server.substring(0, index);          // hostname
+    port = server.substring(index + 1).toInt(); // port
+  } else {
+    host = server;
+    if (protocol == "http") {
+      port = 80;
+    } else if (protocol == "https") {
+      port = 443;
+    }
+  }
+
+  if (url.length()) {
+    uri = url;
+  } else {
+    uri = "/";
+  }
+  return true;
+}
+
 void enterOTA() {
   BlynkState::set(MODE_OTA_UPGRADE);
 
-  DEBUG_PRINT(String("Firmware update URL: ") + overTheAirURL);
+  // Disconnect, not to interfere with OTA process
+  Blynk.disconnect();
 
-  HTTPClient http;
-  http.begin(overTheAirURL);
+  String protocol, host, url;
+  int port;
+  
+  DEBUG_PRINT(String("OTA: ") + overTheAirURL);
 
-  int httpCode = http.GET();
-  if (httpCode != HTTP_CODE_OK) {
-    DEBUG_PRINT("HTTP response should be 200");
-    BlynkState::set(MODE_ERROR);
-    return;
-  }
-  int contentLength = http.getSize();
-  if (contentLength <= 0) {
-    DEBUG_PRINT("Content-Length not defined");
-    BlynkState::set(MODE_ERROR);
-    return;
+  if (!parseURL(overTheAirURL, protocol, host, port, url)) {
+    OTA_FATAL(F("Cannot parse URL"));
   }
 
-  bool canBegin = Update.begin(contentLength);
-  if (!canBegin) {
-    DEBUG_PRINT("Not enough space to begin OTA");
-    BlynkState::set(MODE_ERROR);
-    return;
-  }
+  DEBUG_PRINT(String("Connecting to ") + host + ":" + port);
 
-  Client& client = http.getStream();
-  int written = Update.writeStream(client);
-  if (written != contentLength) {
-    DEBUG_PRINT(String("OTA written ") + written + " / " + contentLength + " bytes");
-    BlynkState::set(MODE_ERROR);
-    return;
+  Client* client = NULL;
+  if (protocol == "http") {
+    client = new WiFiClient();
+#ifdef USE_SSL
+  } else if (protocol == "https") {
+    client = &_blynkWifiClient;
+    //client = new WiFiClientSecure();
+#endif
+  } else {
+    OTA_FATAL(String("Unsupported protocol: ") + protocol);
   }
+  HttpClient http(*client, host, port);
+  http.get(url);
 
-  if (!Update.end()) {
-    DEBUG_PRINT("Error #" + String(Update.getError()));
-    BlynkState::set(MODE_ERROR);
+  int statusCode = http.responseStatusCode();
+  Serial.print("Update status code: ");
+  Serial.println(statusCode);
+  if (statusCode != 200) {
+    http.stop();
     return;
   }
 
-  if (!Update.isFinished()) {
-    DEBUG_PRINT("Update failed.");
-    BlynkState::set(MODE_ERROR);
+
+  long length = http.contentLength();
+  if (length == HttpClient::kNoContentLengthHeader) {
+    http.stop();
+    Serial.println("Server didn't provide Content-length header. Can't continue with update.");
+    return;
+  }
+  Serial.print("Server returned update file of size ");
+  Serial.print(length);
+  Serial.println(" bytes");
+
+  if (!InternalStorage.open(length)) {
+    http.stop();
+    Serial.println("There is not enough space to store the update. Can't continue with update.");
+    return;
+  }
+  //InternalStorage.debugPrint();
+
+  byte b;
+  while (length > 0) {
+    if (!http.readBytes(&b, 1)) // reading a byte with timeout
+      break;
+    InternalStorage.write(b);
+    length--;
+  }
+  InternalStorage.close();
+  http.stop();
+  if (length > 0) {
+    Serial.print("Timeout downloading update file at ");
+    Serial.print(length);
+    Serial.println(" bytes. Can't continue with update.");
     return;
   }
 
   DEBUG_PRINT("=== Update successfully completed. Rebooting.");
-  restartMCU();
+  InternalStorage.apply();
 }
 
