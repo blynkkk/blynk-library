@@ -13,6 +13,7 @@ extern BlynkTimer edgentTimer;
 BLYNK_WRITE(InternalPinOTA) {
   overTheAirURL = param.asString();
 
+  // Force HTTP update
   overTheAirURL.replace("https://", "http://");
 
   edgentTimer.setTimeout(2000L, [](){
@@ -93,45 +94,51 @@ void enterOTA() {
   http.get(url);
 
   int statusCode = http.responseStatusCode();
-  Serial.print("Update status code: ");
-  Serial.println(statusCode);
   if (statusCode != 200) {
     http.stop();
-    return;
+    OTA_FATAL(String("HTTP status code: ") + statusCode);
   }
 
 
-  long length = http.contentLength();
-  if (length == HttpClient::kNoContentLengthHeader) {
+  int contentLength = http.contentLength();
+  if (contentLength == HttpClient::kNoContentLengthHeader) {
     http.stop();
-    Serial.println("Server didn't provide Content-length header. Can't continue with update.");
-    return;
+    OTA_FATAL("Content-Length not defined");
   }
-  Serial.print("Server returned update file of size ");
-  Serial.print(length);
-  Serial.println(" bytes");
 
-  if (!InternalStorage.open(length)) {
+  if (!InternalStorage.open(contentLength)) {
     http.stop();
-    Serial.println("There is not enough space to store the update. Can't continue with update.");
-    return;
+    OTA_FATAL("Not enough space to store the update");
   }
   //InternalStorage.debugPrint();
 
-  byte b;
-  while (length > 0) {
-    if (!http.readBytes(&b, 1)) // reading a byte with timeout
-      break;
-    InternalStorage.write(b);
-    length--;
+  DEBUG_PRINT("Flashing...");
+
+  int written = 0;
+  int prevProgress = 0;
+  uint8_t buff[256];
+  while (client->connected() && written < contentLength) {
+
+    int len = http.readBytes(buff, sizeof(buff));
+    if (len <= 0) continue;
+
+    for (int i = 0; i<len; i++) {
+      InternalStorage.write(buff[i]);
+    }
+    written += len;
+
+    const int progress = (written*100)/contentLength;
+    if (progress - prevProgress >= 10 || progress == 100) {
+      BLYNK_PRINT.print(String("\r ") + progress + "%");
+      prevProgress = progress;
+    }
   }
+  BLYNK_PRINT.println();
   InternalStorage.close();
   http.stop();
-  if (length > 0) {
-    Serial.print("Timeout downloading update file at ");
-    Serial.print(length);
-    Serial.println(" bytes. Can't continue with update.");
-    return;
+
+  if (written != contentLength) {
+    OTA_FATAL(String("Interrupted at ") + written + " / " + contentLength + " bytes");
   }
 
   DEBUG_PRINT("=== Update successfully completed. Rebooting.");
