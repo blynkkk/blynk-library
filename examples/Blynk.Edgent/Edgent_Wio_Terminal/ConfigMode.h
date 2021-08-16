@@ -345,7 +345,11 @@ void enterConnectNet() {
     }
   }
 
-  WiFi.begin(configStore.wifiSSID, configStore.wifiPass);
+  if (strlen(configStore.wifiPass)) {
+    WiFi.begin(configStore.wifiSSID, configStore.wifiPass);
+  } else {
+    WiFi.begin(configStore.wifiSSID);
+  }
 
   unsigned long timeoutMs = millis() + WIFI_NET_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) && (WiFi.status() != WL_CONNECTED))
