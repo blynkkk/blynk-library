@@ -174,8 +174,12 @@ public:
 };
 
 
-static BlynkTransportEsp32_BLE _blynkTransportBLE;
-BlynkEsp32_BLE Blynk(_blynkTransportBLE);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportEsp32_BLE _blynkTransportBLE;
+  BlynkEsp32_BLE Blynk(_blynkTransportBLE);
+#else
+  extern BlynkEsp32_BLE Blynk;
+#endif
 
 inline
 void BlynkTransportEsp32_BLE::onConnect(BLEServer* pServer) {

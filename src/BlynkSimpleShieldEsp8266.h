@@ -193,8 +193,12 @@ private:
     ESP8266* wifi;
 };
 
-static BlynkTransportShieldEsp8266 _blynkTransport;
-BlynkWifi Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportShieldEsp8266 _blynkTransport;
+  BlynkWifi Blynk(_blynkTransport);
+#else
+  extern BlynkWifi Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

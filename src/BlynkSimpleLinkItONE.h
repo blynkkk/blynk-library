@@ -85,9 +85,13 @@ public:
 };
 
 
-static LWiFiClient _blynkWifiClient;
-static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
-BlynkLinkItOneWifi Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static LWiFiClient _blynkWifiClient;
+  static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
+  BlynkLinkItOneWifi Blynk(_blynkTransport);
+#else
+  extern BlynkLinkItOneWifi Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 
