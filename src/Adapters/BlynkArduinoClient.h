@@ -54,15 +54,15 @@ public:
     bool connect() {
         if (domain) {
             BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', port);
-
             isConn = (1 == client->connect(domain, port));
-            return isConn;
         } else { //if (uint32_t(addr) != 0) {
             BLYNK_LOG_IP("Connecting to ", addr);
             isConn = (1 == client->connect(addr, port));
-            return isConn;
         }
-        return false;
+#ifdef BLYNK_NODELAY
+        client->setNoDelay(true);
+#endif
+        return isConn;
     }
 
     void disconnect() { isConn = false; client->stop(); }
