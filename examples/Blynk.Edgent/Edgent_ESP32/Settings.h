@@ -25,6 +25,27 @@
   #define BOARD_LED_INVERSE           false
   #define BOARD_LED_BRIGHTNESS        64
 
+#elif defined(USE_ESP32C3_DEV_MODULE)
+
+  #define BOARD_BUTTON_PIN            9
+  #define BOARD_BUTTON_ACTIVE_LOW     true
+
+  #define BOARD_LED_PIN_WS2812        8
+  #define BOARD_LED_INVERSE           false
+  #define BOARD_LED_BRIGHTNESS        32
+
+  // TODO: remove, workaround for undefined reference to `esp32_adc2gpio'
+  #undef  analogInputToDigitalPin
+
+#elif defined(USE_ESP32S2_DEV_KIT)
+
+  #define BOARD_BUTTON_PIN            0
+  #define BOARD_BUTTON_ACTIVE_LOW     true
+
+  #define BOARD_LED_PIN               19
+  #define BOARD_LED_INVERSE           false
+  #define BOARD_LED_BRIGHTNESS        128
+
 #else
 
   #warning "Custom board configuration is used"
