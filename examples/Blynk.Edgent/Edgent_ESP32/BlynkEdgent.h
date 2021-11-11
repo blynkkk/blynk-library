@@ -24,6 +24,8 @@ extern "C" {
 #include "OTA.h"
 #include "Console.h"
 
+BlynkTimer edgentTimer;
+
 inline
 void BlynkState::set(State m) {
   if (state != m && m < MODE_MAX_VALUE) {
@@ -77,7 +79,7 @@ public:
     indicator_init();
     button_init();
     config_init();
-    console_init();
+    edgentTimer.setTimeout(1000L, console_init);
 
     printDeviceBanner();
 
@@ -109,7 +111,6 @@ public:
 };
 
 Edgent BlynkEdgent;
-BlynkTimer edgentTimer;
 
 void app_loop() {
     edgentTimer.run();
