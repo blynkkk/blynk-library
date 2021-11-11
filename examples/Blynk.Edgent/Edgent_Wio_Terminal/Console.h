@@ -51,3 +51,4 @@ BLYNK_WRITE(InternalPinDBG) {
   String cmd = String(param.asStr()) + "\n";
   edgentConsole.runCommand((char*)cmd.c_str());
 }
+

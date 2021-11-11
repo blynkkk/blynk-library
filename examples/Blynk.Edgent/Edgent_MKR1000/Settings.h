@@ -22,6 +22,7 @@
 
 #define BUTTON_HOLD_TIME_INDICATION   3000
 #define BUTTON_HOLD_TIME_ACTION       10000
+#define BUTTON_PRESS_TIME_ACTION      50
 
 #define BOARD_PWM_MAX                 255
 
@@ -29,8 +30,8 @@
 #define CONFIG_DEFAULT_SERVER         "blynk.cloud"
 #define CONFIG_DEFAULT_PORT           443
 
-#define WIFI_NET_CONNECT_TIMEOUT      30000
-#define WIFI_CLOUD_CONNECT_TIMEOUT    60000
+#define WIFI_NET_CONNECT_TIMEOUT      50000
+#define WIFI_CLOUD_CONNECT_TIMEOUT    50000
 #define WIFI_AP_IP                    IPAddress(192, 168, 4, 1)
 //#define WIFI_AP_Subnet              IPAddress(255, 255, 255, 0)
 //#define WIFI_CAPTIVE_PORTAL_ENABLE

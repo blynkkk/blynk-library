@@ -81,10 +81,12 @@ void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   }
   unique &= 0xFFFFF;
 
+  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-6-6);
+
   if (withPrefix) {
-    snprintf(buff, len, "Blynk %s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "Blynk %s-%05X", devName.c_str(), unique);
   } else {
-    snprintf(buff, len, "%s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "%s-%05X", devName.c_str(), unique);
   }
 }
 
@@ -211,13 +213,14 @@ void enterConfigMode()
     getWiFiName(ssidBuff, sizeof(ssidBuff));
     char buff[512];
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
+      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","mac":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
       BLYNK_DEVICE_NAME,
       tmpl ? tmpl : "Unknown",
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
       ssidBuff,
       WiFi.softAPmacAddress().c_str(),
+      WiFi.macAddress().c_str(),
       configStore.last_error
     );
     server.send(200, "application/json", buff);
@@ -335,7 +338,6 @@ void enterConnectNet() {
   getWiFiName(ssidBuff, sizeof(ssidBuff));
   String hostname(ssidBuff);
   hostname.replace(" ", "-");
-
   WiFi.hostname(hostname.c_str());
 
   if (configStore.getFlag(CONFIG_FLAG_STATIC_IP)) {

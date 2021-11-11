@@ -86,10 +86,12 @@ void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   }
   unique &= 0xFFFFF;
 
+  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-6-6);
+
   if (withPrefix) {
-    snprintf(buff, len, "Blynk %s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "Blynk %s-%05X", devName.c_str(), unique);
   } else {
-    snprintf(buff, len, "%s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "%s-%05X", devName.c_str(), unique);
   }
 }
 
@@ -329,7 +331,7 @@ void enterConfigMode()
 
     byte mac[6] = { 0, };
     WiFi.macAddress(mac);
-    
+
     snprintf(buff, sizeof(buff),
       R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","last_error":%d,"wifi_scan":true,"static_ip":true})json",
       BLYNK_DEVICE_NAME,

@@ -79,10 +79,12 @@ void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   }
   unique &= 0xFFFFF;
 
+  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-6-6);
+
   if (withPrefix) {
-    snprintf(buff, len, "Blynk %s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "Blynk %s-%05X", devName.c_str(), unique);
   } else {
-    snprintf(buff, len, "%s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "%s-%05X", devName.c_str(), unique);
   }
 }
 
