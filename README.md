@@ -28,15 +28,15 @@ Full list of supported hardware can be found [here](https://github.com/blynkkk/b
 **Blynk [Arduino Library](https://github.com/blynkkk/blynk-library/releases/latest)**
 
 **Blynk Mobile App: 
-[<img src="https://cdn.rawgit.com/simple-icons/simple-icons/develop/icons/googleplay.svg" width="18" height="18" /> Google Play](https://play.google.com/store/apps/details?id=cc.blynk) | 
-[<img src="https://cdn.rawgit.com/simple-icons/simple-icons/develop/icons/apple.svg" width="18" height="18" /> App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8)**
+[<img src="https://cdn.rawgit.com/simple-icons/simple-icons/develop/icons/googleplay.svg" width="18" height="18" /> Google Play](https://play.google.com/store/apps/details?id=cloud.blynk) | 
+[<img src="https://cdn.rawgit.com/simple-icons/simple-icons/develop/icons/apple.svg" width="18" height="18" /> App Store](https://apps.apple.com/us/app/blynk-iot/id1559317868)**
 
 Optionally you can install **Blynk [Local Server](https://github.com/blynkkk/blynk-server)** and run everything locally. However, **Blynk Cloud is free** for anyone who is using Blynk for personal (non-commercial) use.
 
 
 ## Quickstart: Arduino + Ethernet shield
 
-* Download the Blynk app ([App Store](https://itunes.apple.com/us/app/blynk-control-arduino-raspberry/id808760481?ls=1&mt=8), [Google Play](https://play.google.com/store/apps/details?id=cc.blynk))
+* Download the Blynk app ([App Store](https://apps.apple.com/us/app/blynk-iot/id1559317868), [Google Play](https://play.google.com/store/apps/details?id=cloud.blynk))
 * Get the Auth Token from the app
 * Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries)
 * In Arduino IDE, select File -> Examples -> Blynk -> Boards_Ethernet -> Arduino_Ethernet
