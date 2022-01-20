@@ -37,7 +37,8 @@ private:
 #endif
     enum HandlerType {
         SIMPLE,
-        WITH_ARGS
+        WITH_ARGS,
+        SUB_CONSOLE
     };
 
     class CmdHandler {
@@ -45,8 +46,9 @@ private:
         const char* cmd;
         HandlerType type;
         union {
-            HandlerSimp* f_simp;
-            HandlerArgs* f_args;
+            HandlerSimp*  f_simp;
+            HandlerArgs*  f_args;
+            BlynkConsole* f_cons;
         };
         CmdHandler() = default;
         CmdHandler(const char* s, HandlerSimp* f)
@@ -54,6 +56,9 @@ private:
         {}
         CmdHandler(const char* s, HandlerArgs* f)
             : cmd(s), type(WITH_ARGS), f_args(f)
+        {}
+        CmdHandler(const char* s, BlynkConsole* f)
+            : cmd(s), type(SUB_CONSOLE), f_cons(f)
         {}
     };
 
@@ -70,7 +75,7 @@ public:
         reset_buff();
 
 #if defined(BLYNK_CONSOLE_USE_STREAM) && defined(BLYNK_CONSOLE_USE_LAMBDAS)
-        HandlerSimp help = [=]() {
+        help = [=]() {
             stream->print("Available commands: ");
             for (size_t i=0; i<commandsQty; i++) {
                 CmdHandler& handler = commands[i];
@@ -87,18 +92,27 @@ public:
     }
 
 #ifdef BLYNK_CONSOLE_USE_STREAM
+    void print() {}
+
     template <typename T>
     void print(T val) {
-        stream->print(val);
+        if (stream) stream->print(val);
     }
 
-    void printf(char *fmt, ... ) {
-        char buf[256];
-        va_list args;
-        va_start (args, fmt);
-        vsnprintf(buf, sizeof(buf), fmt, args);
-        va_end (args);
-        stream->print(buf);
+    template <typename T1, typename T2>
+    void print(T1 val1, T2 val2) {
+        if (stream) stream->print(val1, val2);
+    }
+
+    void printf(const char *fmt, ... ) {
+        if (stream) {
+            char buf[256];
+            va_list args;
+            va_start (args, fmt);
+            vsnprintf(buf, sizeof(buf), (char*)fmt, args);
+            va_end (args);
+            stream->print(buf);
+        }
     }
 #endif
 
@@ -110,6 +124,14 @@ public:
     void addCommand(const char* cmd, HandlerArgs h) {
         if (commandsQty >= BLYNK_CONSOLE_MAX_COMMANDS) return;
         commands[commandsQty++] = CmdHandler(cmd, new HandlerArgs(h));
+    }
+
+    void addCommand(const char* cmd, BlynkConsole* h) {
+        if (commandsQty >= BLYNK_CONSOLE_MAX_COMMANDS) return;
+#ifdef BLYNK_CONSOLE_USE_STREAM
+        h->init(*stream);
+#endif
+        commands[commandsQty++] = CmdHandler(cmd, h);
     }
 
     ProcessResult process(char c) {
@@ -135,6 +157,10 @@ public:
 #ifdef BLYNK_CONSOLE_USE_STREAM
         if (stream) stream->println();
 #endif
+        return runCommand(argc, (const char**)argv);
+    }
+
+    ProcessResult runCommand(int argc, const char** argv) {
         for (size_t i=0; i<commandsQty; i++) {
             CmdHandler& handler = commands[i];
             if (!strncasecmp(argv[0], handler.cmd, strlen(handler.cmd)+1)) {
@@ -145,6 +171,9 @@ public:
                 case WITH_ARGS:
                     (*(handler.f_args))(argc-1, (const char**)(argv+1));
                     break;
+                case SUB_CONSOLE:
+                    if (argc < 2) return NOT_FOUND;
+                    return handler.f_cons->runCommand(argc-1, (const char**)(argv+1));
                 }
                 return EXECUTED;
             }
@@ -184,6 +213,7 @@ private:
 
 #ifdef BLYNK_CONSOLE_USE_STREAM
     Stream* stream = nullptr;
+    HandlerSimp help;
 #endif
 
     void reset_buff() {
