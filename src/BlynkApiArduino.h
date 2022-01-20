@@ -65,7 +65,7 @@ void BlynkApi<Proto>::sendInfo()
 
 
 // Check if analog pins can be referenced by name on this device
-#if defined(analogInputToDigitalPin)
+#if defined(analogInputToDigitalPin) && !defined(BLYNK_NO_ANALOG_PINS)
     #define BLYNK_DECODE_PIN(it) (((it).asStr()[0] == 'A') ? analogInputToDigitalPin(atoi((it).asStr()+1)) : (it).asInt())
 #else
     #define BLYNK_DECODE_PIN(it) ((it).asInt())
