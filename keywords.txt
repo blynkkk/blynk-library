@@ -13,6 +13,10 @@ WidgetMap	KEYWORD1
 WidgetTable	KEYWORD1
 BlynkParam	KEYWORD1
 BlynkParamAllocated	KEYWORD1
+BlynkConsole	KEYWORD1
+BlynkAutomations	KEYWORD1
+BlynkTime	KEYWORD1
+BlynkDateTime	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
