@@ -11,7 +11,7 @@
 #ifndef BlynkFifo_h
 #define BlynkFifo_h
 
-#include <utility/BlynkUtility.h>
+#include <Blynk/BlynkUtility.h>
 
 template <class T, unsigned N>
 class BlynkFifo

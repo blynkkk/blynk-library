@@ -1,10 +1,11 @@
 #include <Blynk/BlynkDebug.h>
-#include <utility/BlynkDateTime.h>
+#include <Blynk/BlynkDateTime.h>
+
+#include <math.h>
 
 #if !defined(BLYNK_NO_FLOAT) && defined(BLYNK_USE_INTERNAL_DTOSTRF)
 
 #include <string.h>
-#include <math.h>
 #include <stdio.h>
 
 char* dtostrf_internal(double number, signed char BLYNK_UNUSED width, unsigned char prec, char *s) {
@@ -90,7 +91,8 @@ static const int month_tab[2][12] = {
     { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 };
 
-struct blynk_tm* blynk_gmtime_r(const blynk_time_t* t, struct blynk_tm *tm) {
+struct blynk_tm* blynk_gmtime_r(const blynk_time_t* t, struct blynk_tm *tm)
+{
     blynk_time_t time = *t;
     unsigned long dayclock, dayno;
     int year = YEAR_EPOCH;
@@ -114,11 +116,11 @@ struct blynk_tm* blynk_gmtime_r(const blynk_time_t* t, struct blynk_tm *tm) {
         tm->tm_mon++;
     }
     tm->tm_mday = dayno + 1;
-    tm->tm_isdst = 0;
     return tm;
 }
 
-blynk_time_t blynk_mk_gmtime(struct blynk_tm *tm) {
+blynk_time_t blynk_mk_gmtime(struct blynk_tm *tm)
+{
     long day, year;
     int tm_year;
     int yday, month;
@@ -211,3 +213,46 @@ blynk_time_t blynk_mk_gmtime(struct blynk_tm *tm) {
         return (blynk_time_t) -1;
     return (blynk_time_t) seconds;
 }
+
+int blynk_compute_sun(int8_t month, int8_t day, double latitude, double longitude, bool rise)
+{
+    float y, decl, eqt, ha, lon, lat;
+    uint8_t a;
+    int minutes;
+
+    month -= 1;
+    day   -= 1;
+    lat   =   latitude/57.295779513082322;
+    lon   = -longitude/57.295779513082322;
+
+    //approximate hour;
+    a = (rise) ? 18 : 6;
+
+    // approximate day of year
+    y = month * 30.4375 + day  + a/24.0; // 0... 365
+
+    // compute fractional year
+    y *= 1.718771839885e-02; // 0... 1
+
+    // compute equation of time... .43068174
+    eqt = 229.18 * (0.000075+0.001868*cos(y)  -0.032077*sin(y) -0.014615*cos(y*2) -0.040849*sin(y* 2) );
+
+    // compute solar declination... -0.398272
+    decl = 0.006918-0.399912*cos(y)+0.070257*sin(y)-0.006758*cos(y*2)+0.000907*sin(y*2)-0.002697*cos(y*3)+0.00148*sin(y*3);
+
+    //compute hour angle
+    ha = (  cos(1.585340737228125) / (cos(lat)*cos(decl)) -tan(lat) * tan(decl)  );
+
+    if (fabs(ha) > 1.0) { // we're in the (ant)arctic and there is no rise(or set) today!
+        return -1;
+    }
+
+    ha = acos(ha);
+    if(!rise) ha = -ha;
+
+    // compute minutes from midnight
+    minutes = 720+4*(lon-ha)*57.295779513082322-eqt;
+
+    return minutes;
+}
+
