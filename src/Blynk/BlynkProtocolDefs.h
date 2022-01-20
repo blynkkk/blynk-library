@@ -77,9 +77,9 @@ struct BlynkHeader
 }
 BLYNK_ATTR_PACKED;
 
-#if defined(ESP32)
+#if defined(ESP32) || defined(ESP8266)
     #include <lwip/ip_addr.h>
-#elif !defined(htons) && (defined(ARDUINO) || defined(ESP8266) || defined(PARTICLE) || defined(__MBED__))
+#elif !defined(htons) && (defined(ARDUINO) || defined(PARTICLE) || defined(__MBED__))
     #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         #define htons(x) ( ((x)<<8) | (((x)>>8)&0xFF) )
         #define htonl(x) ( ((x)<<24 & 0xFF000000UL) | \
