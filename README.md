@@ -1,4 +1,4 @@
-[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg)](https://stand-with-ukraine.pp.ua)
 
 # Blynk C++ Library [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Build%20your%20IoT%20App%20in%20minutes,%20right%20on%20your%20smartphone!&url=https://github.com/blynkkk/blynk-library&via=blynk_app&hashtags=IoT,iOS,Android,Arduino,ESP8266,ESP32,RaspberryPi)
 
