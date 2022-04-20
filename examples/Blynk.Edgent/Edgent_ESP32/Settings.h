@@ -34,9 +34,6 @@
   #define BOARD_LED_INVERSE           false
   #define BOARD_LED_BRIGHTNESS        32
 
-  // TODO: remove, workaround for undefined reference to `esp32_adc2gpio'
-  #undef  analogInputToDigitalPin
-
 #elif defined(USE_ESP32S2_DEV_KIT)
 
   #define BOARD_BUTTON_PIN            0
@@ -74,16 +71,18 @@
 
 #define BOARD_PWM_MAX                 1023
 
-#define BOARD_LEDC_CHANNEL_1     1
-#define BOARD_LEDC_CHANNEL_2     2
-#define BOARD_LEDC_CHANNEL_3     3
-#define BOARD_LEDC_TIMER_BITS    10
-#define BOARD_LEDC_BASE_FREQ     12000
+#define BOARD_LEDC_CHANNEL_1          1
+#define BOARD_LEDC_CHANNEL_2          2
+#define BOARD_LEDC_CHANNEL_3          3
+#define BOARD_LEDC_TIMER_BITS         10
+#define BOARD_LEDC_BASE_FREQ          12000
 
+#define CONFIG_DEVICE_PREFIX          "Blynk"
 #define CONFIG_AP_URL                 "blynk.setup"
 #define CONFIG_DEFAULT_SERVER         "blynk.cloud"
 #define CONFIG_DEFAULT_PORT           443
 
+#define WIFI_CLOUD_MAX_RETRIES        500
 #define WIFI_NET_CONNECT_TIMEOUT      50000
 #define WIFI_CLOUD_CONNECT_TIMEOUT    50000
 #define WIFI_AP_IP                    IPAddress(192, 168, 4, 1)

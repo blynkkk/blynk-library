@@ -101,6 +101,16 @@ static bool config_load_blnkopt()
 #include <Preferences.h>
 Preferences preferences;
 
+bool preferences_init()
+{
+  preferences.end();
+  if (!preferences.begin("blynk", false)) {
+    DEBUG_PRINT("Config init FAILED");
+    return false;
+  }
+  return true;
+}
+
 void config_load()
 {
   memset(&configStore, 0, sizeof(configStore));
@@ -121,7 +131,7 @@ bool config_save()
 
 bool config_init()
 {
-  preferences.begin("blynk", false);
+  preferences_init();
   config_load();
   return true;
 }
@@ -131,7 +141,6 @@ void enterResetConfig()
   DEBUG_PRINT("Resetting configuration!");
   configStore = configDefault;
   config_save();
-  eraseMcuConfig();
   BlynkState::set(MODE_WAIT_CONFIG);
 }
 
