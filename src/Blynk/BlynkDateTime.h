@@ -21,7 +21,7 @@ int blynk_compute_sun(int8_t month, int8_t day, double latitude, double longitud
 
 static inline
 bool isTimeValid(blynk_time_t t_sec) {
-    return t_sec > 1640988000; // 01 Jan 2022
+    return t_sec > 1609459200; // 01 Jan 2021
 }
 
 struct blynk_tm {
@@ -71,9 +71,9 @@ public:
         mTime = (hour * BLYNK_SECS_PER_HOUR + minute * BLYNK_SECS_PER_MIN + second) % BLYNK_SECS_PER_DAY;
     }
 
-    int second() const { return mTime % BLYNK_SECS_PER_MIN; }
+    int second() const { return (mTime % BLYNK_SECS_PER_MIN); }
     int minute() const { return (mTime / BLYNK_SECS_PER_MIN) % BLYNK_SECS_PER_MIN; }
-    int hour()   const { return mTime / BLYNK_SECS_PER_HOUR; }
+    int hour()   const { return (mTime / BLYNK_SECS_PER_HOUR); }
 
     int hour12() const {
         int h = hour();
@@ -156,9 +156,24 @@ public:
     int month()  const { return 1 + mTm.tm_mon; }
     int year()   const { return 1900 + mTm.tm_year; }
 
-    int day_of_year() const { return 1 + mTm.tm_yday; }
+    int yearday() const { return 1 + mTm.tm_yday; } // 1 = Jan 1, 2 = Jan 2 ...
+    int weekday() const { return mTm.tm_wday; }     // 0 = Sun,   1 = Mon ...
+
+    // Deprecated: // 1 = Mon, ..., 7 = Sun
     int day_of_week() const { return mTm.tm_wday == 0 ? 7 : mTm.tm_wday; }
+    int day_of_year() const { return 1 + mTm.tm_yday; }
     const char* dow_str() const { return DOW_STR[mTm.tm_wday % 7]; }
+
+    int weak_of_year() const {
+        int julian = yearday();
+        int dow = mTm.tm_wday;
+        int dowJan1 = BlynkDateTime(0,0,0, 1,1,year()).weekday();
+        int weekNum = ((julian + 6) / 7);
+        if (dow < dowJan1) {
+            ++weekNum;
+        }
+        return (weekNum);
+    }
 
     int getSecsToday() const                { return mTime % BLYNK_SECS_PER_DAY; }
     int getSecsThisWeek() const             { return (mTm.tm_wday * BLYNK_SECS_PER_DAY) + getSecsToday(); }
