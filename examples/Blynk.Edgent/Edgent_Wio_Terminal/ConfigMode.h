@@ -3,10 +3,6 @@
 #include <WebServer.h>
 #include <DNSServer.h>
 
-WebServer server(80);
-DNSServer dnsServer;
-const byte DNS_PORT = 53;
-
 #ifdef BLYNK_USE_SPIFFS
   #include "SPIFFS.h"
 #else
@@ -59,6 +55,13 @@ const byte DNS_PORT = 53;
 </html>
 )html";
 #endif
+
+WebServer server(80);
+DNSServer dnsServer;
+const byte DNS_PORT = 53;
+
+static int connectNetRetries    = WIFI_CLOUD_MAX_RETRIES;
+static int connectBlynkRetries  = WIFI_CLOUD_MAX_RETRIES;
 
 void restartMCU() {
   NVIC_SystemReset();
@@ -271,13 +274,14 @@ void enterConfigMode()
     getWiFiName(ssidBuff, sizeof(ssidBuff));
     char buff[512];
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
+      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","mac":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
       BLYNK_DEVICE_NAME,
       tmpl ? tmpl : "Unknown",
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
       ssidBuff,
       WiFi.softAPmacAddress().c_str(),
+      WiFi.macAddress().c_str(),
       configStore.last_error
     );
     server.send(200, "application/json", buff);

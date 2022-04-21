@@ -1,10 +1,11 @@
 /*
  * Required libraries:
- *  - Seeed Arduino rpcunified
+ *  - Seeed Arduino rpcUnified
  *  - Seeed Arduino rpcWiFi
  *  - Seeed Arduino SFUD
  *  - Seeed Arduino FS
  *  - Seeed Arduino mbedtls
+ *  - Seeed Arduino FreeRTOS
  *  - ArduinoOTA
  *  - ArduinoHttpClient
  *  
