@@ -239,6 +239,9 @@ void enterConfigMode()
     }
   });
   server.on("/board_info.json", []() {
+    // Configuring starts with board info request (may impact indication)
+    BlynkState::set(MODE_CONFIGURING);
+
     DEBUG_PRINT("Sending board info...");
     const char* tmpl = BLYNK_TEMPLATE_ID;
     char ssidBuff[64];
@@ -344,9 +347,7 @@ void enterConfigMode()
     dnsServer.processNextRequest();
     server.handleClient();
     app_loop();
-    if (BlynkState::is(MODE_WAIT_CONFIG) && WiFi.softAPgetStationNum() > 0) {
-      BlynkState::set(MODE_CONFIGURING);
-    } else if (BlynkState::is(MODE_CONFIGURING) && WiFi.softAPgetStationNum() == 0) {
+    if (BlynkState::is(MODE_CONFIGURING) && WiFi.softAPgetStationNum() == 0) {
       BlynkState::set(MODE_WAIT_CONFIG);
     }
   }

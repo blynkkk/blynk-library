@@ -209,7 +209,7 @@ void enterConfigMode()
 
   server.begin();
 
-  while(BlynkState::is(MODE_WAIT_CONFIG)) {
+  while (BlynkState::is(MODE_WAIT_CONFIG) || BlynkState::is(MODE_CONFIGURING)) {
     app_loop();
 
     WiFiClient client = server.available();   // listen for incoming clients
@@ -311,6 +311,9 @@ void enterConfigMode()
     content_type = "application/json";
   } break;
   case REQ_BOARD_INFO: {
+    // Configuring starts with board info request (may impact indication)
+    BlynkState::set(MODE_CONFIGURING);
+
     DEBUG_PRINT("Sending board info...");
     const char* tmpl = BLYNK_TEMPLATE_ID;
     char ssidBuff[64];

@@ -116,9 +116,7 @@ public:
     }
   }
 
-};
-
-Edgent BlynkEdgent;
+} BlynkEdgent;
 
 void app_loop() {
     edgentTimer.run();
