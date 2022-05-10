@@ -86,7 +86,7 @@ public:
 #if defined(BLYNK_NO_FANCY_LOGO)
         BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE
             BLYNK_NEWLINE
-            " #StandWithUkraine https://bit.ly/swua" BLYNK_NEWLINE
+            " #StandWithUkraine    https://bit.ly/swua" BLYNK_NEWLINE
             BLYNK_NEWLINE
         ));
 #else
@@ -97,7 +97,7 @@ public:
             " /____/_/\\_, /_//_/_/\\_\\" BLYNK_NEWLINE
             "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE BLYNK_NEWLINE
             BLYNK_NEWLINE
-            " #StandWithUkraine https://bit.ly/swua" BLYNK_NEWLINE
+            " #StandWithUkraine    https://bit.ly/swua" BLYNK_NEWLINE
             BLYNK_NEWLINE
         ));
 #endif
