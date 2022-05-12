@@ -73,6 +73,14 @@ public:
             return id;
         }
 
+        operator bool() const {
+            return isValid();
+        }
+
+        void operator() (void) const {
+            if (isValid()) st->executeNow(id);
+        }
+
         bool isValid() const { return st && id >= 0; }
         void changeInterval(unsigned long d) {
             if (isValid()) st->changeInterval(id, d);
@@ -149,6 +157,9 @@ public:
 
     // restart the specified timer
     void restartTimer(unsigned numTimer);
+
+    // remove delay to next execution
+    void executeNow(unsigned numTimer);
 
     // returns true if the specified timer is enabled
     bool isEnabled(unsigned numTimer);

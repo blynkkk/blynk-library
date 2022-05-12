@@ -235,6 +235,13 @@ void SimpleTimer::restartTimer(unsigned numTimer) {
     timer[numTimer].prev_millis = elapsed();
 }
 
+void SimpleTimer::executeNow(unsigned numTimer) {
+    if (numTimer >= MAX_TIMERS) {
+        return;
+    }
+
+    timer[numTimer].prev_millis = elapsed() - timer[numTimer].delay;
+}
 
 bool SimpleTimer::isEnabled(unsigned numTimer) {
     if (numTimer >= MAX_TIMERS) {
