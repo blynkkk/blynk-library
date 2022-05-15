@@ -109,6 +109,7 @@ private:
 #ifdef BLYNK_USE_DIRECT_CONNECT
         conn.connect(); // flushing the buffer to resync
 #else
+        // TODO flush
         state = CONNECTING;
         conn.disconnect();
         BlynkOnDisconnected();
@@ -299,7 +300,6 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     if (hdr.length > BLYNK_MAX_READBYTES) {
         BLYNK_LOG2(BLYNK_F("Packet too big: "), hdr.length);
-        // TODO: Flush
         internalReconnect();
         return true;
     }
@@ -413,7 +413,6 @@ bool BlynkProtocol<Transp>::processInput(void)
 #ifdef BLYNK_DEBUG
         BLYNK_LOG2(BLYNK_F("Invalid header type: "), hdr.type);
 #endif
-        // TODO: Flush
         internalReconnect();
     } break;
     }
