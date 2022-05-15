@@ -252,7 +252,12 @@ bool BlynkProtocol<Transp>::processInput(void)
 #ifdef BLYNK_DEBUG
         BLYNK_LOG2(BLYNK_F("Bad hdr len: "), ret);
 #endif
+#ifdef BLYNK_USE_DIRECT_CONNECT
+        internalReconnect();
+        return true;
+#else
         return false;
+#endif
     }
 
     if (hdr.type == BLYNK_CMD_RESPONSE) {
