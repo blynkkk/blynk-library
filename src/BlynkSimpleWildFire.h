@@ -14,9 +14,13 @@
 #include <Adapters/BlynkWildFire.h>
 
 WildFire_CC3000 cc3000;
-static BlynkTransportWildFire _blynkTransport(cc3000);
-BlynkWildFire Blynk(cc3000, _blynkTransport);
-
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportWildFire _blynkTransport(cc3000);
+  BlynkWildFire Blynk(cc3000, _blynkTransport);
+#else
+  extern BlynkWildFire Blynk;
+#endif
+  
 #include <BlynkWidgets.h>
 
 #endif

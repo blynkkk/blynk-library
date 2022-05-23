@@ -18,9 +18,13 @@
 #include <WiFi101.h>
 #include <Adapters/BlynkWiFiCommon.h>
 
-static WiFiSSLClient _blynkWifiClient;
-static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
-BlynkWifiCommon Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static WiFiSSLClient _blynkWifiClient;
+  static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
+  BlynkWifiCommon Blynk(_blynkTransport);
+#else
+  extern BlynkWifiCommon Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

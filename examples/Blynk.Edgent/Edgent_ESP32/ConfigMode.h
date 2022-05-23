@@ -180,7 +180,7 @@ void enterConfigMode()
     String dns  = server.arg("dns");
     String dns2 = server.arg("dns2");
 
-    bool save  = server.arg("save").toInt();
+    bool forceSave  = server.arg("save").toInt();
 
     String content;
 
@@ -200,7 +200,7 @@ void enterConfigMode()
       }
 
       IPAddress addr;
-      
+
       if (ip.length() && addr.fromString(ip)) {
         configStore.staticIP = addr;
         configStore.setFlag(CONFIG_FLAG_STATIC_IP, true);
@@ -220,7 +220,7 @@ void enterConfigMode()
         configStore.staticDNS2 = addr;
       }
 
-      if (save) {
+      if (forceSave) {
         configStore.setFlag(CONFIG_FLAG_VALID, true);
         config_save();
 
@@ -473,7 +473,7 @@ void enterSwitchToSTA() {
 
 void enterError() {
   BlynkState::set(MODE_ERROR);
-  
+
   unsigned long timeoutMs = millis() + 10000;
   while (timeoutMs > millis() || g_buttonPressed)
   {

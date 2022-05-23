@@ -92,9 +92,13 @@ public:
 
 };
 
-static WiFiClient _blynkWifiClient;
-static BlynkEsp32Client _blynkTransport(_blynkWifiClient);
-BlynkWifi Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static WiFiClient _blynkWifiClient;
+  static BlynkEsp32Client _blynkTransport(_blynkWifiClient);
+  BlynkWifi Blynk(_blynkTransport);
+#else
+  extern BlynkWifi Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

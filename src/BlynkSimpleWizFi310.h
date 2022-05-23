@@ -20,9 +20,13 @@
 #include <WizFi310.h>
 #include <Adapters/BlynkWiFiCommon.h>
 
-static WiFiClient _blynkWifiClient;
-static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
-BlynkWifiCommon Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static WiFiClient _blynkWifiClient;
+  static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
+  BlynkWifiCommon Blynk(_blynkTransport);
+#else
+  extern BlynkWifiCommon Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

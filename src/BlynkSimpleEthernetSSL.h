@@ -28,8 +28,12 @@
 static EthernetClient _blynkEthernetClient;
 static BearSSLClient _blynkEthernetClientSSL(_blynkEthernetClient);
 
-static BlynkArduinoClient _blynkTransport(_blynkEthernetClientSSL);
-BlynkEthernet Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkArduinoClient _blynkTransport(_blynkEthernetClientSSL);
+  BlynkEthernet Blynk(_blynkTransport);
+#else
+  extern BlynkEthernet Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

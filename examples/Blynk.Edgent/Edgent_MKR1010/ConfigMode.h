@@ -254,7 +254,7 @@ void enterConfigMode()
     String dns  = urlFindArg(config_line, "dns");
     String dns2 = urlFindArg(config_line, "dns2");
 
-    bool save  = urlFindArg(config_line, "save").toInt();
+    bool forceSave  = urlFindArg(config_line, "save").toInt();
 
     DEBUG_PRINT(String("WiFi SSID: ") + ssid + " Pass: " + pass);
     DEBUG_PRINT(String("Blynk cloud: ") + token + " @ " + host + ":" + port);
@@ -272,7 +272,7 @@ void enterConfigMode()
       }
 
       IPAddress addr;
-      
+
       if (ip.length() && addr.fromString(ip)) {
         configStore.staticIP = addr;
         configStore.setFlag(CONFIG_FLAG_STATIC_IP, true);
@@ -292,7 +292,7 @@ void enterConfigMode()
         configStore.staticDNS2 = addr;
       }
 
-      if (save) {
+      if (forceSave) {
         configStore.setFlag(CONFIG_FLAG_VALID, true);
         config_save();
 
@@ -490,7 +490,7 @@ void enterSwitchToSTA() {
 
 void enterError() {
   BlynkState::set(MODE_ERROR);
-  
+
   unsigned long timeoutMs = millis() + 10000;
   while (timeoutMs > millis() || g_buttonPressed)
   {

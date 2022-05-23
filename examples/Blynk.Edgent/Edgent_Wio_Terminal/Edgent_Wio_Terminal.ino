@@ -8,7 +8,7 @@
  *  - Seeed Arduino FreeRTOS
  *  - ArduinoOTA
  *  - ArduinoHttpClient
- *  
+ *
  * Please also update the WiFi module firmware:
  *   https://wiki.seeedstudio.com/Wio-Terminal-Network-Overview
  */

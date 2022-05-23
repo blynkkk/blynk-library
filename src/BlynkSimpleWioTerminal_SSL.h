@@ -130,9 +130,13 @@ public:
 
 };
 
-static WiFiClientSecure _blynkWifiClient;
-static BlynkArduinoClientSecure<WiFiClientSecure> _blynkTransport(_blynkWifiClient);
-BlynkWifi<BlynkArduinoClientSecure<WiFiClientSecure> > Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static WiFiClientSecure _blynkWifiClient;
+  static BlynkArduinoClientSecure<WiFiClientSecure> _blynkTransport(_blynkWifiClient);
+  BlynkWifi<BlynkArduinoClientSecure<WiFiClientSecure> > Blynk(_blynkTransport);
+#else
+  extern BlynkWifi<BlynkArduinoClientSecure<WiFiClientSecure> > Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 
