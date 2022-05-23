@@ -152,7 +152,11 @@ class BlynkTransportEsp32_BT
       switch (event)
       {
         case ESP_SPP_INIT_EVT: // Once the SPP callback has been registered, ESP_SPP_INIT_EVT is triggered
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
+          esp_bt_gap_set_scan_mode(ESP_BT_CONNECTABLE, ESP_BT_GENERAL_DISCOVERABLE);
+#else
           esp_bt_gap_set_scan_mode(ESP_BT_SCAN_MODE_CONNECTABLE_DISCOVERABLE);
+#endif
           esp_spp_start_srv(ESP_SPP_SEC_NONE, ESP_SPP_ROLE_SLAVE, 0, "SPP_SERVER");
           break;
 

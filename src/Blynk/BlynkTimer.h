@@ -35,10 +35,18 @@
 #define SIMPLETIMER_H
 #define SimpleTimer BlynkTimer
 
-typedef void (*timer_callback)(void);
-typedef void (*timer_callback_p)(void *);
+#if defined(__has_include) && __has_include(<functional>)
+  #include <functional>
+  #define HAS_FUNCTIONAL_H
+#endif
 
 class SimpleTimer {
+#ifdef HAS_FUNCTIONAL_H
+    typedef std::function<void(void)> timer_callback;
+#else
+    typedef void (*timer_callback)(void);
+#endif
+    typedef void (*timer_callback_p)(void *);
 
 public:
     // maximum number of timers
@@ -47,6 +55,49 @@ public:
     // setTimer() constants
     const static int RUN_FOREVER = 0;
     const static int RUN_ONCE = 1;
+
+    class Handle {
+    public:
+        Handle()
+            : st(NULL), id(-1)
+        {}
+
+        Handle(SimpleTimer* t, int i)
+            : st(t),    id(i)
+        {}
+
+        ~Handle() {
+        }
+
+        operator int() const {
+            return id;
+        }
+
+        operator bool() const {
+            return isValid();
+        }
+
+        void operator() (void) const {
+            if (isValid()) st->executeNow(id);
+        }
+
+        bool isValid() const { return st && id >= 0; }
+        void changeInterval(unsigned long d) {
+            if (isValid()) st->changeInterval(id, d);
+        }
+        void deleteTimer()  { if (isValid()) st->deleteTimer(id); invalidate(); }
+        void restartTimer() { if (isValid()) st->restartTimer(id);        }
+        bool isEnabled()    { return isValid() && st->isEnabled(id);      }
+        void enable()       { if (isValid()) st->enable(id);              }
+        void disable()      { if (isValid()) st->disable(id);             }
+        void toggle()       { if (isValid()) st->toggle(id);              }
+
+    private:
+        void invalidate()   { st = NULL; id = -1; }
+
+        SimpleTimer*    st;
+        int             id;
+    };
 
     // constructor
     SimpleTimer();
@@ -59,32 +110,44 @@ public:
     // Timer will call function 'f' every 'd' milliseconds forever
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setInterval(unsigned long d, timer_callback f);
+    Handle setInterval(unsigned long d, const timer_callback& f) {
+        return Handle(this, setupTimer(d, f, RUN_FOREVER));
+    }
 
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds forever
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setInterval(unsigned long d, timer_callback_p f, void* p);
+    Handle setInterval(unsigned long d, timer_callback_p f, void* p) {
+        return Handle(this, setupTimer(d, f, p, RUN_FOREVER));
+    }
 
     // Timer will call function 'f' after 'd' milliseconds one time
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setTimeout(unsigned long d, timer_callback f);
+    Handle setTimeout(unsigned long d, const timer_callback& f) {
+        return Handle(this, setupTimer(d, f, RUN_ONCE));
+    }
 
     // Timer will call function 'f' with parameter 'p' after 'd' milliseconds one time
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setTimeout(unsigned long d, timer_callback_p f, void* p);
+    Handle setTimeout(unsigned long d, timer_callback_p f, void* p) {
+        return Handle(this, setupTimer(d, f, p, RUN_ONCE));
+    }
 
     // Timer will call function 'f' every 'd' milliseconds 'n' times
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setTimer(unsigned long d, timer_callback f, unsigned n);
+    Handle setTimer(unsigned long d, const timer_callback& f, unsigned n) {
+        return Handle(this, setupTimer(d, f, n));
+    }
 
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds 'n' times
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setTimer(unsigned long d, timer_callback_p f, void* p, unsigned n);
+    Handle setTimer(unsigned long d, timer_callback_p f, void* p, unsigned n) {
+        return Handle(this, setupTimer(d, f, p, n));
+    }
 
     // updates interval of the specified timer
     bool changeInterval(unsigned numTimer, unsigned long d);
@@ -94,6 +157,9 @@ public:
 
     // restart the specified timer
     void restartTimer(unsigned numTimer);
+
+    // remove delay to next execution
+    void executeNow(unsigned numTimer);
 
     // returns true if the specified timer is enabled
     bool isEnabled(unsigned numTimer);
@@ -129,14 +195,22 @@ private:
     // low level function to initialize and enable a new timer
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setupTimer(unsigned long d, void* f, void* p, bool h, unsigned n);
+    int setupTimer(unsigned long d, const timer_callback& f, unsigned n);
+    int setupTimer(unsigned long d,      timer_callback_p f, void* p, unsigned n);
+
+    bool isValidTimer(unsigned id) {
+        return timer[id].callback || timer[id].callback_p;
+    }
 
     // find the first available slot
     int findFirstFreeSlot();
 
     typedef struct {
       unsigned long prev_millis;        // value returned by the millis() function in the previous run() call
-      void* callback;                   // pointer to the callback function
+
+      timer_callback    callback;
+      timer_callback_p  callback_p;
+
       void* param;                      // function parameter
       bool hasParam;                 // true if callback takes a parameter
       unsigned long delay;              // delay value

@@ -30,6 +30,8 @@ BlynkWifiCommon Blynk(_blynkTransport);
 #error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_DEVICE_NAME"
 #endif
 
+BlynkTimer edgentTimer;
+
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"
@@ -37,6 +39,7 @@ BlynkWifiCommon Blynk(_blynkTransport);
 #include "Indicator.h"
 #include "OTA.h"
 #include "Console.h"
+
 
 inline
 void BlynkState::set(State m) {
@@ -56,7 +59,9 @@ void printDeviceBanner()
   DEBUG_PRINT(String("Product:  ") + BLYNK_DEVICE_NAME);
   DEBUG_PRINT(String("Firmware: ") + BLYNK_FIRMWARE_VERSION " (build " __DATE__ " " __TIME__ ")");
   if (configStore.getFlag(CONFIG_FLAG_VALID)) {
-    DEBUG_PRINT(String("Token:    ...") + (configStore.cloudToken+28));
+    DEBUG_PRINT(String("Token:    ") +
+                String(configStore.cloudToken).substring(0,4) +
+                " - •••• - •••• - ••••");
   }
   DEBUG_PRINT(String("Device:   ") + BLYNK_INFO_DEVICE);
   DEBUG_PRINT(String("WiFi FW:  ") + WiFi.firmwareVersion());
@@ -87,9 +92,8 @@ public:
     indicator_init();
     button_init();
     config_init();
-    console_init();
-
     printDeviceBanner();
+    console_init();
 
     if (configStore.getFlag(CONFIG_FLAG_VALID)) {
       BlynkState::set(MODE_CONNECTING_NET);
@@ -116,10 +120,7 @@ public:
     }
   }
 
-};
-
-Edgent BlynkEdgent;
-BlynkTimer edgentTimer;
+} BlynkEdgent;
 
 void app_loop() {
     edgentTimer.run();

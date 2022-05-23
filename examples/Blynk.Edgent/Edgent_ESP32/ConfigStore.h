@@ -67,10 +67,20 @@ void CopyString(const String& s, T(&arr)[size]) {
 static bool config_load_blnkopt()
 {
   static const char blnkopt[] = "blnkopt\0"
+#if defined(BLYNK_AUTH_TOKEN)
+    /* While Blynk.Edgent assigns Auth token, SSID and password
+     * dynamically using the App, you can still pre-configure them.
+     * Please use this FOR TESTING PURPOSES ONLY.
+     */
+    BLYNK_PARAM_KV("ssid" , BLYNK_WIFI_SSID)
+    BLYNK_PARAM_KV("pass" , BLYNK_WIFI_PASS)
+    BLYNK_PARAM_KV("auth" , BLYNK_AUTH_TOKEN)
+#else
     BLYNK_PARAM_KV("ssid" , BLYNK_PARAM_PLACEHOLDER_64
                             BLYNK_PARAM_PLACEHOLDER_64
                             BLYNK_PARAM_PLACEHOLDER_64
                             BLYNK_PARAM_PLACEHOLDER_64)
+#endif
     BLYNK_PARAM_KV("host" , CONFIG_DEFAULT_SERVER)
     BLYNK_PARAM_KV("port" , BLYNK_TOSTRING(CONFIG_DEFAULT_PORT))
     "\0";
@@ -101,6 +111,16 @@ static bool config_load_blnkopt()
 #include <Preferences.h>
 Preferences preferences;
 
+bool preferences_init()
+{
+  preferences.end();
+  if (!preferences.begin("blynk", false)) {
+    DEBUG_PRINT("Config init FAILED");
+    return false;
+  }
+  return true;
+}
+
 void config_load()
 {
   memset(&configStore, 0, sizeof(configStore));
@@ -121,7 +141,7 @@ bool config_save()
 
 bool config_init()
 {
-  preferences.begin("blynk", false);
+  preferences_init();
   config_load();
   return true;
 }
@@ -131,7 +151,6 @@ void enterResetConfig()
   DEBUG_PRINT("Resetting configuration!");
   configStore = configDefault;
   config_save();
-  eraseMcuConfig();
   BlynkState::set(MODE_WAIT_CONFIG);
 }
 

@@ -67,10 +67,12 @@ const char* config_form = R"html(
 </html>
 )html";
 
+static int connectNetRetries    = WIFI_CLOUD_MAX_RETRIES;
+static int connectBlynkRetries  = WIFI_CLOUD_MAX_RETRIES;
+
 void restartMCU() {
   NVIC_SystemReset();
 }
-
 
 void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   static byte mac[6] = { 0, };
@@ -86,10 +88,13 @@ void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   }
   unique &= 0xFFFFF;
 
+  String devPrefix = CONFIG_DEVICE_PREFIX;
+  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-7-devPrefix.length());
+
   if (withPrefix) {
-    snprintf(buff, len, "Blynk %s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "%s %s-%05X", devPrefix.c_str(), devName.c_str(), unique);
   } else {
-    snprintf(buff, len, "%s-%05X", BLYNK_DEVICE_NAME, unique);
+    snprintf(buff, len, "%s-%05X", devName.c_str(), unique);
   }
 }
 
@@ -208,7 +213,7 @@ void enterConfigMode()
 
   int status = WiFi.status();
 
-  while(BlynkState::is(MODE_WAIT_CONFIG)) {
+  while (BlynkState::is(MODE_WAIT_CONFIG) || BlynkState::is(MODE_CONFIGURING)) {
     // Workaround for https://github.com/arduino-libraries/WiFi101/issues/46
     if (status != WiFi.status()) {
       status = WiFi.status();
@@ -218,6 +223,9 @@ void enterConfigMode()
         server.begin(); 
       } else {
         Serial.println("Device disconnected from AP");
+        if (BlynkState::is(MODE_CONFIGURING)) {
+          BlynkState::set(MODE_WAIT_CONFIG);
+        }
       } 
     }
     app_loop();
@@ -265,13 +273,13 @@ void enterConfigMode()
     String dns  = urlFindArg(config_line, "dns");
     String dns2 = urlFindArg(config_line, "dns2");
 
-    bool save  = urlFindArg(config_line, "save").toInt();
+    bool forceSave  = urlFindArg(config_line, "save").toInt();
 
     DEBUG_PRINT(String("WiFi SSID: ") + ssid + " Pass: " + pass);
     DEBUG_PRINT(String("Blynk cloud: ") + token + " @ " + host + ":" + port);
 
     if (token.length() == 32 && ssid.length() > 0) {
-      configStore.setFlag(CONFIG_FLAG_VALID, false);
+      configStore = configDefault;
       CopyString(ssid, configStore.wifiSSID);
       CopyString(pass, configStore.wifiPass);
       CopyString(token, configStore.cloudToken);
@@ -283,7 +291,7 @@ void enterConfigMode()
       }
 
       IPAddress addr;
-      
+
       if (ip.length() && addr.fromString(ip)) {
         configStore.staticIP = addr;
         configStore.setFlag(CONFIG_FLAG_STATIC_IP, true);
@@ -303,7 +311,7 @@ void enterConfigMode()
         configStore.staticDNS2 = addr;
       }
 
-      if (save) {
+      if (forceSave) {
         configStore.setFlag(CONFIG_FLAG_VALID, true);
         config_save();
 
@@ -312,6 +320,7 @@ void enterConfigMode()
         content = R"json({"status":"ok","msg":"Trying to connect..."})json";
       }
 
+      connectNetRetries = connectBlynkRetries = 1;
       BlynkState::set(MODE_SWITCH_TO_STA);
     } else {
       DEBUG_PRINT("Configuration invalid");
@@ -321,6 +330,9 @@ void enterConfigMode()
     content_type = "application/json";
   } break;
   case REQ_BOARD_INFO: {
+    // Configuring starts with board info request (may impact indication)
+    BlynkState::set(MODE_CONFIGURING);
+
     DEBUG_PRINT("Sending board info...");
     const char* tmpl = BLYNK_TEMPLATE_ID;
     char ssidBuff[64];
@@ -329,7 +341,7 @@ void enterConfigMode()
 
     byte mac[6] = { 0, };
     WiFi.macAddress(mac);
-    
+
     snprintf(buff, sizeof(buff),
       R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","last_error":%d,"wifi_scan":true,"static_ip":true})json",
       BLYNK_DEVICE_NAME,
@@ -435,8 +447,9 @@ void enterConnectNet() {
       BLYNK_LOG_IP("Using Dynamic IP: ", localip);
     }
 
+    connectNetRetries = WIFI_CLOUD_MAX_RETRIES;
     BlynkState::set(MODE_CONNECTING_CLOUD);
-  } else {
+  } else if (--connectNetRetries <= 0) {
     config_set_last_error(BLYNK_PROV_ERR_NETWORK);
     BlynkState::set(MODE_ERROR);
   }
@@ -450,6 +463,7 @@ void enterConnectCloud() {
 
   unsigned long timeoutMs = millis() + WIFI_CLOUD_CONNECT_TIMEOUT;
   while ((timeoutMs > millis()) &&
+        (WiFi.status() == WL_CONNECTED) &&
         (!Blynk.isTokenInvalid()) &&
         (Blynk.connected() == false))
   {
@@ -468,16 +482,19 @@ void enterConnectCloud() {
 
   if (Blynk.isTokenInvalid()) {
     config_set_last_error(BLYNK_PROV_ERR_TOKEN);
-    BlynkState::set(MODE_WAIT_CONFIG);
+    BlynkState::set(MODE_WAIT_CONFIG); // TODO: retry after timeout
+  } else if (WiFi.status() != WL_CONNECTED) {
+    BlynkState::set(MODE_CONNECTING_NET);
   } else if (Blynk.connected()) {
     BlynkState::set(MODE_RUNNING);
+    connectBlynkRetries = WIFI_CLOUD_MAX_RETRIES;
 
     if (!configStore.getFlag(CONFIG_FLAG_VALID)) {
       configStore.last_error = BLYNK_PROV_ERR_NONE;
       configStore.setFlag(CONFIG_FLAG_VALID, true);
       config_save();
     }
-  } else {
+  } else if (--connectBlynkRetries <= 0) {
     config_set_last_error(BLYNK_PROV_ERR_CLOUD);
     BlynkState::set(MODE_ERROR);
   }
@@ -495,7 +512,7 @@ void enterSwitchToSTA() {
 
 void enterError() {
   BlynkState::set(MODE_ERROR);
-  
+
   unsigned long timeoutMs = millis() + 10000;
   while (timeoutMs > millis() || g_buttonPressed)
   {

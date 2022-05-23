@@ -34,13 +34,11 @@ void console_init()
     char ssidBuff[64];
     getWiFiName(ssidBuff, sizeof(ssidBuff));
 
-    byte mac[6] = { 0, };
-    WiFi.macAddress(mac);
-
     edgentConsole.printf(
-        R"json({"ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","rssi":%d})json" "\n",
+        R"json({"ssid":"%s","bssid":"%s","mac":"%s","rssi":%d})json" "\n",
         ssidBuff,
-        mac[5], mac[4], mac[3], mac[2], mac[1], mac[0],
+        WiFi.softAPmacAddress().c_str(),
+        WiFi.macAddress().c_str(),
         WiFi.RSSI()
     );
   });
@@ -51,3 +49,4 @@ BLYNK_WRITE(InternalPinDBG) {
   String cmd = String(param.asStr()) + "\n";
   edgentConsole.runCommand((char*)cmd.c_str());
 }
+

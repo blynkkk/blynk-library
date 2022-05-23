@@ -130,6 +130,21 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
+#elif defined(ARDUINO) && (defined(ARDUINO_ARDUINO_NANO33BLE))
+
+    #include <Arduino.h>
+    // #include <libmaple/nvic.h>
+
+    void BlynkReset()
+    {
+        // nvic_sys_reset();
+        for(;;) {}
+    }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
 #elif defined (PARTICLE) || defined(SPARK)
 
     #include "application.h"

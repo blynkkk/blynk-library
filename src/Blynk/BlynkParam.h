@@ -105,6 +105,8 @@ public:
     size_t getBuffSize() const { return buff_size; }
 
     // Modification
+    void clear() { len = 0; }
+
     void add(int value);
     void add(unsigned int value);
     void add(long value);
@@ -140,6 +142,8 @@ public:
         add(key);
         add(val);
     }
+
+    void remove_key(const char* key);
 
 protected:
     char*    buff;
@@ -184,6 +188,29 @@ BlynkParam::iterator BlynkParam::operator[](const char* key) const
         if (it >= e) break;
     }
     return iterator::invalid();
+}
+
+inline
+void BlynkParam::remove_key(const char* key)
+{
+    bool found;
+    do {
+        found = false;
+        const iterator e = end();
+        for (iterator it = begin(); it < e; ++it) {
+            if (!strcmp(it.asStr(), key)) {
+                const char* key = it.asStr();
+                ++it; ++it;
+                const char* next = it.asStr();
+                memmove((void*)key, next, (buff+len)-next);
+                len -= (next-key);
+                found = true;
+                break;
+            }
+            ++it;
+            if (it >= e) break;
+        }
+    } while (found);
 }
 
 inline
