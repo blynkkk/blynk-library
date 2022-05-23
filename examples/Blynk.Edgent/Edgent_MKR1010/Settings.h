@@ -26,10 +26,18 @@
 
 #define BOARD_PWM_MAX                 255
 
+#if !defined(CONFIG_DEVICE_PREFIX)
 #define CONFIG_DEVICE_PREFIX          "Blynk"
+#endif
+#if !defined(CONFIG_AP_URL)
 #define CONFIG_AP_URL                 "blynk.setup"
+#endif
+#if !defined(CONFIG_DEFAULT_SERVER)
 #define CONFIG_DEFAULT_SERVER         "blynk.cloud"
+#endif
+#if !defined(CONFIG_DEFAULT_PORT)
 #define CONFIG_DEFAULT_PORT           443
+#endif
 
 #define WIFI_CLOUD_MAX_RETRIES        500
 #define WIFI_NET_CONNECT_TIMEOUT      50000
@@ -47,8 +55,10 @@
 #define BLYNK_NO_DEFAULT_BANNER
 
 #if defined(APP_DEBUG)
-  #define DEBUG_PRINT(...) BLYNK_LOG1(__VA_ARGS__)
+  #define DEBUG_PRINT(...)  BLYNK_LOG1(__VA_ARGS__)
+  #define DEBUG_PRINTF(...) BLYNK_LOG(__VA_ARGS__)
 #else
   #define DEBUG_PRINT(...)
+  #define DEBUG_PRINTF(...)
 #endif
 

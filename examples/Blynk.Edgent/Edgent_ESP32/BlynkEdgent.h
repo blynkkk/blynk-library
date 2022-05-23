@@ -15,6 +15,8 @@ extern "C" {
 #error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_DEVICE_NAME"
 #endif
 
+BlynkTimer edgentTimer;
+
 #include "BlynkState.h"
 #include "ConfigStore.h"
 #include "ResetButton.h"
@@ -23,7 +25,6 @@ extern "C" {
 #include "OTA.h"
 #include "Console.h"
 
-BlynkTimer edgentTimer;
 
 inline
 void BlynkState::set(State m) {
