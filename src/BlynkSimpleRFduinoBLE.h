@@ -117,8 +117,12 @@ public:
 
 BlynkTransportRFduinoBLE* BlynkTransportRFduinoBLE::instance = NULL;
 
-static BlynkTransportRFduinoBLE _blynkTransport;
-BlynkSimpleRFduinoBLE Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportRFduinoBLE _blynkTransport;
+  BlynkSimpleRFduinoBLE Blynk(_blynkTransport);
+#else
+  extern BlynkSimpleRFduinoBLE Blynk;
+#endif
 
 
 void RFduinoBLE_onConnect()

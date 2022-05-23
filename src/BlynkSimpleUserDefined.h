@@ -77,8 +77,12 @@ public:
 private:
 };
 
-static BlynkTransportUserDefined _blynkTransport;
-BlynkUserDefined Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportUserDefined _blynkTransport;
+  BlynkUserDefined Blynk(_blynkTransport);
+#else
+  extern BlynkUserDefined Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

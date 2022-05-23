@@ -216,8 +216,12 @@ class BlynkEsp32_BT
 BlynkTransportEsp32_BT* BlynkTransportEsp32_BT::instance = NULL;
 uint32_t BlynkTransportEsp32_BT::spp_handle = 0;
 
-static BlynkTransportEsp32_BT _blynkTransport;
-BlynkEsp32_BT Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportEsp32_BT _blynkTransport;
+  BlynkEsp32_BT Blynk(_blynkTransport);
+#else
+  extern BlynkEsp32_BT Blynk;
+#endif
 
 void BlynkTransportEsp32_BT::onConnect() {
   BLYNK_LOG1(BLYNK_F("BT connect"));

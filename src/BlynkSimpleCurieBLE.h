@@ -153,8 +153,12 @@ public:
 
 BlynkTransportCurieBLE* BlynkTransportCurieBLE::instance = NULL;
 
-static BlynkTransportCurieBLE _blynkTransport;
-BlynkCurieBLE Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportCurieBLE _blynkTransport;
+  BlynkCurieBLE Blynk(_blynkTransport);
+#else
+  extern BlynkCurieBLE Blynk;
+#endif
 
 inline
 void BlynkTransportCurieBLE::txCharSubscribed(BLECentral& central, BLECharacteristic& ch) {

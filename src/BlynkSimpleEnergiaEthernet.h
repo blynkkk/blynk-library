@@ -15,9 +15,13 @@
 #include <EthernetClient.h>
 #include <Adapters/BlynkEthernet.h>
 
-static EthernetClient _blynkEthernetClient;
-static BlynkArduinoClient _blynkTransport(_blynkEthernetClient);
-BlynkEthernet Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static EthernetClient _blynkEthernetClient;
+  static BlynkArduinoClient _blynkTransport(_blynkEthernetClient);
+  BlynkEthernet Blynk(_blynkTransport);
+#else
+  extern BlynkEthernet Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 
