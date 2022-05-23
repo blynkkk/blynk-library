@@ -77,10 +77,18 @@
 #define BOARD_LEDC_TIMER_BITS         10
 #define BOARD_LEDC_BASE_FREQ          12000
 
+#if !defined(CONFIG_DEVICE_PREFIX)
 #define CONFIG_DEVICE_PREFIX          "Blynk"
+#endif
+#if !defined(CONFIG_AP_URL)
 #define CONFIG_AP_URL                 "blynk.setup"
+#endif
+#if !defined(CONFIG_DEFAULT_SERVER)
 #define CONFIG_DEFAULT_SERVER         "blynk.cloud"
+#endif
+#if !defined(CONFIG_DEFAULT_PORT)
 #define CONFIG_DEFAULT_PORT           443
+#endif
 
 #define WIFI_CLOUD_MAX_RETRIES        500
 #define WIFI_NET_CONNECT_TIMEOUT      50000
