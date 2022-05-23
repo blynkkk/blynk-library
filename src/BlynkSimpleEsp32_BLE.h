@@ -187,6 +187,7 @@ void BlynkTransportEsp32_BLE::onConnect(BLEServer* pServer) {
 inline
 void BlynkTransportEsp32_BLE::onDisconnect(BLEServer* pServer) {
   BLYNK_LOG1(BLYNK_F("BLE disconnect"));
+  pServer->getAdvertising()->start();
   Blynk.disconnect();
   disconnect();
 }
