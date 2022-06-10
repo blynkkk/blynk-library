@@ -55,7 +55,29 @@ void BlynkAverageSample (T& avg, const T& input) {
       avg -= 1;
 }
 
-static inline
+static
+int BlynkRSSI2SQ(int dBm) {
+    if(dBm <= -100) {
+        return 0;
+    } else if(dBm >= -50) {
+        return 100;
+    } else {
+        return 2 * (dBm + 100);
+    }
+}
+
+static
+int BlynkSQ2RSSI(int quality) {
+    if(quality <= 0) {
+        return -100;
+    } else if(quality >= 100) {
+        return -50;
+    } else {
+        return (quality / 2) - 100;
+    }
+}
+
+static
 uint32_t BlynkCRC32(const void* data, size_t length, uint32_t previousCrc32 = 0)
 {
   const uint32_t Polynomial = 0xEDB88320;
@@ -70,7 +92,7 @@ uint32_t BlynkCRC32(const void* data, size_t length, uint32_t previousCrc32 = 0)
   return ~crc;
 }
 
-static inline
+static
 bool BlynkStrMatch(const char* pat, const char* txt) {
     const long n = strlen(txt);
     const long m = strlen(pat);
