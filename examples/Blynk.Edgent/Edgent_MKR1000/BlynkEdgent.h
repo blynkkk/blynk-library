@@ -54,18 +54,20 @@ void BlynkState::set(State m) {
 
 void printDeviceBanner()
 {
+#ifdef BLYNK_PRINT
   Blynk.printBanner();
-  DEBUG_PRINT("--------------------------");
-  DEBUG_PRINT(String("Product:  ") + BLYNK_DEVICE_NAME);
-  DEBUG_PRINT(String("Firmware: ") + BLYNK_FIRMWARE_VERSION " (build " __DATE__ " " __TIME__ ")");
+  BLYNK_PRINT.println("----------------------------------------------------");
+  BLYNK_PRINT.print(" Device:    "); BLYNK_PRINT.println(getWiFiName());
+  BLYNK_PRINT.print(" Firmware:  "); BLYNK_PRINT.println(BLYNK_FIRMWARE_VERSION " (build " __DATE__ " " __TIME__ ")");
   if (configStore.getFlag(CONFIG_FLAG_VALID)) {
-    DEBUG_PRINT(String("Token:    ") +
-                String(configStore.cloudToken).substring(0,4) +
+    BLYNK_PRINT.print(" Token:     ");
+    BLYNK_PRINT.println(String(configStore.cloudToken).substring(0,4) +
                 " - •••• - •••• - ••••");
   }
-  DEBUG_PRINT(String("Device:   ") + BLYNK_INFO_DEVICE);
-  DEBUG_PRINT(String("WiFi FW:  ") + WiFi.firmwareVersion());
-  DEBUG_PRINT("--------------------------");
+  BLYNK_PRINT.print(" Platform:  "); BLYNK_PRINT.println(String(BLYNK_INFO_DEVICE) + " @ " + (F_CPU/1000000) + "MHz");
+  BLYNK_PRINT.print(" WiFi FW:   "); BLYNK_PRINT.println(WiFi.firmwareVersion());
+  BLYNK_PRINT.println("----------------------------------------------------");
+#endif
 }
 
 void runBlynkWithChecks() {

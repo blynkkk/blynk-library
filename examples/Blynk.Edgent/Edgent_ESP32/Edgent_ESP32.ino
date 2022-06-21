@@ -13,6 +13,7 @@
 // Uncomment your board, or configure a custom board in Settings.h
 //#define USE_WROVER_BOARD
 //#define USE_TTGO_T7
+//#define USE_TTGO_T_OI
 //#define USE_ESP32C3_DEV_MODULE
 //#define USE_ESP32S2_DEV_KIT
 

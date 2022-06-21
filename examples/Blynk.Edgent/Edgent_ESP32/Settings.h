@@ -16,12 +16,23 @@
 
 #elif defined(USE_TTGO_T7)
 
-  // This board does not have a built-in button
-  // Connect a button to gpio0 <> GND
+  #warning "This board does not have a button. Connect a button to gpio0 <> GND"
+
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
   #define BOARD_LED_PIN               19
+  #define BOARD_LED_INVERSE           false
+  #define BOARD_LED_BRIGHTNESS        64
+
+#elif defined(USE_TTGO_T_OI)
+
+  #warning "This board does not have a button. Connect a button to gpio0 <> GND"
+
+  #define BOARD_BUTTON_PIN            0
+  #define BOARD_BUTTON_ACTIVE_LOW     true
+
+  #define BOARD_LED_PIN               3
   #define BOARD_LED_INVERSE           false
   #define BOARD_LED_BRIGHTNESS        64
 

@@ -5,6 +5,10 @@
 
 #if defined(USE_NODE_MCU_BOARD) || defined(USE_WEMOS_D1_MINI)
 
+  #if defined(USE_WEMOS_D1_MINI)
+    #warning "This board does not have a button. Connect a button to gpio0 <> GND"
+  #endif
+
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 

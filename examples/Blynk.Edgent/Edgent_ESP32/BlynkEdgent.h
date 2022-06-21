@@ -39,22 +39,23 @@ void BlynkState::set(State m) {
 
 void printDeviceBanner()
 {
+#ifdef BLYNK_PRINT
   Blynk.printBanner();
-  DEBUG_PRINT("--------------------------");
-  DEBUG_PRINT(String("Product:  ") + BLYNK_DEVICE_NAME);
-  DEBUG_PRINT(String("Firmware: ") + BLYNK_FIRMWARE_VERSION " (build " __DATE__ " " __TIME__ ")");
+  BLYNK_PRINT.println("----------------------------------------------------");
+  BLYNK_PRINT.print(" Device:    "); BLYNK_PRINT.println(getWiFiName());
+  BLYNK_PRINT.print(" Firmware:  "); BLYNK_PRINT.println(BLYNK_FIRMWARE_VERSION " (build " __DATE__ " " __TIME__ ")");
   if (configStore.getFlag(CONFIG_FLAG_VALID)) {
-    DEBUG_PRINT(String("Token:    ") +
-                String(configStore.cloudToken).substring(0,4) +
+    BLYNK_PRINT.print(" Token:     ");
+    BLYNK_PRINT.println(String(configStore.cloudToken).substring(0,4) +
                 " - •••• - •••• - ••••");
   }
-  DEBUG_PRINT(String("Device:   ") + BLYNK_INFO_DEVICE + " @ " + ESP.getCpuFreqMHz() + "MHz");
-  DEBUG_PRINT(String("MAC:      ") + WiFi.macAddress());
-  DEBUG_PRINT(String("Flash:    ") + ESP.getFlashChipSize() / 1024 + "K");
-  DEBUG_PRINT(String("ESP sdk:  ") + ESP.getSdkVersion());
-  DEBUG_PRINT(String("Chip rev: ") + ESP.getChipRevision());
-  DEBUG_PRINT(String("Free mem: ") + ESP.getFreeHeap());
-  DEBUG_PRINT("--------------------------");
+  BLYNK_PRINT.print(" Platform:  "); BLYNK_PRINT.println(String(BLYNK_INFO_DEVICE) + " @ " + ESP.getCpuFreqMHz() + "MHz");
+  BLYNK_PRINT.print(" Chip rev:  "); BLYNK_PRINT.println(ESP.getChipRevision());
+  BLYNK_PRINT.print(" SDK:       "); BLYNK_PRINT.println(ESP.getSdkVersion());
+  BLYNK_PRINT.print(" Flash:     "); BLYNK_PRINT.println(String(ESP.getFlashChipSize() / 1024) + "K");
+  BLYNK_PRINT.print(" Free mem:  "); BLYNK_PRINT.println(ESP.getFreeHeap());
+  BLYNK_PRINT.println("----------------------------------------------------");
+#endif
 }
 
 void runBlynkWithChecks() {

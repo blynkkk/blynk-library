@@ -77,40 +77,54 @@ void restartMCU() {
   while(1) {};
 }
 
-void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
+static
+String encodeUniquePart(uint32_t n, unsigned len)
+{
+  static constexpr char alphabet[] = { "0W8N4Y1HP5DF9K6JM3C2UA7R" };
+  static constexpr int base = sizeof(alphabet)-1;
+
+  char buf[16] = { 0, };
+  char prev = 0;
+  for (unsigned i = 0; i < len; n /= base) {
+    char c = alphabet[n % base];
+    if (c == prev) {
+      c = alphabet[(n+1) % base];
+    }
+    prev = buf[i++] = c;
+  }
+  return String(buf);
+}
+
+static
+String getWiFiName(bool withPrefix = true)
+{
   const uint64_t chipId = ESP.getEfuseMac();
+
   uint32_t unique = 0;
   for (int i=0; i<4; i++) {
     unique = BlynkCRC32(&chipId, sizeof(chipId), unique);
   }
-  unique &= 0xFFFFF;
+  String devUnique = encodeUniquePart(unique, 4);
 
   String devPrefix = CONFIG_DEVICE_PREFIX;
-  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-7-devPrefix.length());
+  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-6-devPrefix.length());
 
   if (withPrefix) {
-    snprintf(buff, len, "%s %s-%05X", devPrefix.c_str(), devName.c_str(), unique);
+    return devPrefix + " " + devName + "-" + devUnique;
   } else {
-    snprintf(buff, len, "%s-%05X", devName.c_str(), unique);
+    return devName + "-" + devUnique;
   }
 }
 
 void enterConfigMode()
 {
-  char ssidBuff[64];
-  getWiFiName(ssidBuff, sizeof(ssidBuff));
-
   WiFi.mode(WIFI_OFF);
   delay(100);
   WiFi.mode(WIFI_AP);
   delay(2000);
   WiFi.softAPConfig(WIFI_AP_IP, WIFI_AP_IP, WIFI_AP_Subnet);
-  WiFi.softAP(ssidBuff);
+  WiFi.softAP(getWiFiName().c_str());
   delay(500);
-
-  IPAddress myIP = WiFi.softAPIP();
-  DEBUG_PRINT(String("AP SSID: ") + ssidBuff);
-  DEBUG_PRINT(String("AP IP:   ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
 
   // Set up DNS Server
   dnsServer.setTTL(300); // Time-to-live 300s
@@ -244,8 +258,7 @@ void enterConfigMode()
 
     DEBUG_PRINT("Sending board info...");
     const char* tmpl = BLYNK_TEMPLATE_ID;
-    char ssidBuff[64];
-    getWiFiName(ssidBuff, sizeof(ssidBuff));
+
     char buff[512];
     snprintf(buff, sizeof(buff),
       R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","mac":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
@@ -253,7 +266,7 @@ void enterConfigMode()
       tmpl ? tmpl : "Unknown",
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
-      ssidBuff,
+      getWiFiName().c_str(),
       WiFi.softAPmacAddress().c_str(),
       WiFi.macAddress().c_str(),
       configStore.last_error
@@ -363,9 +376,10 @@ void enterConnectNet() {
   BlynkState::set(MODE_CONNECTING_NET);
   DEBUG_PRINT(String("Connecting to WiFi: ") + configStore.wifiSSID);
 
-  char ssidBuff[64];
-  getWiFiName(ssidBuff, sizeof(ssidBuff));
-  String hostname(ssidBuff);
+  // Needed for setHostname to work
+  WiFi.enableSTA(false);
+
+  String hostname = getWiFiName();
   hostname.replace(" ", "-");
   WiFi.setHostname(hostname.c_str());
 
