@@ -4,9 +4,8 @@
 #include <DNSServer.h>
 #include <Update.h>
 
-#ifdef BLYNK_USE_SPIFFS
-  #include "SPIFFS.h"
-#else
+#ifndef BLYNK_FS
+
   const char* config_form = R"html(
 <!DOCTYPE HTML>
 <html>
@@ -55,6 +54,7 @@
 </body>
 </html>
 )html";
+
 #endif
 
 WebServer server(80);
@@ -116,6 +116,26 @@ String getWiFiName(bool withPrefix = true)
   }
 }
 
+static
+String getWiFiMacAddress() {
+  return WiFi.macAddress();
+}
+
+static
+String getWiFiApBSSID() {
+  return WiFi.softAPmacAddress();
+}
+
+static
+String getWiFiNetworkSSID() {
+  return WiFi.SSID();
+}
+
+static
+String getWiFiNetworkBSSID() {
+  return WiFi.BSSIDstr();
+}
+
 void enterConfigMode()
 {
   WiFi.mode(WIFI_OFF);
@@ -157,25 +177,39 @@ void enterConfigMode()
       //WiFiUDP::stop();
 
       if (!Update.begin(UPDATE_SIZE_UNKNOWN)) { //start with max available size
+#ifdef BLYNK_PRINT
         Update.printError(BLYNK_PRINT);
+#endif
       }
     } else if (upload.status == UPLOAD_FILE_WRITE) {
       /* flashing firmware to ESP*/
       if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
+#ifdef BLYNK_PRINT
         Update.printError(BLYNK_PRINT);
+#endif
       }
+#ifdef BLYNK_PRINT
       BLYNK_PRINT.print(".");
+#endif
     } else if (upload.status == UPLOAD_FILE_END) {
+#ifdef BLYNK_PRINT
       BLYNK_PRINT.println();
+#endif
       DEBUG_PRINT("Finishing...");
       if (Update.end(true)) { //true to set the size to the current progress
         DEBUG_PRINT("Update Success. Rebooting");
       } else {
+#ifdef BLYNK_PRINT
         Update.printError(BLYNK_PRINT);
+#endif
       }
     }
   });
-
+#ifndef BLYNK_FS
+  server.on("/", []() {
+    server.send(200, "text/html", config_form);
+  });
+#endif
   server.on("/config", []() {
     DEBUG_PRINT("Applying configuration...");
     String ssid = server.arg("ssid");
@@ -267,8 +301,8 @@ void enterConfigMode()
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
       getWiFiName().c_str(),
-      WiFi.softAPmacAddress().c_str(),
-      WiFi.macAddress().c_str(),
+      getWiFiApBSSID().c_str(),
+      getWiFiMacAddress().c_str(),
       configStore.last_error
     );
     server.send(200, "application/json", buff);
@@ -343,14 +377,10 @@ void enterConfigMode()
     restartMCU();
   });
 
-#ifdef BLYNK_USE_SPIFFS
-  if (SPIFFS.begin()) {
-    server.serveStatic("/img/favicon.png", SPIFFS, "/img/favicon.png");
-    server.serveStatic("/img/logo.png", SPIFFS, "/img/logo.png");
-    server.serveStatic("/", SPIFFS, "/index.html");
-  } else {
-    DEBUG_PRINT("Webpage: No SPIFFS");
-  }
+#ifdef BLYNK_FS
+  server.serveStatic("/img/favicon.png", BLYNK_FS, "/img/favicon.png");
+  server.serveStatic("/img/logo.png", BLYNK_FS, "/img/logo.png");
+  server.serveStatic("/", BLYNK_FS, "/index.html");
 #endif
 
   server.begin();
@@ -366,10 +396,6 @@ void enterConfigMode()
   }
 
   server.stop();
-  
-#ifdef BLYNK_USE_SPIFFS
-  SPIFFS.end();
-#endif
 }
 
 void enterConnectNet() {

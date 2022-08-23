@@ -5,7 +5,9 @@ BlynkConsole    edgentConsole;
 
 void console_init()
 {
+#ifdef BLYNK_PRINT
   edgentConsole.init(BLYNK_PRINT);
+#endif
 
   edgentConsole.print("\n>");
 
@@ -39,9 +41,9 @@ void console_init()
   edgentConsole.addCommand("netinfo", []() {
     edgentConsole.printf(
         R"json({"ssid":"%s","bssid":"%s","mac":"%s","rssi":%d})json" "\n",
-        WiFi.SSID(),
-        WiFi.BSSIDstr().c_str(),
-        WiFi.macAddress().c_str(),
+        getWiFiNetworkSSID().c_str(),
+        getWiFiNetworkBSSID().c_str(),
+        getWiFiMacAddress().c_str(),
         WiFi.RSSI()
     );
   });
@@ -69,6 +71,80 @@ void console_init()
 
     BlynkState::set(MODE_SWITCH_TO_STA);
   });
+
+#ifdef BLYNK_FS
+
+  edgentConsole.addCommand("ls", [](int argc, const char** argv) {
+    if (argc < 1) return;
+
+    Dir dir = BLYNK_FS.openDir(argv[0]);
+    while (dir.next()) {
+      File f = dir.openFile(BLYNK_FILE_READ);
+
+      MD5Builder md5;
+      md5.begin();
+      md5.addStream(f, f.size());
+      md5.calculate();
+      String md5str = md5.toString();
+
+      edgentConsole.printf("%8d %-16s %s\n",
+                            f.size(), dir.fileName().c_str(),
+                            md5str.substring(0,8).c_str());
+    }
+  });
+
+  edgentConsole.addCommand("rm", [](int argc, const char** argv) {
+    if (argc < 1) return;
+
+    for (int i=0; i<argc; i++) {
+      const char* fn = argv[i];
+      if (BLYNK_FS.remove(fn)) {
+        edgentConsole.printf("Removed %s\n", fn);
+      } else {
+        edgentConsole.printf("Removing %s failed\n", fn);
+      }
+    }
+  });
+
+  edgentConsole.addCommand("mv", [](int argc, const char** argv) {
+    if (argc != 2) return;
+
+    if (!BLYNK_FS.rename(argv[0], argv[1])) {
+      edgentConsole.print("Rename failed\n");
+    }
+  });
+
+  edgentConsole.addCommand("cat", [](int argc, const char** argv) {
+    if (argc != 1) return;
+
+    if (!BLYNK_FS.exists(argv[0])) {
+      edgentConsole.print("File not found\n");
+      return;
+    }
+
+    if (File f = BLYNK_FS.open(argv[0], BLYNK_FILE_READ)) {
+      while (f.available()) {
+        edgentConsole.print((char)f.read());
+      }
+      edgentConsole.print("\n");
+    } else {
+      edgentConsole.print("Cannot open file\n");
+    }
+  });
+
+  edgentConsole.addCommand("echo", [](int argc, const char** argv) {
+    if (argc != 2) return;
+
+    if (File f = BLYNK_FS.open(argv[1], BLYNK_FILE_WRITE)) {
+      if (!f.print(argv[0])) {
+        edgentConsole.print("Cannot write file\n");
+      }
+    } else {
+      edgentConsole.print("Cannot open file\n");
+    }
+  });
+
+#endif
 
 }
 

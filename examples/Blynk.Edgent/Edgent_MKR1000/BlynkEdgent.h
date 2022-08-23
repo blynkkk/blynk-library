@@ -105,6 +105,13 @@ public:
     } else {
       BlynkState::set(MODE_WAIT_CONFIG);
     }
+
+    if (!String(BLYNK_TEMPLATE_ID).startsWith("TMPL") ||
+        !strlen(BLYNK_DEVICE_NAME)
+    ) {
+      DEBUG_PRINT("Invalid configuration of TEMPLATE_ID / DEVICE_NAME");
+      while (true) { delay(100); }
+    }
   }
 
   void run() {

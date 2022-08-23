@@ -4,9 +4,8 @@
 #include <ESP8266HTTPUpdateServer.h>
 #include <DNSServer.h>
 
-#ifdef BLYNK_USE_SPIFFS
-  #include <FS.h>
-#else
+#ifndef BLYNK_FS
+
   const char* config_form = R"html(
 <!DOCTYPE HTML>
 <html>
@@ -55,6 +54,7 @@
 </body>
 </html>
 )html";
+
 #endif
 
 ESP8266WebServer server(80);
@@ -112,6 +112,26 @@ String getWiFiName(bool withPrefix = true)
   }
 }
 
+static
+String getWiFiMacAddress() {
+  return WiFi.macAddress();
+}
+
+static
+String getWiFiApBSSID() {
+  return WiFi.softAPmacAddress();
+}
+
+static
+String getWiFiNetworkSSID() {
+  return WiFi.SSID();
+}
+
+static
+String getWiFiNetworkBSSID() {
+  return WiFi.BSSIDstr();
+}
+
 void enterConfigMode()
 {
   WiFi.mode(WIFI_OFF);
@@ -142,7 +162,7 @@ void enterConfigMode()
 
   httpUpdater.setup(&server, "/update");
 
-#ifndef BLYNK_USE_SPIFFS
+#ifndef BLYNK_FS
   server.on("/", []() {
     server.send(200, "text/html", config_form);
   });
@@ -238,8 +258,8 @@ void enterConfigMode()
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
       getWiFiName().c_str(),
-      WiFi.softAPmacAddress().c_str(),
-      WiFi.macAddress().c_str(),
+      getWiFiApBSSID().c_str(),
+      getWiFiMacAddress().c_str(),
       configStore.last_error
     );
     server.send(200, "application/json", buff);
@@ -317,13 +337,9 @@ void enterConfigMode()
     restartMCU();
   });
 
-#ifdef BLYNK_USE_SPIFFS
-  if (SPIFFS.begin()) {
-    server.serveStatic("/img", SPIFFS, "/img");
-    server.serveStatic("/", SPIFFS, "/index.html");
-  } else {
-    DEBUG_PRINT("Webpage: No SPIFFS");
-  }
+#ifdef BLYNK_FS
+  server.serveStatic("/img", BLYNK_FS, "/img");
+  server.serveStatic("/", BLYNK_FS, "/index.html");
 #endif
 
   server.begin();
@@ -339,10 +355,6 @@ void enterConfigMode()
   }
 
   server.stop();
-  
-#ifdef BLYNK_USE_SPIFFS
-  SPIFFS.end();
-#endif
 }
 
 void enterConnectNet() {

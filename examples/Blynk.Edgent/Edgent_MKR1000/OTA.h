@@ -129,11 +129,15 @@ void enterOTA() {
 
     const int progress = (written*100)/contentLength;
     if (progress - prevProgress >= 10 || progress == 100) {
+#ifdef BLYNK_PRINT
       BLYNK_PRINT.print(String("\r ") + progress + "%");
+#endif
       prevProgress = progress;
     }
   }
+#ifdef BLYNK_PRINT
   BLYNK_PRINT.println();
+#endif
   InternalStorage.close();
   http.stop();
 

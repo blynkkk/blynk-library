@@ -5,7 +5,9 @@ BlynkConsole    edgentConsole;
 
 void console_init()
 {
+#ifdef BLYNK_PRINT
   edgentConsole.init(BLYNK_PRINT);
+#endif
 
   edgentConsole.print("\n>");
 
@@ -37,13 +39,11 @@ void console_init()
   });
 
   edgentConsole.addCommand("netinfo", []() {
-    byte mac[6] = { 0, };
-    WiFi.macAddress(mac);
-
     edgentConsole.printf(
-        R"json({"ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","rssi":%d})json" "\n",
-        WiFi.SSID(),
-        mac[5], mac[4], mac[3], mac[2], mac[1], mac[0],
+        R"json({"ssid":"%s","bssid":"%s","mac":"%s","rssi":%d})json" "\n",
+        getWiFiNetworkSSID().c_str(),
+        getWiFiNetworkBSSID().c_str(),
+        getWiFiMacAddress().c_str(),
         WiFi.RSSI()
     );
   });

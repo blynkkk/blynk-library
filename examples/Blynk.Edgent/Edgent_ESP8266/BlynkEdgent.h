@@ -9,6 +9,22 @@ extern "C" {
 #include "Settings.h"
 #include <BlynkSimpleEsp8266_SSL.h>
 
+#if defined(BLYNK_USE_LITTLEFS)
+  #include <LittleFS.h>
+  #define BLYNK_FS LittleFS
+#elif defined(BLYNK_USE_SPIFFS)
+  #if defined(ESP32)
+    #include <SPIFFS.h>
+  #elif defined(ESP8266)
+    #include <FS.h>
+  #endif
+  #define BLYNK_FS SPIFFS
+#endif
+#if defined(BLYNK_FS) && defined(ESP8266)
+  #define BLYNK_FILE_READ  "r"
+  #define BLYNK_FILE_WRITE "w"
+#endif
+
 #ifndef BLYNK_NEW_LIBRARY
 #error "Old version of Blynk library is in use. Please replace it with the new one."
 #endif
@@ -79,6 +95,11 @@ class Edgent {
 public:
   void begin()
   {
+
+#ifdef BLYNK_FS
+    BLYNK_FS.begin();
+#endif
+
     indicator_init();
     button_init();
     config_init();
@@ -92,6 +113,13 @@ public:
       BlynkState::set(MODE_CONNECTING_NET);
     } else {
       BlynkState::set(MODE_WAIT_CONFIG);
+    }
+
+    if (!String(BLYNK_TEMPLATE_ID).startsWith("TMPL") ||
+        !strlen(BLYNK_DEVICE_NAME)
+    ) {
+      DEBUG_PRINT("Invalid configuration of TEMPLATE_ID / DEVICE_NAME");
+      while (true) { delay(100); }
     }
   }
 

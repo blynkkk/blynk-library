@@ -9,7 +9,7 @@
  */
 
 // Fill-in information from your Blynk Template here
-//#define BLYNK_TEMPLATE_ID           "TMPLxxxxxx"
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxxx"
 //#define BLYNK_DEVICE_NAME           "Device"
 
 #define BLYNK_FIRMWARE_VERSION        "0.1.0"
