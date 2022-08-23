@@ -31,9 +31,6 @@ void BlynkApi<Proto>::sendInfo()
 #ifdef BLYNK_INFO_CONNECTION
         BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
-#ifdef BLYNK_FIRMWARE_TYPE
-        BLYNK_PARAM_KV("fw-type", BLYNK_FIRMWARE_TYPE)
-#endif
 #ifdef BLYNK_FIRMWARE_VERSION
         BLYNK_PARAM_KV("fw"     , BLYNK_FIRMWARE_VERSION)
 #endif
@@ -44,6 +41,14 @@ void BlynkApi<Proto>::sendInfo()
 
     char mem_dyn[64];
     BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
+#ifdef BLYNK_FIRMWARE_TYPE
+    {
+        const char* fwtype = BLYNK_FIRMWARE_TYPE;
+        if (fwtype && strlen(fwtype)) {
+            profile_dyn.add_key("fw-type", fwtype);
+        }
+    }
+#endif
 #ifdef BLYNK_TEMPLATE_ID
     {
         const char* tmpl = BLYNK_TEMPLATE_ID;
