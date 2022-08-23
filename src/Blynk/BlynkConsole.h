@@ -11,6 +11,8 @@
 #ifndef BlynkConsole_h
 #define BlynkConsole_h
 
+#include <Blynk/BlynkConfig.h>
+
 #define BLYNK_CONSOLE_MAX_COMMANDS 64
 #define BLYNK_CONSOLE_INPUT_BUFFER 256
 #define BLYNK_CONSOLE_USE_STREAM
@@ -76,6 +78,7 @@ public:
 
 #if defined(BLYNK_CONSOLE_USE_STREAM) && defined(BLYNK_CONSOLE_USE_LAMBDAS)
         help = [=]() {
+            if (!stream) return;
             stream->print("Available commands: ");
             for (size_t i=0; i<commandsQty; i++) {
                 CmdHandler& handler = commands[i];
@@ -127,11 +130,15 @@ public:
     }
 
     void addCommand(const char* cmd, BlynkConsole* h) {
-        if (commandsQty >= BLYNK_CONSOLE_MAX_COMMANDS) return;
+        if (commandsQty >= BLYNK_CONSOLE_MAX_COMMANDS || !h) return;
 #ifdef BLYNK_CONSOLE_USE_STREAM
-        h->init(*stream);
+        h->begin(stream);
 #endif
         commands[commandsQty++] = CmdHandler(cmd, h);
+    }
+
+    void addCommand(const char* cmd, BlynkConsole& h) {
+        addCommand(cmd, &h);
     }
 
     ProcessResult process(char c) {
@@ -149,8 +156,8 @@ public:
     }
 
     ProcessResult runCommand(char* cmd) {
-        char* argv[8] = { 0, };
-        int argc = split_argv(cmd, argv);
+        char* argv[16];
+        int argc = split_argv(cmd, argv, 16);
         if (argc <= 0) {
             return SKIPPED;
         }
@@ -182,10 +189,19 @@ public:
     }
     
 #ifdef BLYNK_CONSOLE_USE_STREAM
+    BLYNK_DEPRECATED
     void init(Stream& s) {
         stream = &s;
     }
-    
+
+    void begin(Stream& s) {
+        stream = &s;
+    }
+
+    void begin(Stream* s) {
+        stream = s;
+    }
+
     void run() {
         while (stream && stream->available()) {
             char c = stream->read();
@@ -252,12 +268,13 @@ private:
     }
     
     static
-    int split_argv(char *str, char** argv)
+    int split_argv(char *str, char** argv, int argv_capacity)
     {
         int result = 0;
         char* curr = str;
         int len = 0;
-        for (int i = 0; str[i] != '\0'; i++) {
+        memset(argv, 0, sizeof(char*)*argv_capacity);
+        for (int i = 0; str[i] != '\0' && result < (argv_capacity-1); i++) {
             if (strchr(" \n\r\t", str[i])) {
                 if (len) {  // Found space after non-space
                     str[i] = '\0';
@@ -272,7 +289,6 @@ private:
                 len++;
             }
         }
-        argv[result] = NULL;
         return result;
     }
 

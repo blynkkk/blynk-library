@@ -15,7 +15,11 @@
 #define BLYNK_INFO_CONNECTION "Serial"
 #endif
 
+#ifdef PARTICLE
+#include <BlynkApiParticle.h>
+#else
 #include <BlynkApiArduino.h>
+#endif
 #include <Blynk/BlynkProtocol.h>
 
 class BlynkTransportStream

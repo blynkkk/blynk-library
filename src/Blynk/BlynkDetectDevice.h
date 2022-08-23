@@ -144,6 +144,16 @@
         #define BLYNK_INFO_DEVICE  "Particle Ethernet"
         #elif PLATFORM_ID==10
         #define BLYNK_INFO_DEVICE  "Particle Electron"
+
+        #elif PLATFORM_ID==12
+        #define BLYNK_INFO_DEVICE  "Particle Argon"
+        #elif PLATFORM_ID==13
+        #define BLYNK_INFO_DEVICE  "Particle Boron"
+        #elif PLATFORM_ID==14
+        #define BLYNK_INFO_DEVICE  "Particle Xenon"
+        #elif PLATFORM_ID==26
+        #define BLYNK_INFO_DEVICE  "Particle Tracker"
+
         #elif PLATFORM_ID==31
         #define BLYNK_INFO_DEVICE  "Particle RPi"
         #elif PLATFORM_ID==82

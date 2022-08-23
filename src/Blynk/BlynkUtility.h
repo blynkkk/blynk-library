@@ -11,6 +11,8 @@
 #ifndef BlynkUtility_h
 #define BlynkUtility_h
 
+#include <Blynk/BlynkDebug.h>
+
 template<class T>
 const T& BlynkMin(const T& a, const T& b)
 {
@@ -43,6 +45,37 @@ T BlynkMathClampMap(T x, T2 in_min, T2 in_max, T2 out_min, T2 out_max)
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
+template <class T, unsigned N>
+class BlynkMovingAverage {
+public:
+    BlynkMovingAverage() {
+        reset();
+    }
+
+    void reset() {
+        _first = true;
+        _avg = 0;
+    }
+
+    T get() {
+        return _avg;
+    }
+
+    T push(T value) {
+        if (_first) {
+            _avg = value;
+            _first = false;
+        } else {
+            _avg -= _avg/N;
+            _avg += double(value)/N;
+        }
+        return _avg;
+    }
+
+private:
+    bool    _first;
+    double  _avg;
+};
 
 template <unsigned WSIZE, typename T>
 void BlynkAverageSample (T& avg, const T& input) {
@@ -55,7 +88,7 @@ void BlynkAverageSample (T& avg, const T& input) {
       avg -= 1;
 }
 
-static
+static inline
 int BlynkRSSI2SQ(int dBm) {
     if(dBm <= -100) {
         return 0;
@@ -66,7 +99,7 @@ int BlynkRSSI2SQ(int dBm) {
     }
 }
 
-static
+static inline
 int BlynkSQ2RSSI(int quality) {
     if(quality <= 0) {
         return -100;
@@ -77,7 +110,7 @@ int BlynkSQ2RSSI(int quality) {
     }
 }
 
-static
+static inline
 uint32_t BlynkCRC32(const void* data, size_t length, uint32_t previousCrc32 = 0)
 {
   const uint32_t Polynomial = 0xEDB88320;
@@ -92,7 +125,7 @@ uint32_t BlynkCRC32(const void* data, size_t length, uint32_t previousCrc32 = 0)
   return ~crc;
 }
 
-static
+static inline
 bool BlynkStrMatch(const char* pat, const char* txt) {
     const long n = strlen(txt);
     const long m = strlen(pat);
