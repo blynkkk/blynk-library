@@ -184,66 +184,6 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE_SYNC, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-
-    // Please use Blynk.logEvent("event", "Description")
-    template<typename T>
-    BLYNK_DEPRECATED
-    void tweet(const T& msg) {
-#if defined(BLYNK_TEMPLATE_ID)
-        logEvent("notify", msg);
-#else
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
-#endif
-    }
-
-    // Please use Blynk.logEvent("event", "Description")
-    template<typename T>
-    BLYNK_DEPRECATED
-    void notify(const T& msg) {
-#if defined(BLYNK_TEMPLATE_ID)
-        logEvent("notify", msg);
-#else
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
-#endif
-    }
-
-    // Please use Blynk.logEvent("event", "Description")
-    template <typename T1, typename T2>
-    BLYNK_DEPRECATED
-    void email(const char* email, const T1& subject, const T2& msg) {
-#if defined(BLYNK_TEMPLATE_ID)
-        logEvent("notify", msg);
-#else
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(email);
-        cmd.add(subject);
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
-#endif
-    }
-
-    // Please use Blynk.logEvent("event", "Description")
-    template <typename T1, typename T2>
-    BLYNK_DEPRECATED
-    void email(const T1& subject, const T2& msg) {
-#if defined(BLYNK_TEMPLATE_ID)
-        logEvent("notify", msg);
-#else
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(subject);
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
-#endif
-    }
-
     /**
      * Sets property of a Widget
      *

@@ -454,7 +454,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     }
 
 #if defined(BLYNK_MSG_LIMIT) && BLYNK_MSG_LIMIT > 0
-    if (cmd >= BLYNK_CMD_TWEET && cmd <= BLYNK_CMD_HARDWARE) {
+    if (cmd >= BLYNK_CMD_BRIDGE && cmd <= BLYNK_CMD_HARDWARE) {
         const millis_time_t allowed_time = BlynkMax(lastActivityOut, lastActivityIn) + 1000/BLYNK_MSG_LIMIT;
         int32_t wait_time = allowed_time - BlynkMillis();
         if (wait_time >= 0) {
