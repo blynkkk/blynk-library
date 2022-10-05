@@ -65,7 +65,12 @@ public:
         return isConn;
     }
 
-    void disconnect() { isConn = false; client->stop(); }
+    void disconnect() {
+        isConn = false;
+        if (client) {
+            client->stop();
+        }
+    }
 
 #ifdef BLYNK_ENC28J60_FIX
     size_t read(void* buf, size_t len) {
