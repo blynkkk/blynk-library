@@ -131,6 +131,24 @@ public:
         virtualWriteBinary(pin, param.getBuffer(), param.getLength());
     }
 
+    /**
+     * Command grouping
+     */
+    void beginGroup() {
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP_BEG);
+    }
+
+    void beginGroup(uint64_t timestamp) {
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP_BEG_TS, 0, &timestamp, sizeof(timestamp));
+    }
+
+    void endGroup() {
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP_END);
+    }
+
+    /**
+     * Handler helpers
+     */
     void callWriteHandler(int pin, const BlynkParam& param) {
         BlynkReq req = { (uint8_t)pin };
         WidgetWriteHandler handler = GetWriteHandler(pin);

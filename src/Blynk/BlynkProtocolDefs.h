@@ -11,14 +11,10 @@
 #ifndef BlynkProtocolDefs_h
 #define BlynkProtocolDefs_h
 
-// Command definitions from:
-//   https://github.com/blynkkk/blynk-server/blob/master/server/core/src/main/java/cc/blynk/server/core/protocol/enums/Command.java
-
 enum BlynkCmd
 {
     BLYNK_CMD_RESPONSE       = 0,
 
-    BLYNK_CMD_LOGIN          = 2,
     BLYNK_CMD_PING           = 6,
 
     BLYNK_CMD_BRIDGE         = 15,
@@ -26,6 +22,11 @@ enum BlynkCmd
     BLYNK_CMD_INTERNAL       = 17,
     BLYNK_CMD_PROPERTY       = 19,
     BLYNK_CMD_HARDWARE       = 20,
+
+    BLYNK_CMD_GROUP_BEG      = 21,
+    BLYNK_CMD_GROUP_BEG_TS   = 22,
+    BLYNK_CMD_GROUP_END      = 23,
+
     BLYNK_CMD_HW_LOGIN       = 29,
 
     BLYNK_CMD_REDIRECT       = 41,
