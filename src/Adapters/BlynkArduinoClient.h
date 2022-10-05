@@ -21,11 +21,11 @@
     #define YIELD_FIX()
 #endif
 
-template <typename Client>
+template <typename TClient>
 class BlynkArduinoClientGen
 {
 public:
-    BlynkArduinoClientGen(Client& c)
+    BlynkArduinoClientGen(TClient& c)
         : client(NULL), domain(NULL), port(0), isConn(false)
     {
         setClient(&c);
@@ -35,7 +35,7 @@ public:
         : client(NULL), domain(NULL), port(0), isConn(false)
     {}
 
-    void setClient(Client* c) {
+    void setClient(TClient* c) {
         client = c;
         client->setTimeout(BLYNK_TIMEOUT_MS);
     }
@@ -121,7 +121,7 @@ public:
     int available() {  YIELD_FIX(); return client->available(); }
 
 protected:
-    Client*     client;
+    TClient*    client;
     IPAddress   addr;
     const char* domain;
     uint16_t    port;
