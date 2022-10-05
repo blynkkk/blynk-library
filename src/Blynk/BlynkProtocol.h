@@ -309,7 +309,6 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     switch (hdr.type)
     {
-    case BLYNK_CMD_LOGIN:
     case BLYNK_CMD_HW_LOGIN: {
 #ifdef BLYNK_USE_DIRECT_CONNECT
         if (strncmp(authkey, (char*)inputBuffer, 32)) {
@@ -442,7 +441,7 @@ int BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
-    if (!conn.connected() || (cmd != BLYNK_CMD_RESPONSE && cmd != BLYNK_CMD_PING && cmd != BLYNK_CMD_LOGIN && cmd != BLYNK_CMD_HW_LOGIN && state != CONNECTED) ) {
+    if (!conn.connected() || (cmd != BLYNK_CMD_RESPONSE && cmd != BLYNK_CMD_PING && cmd != BLYNK_CMD_HW_LOGIN && state != CONNECTED) ) {
 #ifdef BLYNK_DEBUG_ALL
         BLYNK_LOG2(BLYNK_F("Cmd skipped:"), cmd);
 #endif
