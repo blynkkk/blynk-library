@@ -22,10 +22,7 @@ enum BlynkCmd
     BLYNK_CMD_INTERNAL       = 17,
     BLYNK_CMD_PROPERTY       = 19,
     BLYNK_CMD_HARDWARE       = 20,
-
-    BLYNK_CMD_GROUP_BEG      = 21,
-    BLYNK_CMD_GROUP_BEG_TS   = 22,
-    BLYNK_CMD_GROUP_END      = 23,
+    BLYNK_CMD_GROUP          = 21,
 
     BLYNK_CMD_HW_LOGIN       = 29,
 
