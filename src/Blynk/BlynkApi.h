@@ -138,7 +138,7 @@ public:
         char mem[4];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("b");
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength(), buff, len);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength());
     }
 
     void beginGroup(uint64_t timestamp) {
@@ -146,14 +146,14 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("t");
         cmd.add(timestamp);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength(), buff, len);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength());
     }
 
     void endGroup() {
         char mem[4];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("e");
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength(), buff, len);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength());
     }
 
     /**
