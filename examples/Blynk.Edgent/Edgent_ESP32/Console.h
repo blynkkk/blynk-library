@@ -12,19 +12,17 @@ void console_init()
   edgentConsole.print("\n>");
 
   edgentConsole.addCommand("reboot", []() {
-    edgentConsole.print(R"json({"status":"OK","msg":"resetting device"})json" "\n");
+    edgentConsole.print(R"json({"status":"OK","msg":"rebooting wifi module"})json" "\n");
     delay(100);
     restartMCU();
   });
 
-  edgentConsole.addCommand("config", []() {
-    edgentConsole.print(R"json({"status":"OK","msg":"entering configuration mode"})json" "\n");
-    BlynkState::set(MODE_WAIT_CONFIG);
-  });
-
-  edgentConsole.addCommand("erase_config", [=]() {
-    edgentConsole.print(R"json({"status":"OK","msg":"config erased"})json" "\n");
-    BlynkState::set(MODE_RESET_CONFIG);
+  edgentConsole.addCommand("config", [](int argc, const char** argv) {
+    if (argc < 1 || 0 == strcmp(argv[0], "start")) {
+      BlynkState::set(MODE_WAIT_CONFIG);
+    } else if (0 == strcmp(argv[0], "erase")) {
+      BlynkState::set(MODE_RESET_CONFIG);
+    }
   });
 
   edgentConsole.addCommand("devinfo", []() {

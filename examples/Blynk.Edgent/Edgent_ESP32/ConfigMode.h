@@ -177,16 +177,12 @@ void enterConfigMode()
       //WiFiUDP::stop();
 
       if (!Update.begin(UPDATE_SIZE_UNKNOWN)) { //start with max available size
-#ifdef BLYNK_PRINT
-        Update.printError(BLYNK_PRINT);
-#endif
+        DEBUG_PRINT(Update.errorString());
       }
     } else if (upload.status == UPLOAD_FILE_WRITE) {
       /* flashing firmware to ESP*/
       if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
-#ifdef BLYNK_PRINT
-        Update.printError(BLYNK_PRINT);
-#endif
+        DEBUG_PRINT(Update.errorString());
       }
 #ifdef BLYNK_PRINT
       BLYNK_PRINT.print(".");
@@ -199,9 +195,7 @@ void enterConfigMode()
       if (Update.end(true)) { //true to set the size to the current progress
         DEBUG_PRINT("Update Success. Rebooting");
       } else {
-#ifdef BLYNK_PRINT
-        Update.printError(BLYNK_PRINT);
-#endif
+        DEBUG_PRINT(Update.errorString());
       }
     }
   });
