@@ -434,9 +434,15 @@
         #define BLYNK_USE_128_VPINS
         #define BLYNK_BUFFERS_SIZE 512
 
-        /* Nordic NRF5x */
+        /* Nordic nRF52 */
+        #elif defined(ARDUINO_ARCH_NRF5) && defined(NRF52_SERIES)
+        #define BLYNK_INFO_DEVICE  "nRF52"
+        #define BLYNK_USE_128_VPINS
+        #define BLYNK_BUFFERS_SIZE 1024
+
+        /* Nordic nRF51 */
         #elif defined(ARDUINO_ARCH_NRF5)
-        #define BLYNK_INFO_DEVICE  "nRF5"
+        #define BLYNK_INFO_DEVICE  "nRF51"
         #define BLYNK_USE_128_VPINS
         #define BLYNK_BUFFERS_SIZE 512
 
