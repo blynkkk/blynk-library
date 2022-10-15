@@ -29,15 +29,12 @@ class BlynkArduinoClientMulti
 public:
     BlynkArduinoClientMulti() {}
 
-    template <typename C>
-    void addClient(C& c) {
+    void addClient(T& c) {
         if (_conn_qty == 0) {
             BlynkArduinoClientGen<T>::setClient(&c);
         }
         if (_conn_qty < BLYNK_MAX_CLIENT_QTY) {
             _conn_array[_conn_qty++] = &c;
-            c.setHandshakeTimeout(30);
-            c.setCACert(BLYNK_DEFAULT_ROOT_CA);
         }
     }
 
@@ -51,7 +48,6 @@ public:
                 BLYNK_LOG2(BLYNK_F("Connection failed:"), i);
             }
         }
-        BLYNK_LOG1(BLYNK_F("Secure connection failed"));
         return false;
     }
 
