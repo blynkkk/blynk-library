@@ -22,7 +22,6 @@
   Please note that the accuracy of this method is up to several seconds.
 
   App project setup:
-    RTC widget (no pin required)
     Value Display widget on V1
     Value Display widget on V2
 

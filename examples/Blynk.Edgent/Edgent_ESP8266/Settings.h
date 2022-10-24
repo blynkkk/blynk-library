@@ -5,6 +5,10 @@
 
 #if defined(USE_NODE_MCU_BOARD) || defined(USE_WEMOS_D1_MINI)
 
+  #if defined(USE_WEMOS_D1_MINI)
+    #warning "This board does not have a button. Connect a button to gpio0 <> GND"
+  #endif
+
   #define BOARD_BUTTON_PIN            0
   #define BOARD_BUTTON_ACTIVE_LOW     true
 
@@ -38,7 +42,7 @@
   #define BOARD_BUTTON_PIN            0                     // Pin where user button is attached
   #define BOARD_BUTTON_ACTIVE_LOW     true                  // true if button is "active-low"
 
-  #define BOARD_LED_PIN               4                     // Set LED pin - if you have a single-color LED attached
+  //#define BOARD_LED_PIN             4                     // Set LED pin - if you have a single-color LED attached
   //#define BOARD_LED_PIN_R           15                    // Set R,G,B pins - if your LED is PWM RGB
   //#define BOARD_LED_PIN_G           12
   //#define BOARD_LED_PIN_B           13

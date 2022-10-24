@@ -3,20 +3,6 @@
 #include <WiFiMDNSResponder.h>
 #include <utility>
 
-WiFiServer server(80);
-WiFiMDNSResponder mdnsResponder;
-
-String urlDecode(const String& text);
-String urlFindArg(const String& url, const String& arg);
-
-enum Request {
-  REQ_BOARD_INFO,
-  REQ_ROOT,
-  REQ_SCAN_WIFI,
-  REQ_CONFIG,
-  REQ_RESET,
-  REQ_REBOOT
-};
 
 const char* config_form = R"html(
 <!DOCTYPE HTML>
@@ -67,6 +53,21 @@ const char* config_form = R"html(
 </html>
 )html";
 
+WiFiServer server(80);
+WiFiMDNSResponder mdnsResponder;
+
+String urlDecode(const String& text);
+String urlFindArg(const String& url, const String& arg);
+
+enum Request {
+  REQ_BOARD_INFO,
+  REQ_ROOT,
+  REQ_SCAN_WIFI,
+  REQ_CONFIG,
+  REQ_RESET,
+  REQ_REBOOT
+};
+
 static int connectNetRetries    = WIFI_CLOUD_MAX_RETRIES;
 static int connectBlynkRetries  = WIFI_CLOUD_MAX_RETRIES;
 
@@ -74,7 +75,27 @@ void restartMCU() {
   NVIC_SystemReset();
 }
 
-void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
+static
+String encodeUniquePart(uint32_t n, unsigned len)
+{
+  static constexpr char alphabet[] = { "0W8N4Y1HP5DF9K6JM3C2UA7R" };
+  static constexpr int base = sizeof(alphabet)-1;
+
+  char buf[16] = { 0, };
+  char prev = 0;
+  for (unsigned i = 0; i < len; n /= base) {
+    char c = alphabet[n % base];
+    if (c == prev) {
+      c = alphabet[(n+1) % base];
+    }
+    prev = buf[i++] = c;
+  }
+  return String(buf);
+}
+
+static
+String getWiFiName(bool withPrefix = true)
+{
   static byte mac[6] = { 0, };
   static bool needMac = true;
   if (needMac) {
@@ -86,16 +107,54 @@ void getWiFiName(char* buff, size_t len, bool withPrefix = true) {
   for (int i=0; i<4; i++) {
     unique = BlynkCRC32(&mac, sizeof(mac), unique);
   }
-  unique &= 0xFFFFF;
+  String devUnique = encodeUniquePart(unique, 4);
 
   String devPrefix = CONFIG_DEVICE_PREFIX;
-  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-7-devPrefix.length());
+  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-6-devPrefix.length());
 
   if (withPrefix) {
-    snprintf(buff, len, "%s %s-%05X", devPrefix.c_str(), devName.c_str(), unique);
+    return devPrefix + " " + devName + "-" + devUnique;
   } else {
-    snprintf(buff, len, "%s-%05X", devName.c_str(), unique);
+    return devName + "-" + devUnique;
   }
+}
+
+static
+String macToString(byte mac[6]) {
+  char buff[20];
+  snprintf(buff, sizeof(buff), "%02x:%02x:%02x:%02x:%02x:%02x",
+           mac[5], mac[4], mac[3], mac[2], mac[1], mac[0]);
+  return String(buff);
+}
+
+static
+String getWiFiMacAddress() {
+  byte mac[6] = { 0, };
+  WiFi.macAddress(mac);
+  return macToString(mac);
+}
+
+static
+String getWiFiApBSSID() {
+  return getWiFiMacAddress();
+}
+
+static
+String getWiFiNetworkSSID() {
+  if (WiFi.status() != WL_CONNECTED) {
+    return "";
+  }
+  return WiFi.SSID();
+}
+
+static
+String getWiFiNetworkBSSID() {
+  if (WiFi.status() != WL_CONNECTED) {
+    return "";
+  }
+  byte bssid[6];
+  WiFi.BSSID(bssid);
+  return macToString(bssid);
 }
 
 String urlDecode(const String& text)
@@ -176,9 +235,9 @@ String scanNetworks()
         WiFi.BSSID(id, mac);
 
         snprintf(buff, sizeof(buff),
-          R"json(  {"ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","rssi":%i,"sec":"%s","ch":%i})json",
+          R"json(  {"ssid":"%s","bssid":"%s","rssi":%ld,"sec":"%s","ch":%i})json",
           WiFi.SSID(id),
-          mac[5], mac[4], mac[3], mac[2], mac[1], mac[0],
+          macToString(mac).c_str(),
           WiFi.RSSI(id),
           sec,
           WiFi.channel(id)
@@ -195,21 +254,14 @@ String scanNetworks()
 
 void enterConfigMode()
 {
-  char ssidBuff[64];
-  getWiFiName(ssidBuff, sizeof(ssidBuff));
-
   String networks = scanNetworks();
 
   WiFi.end();
   WiFi.config(WIFI_AP_IP);
-  WiFi.beginAP(ssidBuff);
+  WiFi.beginAP(getWiFiName().c_str());
   mdnsResponder.begin(CONFIG_AP_URL);
 
   delay(500);
-  IPAddress myIP = WiFi.localIP();
-  DEBUG_PRINT(String("AP SSID: ") + ssidBuff);
-  DEBUG_PRINT(String("AP IP:   ") + myIP[0] + "." + myIP[1] + "." + myIP[2] + "." + myIP[3]);
-  DEBUG_PRINT(String("AP URL:  ") + CONFIG_AP_URL + ".local");
 
   int status = WiFi.status();
 
@@ -335,21 +387,17 @@ void enterConfigMode()
 
     DEBUG_PRINT("Sending board info...");
     const char* tmpl = BLYNK_TEMPLATE_ID;
-    char ssidBuff[64];
-    getWiFiName(ssidBuff, sizeof(ssidBuff));
+
     char buff[512];
-
-    byte mac[6] = { 0, };
-    WiFi.macAddress(mac);
-
     snprintf(buff, sizeof(buff),
-      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%02x:%02x:%02x:%02x:%02x:%02x","last_error":%d,"wifi_scan":true,"static_ip":true})json",
+      R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","mac":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
       BLYNK_DEVICE_NAME,
       tmpl ? tmpl : "Unknown",
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
-      ssidBuff,
-      mac[5], mac[4], mac[3], mac[2], mac[1], mac[0],
+      getWiFiName().c_str(),
+      getWiFiApBSSID().c_str(),
+      getWiFiMacAddress().c_str(),
       configStore.last_error
     );
     content = buff;
@@ -412,11 +460,9 @@ void enterConnectNet() {
   delay(100);
   WiFi.begin();
 
-  char ssidBuff[64];
-  getWiFiName(ssidBuff, sizeof(ssidBuff));
-  String hostname(ssidBuff);
+  String hostname = getWiFiName();
   hostname.replace(" ", "-");
-  WiFi.hostname(hostname.c_str());
+  WiFi.setHostname(hostname.c_str());
 
   if (configStore.getFlag(CONFIG_FLAG_STATIC_IP)) {
         WiFi.config(configStore.staticIP,

@@ -1,6 +1,6 @@
 
 // Fill-in information from your Blynk Template here
-//#define BLYNK_TEMPLATE_ID           "TMPLxxxxxx"
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxxx"
 //#define BLYNK_DEVICE_NAME           "Device"
 
 #define BLYNK_FIRMWARE_VERSION        "0.1.0"
@@ -13,6 +13,7 @@
 // Uncomment your board, or configure a custom board in Settings.h
 //#define USE_WROVER_BOARD
 //#define USE_TTGO_T7
+//#define USE_TTGO_T_OI
 //#define USE_ESP32C3_DEV_MODULE
 //#define USE_ESP32S2_DEV_KIT
 

@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://github.com/blynkkk/blynk-library.git"
   },
-  "homepage": "http://blynk.cc",
+  "homepage": "https://blynk.io",
   "export": {
     "exclude": [
       "linux",

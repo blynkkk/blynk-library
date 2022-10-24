@@ -129,7 +129,7 @@ void            BlynkFatal() BLYNK_NORETURN;
                                             BLYNK_PRINT.print(ip[1]); BLYNK_PRINT.print('.');  \
                                             BLYNK_PRINT.println(ip[0]); }
 
-        static
+        static inline
         void BLYNK_LOG_TIME() {
             BLYNK_PRINT.print('[');
             BLYNK_PRINT.print(BlynkMillis());
@@ -141,7 +141,7 @@ void            BlynkFatal() BLYNK_NORETURN;
         #define BLYNK_DBG_BREAK()    { for(;;); }
         #define BLYNK_ASSERT(expr)   { if(!(expr)) { BLYNK_LOG2(BLYNK_F("Assertion failed: "), BLYNK_F(#expr)); BLYNK_DBG_BREAK() } }
 
-        static
+        static inline
         void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
             if (len) {
                 BLYNK_LOG_TIME();
@@ -174,7 +174,7 @@ void            BlynkFatal() BLYNK_NORETURN;
         #include <stdio.h>
         #include <stdarg.h>
 
-        BLYNK_UNUSED
+        static inline
         void blynk_dbg_print(const char* BLYNK_PROGMEM fmt, ...)
         {
             va_list ap;
@@ -208,7 +208,7 @@ void            BlynkFatal() BLYNK_NORETURN;
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_ASSERT(expr)   assert(expr)
 
-        static
+        static inline
         void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
             BLYNK_LOG_TIME();
             BLYNK_PRINT.printf(msg);
@@ -254,7 +254,7 @@ void            BlynkFatal() BLYNK_NORETURN;
         #define BLYNK_DBG_BREAK()    raise(SIGTRAP);
         #define BLYNK_ASSERT(expr)   assert(expr)
 
-        static
+        static inline
         void BLYNK_DBG_DUMP(const char* msg, const void* addr, size_t len) {
             BLYNK_LOG_TIME();
             fprintf(BLYNK_PRINT, "%s", msg);

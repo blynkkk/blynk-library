@@ -13,10 +13,9 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <Blynk/BlynkDebug.h>
+#include <Blynk/BlynkUtility.h>
 #include <Blynk/BlynkProtocolDefs.h>
 #include <Blynk/BlynkApi.h>
-#include <Blynk/BlynkUtility.h>
 
 template <class Transp>
 class BlynkProtocol
@@ -319,7 +318,6 @@ bool BlynkProtocol<Transp>::processInput(void)
 
     switch (hdr.type)
     {
-    case BLYNK_CMD_LOGIN:
     case BLYNK_CMD_HW_LOGIN: {
 #ifdef BLYNK_USE_DIRECT_CONNECT
         if (strncmp(authkey, (char*)inputBuffer, 32)) {
@@ -451,7 +449,7 @@ int BlynkProtocol<Transp>::readHeader(BlynkHeader& hdr)
 template <class Transp>
 void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, size_t length, const void* data2, size_t length2)
 {
-    if (!conn.connected() || (cmd != BLYNK_CMD_RESPONSE && cmd != BLYNK_CMD_PING && cmd != BLYNK_CMD_LOGIN && cmd != BLYNK_CMD_HW_LOGIN && state != CONNECTED) ) {
+    if (!conn.connected() || (cmd != BLYNK_CMD_RESPONSE && cmd != BLYNK_CMD_PING && cmd != BLYNK_CMD_HW_LOGIN && state != CONNECTED) ) {
 #ifdef BLYNK_DEBUG_ALL
         BLYNK_LOG2(BLYNK_F("Cmd skipped:"), cmd);
 #endif
@@ -463,7 +461,7 @@ void BlynkProtocol<Transp>::sendCmd(uint8_t cmd, uint16_t id, const void* data, 
     }
 
 #if defined(BLYNK_MSG_LIMIT) && BLYNK_MSG_LIMIT > 0
-    if (cmd >= BLYNK_CMD_TWEET && cmd <= BLYNK_CMD_HARDWARE) {
+    if (cmd >= BLYNK_CMD_BRIDGE && cmd <= BLYNK_CMD_HARDWARE) {
         const millis_time_t allowed_time = BlynkMax(lastActivityOut, lastActivityIn) + 1000/BLYNK_MSG_LIMIT;
         int32_t wait_time = allowed_time - BlynkMillis();
         if (wait_time >= 0) {
