@@ -57,6 +57,15 @@ public:
         uint8_t* a = (uint8_t*)&addr;
         BLYNK_LOG_IP_REV("Connecting to ", a);
         client = cc3000.connectTCP(addr, port);
+        if (client.connected()) {
+            return true;
+        }
+        // If port is 80 or 8080, try an alternative port
+        if (port == 80) {
+            cc3000.connectTCP(addr, 8080);
+        } else if (port == 8080) {
+            cc3000.connectTCP(addr, 80);
+        }
         return client.connected();
     }
 
