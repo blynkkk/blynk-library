@@ -42,10 +42,10 @@ public:
         for (int i = 0; i < _conn_qty; i++) {
             BlynkArduinoClientGen<T>::setClient(_conn_array[i]);
             if (BlynkArduinoClientGen<T>::connect()) {
-                BLYNK_LOG2(BLYNK_F("Connection established:"), i);
+                BLYNK_LOG3(BLYNK_F("Connection "), i, F(" OK"));
                 return true;
             } else {
-                BLYNK_LOG2(BLYNK_F("Connection failed:"), i);
+                BLYNK_LOG3(BLYNK_F("Connection "), i, F(" failed"));
             }
         }
         return false;

@@ -138,7 +138,7 @@ public:
         char mem[4];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("b");
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     void beginGroup(uint64_t timestamp) {
@@ -146,14 +146,14 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("t");
         cmd.add(timestamp);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     void endGroup() {
         char mem[4];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("e");
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -267,10 +267,19 @@ public:
     }
 
     template <typename NAME>
-    void clearEvent(const NAME& event_name) {
+    void resolveEvent(const NAME& event_name) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(event_name);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_CLEAR, 0, cmd.getBuffer(), cmd.getLength()-1);
+    }
+
+    template <typename NAME>
+    void resolveAllEvents(const NAME& event_name) {
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(event_name);
+        cmd.add("all");
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_CLEAR, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 

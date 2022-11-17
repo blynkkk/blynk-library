@@ -1,5 +1,5 @@
 /**
- * @file       BlynkParam.h
+ * @file       BlynkArduinoClient.h
  * @author     Volodymyr Shymanskyy
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
@@ -51,16 +51,31 @@ public:
         port = p;
     }
 
-    bool connect() {
+    bool _connectToPort(uint16_t p) {
         if (domain) {
-            BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', port);
-            isConn = (1 == client->connect(domain, port));
-        } else { //if (uint32_t(addr) != 0) {
+            BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', p);
+            return (1 == client->connect(domain, p));
+        } else {
             BLYNK_LOG_IP("Connecting to ", addr);
-            isConn = (1 == client->connect(addr, port));
+            return (1 == client->connect(addr, p));
+        }
+        return false;
+    }
+
+    bool connect() {
+        isConn = _connectToPort(port);
+        if (!isConn) {
+            // If port is 80 or 8080, try an alternative port
+            if (port == 80) {
+                isConn = _connectToPort(8080);
+            } else if (port == 8080) {
+                isConn = _connectToPort(80);
+            }
         }
 #ifdef BLYNK_NODELAY
-        client->setNoDelay(true);
+        if (isConn) {
+            client->setNoDelay(true);
+        }
 #endif
         return isConn;
     }

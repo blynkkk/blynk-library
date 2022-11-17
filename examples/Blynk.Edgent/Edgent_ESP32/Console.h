@@ -73,9 +73,8 @@ void console_init()
 #ifdef BLYNK_FS
 
   edgentConsole.addCommand("ls", [](int argc, const char** argv) {
-    if (argc < 1) return;
-
-    File rootDir = BLYNK_FS.open(argv[0]);
+    const char* path = (argc < 1) ? "/" : argv[0];
+    File rootDir = BLYNK_FS.open(path);
     while (File f = rootDir.openNextFile()) {
       String fn = f.name();
 
@@ -85,7 +84,7 @@ void console_init()
       md5.calculate();
       String md5str = md5.toString();
 
-      edgentConsole.printf("%8d %-16s %s\n",
+      edgentConsole.printf("%8d %-24s %s\n",
                             f.size(), fn.c_str(),
                             md5str.substring(0,8).c_str());
     }

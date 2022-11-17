@@ -11,7 +11,7 @@
 #ifndef BlynkSimpleParticle_h
 #define BlynkSimpleParticle_h
 
-#include "BlynkParticleBearSSL.h"
+#include <Adapters/BlynkParticleBearSSL.h>
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
   static BlynkTransportParticle _blynkTransport;
