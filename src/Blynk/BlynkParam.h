@@ -118,7 +118,6 @@ public:
     void add(double value);
 #endif
     void add(const char* str);
-    void add(const void* b, size_t l);
 #if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
     void add(const String& str);
 #if defined(BLYNK_HAS_PROGMEM)
@@ -144,6 +143,9 @@ public:
     }
 
     void remove_key(const char* key);
+
+protected:
+    void add(const void* b, size_t l);
 
 protected:
     char*    buff;

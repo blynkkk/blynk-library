@@ -124,11 +124,11 @@ public:
      * @param param
      */
     void virtualWrite(int pin, const BlynkParam& param) {
-        virtualWriteBinary(pin, param.getBuffer(), param.getLength());
+        virtualWriteBinary(pin, param.getBuffer(), param.getLength()-1);
     }
 
     void virtualWrite(int pin, const BlynkParamAllocated& param) {
-        virtualWriteBinary(pin, param.getBuffer(), param.getLength());
+        virtualWriteBinary(pin, param.getBuffer(), param.getLength()-1);
     }
 
     /**
@@ -237,7 +237,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(pin);
         cmd.add(property);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength()-1);
     }
 
     template <typename T>
@@ -246,7 +246,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(pin);
         cmd.add(property);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength()-1);
     }
 
     template <typename NAME>
