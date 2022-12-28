@@ -49,7 +49,10 @@ template <class Proto>
 class BlynkApi
 {
 public:
-    BlynkApi() {
+    BlynkApi()
+        : groupState(GROUP_NONE)
+        , groupTs(0)
+    {
     }
 
 #ifdef DOXYGEN // These API here are only for the documentation
@@ -135,25 +138,27 @@ public:
      * Command grouping
      */
     void beginGroup() {
-        char mem[4];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add("b");
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+        if (GROUP_STARTED != groupState) {
+            groupState = GROUP_PENDING;
+            groupTs    = 0;
+        }
     }
 
     void beginGroup(uint64_t timestamp) {
-        char mem[24];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add("t");
-        cmd.add(timestamp);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+        if (GROUP_STARTED != groupState) {
+            groupState = GROUP_PENDING;
+            groupTs    = timestamp;
+        }
     }
 
     void endGroup() {
-        char mem[4];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add("e");
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+        if (GROUP_STARTED == groupState) {
+            char mem[4];
+            BlynkParam cmd(mem, 0, sizeof(mem));
+            cmd.add("e");
+            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+        }
+        groupState = GROUP_NONE;
     }
 
     /**
@@ -329,6 +334,34 @@ public:
 protected:
     void processCmd(const void* buff, size_t len);
     void sendInfo();
+
+    void sendPendingGroup() {
+        if (GROUP_PENDING == groupState) {
+            // Set groupState here as sendCmd is recursive
+            groupState = GROUP_STARTED;
+            if (groupTs) {
+                char mem[24];
+                BlynkParam cmd(mem, 0, sizeof(mem));
+                cmd.add("t");
+                cmd.add(groupTs);
+                static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+            } else {
+                char mem[4];
+                BlynkParam cmd(mem, 0, sizeof(mem));
+                cmd.add("b");
+                static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+            }
+        }
+    }
+
+protected:
+    enum GroupState {
+        GROUP_NONE,
+        GROUP_PENDING,
+        GROUP_STARTED,
+    } groupState;
+    uint64_t groupTs;
+
 };
 
 
