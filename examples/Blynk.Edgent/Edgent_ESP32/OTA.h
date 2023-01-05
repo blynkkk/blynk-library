@@ -29,6 +29,9 @@ void enterOTA() {
   HTTPClient http;
   http.begin(overTheAirURL);
 
+  const char* headerkeys[] = { "x-MD5" };
+  http.collectHeaders(headerkeys, sizeof(headerkeys)/sizeof(char*));
+
   int httpCode = http.GET();
   if (httpCode != HTTP_CODE_OK) {
     DEBUG_PRINT("HTTP response should be 200");
@@ -48,6 +51,19 @@ void enterOTA() {
     BlynkState::set(MODE_ERROR);
     return;
   }
+
+  if (http.hasHeader("x-MD5")) {
+    String md5 = http.header("x-MD5");
+    if (md5.length() == 32) {
+      md5.toLowerCase();
+      DEBUG_PRINT("Expected MD5: " + md5);
+      Update.setMD5(md5.c_str());
+    }
+  }
+
+#ifdef BLYNK_FS
+  BLYNK_FS.end();
+#endif
 
   Client& client = http.getStream();
   int written = Update.writeStream(client);

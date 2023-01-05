@@ -12,39 +12,27 @@ void console_init()
   edgentConsole.print("\n>");
 
   edgentConsole.addCommand("reboot", []() {
-    edgentConsole.print(R"json({"status":"OK","msg":"resetting device"})json" "\n");
+    edgentConsole.print(R"json({"status":"OK","msg":"rebooting wifi module"})json" "\n");
     delay(100);
     restartMCU();
   });
 
-  edgentConsole.addCommand("config", []() {
-    edgentConsole.print(R"json({"status":"OK","msg":"entering configuration mode"})json" "\n");
-    BlynkState::set(MODE_WAIT_CONFIG);
-  });
-
-  edgentConsole.addCommand("erase_config", [=]() {
-    edgentConsole.print(R"json({"status":"OK","msg":"config erased"})json" "\n");
-    BlynkState::set(MODE_RESET_CONFIG);
+  edgentConsole.addCommand("config", [](int argc, const char** argv) {
+    if (argc < 1 || 0 == strcmp(argv[0], "start")) {
+      BlynkState::set(MODE_WAIT_CONFIG);
+    } else if (0 == strcmp(argv[0], "erase")) {
+      BlynkState::set(MODE_RESET_CONFIG);
+    }
   });
 
   edgentConsole.addCommand("devinfo", []() {
     edgentConsole.printf(
         R"json({"name":"%s","board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s"})json" "\n",
         getWiFiName().c_str(),
-        BLYNK_DEVICE_NAME,
+        BLYNK_TEMPLATE_NAME,
         BLYNK_TEMPLATE_ID,
         BLYNK_FIRMWARE_TYPE,
         BLYNK_FIRMWARE_VERSION
-    );
-  });
-
-  edgentConsole.addCommand("netinfo", []() {
-    edgentConsole.printf(
-        R"json({"ssid":"%s","bssid":"%s","mac":"%s","rssi":%d})json" "\n",
-        getWiFiNetworkSSID().c_str(),
-        getWiFiNetworkBSSID().c_str(),
-        getWiFiMacAddress().c_str(),
-        WiFi.RSSI()
     );
   });
 
@@ -72,12 +60,28 @@ void console_init()
     BlynkState::set(MODE_SWITCH_TO_STA);
   });
 
+  edgentConsole.addCommand("firmware", [](int argc, const char** argv) {
+    if (argc < 1 || 0 == strcmp(argv[0], "info")) {
+      unsigned sketchSize = ESP.getSketchSize();
+      unsigned partSize = sketchSize + ESP.getFreeSketchSpace();
+
+      edgentConsole.printf(" Version:   %s (build %s)\n", BLYNK_FIRMWARE_VERSION, __DATE__ " " __TIME__);
+      edgentConsole.printf(" Type:      %s\n", BLYNK_FIRMWARE_TYPE);
+      edgentConsole.printf(" Platform:  %s\n", BLYNK_INFO_DEVICE);
+      edgentConsole.printf(" SDK:       %s\n", ESP.getSdkVersion());
+      edgentConsole.printf(" ESP Core:  %s\n", ESP.getCoreVersion().c_str());
+
+      edgentConsole.printf(" App size:  %dK (%d%%)\n", sketchSize/1024, (sketchSize*100)/partSize);
+      edgentConsole.printf(" App MD5:   %s\n", ESP.getSketchMD5().c_str());
+
+    }
+  });
+
 #ifdef BLYNK_FS
 
   edgentConsole.addCommand("ls", [](int argc, const char** argv) {
-    if (argc < 1) return;
-
-    Dir dir = BLYNK_FS.openDir(argv[0]);
+    const char* path = (argc < 1) ? "/" : argv[0];
+    Dir dir = BLYNK_FS.openDir(path);
     while (dir.next()) {
       File f = dir.openFile(BLYNK_FILE_READ);
 
@@ -87,7 +91,7 @@ void console_init()
       md5.calculate();
       String md5str = md5.toString();
 
-      edgentConsole.printf("%8d %-16s %s\n",
+      edgentConsole.printf("%8d %-24s %s\n",
                             f.size(), dir.fileName().c_str(),
                             md5str.substring(0,8).c_str());
     }

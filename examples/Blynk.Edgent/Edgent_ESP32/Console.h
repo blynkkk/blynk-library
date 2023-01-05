@@ -1,6 +1,11 @@
 
 #include <Blynk/BlynkConsole.h>
 
+extern "C" {
+  #include "esp_partition.h"
+  #include "esp_ota_ops.h"
+}
+
 BlynkConsole    edgentConsole;
 
 void console_init()
@@ -29,20 +34,10 @@ void console_init()
     edgentConsole.printf(
         R"json({"name":"%s","board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s"})json" "\n",
         getWiFiName().c_str(),
-        BLYNK_DEVICE_NAME,
+        BLYNK_TEMPLATE_NAME,
         BLYNK_TEMPLATE_ID,
         BLYNK_FIRMWARE_TYPE,
         BLYNK_FIRMWARE_VERSION
-    );
-  });
-
-  edgentConsole.addCommand("netinfo", []() {
-    edgentConsole.printf(
-        R"json({"ssid":"%s","bssid":"%s","mac":"%s","rssi":%d})json" "\n",
-        getWiFiNetworkSSID().c_str(),
-        getWiFiNetworkBSSID().c_str(),
-        getWiFiMacAddress().c_str(),
-        WiFi.RSSI()
     );
   });
 
@@ -70,13 +65,42 @@ void console_init()
     BlynkState::set(MODE_SWITCH_TO_STA);
   });
 
+  edgentConsole.addCommand("firmware", [](int argc, const char** argv) {
+    if (argc < 1 || 0 == strcmp(argv[0], "info")) {
+      unsigned sketchSize = ESP.getSketchSize();
+
+      edgentConsole.printf(" Version:   %s (build %s)\n", BLYNK_FIRMWARE_VERSION, __DATE__ " " __TIME__);
+      edgentConsole.printf(" Type:      %s\n", BLYNK_FIRMWARE_TYPE);
+      edgentConsole.printf(" Platform:  %s\n", BLYNK_INFO_DEVICE);
+      edgentConsole.printf(" SDK:       %s\n", ESP.getSdkVersion());
+
+      if (const esp_partition_t* running = esp_ota_get_running_partition()) {
+        edgentConsole.printf(" Partition: %s (%dK)\n", running->label, running->size / 1024);
+        edgentConsole.printf(" App size:  %dK (%d%%)\n", sketchSize/1024, (sketchSize*100)/(running->size));
+        edgentConsole.printf(" App MD5:   %s\n", ESP.getSketchMD5().c_str());
+      }
+
+    } else if (0 == strcmp(argv[0], "rollback")) {
+      if (Update.rollBack()) {
+        edgentConsole.print(R"json({"status":"ok"})json" "\n");
+        edgentTimer.setTimeout(50, restartMCU);
+      } else {
+        edgentConsole.print(R"json({"status":"error"})json" "\n");
+      }
+    }
+  });
+
 #ifdef BLYNK_FS
 
   edgentConsole.addCommand("ls", [](int argc, const char** argv) {
     const char* path = (argc < 1) ? "/" : argv[0];
     File rootDir = BLYNK_FS.open(path);
     while (File f = rootDir.openNextFile()) {
+#if defined(BLYNK_USE_SPIFFS) && (ESP_IDF_VERSION < ESP_IDF_VERSION_VAL(4, 0, 0))
       String fn = f.name();
+#else
+      String fn = f.path();
+#endif
 
       MD5Builder md5;
       md5.begin();

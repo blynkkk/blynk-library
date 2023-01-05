@@ -23,8 +23,12 @@ extern "C" {
 #error "Old version of Blynk library is in use. Please replace it with the new one."
 #endif
 
-#if !defined(BLYNK_TEMPLATE_ID) || !defined(BLYNK_DEVICE_NAME)
-#error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_DEVICE_NAME"
+#if !defined(BLYNK_TEMPLATE_NAME) && defined(BLYNK_DEVICE_NAME)
+#define BLYNK_TEMPLATE_NAME BLYNK_DEVICE_NAME
+#endif
+
+#if !defined(BLYNK_TEMPLATE_ID) || !defined(BLYNK_TEMPLATE_NAME)
+#error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_TEMPLATE_NAME"
 #endif
 
 BlynkTimer edgentTimer;
@@ -90,6 +94,9 @@ public:
   {
     WiFi.persistent(false);
     WiFi.enableSTA(true); // Needed to get MAC
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0))
+    WiFi.setMinSecurity(WIFI_AUTH_WEP);
+#endif
 
 #ifdef BLYNK_FS
     BLYNK_FS.begin(true);
@@ -111,9 +118,9 @@ public:
     }
 
     if (!String(BLYNK_TEMPLATE_ID).startsWith("TMPL") ||
-        !strlen(BLYNK_DEVICE_NAME)
+        !strlen(BLYNK_TEMPLATE_NAME)
     ) {
-      DEBUG_PRINT("Invalid configuration of TEMPLATE_ID / DEVICE_NAME");
+      DEBUG_PRINT("Invalid configuration of TEMPLATE_ID / TEMPLATE_NAME");
       while (true) { delay(100); }
     }
   }

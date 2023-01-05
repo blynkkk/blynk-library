@@ -71,6 +71,7 @@ static int connectBlynkRetries  = WIFI_CLOUD_MAX_RETRIES;
 
 void restartMCU() {
   NVIC_SystemReset();
+  while(1) {};
 }
 
 static
@@ -108,7 +109,7 @@ String getWiFiName(bool withPrefix = true)
   String devUnique = encodeUniquePart(unique, 4);
 
   String devPrefix = CONFIG_DEVICE_PREFIX;
-  String devName = String(BLYNK_DEVICE_NAME).substring(0, 31-6-devPrefix.length());
+  String devName = String(BLYNK_TEMPLATE_NAME).substring(0, 31-6-devPrefix.length());
 
   if (withPrefix) {
     return devPrefix + " " + devName + "-" + devUnique;
@@ -373,7 +374,7 @@ void enterConfigMode()
     char buff[512];
     snprintf(buff, sizeof(buff),
       R"json({"board":"%s","tmpl_id":"%s","fw_type":"%s","fw_ver":"%s","ssid":"%s","bssid":"%s","mac":"%s","last_error":%d,"wifi_scan":true,"static_ip":true})json",
-      BLYNK_DEVICE_NAME,
+      BLYNK_TEMPLATE_NAME,
       tmpl ? tmpl : "Unknown",
       BLYNK_FIRMWARE_TYPE,
       BLYNK_FIRMWARE_VERSION,
@@ -518,6 +519,8 @@ void enterConnectCloud() {
       configStore.last_error = BLYNK_PROV_ERR_NONE;
       configStore.setFlag(CONFIG_FLAG_VALID, true);
       config_save();
+
+      Blynk.sendInternal("meta", "set", "Hotspot Name", getWiFiName());
     }
   } else if (--connectBlynkRetries <= 0) {
     config_set_last_error(BLYNK_PROV_ERR_CLOUD);

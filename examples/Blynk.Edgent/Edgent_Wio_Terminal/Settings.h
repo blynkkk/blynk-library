@@ -44,7 +44,7 @@
 #define WIFI_CLOUD_CONNECT_TIMEOUT    50000
 #define WIFI_AP_IP                    IPAddress(192, 168, 4, 1)
 #define WIFI_AP_Subnet                IPAddress(255, 255, 255, 0)
-#define WIFI_CAPTIVE_PORTAL_ENABLE    0
+//#define WIFI_CAPTIVE_PORTAL_ENABLE    1
 
 //#define USE_TC3
 //#define USE_TCC0
