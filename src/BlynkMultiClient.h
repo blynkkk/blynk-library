@@ -73,6 +73,11 @@ public:
         : Base(transp)
     {}
 
+    template<typename T>
+    void addClient(T& c) {
+        this->conn.addClient(c);
+    }
+
     void config(const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
                 uint16_t    port   = BLYNK_DEFAULT_PORT_SSL)
