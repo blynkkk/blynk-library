@@ -37,8 +37,10 @@
 
 #include <SPI.h>
 #include <Ethernet.h>
-
+#include <ArduinoECCX08.h>
+#include <ArduinoBearSSL.h>
 static EthernetClient   blynkEthernetClient;
+static BearSSLClient    blynkEthernetClientSSL(blynkEthernetClient);
 byte ETH_MAC[] =        { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 /*
@@ -50,7 +52,7 @@ byte ETH_MAC[] =        { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 static GSMModem         modem;
 static GPRS             gprs;
 static GSM              gsmAccess;
-static GSMClient        blynkGsmClient;
+static GSMSSLClient     blynkGsmClientSSL;
 
 const char SIM_PIN[]      = "";
 const char GPRS_APN[]     = "internet";
@@ -64,6 +66,73 @@ const char GPRS_PASS[]    = "";
 #define MKRETH_CS  5
 #define SDCARD_CS  4
 
+unsigned long ntpGetTime() {
+  static const char timeServer[] = "time.nist.gov";
+
+  const int NTP_PACKET_SIZE = 48; // NTP time stamp is in the first 48 bytes of the message
+  byte packetBuffer[NTP_PACKET_SIZE];
+
+  EthernetUDP Udp;
+  Udp.begin(8888);
+
+  // set all bytes in the buffer to 0
+  memset(packetBuffer, 0, NTP_PACKET_SIZE);
+  // Initialize values needed to form NTP request
+  // (see URL above for details on the packets)
+  packetBuffer[0] = 0b11100011;   // LI, Version, Mode
+  packetBuffer[1] = 0;     // Stratum, or type of clock
+  packetBuffer[2] = 6;     // Polling Interval
+  packetBuffer[3] = 0xEC;  // Peer Clock Precision
+  // 8 bytes of zero for Root Delay & Root Dispersion
+  packetBuffer[12]  = 49;
+  packetBuffer[13]  = 0x4E;
+  packetBuffer[14]  = 49;
+  packetBuffer[15]  = 52;
+
+  for (int i=0; i<10; i++)
+  {
+    // all NTP fields have been given values, now
+    // you can send a packet requesting a timestamp:
+    Udp.beginPacket(timeServer, 123); // NTP requests are to port 123
+    Udp.write(packetBuffer, NTP_PACKET_SIZE);
+    Udp.endPacket();
+
+    millis_time_t started = BlynkMillis();
+    while (BlynkMillis() - started < 1000)
+    {
+      delay(100);
+      if (Udp.parsePacket()) {
+        // We've received a packet, read the data from it
+        Udp.read(packetBuffer, NTP_PACKET_SIZE); // read the packet into the buffer
+
+        // the timestamp starts at byte 40 of the received packet and is four bytes,
+        // or two words, long. First, extract the two words:
+        unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
+        unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
+        // combine the four bytes (two words) into a long integer
+        // this is NTP time (seconds since Jan 1 1900):
+        unsigned long secsSince1900 = highWord << 16 | lowWord;
+        //Serial.print("Seconds since Jan 1 1900 = ");
+        //Serial.println(secsSince1900);
+
+        // Unix time starts on Jan 1 1970. In seconds, that's 2208988800:
+        const unsigned long seventyYears = 2208988800UL;
+        // subtract seventy years:
+        unsigned long epoch = secsSince1900 - seventyYears;
+
+        // print Unix time:
+        Serial.print("Unix time = ");
+        Serial.println(epoch);
+
+        return epoch;
+      }
+    }
+    Serial.println("Retry NTP");
+  }
+  Serial.println("NTP failed");
+  return 0;
+}
+
 void setup()
 {
   Serial.begin(115200);
@@ -74,6 +143,9 @@ void setup()
   digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
 
   Ethernet.init(MKRETH_CS);      // Init MKR ETH shield
+
+  // Enable NTP time helper (needed for SSL authentiction)
+  ArduinoBearSSL.onGetTime(ntpGetTime);
 
   /*
    * Connect Ethernet
@@ -124,8 +196,8 @@ void setup()
    * Blynk
    */
 
-  Blynk.addClient("ETH", blynkEthernetClient, 80);
-  Blynk.addClient("GSM", blynkGsmClient,      80);
+  Blynk.addClient("ETH", blynkEthernetClientSSL,  443);
+  Blynk.addClient("GSM", blynkGsmClientSSL,       443);
 
   Blynk.config(BLYNK_AUTH_TOKEN);
 }
