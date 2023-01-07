@@ -26,26 +26,36 @@ template <typename T>
 class BlynkArduinoClientMulti
     : public BlynkArduinoClientGen<T>
 {
+    struct Entry {
+        String    name;
+        T*        client;
+        uint16_t  port;
+    };
 public:
     BlynkArduinoClientMulti() {}
 
-    void addClient(T& c) {
+    void addClient(const String& name, T& c, uint16_t port = BLYNK_DEFAULT_PORT_SSL) {
         if (_conn_qty == 0) {
             BlynkArduinoClientGen<T>::setClient(&c);
+            BlynkArduinoClientGen<T>::port = port;
         }
         if (_conn_qty < BLYNK_MAX_CLIENT_QTY) {
-            _conn_array[_conn_qty++] = &c;
+            Entry& e = _conn_array[_conn_qty++];
+            e.name =   name;
+            e.client = &c;
+            e.port =   port;
         }
     }
 
     bool connect() {
         for (int i = 0; i < _conn_qty; i++) {
-            BlynkArduinoClientGen<T>::setClient(_conn_array[i]);
+            BlynkArduinoClientGen<T>::setClient(_conn_array[i].client);
+            BlynkArduinoClientGen<T>::port = _conn_array[i].port;
             if (BlynkArduinoClientGen<T>::connect()) {
-                BLYNK_LOG3(BLYNK_F("Connection "), i, F(" OK"));
+                BLYNK_LOG2(_conn_array[i].name, BLYNK_F(" connection OK"));
                 return true;
             } else {
-                BLYNK_LOG3(BLYNK_F("Connection "), i, F(" failed"));
+                BLYNK_LOG2(_conn_array[i].name, BLYNK_F(" connection failed"));
             }
         }
         return false;
@@ -54,13 +64,13 @@ public:
     void disconnect() {
         BlynkArduinoClientGen<T>::isConn = false;
         for (int i = 0; i < _conn_qty; i++) {
-            _conn_array[i]->stop();
+            _conn_array[i].client->stop();
         }
     }
 
 private:
-    T*  _conn_array[BLYNK_MAX_CLIENT_QTY] = { NULL, };
-    int _conn_qty = 0;
+    Entry   _conn_array[BLYNK_MAX_CLIENT_QTY];
+    int     _conn_qty = 0;
 };
 
 template <typename Transport>
@@ -74,24 +84,22 @@ public:
     {}
 
     template<typename T>
-    void addClient(T& c) {
-        this->conn.addClient(c);
+    void addClient(const String& name, T& client, uint16_t port = BLYNK_DEFAULT_PORT_SSL) {
+        this->conn.addClient(name, client, port);
     }
 
     void config(const char* auth,
-                const char* domain = BLYNK_DEFAULT_DOMAIN,
-                uint16_t    port   = BLYNK_DEFAULT_PORT_SSL)
+                const char* domain = BLYNK_DEFAULT_DOMAIN)
     {
         Base::begin(auth);
-        this->conn.begin(domain, port);
+        this->conn.begin(domain, 0);
     }
 
     void config(const char* auth,
-                IPAddress   ip,
-                uint16_t    port = BLYNK_DEFAULT_PORT_SSL)
+                IPAddress   ip)
     {
         Base::begin(auth);
-        this->conn.begin(ip, port);
+        this->conn.begin(ip, 0);
     }
 
 };
