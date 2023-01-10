@@ -35,9 +35,11 @@
 #define SIMPLETIMER_H
 #define SimpleTimer BlynkTimer
 
-#if defined(__has_include) && __has_include(<functional>)
+#if defined(__has_include)
+#if __has_include(<functional>)
   #include <functional>
   #define HAS_FUNCTIONAL_H
+#endif
 #endif
 
 class SimpleTimer {
