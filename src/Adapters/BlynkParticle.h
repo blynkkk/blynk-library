@@ -18,7 +18,7 @@ class BlynkTransportParticle
 {
 public:
     BlynkTransportParticle()
-        : domain(NULL), port(0)
+        : domain(NULL), port(0), actual_port(0)
     {}
 
     void begin(IPAddress a, uint16_t p) {
@@ -33,19 +33,20 @@ public:
     }
 
     bool _connectToPort(uint16_t p) {
+        bool isConn = false;
         if (domain) {
             BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', p);
-            return (1 == client->connect(domain, p));
+            isConn = (1 == client.connect(domain, p));
         } else {
             BLYNK_LOG_IP("Connecting to ", addr);
-            return (1 == client->connect(addr, p));
+            isConn = (1 == client.connect(addr, p));
         }
-        return false;
+        actual_port = isConn ? p : 0;
+        return isConn;
     }
 
     bool connect() {
-        bool isConn = false;
-        isConn = _connectToPort(port);
+        bool isConn = _connectToPort(port);
         if (!isConn) {
             // If port is 80 or 8080, try an alternative port
             if (port == 80) {
@@ -55,6 +56,10 @@ public:
             }
         }
         return isConn;
+    }
+
+    uint16_t getActualPort() const {
+        return actual_port;
     }
 
     void disconnect() { client.stop(); }
@@ -76,6 +81,7 @@ private:
     IPAddress   addr;
     const char* domain;
     uint16_t    port;
+    uint16_t    actual_port;
 };
 
 class BlynkParticle
