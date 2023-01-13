@@ -57,7 +57,11 @@ public:
         _avg = 0;
     }
 
-    T get() {
+    bool hasValue() const {
+        return !_first;
+    }
+
+    T get() const {
         return _avg;
     }
 
