@@ -8,7 +8,7 @@
  * Please also update the WiFi module firmware, if needed
  */
 
-// Fill-in information from your Blynk Template here
+/* Fill-in information from your Blynk Template here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 
