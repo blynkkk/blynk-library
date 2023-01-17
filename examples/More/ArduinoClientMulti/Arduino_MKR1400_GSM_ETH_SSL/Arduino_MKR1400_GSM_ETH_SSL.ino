@@ -89,7 +89,7 @@ unsigned long ntpGetTime() {
   packetBuffer[14]  = 49;
   packetBuffer[15]  = 52;
 
-  for (int i=0; i<10; i++)
+  for (int i = 0; i < 10; i++)
   {
     // all NTP fields have been given values, now
     // you can send a packet requesting a timestamp:

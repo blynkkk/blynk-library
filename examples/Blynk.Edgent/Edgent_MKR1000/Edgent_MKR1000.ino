@@ -4,7 +4,7 @@
  *  - ArduinoOTA
  *  - ArduinoHttpClient
  *  - Timer5
- *  
+ *
  * Please also update the WiFi module firmware, if needed
  */
 
