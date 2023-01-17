@@ -16,12 +16,7 @@
 /***************************************************
  * Change these settings to match your need
  ***************************************************/
-#ifdef BLYNK_TEMPLATE_ID
 #define BLYNK_DEFAULT_DOMAIN     "blynk.cloud"
-#else
-#define BLYNK_DEFAULT_DOMAIN     "blynk-cloud.com"
-#endif
-
 #define BLYNK_DEFAULT_PORT       80
 #define BLYNK_DEFAULT_PORT_SSL   443
 
@@ -29,7 +24,7 @@
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "1.1.0"
+#define BLYNK_VERSION        "1.2.0"
 
 #define BLYNK_NEW_LIBRARY
 
