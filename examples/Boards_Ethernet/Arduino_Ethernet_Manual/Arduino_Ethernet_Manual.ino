@@ -33,17 +33,15 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 IPAddress server_ip (10, 0, 0, 10);
 
@@ -65,9 +63,9 @@ void setup()
   pinMode(SDCARD_CS, OUTPUT);
   digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
 
-  Blynk.begin(auth, server_ip, 8080, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
+  Blynk.begin(BLYNK_AUTH_TOKEN, server_ip, 8080, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
   // Or like this:
-  //Blynk.begin(auth, "blynk-cloud.com", 80, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, "blynk.cloud", 80, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
 }
 
 void loop()

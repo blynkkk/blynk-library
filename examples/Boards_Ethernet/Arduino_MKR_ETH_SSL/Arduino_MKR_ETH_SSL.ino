@@ -33,8 +33,10 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <SPI.h>
@@ -42,10 +44,6 @@
 #include <ArduinoECCX08.h>
 #include <ArduinoBearSSL.h>
 #include <BlynkSimpleEthernetSSL.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 #define MKRETH_CS  5
 #define SDCARD_CS  4
@@ -63,10 +61,10 @@ void setup()
   // Enable NTP time helper (needed for SSL authentiction)
   ArduinoBearSSL.onGetTime(ntpGetTime);
 
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk-cloud.com", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, IPAddress(192,168,1,100), 8080);
   // For more options, see Boards_Ethernet/Arduino_Ethernet_Manual example
 }
 

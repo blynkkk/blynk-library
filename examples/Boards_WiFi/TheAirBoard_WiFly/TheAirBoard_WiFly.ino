@@ -36,17 +36,15 @@ SoftwareSerial DebugSerial(10, 11); // RX, TX
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT DebugSerial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <TheAirBoard.h>
 #include <WiFlyHQ.h>
 #include <BlynkSimpleWiFly.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
@@ -74,7 +72,7 @@ void setup()
   //wifly.setBaud(115200);
   //WiFlySerial.begin(115200);
 
-  Blynk.begin(auth, wifly, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, wifly, ssid, pass);
 }
 
 void loop()

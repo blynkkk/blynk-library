@@ -51,8 +51,10 @@
 
 #define BLYNK_PRINT Serial // Enables Serial Monitor
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 // Following includes are for Arduino Ethernet Shield (W5100)
@@ -61,18 +63,13 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
-
 void setup()
 {
   // See the connection status in Serial Monitor
   Serial.begin(9600);
 
   // Here your Arduino connects to the Blynk Cloud.
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
 }
 
 void loop()

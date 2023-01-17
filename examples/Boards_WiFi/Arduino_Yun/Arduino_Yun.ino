@@ -26,27 +26,24 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <Bridge.h>
 #include <BlynkSimpleYun.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
 
 void setup()
 {
   // Debug console
   Serial.begin(9600);
 
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
   // You can also specify server:
-  //Blynk.begin(auth, "blynk-cloud.com", 80);
-  //Blynk.begin(auth, IPAddress(192,168,1,100), 8080);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, IPAddress(192,168,1,100), 8080);
 }
 
 void loop()

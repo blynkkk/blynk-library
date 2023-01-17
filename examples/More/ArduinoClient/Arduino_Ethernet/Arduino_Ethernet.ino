@@ -31,17 +31,15 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleStream.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // You can specify your board mac adress
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
@@ -76,7 +74,7 @@ void setup()
 
   connectBlynk();
 
-  Blynk.begin(ethernetClient, auth);
+  Blynk.begin(ethernetClient, BLYNK_AUTH_TOKEN);
 }
 
 void loop()

@@ -28,8 +28,10 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 // Arduino MKR GSM 1400 uses U-blox modem
@@ -41,10 +43,6 @@
 
 #include <TinyGsmClient.h>
 #include <BlynkSimpleTinyGSM.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Your GPRS credentials
 // Leave empty, if missing user or pass
@@ -84,7 +82,7 @@ void setup()
   // Unlock your SIM card with a PIN
   //modem.simUnlock("1234");
 
-  Blynk.begin(auth, modem, apn, user, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, modem, apn, user, pass);
 }
 
 void loop()

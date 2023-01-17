@@ -31,17 +31,15 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <SPI.h>
 #include <Adafruit_CC3000.h>
 #include <BlynkSimpleTinyDuino.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Your WiFi credentials.
 // Choose wifi_sec from WLAN_SEC_UNSEC, WLAN_SEC_WEP, WLAN_SEC_WPA or WLAN_SEC_WPA2
@@ -54,7 +52,7 @@ void setup()
   // Debug console
   Serial.begin(9600);
 
-  Blynk.begin(auth, ssid, pass, wifi_sec);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, wifi_sec);
 }
 
 void loop()

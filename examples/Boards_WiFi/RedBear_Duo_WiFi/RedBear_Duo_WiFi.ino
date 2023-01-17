@@ -26,15 +26,13 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <BlynkSimpleRedBear_Duo.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Your WiFi credentials.
 // Choose wifi_sec from WPA2, WPA, or WEP
@@ -56,10 +54,10 @@ void setup()
   WiFi.setCredentials(ssid, pass, wifi_sec);
   WiFi.connect();
 
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
   // Or specify server using one of those commands:
-  //Blynk.begin(auth, "blynk-cloud.com", 80);
-  //Blynk.begin(auth, server_ip, port);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, "blynk.cloud", 80);
+  //Blynk.begin(BLYNK_AUTH_TOKEN, server_ip, port);
 }
 
 void loop()

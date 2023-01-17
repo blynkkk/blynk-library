@@ -24,10 +24,10 @@
 
 //#define BLYNK_DEBUG
 
-/* Fill-in information from your Blynk Template here */
-//#define BLYNK_TEMPLATE_ID             "YourTemplateID"
-//#define BLYNK_TEMPLATE_NAME           "Device"
-//#define BLYNK_AUTH_TOKEN              ""
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 #include <BlynkMultiClient.h>
 

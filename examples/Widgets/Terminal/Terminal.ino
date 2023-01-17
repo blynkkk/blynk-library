@@ -27,17 +27,15 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Attach virtual serial terminal to Virtual Pin V1
 WidgetTerminal terminal(V1);
@@ -68,7 +66,7 @@ void setup()
   // Debug console
   Serial.begin(9600);
 
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
 
   // Clear the terminal content
   terminal.clear();

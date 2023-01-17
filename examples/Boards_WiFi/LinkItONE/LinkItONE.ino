@@ -26,17 +26,15 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <LWiFi.h>
 #include <LWiFiClient.h>
 #include <BlynkSimpleLinkItONE.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Your WiFi credentials.
 // Choose wifi_sec from LWIFI_OPEN, LWIFI_WPA, or LWIFI_WEP
@@ -48,7 +46,7 @@ void setup()
 {
   // Debug console
   Serial.begin(9600);
-  Blynk.begin(auth, ssid, pass, wifi_sec);
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass, wifi_sec);
 }
 
 void loop()

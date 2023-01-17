@@ -30,16 +30,14 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <ESP8266_Lib.h>
 #include <BlynkSimpleShieldEsp8266.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
@@ -68,7 +66,7 @@ void setup()
   digitalWrite(EspSwitch, HIGH);
 
   // Configure Blynk connection
-  Blynk.begin(auth, wifi, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass);
 }
 
 void loop()

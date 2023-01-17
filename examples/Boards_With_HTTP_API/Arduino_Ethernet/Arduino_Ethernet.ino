@@ -28,13 +28,14 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-const char auth[] = "YourAuthToken";
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 // Blynk cloud server
-const char* host = "blynk-cloud.com";
-unsigned int port = 8080;
+const char* host = "blynk.cloud";
+unsigned int port = 80;
 
 // Network settings
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
@@ -147,7 +148,7 @@ void loop() {
   Serial.println(value);
 
   String putData = String("[\"") + value + "\"]";
-  if (httpRequest(String("PUT /") + auth + "/update/V2", putData, response)) {
+  if (httpRequest(String("PUT /") + BLYNK_AUTH_TOKEN + "/update/V2", putData, response)) {
     if (response.length() != 0) {
       Serial.print("WARNING: ");
       Serial.println(response);
@@ -159,7 +160,7 @@ void loop() {
 
   Serial.println("Reading value");
 
-  if (httpRequest(String("GET /") + auth + "/get/V2", "", response)) {
+  if (httpRequest(String("GET /") + BLYNK_AUTH_TOKEN + "/get/V2", "", response)) {
     Serial.print("Value from server: ");
     Serial.println(response);
   }
@@ -167,14 +168,14 @@ void loop() {
   // Set Property
   Serial.println("Setting property");
 
-  if (httpRequest(String("GET /") + auth + "/update/V2?label=" + value, "", response)) {
+  if (httpRequest(String("GET /") + BLYNK_AUTH_TOKEN + "/update/V2?label=" + value, "", response)) {
     if (response.length() != 0) {
       Serial.print("WARNING: ");
       Serial.println(response);
     }
   }
 
-  // For more HTTP API, see http://docs.blynkapi.apiary.io
+  // For more HTTP API, see https://docs.blynk.io/en/blynk.cloud/https-api-overview
 
   // Wait
   delay(30000L);

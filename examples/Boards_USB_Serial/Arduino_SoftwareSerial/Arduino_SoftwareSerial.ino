@@ -27,16 +27,14 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in your Template ID (only if using Blynk.Cloud) */
-//#define BLYNK_TEMPLATE_ID   "YourTemplateID"
+/* Fill-in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
 #include <BlynkSimpleStream.h>
 #include <SoftwareSerial.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 SoftwareSerial SwSerial(2, 3); // RX, TX
 
@@ -48,7 +46,7 @@ void setup()
   // Blynk will work through SoftwareSerial
   // Do not read or write this serial manually in your sketch
   SwSerial.begin(9600);
-  Blynk.begin(SwSerial, auth);
+  Blynk.begin(SwSerial, BLYNK_AUTH_TOKEN);
 }
 
 void loop()
