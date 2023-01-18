@@ -64,6 +64,7 @@ void connectNetwork()
 }
 
 bool httpRequest(const String& method,
+                 const String& url,
                  const String& request,
                  String&       response)
 {
@@ -79,7 +80,10 @@ bool httpRequest(const String& method,
     return false;
   }
 
-  client.print(method); client.println(F(" HTTP/1.1"));
+  Serial.print(method); Serial.print(" "); Serial.println(url);
+
+  client.print(method); client.print(" ");
+  client.print(url); client.println(F(" HTTP/1.1"));
   client.print(F("Host: ")); client.println(host);
   client.println(F("Connection: close"));
   if (request.length()) {
@@ -117,10 +121,12 @@ bool httpRequest(const String& method,
   //Serial.println("Reading response body");
   response = "";
   response.reserve(contentLength + 1);
-  while (response.length() < contentLength && client.connected()) {
-    while (client.available()) {
+  while (response.length() < contentLength) {
+    if (client.available()) {
       char c = client.read();
       response += c;
+    } else if (!client.connected()) {
+      break;
     }
   }
   client.stop();
@@ -148,8 +154,7 @@ void loop() {
   Serial.print("Sending value: ");
   Serial.println(value);
 
-  String putData = String("[\"") + value + "\"]";
-  if (httpRequest(String("PUT /") + BLYNK_AUTH_TOKEN + "/update/V2", putData, response)) {
+  if (httpRequest("GET", String("/external/api/update?token=") + BLYNK_AUTH_TOKEN + "&pin=V2&value=" + value, "", response)) {
     if (response.length() != 0) {
       Serial.print("WARNING: ");
       Serial.println(response);
@@ -161,7 +166,7 @@ void loop() {
 
   Serial.println("Reading value");
 
-  if (httpRequest(String("GET /") + BLYNK_AUTH_TOKEN + "/get/V2", "", response)) {
+  if (httpRequest("GET", String("/external/api/get?token=") + BLYNK_AUTH_TOKEN + "&pin=V2", "", response)) {
     Serial.print("Value from server: ");
     Serial.println(response);
   }
@@ -169,7 +174,7 @@ void loop() {
   // Set Property
   Serial.println("Setting property");
 
-  if (httpRequest(String("GET /") + BLYNK_AUTH_TOKEN + "/update/V2?label=" + value, "", response)) {
+  if (httpRequest("GET", String("/external/api/update/property?token=") + BLYNK_AUTH_TOKEN + "&pin=V2&label=" + value, "", response)) {
     if (response.length() != 0) {
       Serial.print("WARNING: ");
       Serial.println(response);

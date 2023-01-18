@@ -80,7 +80,7 @@ void loop() {
   Serial.print("Sending value: ");
   Serial.println(value);
 
-  if (httpRequest("GET", String("/") + BLYNK_AUTH_TOKEN + "/update/V2?value=" + value, "", response)) {
+  if (httpRequest("GET", String("/external/api/update?token=") + BLYNK_AUTH_TOKEN + "&pin=V2&value=" + value, "", response)) {
     if (response.length() != 0) {
       Serial.print("WARNING: ");
       Serial.println(response);
@@ -92,7 +92,7 @@ void loop() {
 
   Serial.println("Reading value");
 
-  if (httpRequest("GET", String("/") + BLYNK_AUTH_TOKEN + "/get/V2", "", response)) {
+  if (httpRequest("GET", String("/external/api/get?token=") + BLYNK_AUTH_TOKEN + "&pin=V2", "", response)) {
     Serial.print("Value from server: ");
     Serial.println(response);
   }
@@ -100,7 +100,7 @@ void loop() {
   // Set Property
   Serial.println("Setting property");
 
-  if (httpRequest("GET", String("/") + BLYNK_AUTH_TOKEN + "/update/V2?label=" + value, "", response)) {
+  if (httpRequest("GET", String("/external/api/update/property?token=") + BLYNK_AUTH_TOKEN + "&pin=V2&label=" + value, "", response)) {
     if (response.length() != 0) {
       Serial.print("WARNING: ");
       Serial.println(response);
