@@ -46,7 +46,7 @@
 byte ETH_MAC[] =        { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 #include <SPI.h>
-#include <Ethernet.h>
+#include <Ethernet.h>   // For ENC28J60, you can use <EthernetENC.h> library
 
 // Ethernet shield and SDcard pins
 #define W5100_CS   10
