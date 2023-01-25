@@ -20,7 +20,7 @@
 
   This sketch shows how to read values from Virtual Pins
 
-  App project setup:
+  App dashboard setup:
     Slider widget (0...100) on Virtual Pin V1
  *************************************************************/
 

@@ -24,7 +24,7 @@
   BlynkTimer provides SimpleTimer functionality:
     http://playground.arduino.cc/Code/SimpleTimer
 
-  App project setup:
+  App dashboard setup:
     Value Display widget attached to Virtual Pin V5
  *************************************************************/
 
@@ -43,9 +43,7 @@
 
 BlynkTimer timer;
 
-// This function sends Arduino's up time every second to Virtual Pin (5).
-// In the app, Widget's reading frequency should be set to PUSH. This means
-// that you define how often to send data to Blynk App.
+// This function sends Arduino's up time every second to Virtual Pin (5)
 void myTimerEvent()
 {
   // You can send any value at any time.

@@ -39,16 +39,16 @@
 #include <MKRGSM.h>
 #include <BlynkSimpleMKRGSM.h>
 
-GSMClient client;
-GPRS gprs;
-GSM gsmAccess;
-
 // Your SIM and GPRS credentials
 // Leave empty, if missing pin, user or pass
 char pin[]  = "";
 char apn[]  = "YourAPN";
 char user[] = "";
 char pass[] = "";
+
+GSMClient client;
+GPRS gprs;
+GSM gsmAccess;
 
 void setup()
 {
