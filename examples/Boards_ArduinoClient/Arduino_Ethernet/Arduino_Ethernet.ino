@@ -37,7 +37,7 @@
 /* Uncomment this to see the verbose Blynk protocol log */
 //#define BLYNK_DEBUG
 
-/* REQUIRED info. Fill in and uncomment. These code lines should not be moved down */
+/* REQUIRED info. Fill in and uncomment. Don't move or remove these lines */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"       // Can be found in Template https://blynk.cloud
 //#define BLYNK_TEMPLATE_NAME         "Device"          // Device name can be any
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"   // Where to find AuthToken
