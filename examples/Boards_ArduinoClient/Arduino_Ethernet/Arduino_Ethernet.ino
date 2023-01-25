@@ -1,5 +1,4 @@
 /*************************************************************
-  
   Blynk is a platform with iOS and Android apps to control
   ESP32, Arduino, Raspberry Pi and the likes over the Internet.
   You can easily build mobile and web interfaces for any
@@ -10,14 +9,10 @@
     Blynk community:            https://community.blynk.cc
     Follow us:                  https://www.fb.com/blynkapp
                                 https://twitter.com/blynk_app
-                                
+
+  Blynk library is licensed under MIT license
+  This example code is in public domain.
  *************************************************************
-
- Blynk library is licensed under MIT license
- This example code is in public domain.
-
-*************************************************************
-  
   This sketch shows how to use an Arduino Client directly in Blynk.
   Using a standard Client interface is a convenient way to integrate
   any connectivity shield, even if it's not directly supported by Blynk.
@@ -28,7 +23,6 @@
   WARNING: If you have an SD card, you may need to disable it
         by setting pin 4 to HIGH. Read more here:
         https://www.arduino.cc/en/Main/ArduinoEthernetShield
-        
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -37,10 +31,11 @@
 /* Uncomment this to see the verbose Blynk protocol log */
 //#define BLYNK_DEBUG
 
-/* REQUIRED info. Fill in and uncomment. Don't move or remove these lines */
-//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"       // Can be found in Template https://blynk.cloud
-//#define BLYNK_TEMPLATE_NAME         "Device"          // Device name can be any
-//#define BLYNK_AUTH_TOKEN            "YourAuthToken"   // Where to find AuthToken
+/* Fill in information from Blynk Device Info here */
+/* More info: https://docs.blynk.io/en/getting-started/activating-devices/manual-device-activation#preparing-your-sketch */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 #include <BlynkMultiClient.h>
 
@@ -100,7 +95,7 @@ void setup()
 
 void loop()
 {
-  // IMPORTANT: don't using delay() in void loop(). Use timers. Read more here: link to doc
   Blynk.run();
   Ethernet.maintain();
 }
+
