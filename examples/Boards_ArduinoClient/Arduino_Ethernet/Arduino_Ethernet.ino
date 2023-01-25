@@ -23,12 +23,12 @@
   WARNING: If you have an SD card, you may need to disable it
         by setting pin 4 to HIGH. Read more here:
         https://www.arduino.cc/en/Main/ArduinoEthernetShield
-
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+/* Uncomment this to see the verbose Blynk protocol log */
 //#define BLYNK_DEBUG
 
 /* Fill-in information from Blynk Device Info here */

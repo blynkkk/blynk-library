@@ -237,6 +237,10 @@
             #define BLYNK_BUFFERS_SIZE 1024
         #endif
 
+        #if defined(ESP32)
+            #define BLYNK_NO_ANALOG_PINS
+        #endif
+
         #if defined(ARDUINO_ARCH_AVR)
             #define BLYNK_USE_INTERNAL_ATOLL
         #endif
@@ -364,7 +368,10 @@
         /* ESP32 */
         #elif defined(ARDUINO_ESP32C3_DEV)
         #define BLYNK_INFO_DEVICE  "ESP32C3"
-        #define BLYNK_NO_ANALOG_PINS
+        #elif defined(ARDUINO_ESP32C6_DEV)
+        #define BLYNK_INFO_DEVICE  "ESP32C6"
+        #elif defined(ARDUINO_ESP32S3_DEV)
+        #define BLYNK_INFO_DEVICE  "ESP32S3"
         #elif defined(ARDUINO_ESP32S2_DEV)
         #define BLYNK_INFO_DEVICE  "ESP32S2"
         #elif defined(ARDUINO_ARCH_ESP32)

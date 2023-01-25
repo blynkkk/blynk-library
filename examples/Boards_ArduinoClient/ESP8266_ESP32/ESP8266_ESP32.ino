@@ -19,12 +19,12 @@
 
   Please be sure to select a correct ESP8266 or ESP32 module
     in the Tools -> Board menu!
-
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+/* Uncomment this to see the verbose Blynk protocol log */
 //#define BLYNK_DEBUG
 
 /* Fill-in information from Blynk Device Info here */
