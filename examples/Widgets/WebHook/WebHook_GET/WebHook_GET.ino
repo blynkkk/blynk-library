@@ -20,7 +20,7 @@
 
   This example shows how to fetch data using WebHook GET method
 
-  App project setup:
+  App dashboard setup:
     WebHook widget on V0, method: GET, url: /pin/
  *************************************************************/
 

@@ -20,7 +20,7 @@
 
   Output any data on Map widget!
 
-  App project setup:
+  App dashboard setup:
     Map widget on V1
  *************************************************************/
 

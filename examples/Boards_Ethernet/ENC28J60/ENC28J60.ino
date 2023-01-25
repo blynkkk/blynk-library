@@ -10,7 +10,7 @@
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
@@ -20,7 +20,8 @@
   For this example you need UIPEthernet library:
     https://github.com/UIPEthernet/UIPEthernet
 
-  Typical wiring would be:
+  Typical wiring would be (this is for Arduino UNO,
+  search for correct wiring for your board):
    VCC -- 5V
    GND -- GND
    CS  -- D10

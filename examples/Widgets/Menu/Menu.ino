@@ -20,7 +20,7 @@
 
   This example shows how to use the Menu Widget.
 
-  App project setup:
+  App dashboard setup:
     Menu widget attached to V1 (put 3 items in it)
  *************************************************************/
 

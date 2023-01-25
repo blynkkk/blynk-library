@@ -21,7 +21,7 @@
   This example shows how to synchronize Button widget
   and physical button state.
 
-  App project setup:
+  App dashboard setup:
     Button widget attached to V2 (Switch mode)
  *************************************************************/
 
@@ -39,8 +39,8 @@
 #include <BlynkSimpleEthernet.h>
 
 // Set your LED and physical button pins here
-const int ledPin = 7;
-const int btnPin = 8;
+const int ledPin = 13;
+const int btnPin = 12;
 
 BlynkTimer timer;
 void checkPhysicalButton();

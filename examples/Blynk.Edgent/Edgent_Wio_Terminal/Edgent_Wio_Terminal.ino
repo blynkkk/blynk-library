@@ -1,17 +1,36 @@
-/*
- * Required libraries:
- *  - Seeed Arduino rpcUnified
- *  - Seeed Arduino rpcWiFi
- *  - Seeed Arduino SFUD
- *  - Seeed Arduino FS
- *  - Seeed Arduino mbedtls
- *  - Seeed Arduino FreeRTOS
- *  - ArduinoOTA
- *  - ArduinoHttpClient
- *
- * Please also update the WiFi module firmware:
- *   https://wiki.seeedstudio.com/Wio-Terminal-Network-Overview
- */
+/*************************************************************
+  Blynk is a platform with iOS and Android apps to control
+  Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build graphic interfaces for all your
+  projects by simply dragging and dropping widgets.
+
+    Downloads, docs, tutorials: http://www.blynk.cc
+    Sketch generator:           http://examples.blynk.cc
+    Blynk community:            http://community.blynk.cc
+    Follow us:                  http://www.fb.com/blynkapp
+                                http://twitter.com/blynk_app
+
+  Blynk library is licensed under MIT license
+ *************************************************************
+  Blynk.Edgent implements:
+  - Blynk.Inject - Dynamic WiFi credentials provisioning
+  - Blynk.Air    - Over The Air firmware updates
+  - Device state indication using a physical LED
+  - Credentials reset using a physical Button
+
+  Required libraries:
+   - Seeed Arduino rpcUnified
+   - Seeed Arduino rpcWiFi
+   - Seeed Arduino SFUD
+   - Seeed Arduino FS
+   - Seeed Arduino mbedtls
+   - Seeed Arduino FreeRTOS
+   - ArduinoOTA
+   - ArduinoHttpClient
+
+  NOTE: Please also update the WiFi module firmware:
+   https://wiki.seeedstudio.com/Wio-Terminal-Network-Overview
+ *************************************************************/
 
 /* Fill-in information from your Blynk Template here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"

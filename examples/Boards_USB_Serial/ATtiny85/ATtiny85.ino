@@ -18,7 +18,7 @@
 
  *************************************************************
   =>
-  =>          USB HOWTO: http://tiny.cc/BlynkUSB
+  =>          USB HOWTO: http://tiny.cc/BlynkOverSerial
   =>
 
   Note: This requires ATtiny support package:

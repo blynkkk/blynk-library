@@ -20,7 +20,7 @@
 
   You can send/receive any data using WidgetTerminal object.
 
-  App project setup:
+  App dashboard setup:
     Terminal widget attached to Virtual Pin V1
  *************************************************************/
 

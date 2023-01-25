@@ -10,7 +10,7 @@
     Downloads, docs, tutorials: http://www.blynk.cc
     Sketch generator:           http://examples.blynk.cc
     Blynk community:            http://community.blynk.cc
-    Social networks:            http://www.fb.com/blynkapp
+    Follow us:                  http://www.fb.com/blynkapp
                                 http://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
@@ -18,7 +18,7 @@
 
  *************************************************************
   =>
-  =>          USB HOWTO: http://tiny.cc/BlynkUSB
+  =>          USB HOWTO: http://tiny.cc/BlynkOverSerial
   =>
 
   Feel free to apply it to any other example. It's simple!

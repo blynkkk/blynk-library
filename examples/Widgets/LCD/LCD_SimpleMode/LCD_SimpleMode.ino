@@ -17,15 +17,22 @@
   This example code is in public domain.
 
  *************************************************************
-  =>
-  =>          USB HOWTO: http://tiny.cc/BlynkOverSerial
-  =>
 
-  Feel free to apply it to any other example. It's simple!
+  Output any data on LCD widget!
+
+  App dashboard setup:
+
+    LCD widget, SIMPLE mode, in widget settings :
+
+    - Select pin V0 for zero pin
+    - Select pin V1 for first pin
+    - Change "Reading Frequency" to PUSH mode
+    - Type into first edit field "/pin0/ seconds"
+    - Type into second edit field "/pin1/ millis"
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial1
+#define BLYNK_PRINT Serial
 
 /* Fill-in information from Blynk Device Info here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
@@ -33,21 +40,36 @@
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
-#include <BlynkSimpleStream.h>
+#include <SPI.h>
+#include <Ethernet.h>
+#include <BlynkSimpleEthernet.h>
+
+BlynkTimer timer;
+
+void sendSeconds() {
+  Blynk.virtualWrite(V0, millis() / 1000);
+}
+
+void sendMillis() {
+  Blynk.virtualWrite(V1, millis());
+}
 
 void setup()
 {
-  // Debug prints on pins 39 (RX), 40 (TX)
-  Serial1.begin(9600);
-
-  // Blynk will work through Serial
-  // Do not read or write this serial manually in your sketch
+  // Debug console
   Serial.begin(9600);
-  Blynk.begin(Serial, BLYNK_AUTH_TOKEN);
+
+  Blynk.begin(BLYNK_AUTH_TOKEN);
+
+  // Setup a function to be called every second
+  timer.setInterval(1000L, sendSeconds);
+  // Setup a function to be called every second
+  timer.setInterval(1000L, sendMillis);
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run();
 }
 

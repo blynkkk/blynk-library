@@ -20,7 +20,7 @@
 
   Fade using a LED widget on your phone!
 
-  App project setup:
+  App dashboard setup:
     LED widget on V2
  *************************************************************/
 
