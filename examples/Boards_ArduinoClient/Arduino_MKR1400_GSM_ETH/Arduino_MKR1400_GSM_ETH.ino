@@ -17,6 +17,8 @@
   at the same time:
     - Arduino MKR1400 GSM module provides GPRS
     - Arduino MKR ETH shield provides Ethernet
+  Using a standard Client interface is a convenient way to integrate
+  any connectivity shield, even if it's not directly supported by Blynk.
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -35,15 +37,27 @@
  * Ethernet
  */
 
+// You can specify your board mac adress
+byte ETH_MAC[] =        { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+
 #include <SPI.h>
 #include <Ethernet.h>
 
-static EthernetClient   blynkEthernetClient;
-byte ETH_MAC[] =        { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+// Ethernet shield and SDcard pins
+#define MKRETH_CS  5
+#define SDCARD_CS  4
+
+static EthernetClient blynkEthernetClient;
 
 /*
  * GSM modem
  */
+
+// Please specify your GPRS credentials
+const char SIM_PIN[]    = "";
+const char GPRS_APN[]   = "internet";
+const char GPRS_USER[]  = "";
+const char GPRS_PASS[]  = "";
 
 #include <MKRGSM.h>
 
@@ -52,32 +66,12 @@ static GPRS             gprs;
 static GSM              gsmAccess;
 static GSMClient        blynkGsmClient;
 
-const char SIM_PIN[]      = "";
-const char GPRS_APN[]     = "internet";
-const char GPRS_USER[]    = "";
-const char GPRS_PASS[]    = "";
-
 /*
  * Main
  */
 
-#define MKRETH_CS  5
-#define SDCARD_CS  4
-
-void setup()
+void connectEthernet()
 {
-  Serial.begin(115200);
-
-  delay(1000);
-
-  pinMode(SDCARD_CS, OUTPUT);
-  digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
-
-  Ethernet.init(MKRETH_CS);      // Init MKR ETH shield
-
-  /*
-   * Connect Ethernet
-   */
   if (Ethernet.begin(ETH_MAC, 5000L, 500L)) {
     Serial.print("Ethernet IP: ");
     Serial.println(Ethernet.localIP());
@@ -88,10 +82,10 @@ void setup()
   } else {
     Serial.println("Ethernet: DHCP configuration failed.");
   }
+}
 
-  /*
-   * Connect GPRS
-   */
+void connectGPRS()
+{
   bool gsmConnected = false;
   bool gprsConnected = false;
 
@@ -119,18 +113,32 @@ void setup()
     Serial.print("GPRS IP: ");
     Serial.println(gprs.getIPAddress());
   }
+}
 
-  /*
-   * Blynk
-   */
+void setup()
+{
+  // Debug console
+  Serial.begin(115200);
 
+  // Deselect the SD card
+  pinMode(SDCARD_CS, OUTPUT);
+  digitalWrite(SDCARD_CS, HIGH);
+
+  // Initialize Ethernet shield
+  Ethernet.init(MKRETH_CS);
+
+  connectEthernet();
+  connectGPRS();
+
+  // Setup Blynk
   Blynk.addClient("ETH", blynkEthernetClient, 80);
   Blynk.addClient("GSM", blynkGsmClient,      80);
-
   Blynk.config(BLYNK_AUTH_TOKEN);
 }
 
-void loop() {
+void loop()
+{
   Blynk.run();
   Ethernet.maintain();
 }
+

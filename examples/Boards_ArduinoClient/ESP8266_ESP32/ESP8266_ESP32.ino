@@ -13,16 +13,11 @@
   Blynk library is licensed under MIT license
   This example code is in public domain.
  *************************************************************
-  This sketch shows how to access WiFiClient directly in Blynk
+  This sketch shows how to use an Arduino Client directly in Blynk.
+  Using a standard Client interface is a convenient way to integrate
+  any connectivity shield, even if it's not directly supported by Blynk.
 
-  1. This gives you full control of the connection process.
-  2. Shows a sensible way of integrating other connectivity hardware,
-     that was not supported by Blynk out-of-the-box.
-
-  NOTE: This requires ESP8266 support package:
-       https://github.com/esp8266/Arduino
-
-  Please be sure to select the right ESP8266 module
+  Please be sure to select a correct ESP8266 or ESP32 module
     in the Tools -> Board menu!
 
  *************************************************************/
@@ -30,30 +25,36 @@
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
+//#define BLYNK_DEBUG
+
 /* Fill-in information from Blynk Device Info here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
+#include <BlynkMultiClient.h>
 
-#include <ESP8266WiFi.h>
-#include <BlynkSimpleStream.h>
+/*
+ * WiFi
+ */
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
 const char* ssid = "YourNetworkName";
 const char* pass = "YourPassword";
 
-WiFiClient wifiClient;
+#ifdef ESP32
+#  include <WiFi.h>
+#else
+#  include <ESP8266WiFi.h>
+#endif
 
-// This function tries to connect to the cloud using TCP
-bool connectBlynk()
-{
-  wifiClient.stop();
-  return wifiClient.connect(BLYNK_DEFAULT_DOMAIN, BLYNK_DEFAULT_PORT);
-}
+static WiFiClient blynkWiFiClient;
 
-// This function tries to connect to your WiFi network
+/*
+ * Main
+ */
+
 void connectWiFi()
 {
   Serial.print("Connecting to ");
@@ -71,17 +72,16 @@ void connectWiFi()
   }
 }
 
-
 void setup()
 {
   // Debug console
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   connectWiFi();
 
-  connectBlynk();
-
-  Blynk.begin(wifiClient, BLYNK_AUTH_TOKEN);
+  // Setup Blynk
+  Blynk.addClient("WiFi", blynkWiFiClient, 80);
+  Blynk.config(BLYNK_AUTH_TOKEN);
 }
 
 void loop()
@@ -89,12 +89,6 @@ void loop()
   // Reconnect WiFi
   if (WiFi.status() != WL_CONNECTED) {
     connectWiFi();
-    return;
-  }
-
-  // Reconnect to Blynk Cloud
-  if (!wifiClient.connected()) {
-    connectBlynk();
     return;
   }
 
