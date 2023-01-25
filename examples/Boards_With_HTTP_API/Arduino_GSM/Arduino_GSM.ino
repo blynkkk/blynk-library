@@ -13,7 +13,7 @@
   This example code is in public domain.
 
  *************************************************************
-  Project setup in the Blynk app:
+  App dashboard setup:
     Value Display widget on V2
 
  *************************************************************/
