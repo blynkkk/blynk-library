@@ -20,7 +20,7 @@
 
   You can construct and display any strings on a Value Display.
 
-  App project setup:
+  App dashboard setup:
     Value Display widget attached to V5
  *************************************************************/
 
@@ -39,9 +39,7 @@
 
 BlynkTimer timer;
 
-// This function sends Arduino's up time every second to Virtual Pin (5).
-// In the app, Widget's reading frequency should be set to PUSH. This means
-// that you define how often to send data to Blynk App.
+// This function sends Arduino's up time every second to Virtual Pin (5)
 void sendTemperature()
 {
   // Generate random temperature value 10.0 to 30.0 (for example)

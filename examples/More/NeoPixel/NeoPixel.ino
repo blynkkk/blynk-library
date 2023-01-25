@@ -23,7 +23,7 @@
   For this example you need NeoPixel library:
     https://github.com/adafruit/Adafruit_NeoPixel
 
-  App project setup:
+  App dashboard setup:
     Slider widget (0...500) on V1
  *************************************************************/
 

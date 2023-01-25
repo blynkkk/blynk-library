@@ -20,7 +20,7 @@
 
   Output any data on LCD widget!
 
-  App project setup:
+  App dashboard setup:
     LCD widget, switch to ADVANCED mode, select pin V1
  *************************************************************/
 

@@ -26,7 +26,7 @@
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/DHT-sensor-library
 
-  App project setup:
+  App dashboard setup:
     Value Display widget attached to V5
     Value Display widget attached to V6
  *************************************************************/
@@ -55,9 +55,7 @@
 DHT dht(DHTPIN, DHTTYPE);
 BlynkTimer timer;
 
-// This function sends Arduino's up time every second to Virtual Pin (5).
-// In the app, Widget's reading frequency should be set to PUSH. This means
-// that you define how often to send data to Blynk App.
+// This function sends Arduino's up time every second to Virtual Pin (5)
 void sendSensor()
 {
   float h = dht.readHumidity();

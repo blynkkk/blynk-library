@@ -20,8 +20,8 @@
 
   You can set predefined properties of any widget. Like color, label
 
-  Project setup in the Blynk app:
-    Gauge widget (0...100) on V0 in PUSH mode
+  App dashboard setup:
+    Gauge widget (0...100) on V0
     Slider widget (0...100) on V1
  *************************************************************/
 

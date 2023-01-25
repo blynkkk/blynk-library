@@ -21,7 +21,7 @@
   This example shows how to monitor a button state
   using interrupts mechanism.
 
-  App project setup:
+  App dashboard setup:
     LED widget on V1
  *************************************************************/
 

@@ -22,7 +22,7 @@
   You can turn it on and of using a button,
   and control frequency with a slider.
 
-  App project setup:
+  App dashboard setup:
     Button widget (Switch) on V1
     Slider widget (100...1000) on V2
  *************************************************************/

@@ -21,8 +21,8 @@
   This example shows you how you can use server as storage for
   your data like EEPROM
 
-  Project setup in the Blynk app (not necessary):
-    Value display on V0 in PUSH mode.
+  App dashboard setup (optional):
+    Value display on V0
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
