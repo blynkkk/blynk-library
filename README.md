@@ -69,15 +69,12 @@ Check out our Examples Browser: http://examples.blynk.cc
 * [Python, MicroPython](https://github.com/blynkkk/lib-python)
 
 ## Libraries by community
-* [Node.js, Espruino, Browsers](https://github.com/vshymanskyy/blynk-library-js)
 * [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
-* [Particle](https://github.com/vshymanskyy/blynk-library-spark)
+* [Particle](https://github.com/vshymanskyy/blynk-library-particle)
 * [Lua, OpenWrt, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
 * [OpenWrt packages](https://github.com/vshymanskyy/blynk-library-openwrt)
 * [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
 * [Node-RED for Blynk IoT](https://flows.nodered.org/node/node-red-contrib-blynk-iot) and [for old Blynk](https://www.npmjs.com/package/node-red-contrib-blynk-ws)
-* [LabVIEW](https://github.com/juncaofish/NI-LabVIEWInterfaceforBlynk)
-* [C#](https://github.com/sverrefroy/BlynkLibrary)
 
 ## Contributing
 We accept contributions from our community: stability bugfixes, new hardware support, or any other improvements.  
