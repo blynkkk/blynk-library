@@ -243,6 +243,7 @@
 
         #if defined(ARDUINO_ARCH_AVR)
             #define BLYNK_USE_INTERNAL_ATOLL
+            #define BLYNK_MAX_TIMERS 8
         #endif
 
         #if defined(ARDUINO_ARCH_SAMD)
