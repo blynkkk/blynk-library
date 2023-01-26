@@ -14,8 +14,8 @@
   This example code is in public domain.
 
  *************************************************************
-  For this example you need UIPEthernet library:
-    https://github.com/UIPEthernet/UIPEthernet
+  For this example you need EthernetENC library:
+    https://github.com/jandrassy/EthernetENC
 
   Typical wiring would be (this is for Arduino UNO,
   search for correct wiring for your board):
@@ -39,8 +39,8 @@
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
 
-#include <UIPEthernet.h>
-#include <BlynkSimpleUIPEthernet.h>
+#include <EthernetENC.h>
+#include <BlynkSimpleEthernetENC.h>
 
 void setup()
 {
