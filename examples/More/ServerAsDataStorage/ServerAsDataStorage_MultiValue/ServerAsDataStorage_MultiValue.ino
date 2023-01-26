@@ -1,17 +1,14 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
   Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
+  ESP32, Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build mobile and web interfaces for any
   projects by simply dragging and dropping widgets.
 
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
+    Downloads, docs, tutorials: https://www.blynk.io
+    Sketch generator:           https://examples.blynk.cc
+    Blynk community:            https://community.blynk.cc
+    Follow us:                  https://www.fb.com/blynkapp
+                                https://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
   This example code is in public domain.
@@ -21,8 +18,8 @@
   This example shows you how you can use server as storage for
   your data like EEPROM
 
-  Project setup in the Blynk app (not necessary):
-    Value display on V1 in PUSH mode.
+  App dashboard setup (optional):
+    Value display on V1
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

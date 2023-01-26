@@ -36,6 +36,13 @@
   #define BOARD_LED_INVERSE           false
   #define BOARD_LED_BRIGHTNESS        64
 
+#elif defined(USE_ESP32_DEV_MODULE)
+
+  #warning "The LED of this board is not configured"
+
+  #define BOARD_BUTTON_PIN            0
+  #define BOARD_BUTTON_ACTIVE_LOW     true
+
 #elif defined(USE_ESP32C3_DEV_MODULE)
 
   #define BOARD_BUTTON_PIN            9
