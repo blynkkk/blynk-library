@@ -37,10 +37,10 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-#define LED_PIN 9
+#define LED_PIN 4
 
 BlynkTimer timer;
-int t1;
+BlynkTimer::Handle t1;
 
 // Toggle LED
 void ledBlynk()
@@ -52,9 +52,9 @@ void ledBlynk()
 BLYNK_WRITE(V1)
 {
   if (param.asInt()) {
-    timer.enable(t1);
+    t1.enable();
   } else {
-    timer.disable(t1);
+    t1.disable();
     digitalWrite(LED_PIN, LOW);
   }
 }
@@ -63,12 +63,7 @@ BLYNK_WRITE(V1)
 BLYNK_WRITE(V2)
 {
   long interval = param.asLong();
-  boolean wasEnabled = timer.isEnabled(t1);
-  timer.deleteTimer(t1);
-  t1 = timer.setInterval(interval, ledBlynk);
-  if (!wasEnabled) {
-    timer.disable(t1);
-  }
+  t1.changeInterval(interval);
 }
 
 void setup()
@@ -81,7 +76,7 @@ void setup()
   // Configure LED and timer
   pinMode(LED_PIN, OUTPUT);
   t1 = timer.setInterval(500L, ledBlynk);
-  timer.disable(t1);
+  t1.disable();
 }
 
 void loop()
