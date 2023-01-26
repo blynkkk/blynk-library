@@ -60,6 +60,32 @@ void console_init()
     BlynkState::set(MODE_SWITCH_TO_STA);
   });
 
+  edgentConsole.addCommand("wifi", [](int argc, const char* argv[]) {
+    if (argc < 1 || 0 == strcmp(argv[0], "show")) {
+      edgentConsole.printf(
+          "mac:%s ip:%s (%s [%s] %ddBm)\n",
+          getWiFiMacAddress().c_str(),
+          WiFi.localIP().toString().c_str(),
+          getWiFiNetworkSSID().c_str(),
+          getWiFiNetworkBSSID().c_str(),
+          WiFi.RSSI()
+      );
+    } else if (0 == strcmp(argv[0], "scan")) {
+      int found = WiFi.scanNetworks();
+      for (int i = 0; i < found; i++) {
+        bool current = (WiFi.SSID(i) == WiFi.SSID());
+        edgentConsole.printf(
+            "%s %s [%s] %s ch:%d rssi:%d\n",
+            (current ? "*" : " "), WiFi.SSID(i).c_str(),
+            macToString(WiFi.BSSID(i)).c_str(),
+            wifiSecToStr(WiFi.encryptionType(i)),
+            WiFi.channel(i), WiFi.RSSI(i)
+        );
+      }
+      WiFi.scanDelete();
+    }
+  });
+
   edgentConsole.addCommand("firmware", [](int argc, const char** argv) {
     if (argc < 1 || 0 == strcmp(argv[0], "info")) {
       unsigned sketchSize = ESP.getSketchSize();
@@ -75,6 +101,30 @@ void console_init()
       edgentConsole.printf(" App MD5:   %s\n", ESP.getSketchMD5().c_str());
 
     }
+  });
+
+  edgentConsole.addCommand("status", [](int argc, const char** argv) {
+    const uint64_t t = micros64() / 1000000;
+    unsigned secs = t % BLYNK_SECS_PER_MIN;
+    unsigned mins = (t / BLYNK_SECS_PER_MIN) % BLYNK_SECS_PER_MIN;
+    unsigned hrs  = (t % BLYNK_SECS_PER_DAY) / BLYNK_SECS_PER_HOUR;
+    unsigned days = t / BLYNK_SECS_PER_DAY;
+
+    uint32_t heap_free; uint16_t heap_max;
+    uint8_t heap_frag;
+    ESP.getHeapStats(&heap_free, &heap_max, &heap_frag);
+    edgentConsole.printf(" Uptime:          %dd %dh %dm %ds\n", days, hrs, mins, secs);
+    edgentConsole.printf(" Reset reason:    %s\n",        ESP.getResetReason().c_str());
+    edgentConsole.printf(" Flash:           %dK\n",       ESP.getFlashChipSize() / 1024);
+    edgentConsole.printf(" Stack unused:    %d\n",        ESP.getFreeContStack());
+    edgentConsole.printf(" Heap free:       %d / %d\n",   heap_free, heap_max);
+    edgentConsole.printf("      fragment:   %d\n",        heap_frag);
+    edgentConsole.printf("      max alloc:  %d\n",        ESP.getMaxFreeBlockSize());
+#ifdef BLYNK_FS
+    FSInfo fs_info;
+    BLYNK_FS.info(fs_info);
+    edgentConsole.printf(" FS free:         %d / %d\n",   (fs_info.totalBytes-fs_info.usedBytes), fs_info.totalBytes);
+#endif
   });
 
 #ifdef BLYNK_FS

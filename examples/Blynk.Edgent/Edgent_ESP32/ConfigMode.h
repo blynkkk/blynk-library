@@ -116,6 +116,30 @@ String getWiFiName(bool withPrefix = true)
   }
 }
 
+static inline
+String macToString(byte mac[6]) {
+  char buff[20];
+  snprintf(buff, sizeof(buff), "%02x:%02x:%02x:%02x:%02x:%02x",
+           mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  return String(buff);
+}
+
+static inline
+const char* wifiSecToStr(wifi_auth_mode_t t) {
+  switch (t) {
+    case WIFI_AUTH_OPEN:            return "OPEN";
+    case WIFI_AUTH_WEP:             return "WEP";
+    case WIFI_AUTH_WPA_PSK:         return "WPA";
+    case WIFI_AUTH_WPA2_PSK:        return "WPA2";
+    case WIFI_AUTH_WPA_WPA2_PSK:    return "WPA+WPA2";
+    case WIFI_AUTH_WPA2_ENTERPRISE: return "WPA2-EAP";
+    case WIFI_AUTH_WPA3_PSK:        return "WPA3";
+    case WIFI_AUTH_WPA2_WPA3_PSK:   return "WPA2+WPA3";
+    case WIFI_AUTH_WAPI_PSK:        return "WAPI";
+    default:                        return "unknown";
+  }
+}
+
 static
 String getWiFiMacAddress() {
   return WiFi.macAddress();
@@ -336,28 +360,19 @@ void enterConfigMode()
       for (int i = 0; i < wifi_nets; i++){
         int id = indices[i];
 
-        const char* sec;
-        switch (WiFi.encryptionType(id)) {
-        case WIFI_AUTH_WEP:          sec = "WEP"; break;
-        case WIFI_AUTH_WPA_PSK:      sec = "WPA/PSK"; break;
-        case WIFI_AUTH_WPA2_PSK:     sec = "WPA2/PSK"; break;
-        case WIFI_AUTH_WPA_WPA2_PSK: sec = "WPA/WPA2/PSK"; break;
-        case WIFI_AUTH_OPEN:         sec = "OPEN"; break;
-        default:                     sec = "unknown"; break;
-        }
-
         snprintf(buff, sizeof(buff),
           R"json(  {"ssid":"%s","bssid":"%s","rssi":%i,"sec":"%s","ch":%i})json",
           WiFi.SSID(id).c_str(),
           WiFi.BSSIDstr(id).c_str(),
           WiFi.RSSI(id),
-          sec,
+          wifiSecToStr(WiFi.encryptionType(id)),
           WiFi.channel(id)
         );
 
         result += buff;
         if (i != wifi_nets-1) result += ",\n";
       }
+      WiFi.scanDelete();
       server.send(200, "application/json", result + "\n]");
     } else {
       server.send(200, "application/json", "[]");

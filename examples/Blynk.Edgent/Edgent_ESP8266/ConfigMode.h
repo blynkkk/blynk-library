@@ -111,6 +111,26 @@ String getWiFiName(bool withPrefix = true)
   }
 }
 
+static inline
+String macToString(byte mac[6]) {
+  char buff[20];
+  snprintf(buff, sizeof(buff), "%02x:%02x:%02x:%02x:%02x:%02x",
+           mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  return String(buff);
+}
+
+static inline
+const char* wifiSecToStr(uint8_t t) {
+  switch (t) {
+    case ENC_TYPE_NONE:             return "OPEN";
+    case ENC_TYPE_WEP:              return "WEP";
+    case ENC_TYPE_TKIP:             return "WPA";
+    case ENC_TYPE_CCMP:             return "WPA2";
+    case ENC_TYPE_AUTO:             return "WPA+WPA2";
+    default:                        return "unknown";
+  }
+}
+
 static
 String getWiFiMacAddress() {
   return WiFi.macAddress();
@@ -295,27 +315,16 @@ void enterConfigMode()
       server.setContentLength(CONTENT_LENGTH_UNKNOWN);
       server.send(200, "application/json", "[\n");
 
-
       char buff[256];
       for (int i = 0; i < wifi_nets; i++){
         int id = indices[i];
-
-        const char* sec;
-        switch (WiFi.encryptionType(id)) {
-        case ENC_TYPE_WEP:  sec = "WEP"; break;
-        case ENC_TYPE_TKIP: sec = "WPA/PSK"; break;
-        case ENC_TYPE_CCMP: sec = "WPA2/PSK"; break;
-        case ENC_TYPE_AUTO: sec = "WPA/WPA2/PSK"; break;
-        case ENC_TYPE_NONE: sec = "OPEN"; break;
-        default:            sec = "unknown"; break;
-        }
 
         snprintf(buff, sizeof(buff),
           R"json(  {"ssid":"%s","bssid":"%s","rssi":%i,"sec":"%s","ch":%i,"hidden":%d})json",
           WiFi.SSID(id).c_str(),
           WiFi.BSSIDstr(id).c_str(),
           WiFi.RSSI(id),
-          sec,
+          wifiSecToStr(WiFi.encryptionType(id)),
           WiFi.channel(id),
           WiFi.isHidden(id)
         );
@@ -323,6 +332,7 @@ void enterConfigMode()
         server.sendContent(buff);
         if (i != wifi_nets-1) server.sendContent(",\n");
       }
+      WiFi.scanDelete();
       server.sendContent("\n]");
     } else {
       server.send(200, "application/json", "[]");
