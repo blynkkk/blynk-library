@@ -17,14 +17,17 @@
 
   Blynk using a LED widget on your phone!
 
-  App dashboard setup:
-    LED widget on V1
+  Datastream setup:
+    Virtual Pin V3, type: Integer, min: 0, max: 255
+
+  App/Web dashboard setup:
+    LED widget on V3
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in information from Blynk Device Info here */
+/* Fill in information from Blynk Device Info here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
@@ -34,7 +37,7 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-WidgetLED led1(V1);
+WidgetLED led1(V3);
 
 BlynkTimer timer;
 

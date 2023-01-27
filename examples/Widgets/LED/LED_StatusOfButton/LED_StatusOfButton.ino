@@ -17,14 +17,17 @@
 
   Blynk using a LED widget on your phone!
 
-  App dashboard setup:
+  Datastream setup:
+    Virtual Pin V3, type: Integer, min: 0, max: 255
+
+  App/Web dashboard setup:
     LED widget on V3
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-/* Fill-in information from Blynk Device Info here */
+/* Fill in information from Blynk Device Info here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
@@ -37,7 +40,7 @@
 // Select your pin with physical button
 const int btnPin = 1;
 
-WidgetLED led3(V3);
+WidgetLED led1(V3);
 
 BlynkTimer timer;
 
@@ -51,9 +54,9 @@ void buttonLedWidget()
   // If state has changed...
   if (isPressed != btnState) {
     if (isPressed) {
-      led3.on();
+      led1.on();
     } else {
-      led3.off();
+      led1.off();
     }
     btnState = isPressed;
   }
