@@ -17,14 +17,17 @@
 
   Output any data on LCD widget!
 
+  Datastream setup:
+    Virtual Pin V8, type: Integer, min: 0, max: 10000
+    Virtual Pin V9, type: Integer, min: 0, max: 10000000
+
   App dashboard setup:
-
-    LCD widget, SIMPLE mode, in widget settings :
-
-    - Select pin V0 for zero pin
-    - Select pin V1 for first pin
-    - Type into first edit field "/pin0/ seconds"
-    - Type into second edit field "/pin1/ millis"
+    LCD widget, SIMPLE mode. In Settings tab:
+    - Attach V8 to first line
+    - Attach V9 to second line
+    Switch to Design tab:
+    - Set first line message to: "/value1/ seconds"
+    - Set second line message to: "/value2/ ms"
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -43,11 +46,11 @@
 BlynkTimer timer;
 
 void sendSeconds() {
-  Blynk.virtualWrite(V0, millis() / 1000);
+  Blynk.virtualWrite(V8, millis() / 1000);
 }
 
 void sendMillis() {
-  Blynk.virtualWrite(V1, millis());
+  Blynk.virtualWrite(V9, millis());
 }
 
 void setup()

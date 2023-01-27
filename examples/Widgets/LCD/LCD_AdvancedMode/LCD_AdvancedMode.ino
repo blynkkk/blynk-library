@@ -17,8 +17,11 @@
 
   Output any data on LCD widget!
 
+  Datastream setup:
+    Virtual Pin V9, type: String
+
   App dashboard setup:
-    LCD widget, switch to ADVANCED mode, select pin V1
+    LCD widget, switch to ADVANCED mode, attach it to V9
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -34,7 +37,7 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-WidgetLCD lcd(V1);
+WidgetLCD lcd(V9);
 
 void setup()
 {

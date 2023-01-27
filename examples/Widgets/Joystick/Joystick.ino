@@ -18,10 +18,10 @@
   You can receive x and y coords for joystick movement within App.
 
   Datastream setup:
-    Virtual Pin V1, type: String
+    Virtual Pin V0, type: String
 
   App dashboard setup:
-    Add a Joystick widget, select Advanced output mode. Attach it to "Joystick" DS.
+    Add Joystick widget, select mode: Advanced, attach it V0
 
   NOTE: Advanced mode means device will receive both x and y on a single Datastream
  *************************************************************/
@@ -39,7 +39,7 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-BLYNK_WRITE(V1) {
+BLYNK_WRITE(V0) {
   int x = param[0].asInt();
   int y = param[1].asInt();
 
