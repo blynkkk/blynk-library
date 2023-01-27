@@ -32,7 +32,7 @@
    https://wiki.seeedstudio.com/Wio-Terminal-Network-Overview
  *************************************************************/
 
-/* Fill-in information from your Blynk Template here */
+/* Fill in information from your Blynk Template here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 
