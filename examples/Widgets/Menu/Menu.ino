@@ -17,8 +17,16 @@
 
   This example shows how to use the Menu Widget.
 
-  App dashboard setup:
+  Datastream setup:
+    Virtual Pin V1, type: Integer, min: 1, max: 3
+
+  App/Web dashboard setup:
     Menu widget attached to V1 (put 3 items in it)
+
+  For Integer DS, pay attention to the Datastream range.
+    Apps automatically assign values to the menu items,
+    starting with the minimal datastream value.
+  It's also possible to use Enum datastreams.
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
