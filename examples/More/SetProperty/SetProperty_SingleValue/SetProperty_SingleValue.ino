@@ -15,7 +15,8 @@
 
  *************************************************************
 
-  You can set predefined properties of any widget. Like color, label
+  You can set predefined properties (color, label, ...) of any widget.
+  Read more: https://docs.blynk.io/en/blynk.edgent-firmware-api/widget-properties
 
   App dashboard setup:
     Gauge widget (0...100) on V0

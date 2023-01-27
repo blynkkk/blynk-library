@@ -15,10 +15,14 @@
 
  *************************************************************
 
-  You can set predefined properties of any widget. Like color, label
+  You can set predefined properties (color, label, ...) of any widget.
+  Read more: https://docs.blynk.io/en/blynk.edgent-firmware-api/widget-properties
+
+  Datastream setup:
+    Virtual Pin V1, type: Integer, min: 1, max: 3
 
   App dashboard setup:
-    Menu Widget on V1 with 2 items
+    Menu Widget on V1 with 2 items: "Item 1", "Add items"
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
