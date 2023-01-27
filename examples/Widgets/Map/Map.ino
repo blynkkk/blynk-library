@@ -17,8 +17,11 @@
 
   Output any data on Map widget!
 
+  Datastream setup:
+    Virtual Pin V6, type: String
+
   App dashboard setup:
-    Map widget on V1
+    Map widget on V6
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -34,7 +37,7 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-WidgetMap myMap(V1);
+WidgetMap myMap(V6);
 
 void setup()
 {
@@ -47,9 +50,9 @@ void setup()
   //myMap.clear();
 
   int index = 0;
-  float lat = 51.5074;
-  float lon = 0.1278;
-  myMap.location(index, lat, lon, "value");
+  double lat = 50.4495378;
+  double lon = 30.5251447;
+  myMap.location(index, lat, lon, "Monument of Independence");
 }
 
 void loop()
