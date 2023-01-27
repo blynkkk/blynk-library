@@ -14,8 +14,10 @@
   This example code is in public domain.
 
  *************************************************************
-
-  This sketch prints all virtual pin's operations!
+  This example uses BLYNK_WRITE_DEFAULT to capture arbitrary
+  virtual pin changes. This may be useful if you have lots
+  of DataStreams with controls.
+  It also shows how to iterate over all parameter values.
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

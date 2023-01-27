@@ -17,8 +17,8 @@
 
   You can receive x and y coords for joystick movement within App.
 
-  Datastreams setup:
-    Add a Virtual Pin Datastream called "Joystick" on V1. Select type: "String".
+  Datastream setup:
+    Virtual Pin V1, type: String
 
   App dashboard setup:
     Add a Joystick widget, select Advanced output mode. Attach it to "Joystick" DS.

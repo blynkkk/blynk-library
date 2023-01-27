@@ -17,8 +17,11 @@
 
   This example shows how you can process commands from player widget
 
+  Datastream setup:
+    Virtual Pin V5, type: String
+
   App dashboard setup:
-    Music Player widget attached to V5
+    Music Player widget on V5
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

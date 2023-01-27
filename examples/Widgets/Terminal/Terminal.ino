@@ -17,8 +17,11 @@
 
   You can send/receive any data using WidgetTerminal object.
 
-  App dashboard setup:
-    Terminal widget attached to Virtual Pin V1
+  Datastream setup:
+    Virtual Pin V10, type: String
+
+  App/Web dashboard setup:
+    Terminal widget on V10
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
@@ -34,12 +37,12 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-// Attach virtual serial terminal to Virtual Pin V1
-WidgetTerminal terminal(V1);
+// Attach virtual serial terminal to Virtual Pin V10
+WidgetTerminal terminal(V10);
 
 // You can send commands from Terminal to your hardware. Just use
 // the same Virtual Pin as your Terminal Widget
-BLYNK_WRITE(V1)
+BLYNK_WRITE(V10)
 {
 
   // if you type "Marco" into Terminal Widget - it will respond: "Polo:"
