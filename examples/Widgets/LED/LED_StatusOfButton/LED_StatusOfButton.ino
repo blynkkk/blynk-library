@@ -38,7 +38,7 @@
 #include <BlynkSimpleEthernet.h>
 
 // Select your pin with physical button
-const int btnPin = 1;
+const int btnPin = 4;
 
 WidgetLED led1(V3);
 

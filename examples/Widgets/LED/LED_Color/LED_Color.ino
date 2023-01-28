@@ -53,16 +53,16 @@ BLYNK_CONNECTED() {
   led1.on();
 }
 
-// V1 LED Widget is blinking
+// V3 LED Widget is blinking
 void blinkLedWidget()
 {
   if (ledStatus) {
     led1.setColor(BLYNK_RED);
-    Serial.println("LED on V1: red");
+    Serial.println("LED on V3: red");
     ledStatus = false;
   } else {
     led1.setColor(BLYNK_GREEN);
-    Serial.println("LED on V1: green");
+    Serial.println("LED on V3: green");
     ledStatus = true;
   }
 }

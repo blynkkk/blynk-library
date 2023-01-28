@@ -41,7 +41,7 @@ WidgetLED led1(V3);
 
 BlynkTimer timer;
 
-// V2 LED Widget is fading
+// V3 LED Widget is fading
 void fadeLedWidget()
 {
   static int value = 0;
@@ -50,7 +50,7 @@ void fadeLedWidget()
   if (value > 255 || value < 0) {
     delta = -delta;
   } else {
-    Serial.print("LED on V2: ");
+    Serial.print("LED on V3: ");
     Serial.println(value);
     led1.setValue(value);
   }
