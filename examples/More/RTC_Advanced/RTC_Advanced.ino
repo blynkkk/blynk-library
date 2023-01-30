@@ -18,6 +18,9 @@
   Blynk can provide your device with time data, like an RTC.
   Please note that the accuracy of this method is up to several seconds.
 
+  NOTE: there's a better way to get a detailed time and timezone info.
+    See TimeAndLocation example for details!
+
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

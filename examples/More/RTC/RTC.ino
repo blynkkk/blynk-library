@@ -18,9 +18,15 @@
   Blynk can provide your device with time data, like an RTC.
   Please note that the accuracy of this method is up to several seconds.
 
-  App/Web dashboard setup:
+  Datastream setup:
+    Virtual Pin V1, type: String
+    Virtual Pin V2, type: String
+
+  App dashboard setup:
     Value Display widget on V1
     Value Display widget on V2
+
+  NOTE: On Web dashboard, use Label widgets
 
   WARNING :
   For this example you'll need Time keeping library:
