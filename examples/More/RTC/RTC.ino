@@ -28,7 +28,7 @@
 
   NOTE: On Web dashboard, use Label widgets
 
-  WARNING :
+  WARNING:
   For this example you'll need Time keeping library:
     https://github.com/PaulStoffregen/Time
 

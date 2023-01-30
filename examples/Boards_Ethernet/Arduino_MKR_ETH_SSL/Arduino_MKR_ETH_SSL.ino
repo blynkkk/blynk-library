@@ -17,8 +17,7 @@
   This example shows how to use Arduino MKR ETH shield
   to connect your project to Blynk.
 
-  Note: This requires the latest Ethernet library (2.0.0+)
-    from http://librarymanager/all#Ethernet
+  NOTE: This requires the latest Ethernet library (2.0.0+)
 
   WARNING: If you have an SD card, you may need to disable it
         by setting pin 4 to HIGH. Read more here:

@@ -17,8 +17,7 @@
   This example shows how to use Arduino.org UNO WiFi
   to connect your project to Blynk.
 
-  Note: This requires WiFi Link library
-    from http://librarymanager/all#WiFi_Link
+  NOTE: This requires WiFi Link library
 
   Please update your UNO WiFi firmware to WiFiLink 1.0.0 (at least).
 

@@ -17,8 +17,7 @@
   This example shows how to use WizFi310
   to connect your project to Blynk.
 
-  Note: This requires WizFi310 library
-    from http://librarymanager/all#WizFi310
+  NOTE: This requires WizFi310 library
 
   Feel free to apply it to any other example. It's simple!
  *************************************************************/

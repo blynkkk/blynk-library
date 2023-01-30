@@ -17,8 +17,7 @@
   This example shows how to use Arduino MKR 1010
   to connect your project to Blynk.
 
-  Note: This requires WiFiNINA library
-    from http://librarymanager/all#WiFiNINA
+  NOTE: This requires WiFiNINA library
 
   Feel free to apply it to any other example. It's simple!
  *************************************************************/

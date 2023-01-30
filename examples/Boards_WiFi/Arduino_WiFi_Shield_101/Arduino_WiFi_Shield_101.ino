@@ -17,8 +17,7 @@
   This example shows how to use Arduino WiFi 101 shield
   to connect your project to Blynk.
 
-  Note: This requires WiFi101 library
-    from http://librarymanager/all#WiFi101
+  NOTE: This requires WiFi101 library
 
   Feel free to apply it to any other example. It's simple!
  *************************************************************/

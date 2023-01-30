@@ -17,8 +17,7 @@
   This example shows how to use WizFi250
   to connect your project to Blynk.
 
-  Note: This requires WizFi250 library
-    from http://librarymanager/all#WizFi250
+  NOTE: This requires WizFi250 library
 
   Feel free to apply it to any other example. It's simple!
  *************************************************************/

@@ -18,7 +18,7 @@
   This example shows how value can be pushed from Arduino to
   the Blynk App.
 
-  WARNING :
+  WARNING:
   For this example you'll need Adafruit DHT sensor libraries:
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/DHT-sensor-library
