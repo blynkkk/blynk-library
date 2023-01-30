@@ -22,6 +22,10 @@
 
   App dashboard setup:
     Map widget on V6
+
+  NOTE: This is for the App Map widget only.
+  The Web Dashboard has different functionality. Read More:
+    https://docs.blynk.io/en/blynk.console/widgets-console/map
  *************************************************************/
 
 /* Comment this out to disable prints and save space */

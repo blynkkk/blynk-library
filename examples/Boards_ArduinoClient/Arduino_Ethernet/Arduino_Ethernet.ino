@@ -37,6 +37,9 @@
 //#define BLYNK_TEMPLATE_NAME         "Device"
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
+/* BlynkMultiClient allows attaching Blynk the standard Arduino Client,
+   and also allows multiple (up to 4) connections to be registered.
+   NOTE: don't replace it with any of the BlynkSimple*.h variants */
 #include <BlynkMultiClient.h>
 
 /*
@@ -47,7 +50,7 @@
 byte ETH_MAC[] =        { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 #include <SPI.h>
-#include <Ethernet.h>   // For ENC28J60, you can use <EthernetENC.h> library
+#include <Ethernet.h>   // For ENC28J60, replace this with <EthernetENC.h> library
 
 // Ethernet shield and SDcard pins
 #define W5100_CS   10
