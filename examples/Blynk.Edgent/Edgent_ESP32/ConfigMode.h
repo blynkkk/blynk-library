@@ -133,9 +133,11 @@ const char* wifiSecToStr(wifi_auth_mode_t t) {
     case WIFI_AUTH_WPA2_PSK:        return "WPA2";
     case WIFI_AUTH_WPA_WPA2_PSK:    return "WPA+WPA2";
     case WIFI_AUTH_WPA2_ENTERPRISE: return "WPA2-EAP";
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 3, 0))
     case WIFI_AUTH_WPA3_PSK:        return "WPA3";
     case WIFI_AUTH_WPA2_WPA3_PSK:   return "WPA2+WPA3";
     case WIFI_AUTH_WAPI_PSK:        return "WAPI";
+#endif
     default:                        return "unknown";
   }
 }
