@@ -20,7 +20,7 @@
   For this example you need WiFlyHQ library:
     https://github.com/harlequin-tech/WiFlyHQ
 
-  Note: Be sure to read this: http://www.theairboard.cc/quick-start/
+  NOTE: Be sure to read this: http://www.theairboard.cc/quick-start/
         WiFly firmware version 4.41 or later is preferred.
 
   Change WiFi ssid, pass, and Blynk auth token to run :)

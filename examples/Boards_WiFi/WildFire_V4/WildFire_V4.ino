@@ -17,7 +17,7 @@
   This example shows how to use WildFire V4
   to connect your project to Blynk.
 
-  Note: You need to install Arduino IDE WildFire support:
+  NOTE: You need to install Arduino IDE WildFire support:
     http://shop.wickeddevice.com/resources/wildfire/
 
   Change WiFi ssid, pass, and Blynk auth token to run :)

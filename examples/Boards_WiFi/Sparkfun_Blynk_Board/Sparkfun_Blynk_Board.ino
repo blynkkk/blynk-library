@@ -16,7 +16,7 @@
  *************************************************************
   This example runs on Sparkfun Blynk Board.
 
-  Note: This requires ESP8266 support package:
+  NOTE: This requires ESP8266 support package:
     https://github.com/esp8266/Arduino
 
   You can select NodeMCU 1.0 (compatible board)

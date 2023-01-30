@@ -16,7 +16,7 @@
  *************************************************************
   This example shows how to use Arduino MKRNB 1500
   to connect your project to Blynk.
-  Note: This requires MKRGSM library
+  NOTE: This requires MKRGSM library
     from https://www.arduino.cc/en/Reference/MKRNB
   Feel free to apply it to any other example. It's simple!
  *************************************************************/

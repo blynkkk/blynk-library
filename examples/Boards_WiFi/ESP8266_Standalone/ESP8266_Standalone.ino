@@ -16,7 +16,7 @@
  *************************************************************
   This example runs directly on ESP8266 chip.
 
-  Note: This requires ESP8266 support package:
+  NOTE: This requires ESP8266 support package:
     https://github.com/esp8266/Arduino
 
   Please be sure to select the right ESP8266 module

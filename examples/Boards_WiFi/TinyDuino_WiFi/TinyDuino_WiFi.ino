@@ -17,7 +17,7 @@
   This example shows how to use TinyCircuits CC3000 shield
   to connect your project to Blynk.
 
-  Note: Firmware version 1.14 or later is preferred.
+  NOTE: Firmware version 1.14 or later is preferred.
         Tools->Board     should be "Arduino Pro or Pro Mini"
         Tools->Processor should be "ATmega 328 (3.3V, 8MHz)"
 

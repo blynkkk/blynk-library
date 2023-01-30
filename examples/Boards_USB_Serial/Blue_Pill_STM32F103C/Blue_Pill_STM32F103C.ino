@@ -18,10 +18,10 @@
   =>          USB HOWTO: http://tiny.cc/BlynkOverSerial
   =>
 
-  Note: This requires STM32duino support package:
+  NOTE: This requires STM32duino support package:
     https://github.com/rogerclarkmelbourne/Arduino_STM32/wiki/Installation
 
-  Note: You may need to wait up to 30 seconds after board starts,
+  NOTE: You may need to wait up to 30 seconds after board starts,
         to allow USB serial to initialize completely.
 
   Feel free to apply it to any other example. It's simple!

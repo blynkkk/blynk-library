@@ -17,10 +17,10 @@
   This example shows how to use CC3000 on WildFire board
   to connect your project to Blynk.
 
-  Note: You need to install Arduino IDE WildFire support:
+  NOTE: You need to install Arduino IDE WildFire support:
     http://shop.wickeddevice.com/resources/wildfire/
 
-  Note: Firmware version 1.14 or later is preferred.
+  NOTE: Firmware version 1.14 or later is preferred.
 
   Change WiFi ssid, pass, and Blynk auth token to run :)
   Feel free to apply it to any other example. It's simple!

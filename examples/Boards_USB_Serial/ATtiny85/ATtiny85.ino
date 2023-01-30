@@ -18,7 +18,7 @@
   =>          USB HOWTO: http://tiny.cc/BlynkOverSerial
   =>
 
-  Note: This requires ATtiny support package:
+  NOTE: This requires ATtiny support package:
     https://github.com/damellis/attiny
 
   Be sure to check ordinary Serial example first!!!

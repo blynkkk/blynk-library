@@ -17,7 +17,7 @@
 
   This example shows how to use Fishino to connect your project to Blynk.
 
-  Note: This requires Fishino Software libraries:
+  NOTE: This requires Fishino Software libraries:
     http://fishino.it/en/download/
 
   Change WiFi ssid, pass, and Blynk auth token to run :)

@@ -20,7 +20,7 @@
   For this example you need WiFlyHQ library:
     https://github.com/harlequin-tech/WiFlyHQ
 
-  Note: Ensure a stable serial connection!
+  NOTE: Ensure a stable serial connection!
         Hardware serial is preferred.
         Firmware version 4.41 or later is preferred.
 

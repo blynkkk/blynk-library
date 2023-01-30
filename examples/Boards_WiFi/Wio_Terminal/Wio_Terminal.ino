@@ -16,7 +16,7 @@
  *************************************************************
   This example runs directly on Wio Terminal.
 
-  Note: This requires Wio Terminal Wi-Fi support package:
+  NOTE: This requires Wio Terminal Wi-Fi support package:
     https://wiki.seeedstudio.com/Wio-Terminal-Network-Overview/
 
   Please be sure to select the right Wio Terminal module
