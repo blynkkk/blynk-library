@@ -15,7 +15,7 @@
 
  *************************************************************
   =>
-  =>          USB HOWTO: http://tiny.cc/BlynkOverSerial
+  =>          USB HOWTO: https://bit.ly/BlynkOverSerial
   =>
 
   NOTE: This requires STM32duino support package:

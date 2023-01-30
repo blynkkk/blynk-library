@@ -15,7 +15,7 @@
 
  *************************************************************
   =>
-  =>          USB HOWTO: http://tiny.cc/BlynkOverSerial
+  =>          USB HOWTO: https://bit.ly/BlynkOverSerial
   =>
 
   Feel free to apply it to any other example. It's simple!

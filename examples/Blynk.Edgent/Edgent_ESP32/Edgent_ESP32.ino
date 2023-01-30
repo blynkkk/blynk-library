@@ -20,7 +20,7 @@
  *************************************************************/
 
 /* Fill in information from your Blynk Template here */
-/* Read more: https://docs.blynk.io/en/getting-started/activating-devices/blynk-edgent-wifi-provisioning */
+/* Read more: https://bit.ly/BlynkInject */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 

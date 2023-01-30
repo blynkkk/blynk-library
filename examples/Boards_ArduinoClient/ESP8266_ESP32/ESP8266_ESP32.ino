@@ -28,6 +28,7 @@
 //#define BLYNK_DEBUG
 
 /* Fill in information from Blynk Device Info here */
+/* Read more: https://bit.ly/BlynkSimpleAuth */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
