@@ -151,7 +151,7 @@ void            BlynkFatal() BLYNK_NORETURN;
                 bool prev_print = true;
                 while (l2--) {
                     const uint8_t c = *octets++ & 0xFF;
-                    if (c >= 32 && c < 127) {
+                    if (c > 32 && c < 127) {
                         if (!prev_print) { BLYNK_PRINT.print(']'); }
                         BLYNK_PRINT.print((char)c);
                         prev_print = true;
@@ -217,7 +217,7 @@ void            BlynkFatal() BLYNK_NORETURN;
             bool prev_print = true;
             while (l2--) {
                 const uint8_t c = *octets++ & 0xFF;
-                if (c >= 32 && c < 127) {
+                if (c > 32 && c < 127) {
                     if (!prev_print) { BLYNK_PRINT.putc(']'); }
                     BLYNK_PRINT.putc((char)c);
                     prev_print = true;
@@ -263,7 +263,7 @@ void            BlynkFatal() BLYNK_NORETURN;
             bool prev_print = true;
             while (l2--) {
                 const uint8_t c = *octets++ & 0xFF;
-                if (c >= 32 && c < 127) {
+                if (c > 32 && c < 127) {
                     if (!prev_print) { fputc(']', BLYNK_PRINT); }
                     fputc((char)c, BLYNK_PRINT);
                     prev_print = true;
