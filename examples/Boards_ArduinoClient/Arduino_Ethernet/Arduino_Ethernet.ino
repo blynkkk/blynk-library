@@ -37,7 +37,7 @@
 //#define BLYNK_TEMPLATE_NAME         "Device"
 //#define BLYNK_AUTH_TOKEN            "YourAuthToken"
 
-/* BlynkMultiClient allows attaching Blynk the standard Arduino Client,
+/* BlynkMultiClient allows attaching Blynk to the standard Arduino Client,
    and also allows multiple (up to 4) connections to be registered.
    NOTE: don't replace it with any of the BlynkSimple*.h variants */
 #include <BlynkMultiClient.h>
