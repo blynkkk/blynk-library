@@ -202,6 +202,10 @@ public:
         stream = s;
     }
 
+    Stream& getStream() {
+        return *stream;
+    }
+
     void run() {
         while (stream && stream->available()) {
             char c = stream->read();
