@@ -35,10 +35,6 @@
 #include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
 
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
 BLYNK_WRITE(V1) {
   TimeInputParam t(param);
 
@@ -110,7 +106,7 @@ void setup()
   // Debug console
   Serial.begin(9600);
 
-  Blynk.begin(auth);
+  Blynk.begin(BLYNK_AUTH_TOKEN);
 }
 
 void loop()
