@@ -11,35 +11,33 @@
 #ifndef BlynkConsole_h
 #define BlynkConsole_h
 
-#include <Blynk/BlynkConfig.h>
+#include <Blynk/BlynkDebug.h>
 
 #define BLYNK_CONSOLE_MAX_COMMANDS 64
 #define BLYNK_CONSOLE_INPUT_BUFFER 256
 #define BLYNK_CONSOLE_USE_STREAM
-#define BLYNK_CONSOLE_USE_LAMBDAS
-
-#ifdef BLYNK_CONSOLE_USE_LAMBDAS
-#include <functional>
-#endif
 
 #ifdef BLYNK_CONSOLE_USE_STREAM
-#include <stdarg.h>
+  #include <stdarg.h>
 #endif
 
 class BlynkConsole
 {
 private:
 
-#ifdef BLYNK_CONSOLE_USE_LAMBDAS
+#ifdef BLYNK_HAS_FUNCTIONAL_H
     typedef std::function<void(void)> HandlerSimp;
     typedef std::function<void(int argc, const char** argv)> HandlerArgs;
+    //typedef std::function<void(BlynkParam param)> HandlerParams;
 #else
     typedef void (*HandlerSimp)();
     typedef void (*HandlerArgs)(int argc, const char** argv);
+    //typedef void (*HandlerArgs)(BlynkParam param);
 #endif
     enum HandlerType {
         SIMPLE,
         WITH_ARGS,
+        //WITH_PARAMS,
         SUB_CONSOLE
     };
 
@@ -76,7 +74,7 @@ public:
     BlynkConsole() {
         reset_buff();
 
-#if defined(BLYNK_CONSOLE_USE_STREAM) && defined(BLYNK_CONSOLE_USE_LAMBDAS)
+#if defined(BLYNK_CONSOLE_USE_STREAM) && defined(BLYNK_HAS_FUNCTIONAL_H)
         help = [=]() {
             if (!stream) return;
             stream->print("Available commands: ");

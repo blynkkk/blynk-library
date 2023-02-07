@@ -35,19 +35,12 @@
 #define SIMPLETIMER_H
 #define SimpleTimer BlynkTimer
 
-#if defined(__has_include)
-#if __has_include(<functional>)
-  #include <functional>
-  #define HAS_FUNCTIONAL_H
-#endif
-#endif
-
 #ifndef BLYNK_MAX_TIMERS
   #define BLYNK_MAX_TIMERS 16
 #endif
 
 class SimpleTimer {
-#ifdef HAS_FUNCTIONAL_H
+#ifdef BLYNK_HAS_FUNCTIONAL_H
     typedef std::function<void(void)> timer_callback;
 #else
     typedef void (*timer_callback)(void);

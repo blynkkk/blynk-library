@@ -79,6 +79,13 @@ void            BlynkFatal() BLYNK_NORETURN;
     #define BLYNK_PSTR(s) s
 #endif
 
+#if defined(__has_include)
+    #if __has_include(<functional>)
+        #include <functional>
+        #define BLYNK_HAS_FUNCTIONAL_H
+    #endif
+#endif
+
 #ifdef ARDUINO_AVR_DIGISPARK
     typedef fstr_t __FlashStringHelper;
 #endif
