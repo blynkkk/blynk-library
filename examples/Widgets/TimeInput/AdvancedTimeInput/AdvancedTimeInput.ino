@@ -20,6 +20,14 @@
 
   App dashboard setup:
     Time Input widget on V1
+      Change format to HH:MM:SS
+      Allow start/stop input -> YES
+      Allow day of week selections -> YES
+      Allow sunset/sunrise selections -> YES
+      Allow timezone selection -> YES
+
+  On a running device, tap on the widget to select:
+    Day(s) of the week, start/end time (or sunrise/sunset), and timezone
  *************************************************************/
 
 /* Comment this out to disable prints and save space */
