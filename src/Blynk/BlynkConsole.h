@@ -12,6 +12,7 @@
 #define BlynkConsole_h
 
 #include <Blynk/BlynkDebug.h>
+#include <Blynk/BlynkParam.h>
 
 #define BLYNK_CONSOLE_MAX_COMMANDS 64
 #define BLYNK_CONSOLE_INPUT_BUFFER 256
@@ -28,16 +29,16 @@ private:
 #ifdef BLYNK_HAS_FUNCTIONAL_H
     typedef std::function<void(void)> HandlerSimp;
     typedef std::function<void(int argc, const char** argv)> HandlerArgs;
-    //typedef std::function<void(BlynkParam param)> HandlerParams;
+    typedef std::function<void(const BlynkParam &param)> HandlerParams;
 #else
     typedef void (*HandlerSimp)();
     typedef void (*HandlerArgs)(int argc, const char** argv);
-    //typedef void (*HandlerArgs)(BlynkParam param);
+    typedef void (*HandlerParams)(const BlynkParam &param);
 #endif
     enum HandlerType {
         SIMPLE,
         WITH_ARGS,
-        //WITH_PARAMS,
+        WITH_PARAMS,
         SUB_CONSOLE
     };
 
@@ -46,9 +47,10 @@ private:
         const char* cmd;
         HandlerType type;
         union {
-            HandlerSimp*  f_simp;
-            HandlerArgs*  f_args;
-            BlynkConsole* f_cons;
+            HandlerSimp*    f_simp;
+            HandlerArgs*    f_args;
+            HandlerParams*  f_params;
+            BlynkConsole*   f_cons;
         };
         CmdHandler() = default;
         CmdHandler(const char* s, HandlerSimp* f)
@@ -56,6 +58,9 @@ private:
         {}
         CmdHandler(const char* s, HandlerArgs* f)
             : cmd(s), type(WITH_ARGS), f_args(f)
+        {}
+        CmdHandler(const char* s, HandlerParams* f)
+            : cmd(s), type(WITH_PARAMS), f_params(f)
         {}
         CmdHandler(const char* s, BlynkConsole* f)
             : cmd(s), type(SUB_CONSOLE), f_cons(f)
@@ -127,6 +132,11 @@ public:
         commands[commandsQty++] = CmdHandler(cmd, new HandlerArgs(h));
     }
 
+    void addCommand(const char* cmd, HandlerParams h) {
+        if (commandsQty >= BLYNK_CONSOLE_MAX_COMMANDS) return;
+        commands[commandsQty++] = CmdHandler(cmd, new HandlerParams(h));
+    }
+
     void addCommand(const char* cmd, BlynkConsole* h) {
         if (commandsQty >= BLYNK_CONSOLE_MAX_COMMANDS || !h) return;
 #ifdef BLYNK_CONSOLE_USE_STREAM
@@ -176,6 +186,18 @@ public:
                 case WITH_ARGS:
                     (*(handler.f_args))(argc-1, (const char**)(argv+1));
                     break;
+                case WITH_PARAMS: {
+                    size_t len = (cmdPtr - cmdBuff);
+                    if (len > 0 && len < BLYNK_CONSOLE_INPUT_BUFFER) {
+                        char mem[len];
+                        BlynkParam param(mem, 0, sizeof(mem));
+                        for (int i = 1; i < argc; i++) {
+                            param.add(argv[i]);
+                        }
+                        (*(handler.f_params))(param);
+                    }
+                    break;
+                }
                 case SUB_CONSOLE:
                     if (argc < 2) return NOT_FOUND;
                     return handler.f_cons->runCommand(argc-1, (const char**)(argv+1));
