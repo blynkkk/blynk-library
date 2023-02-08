@@ -25,6 +25,8 @@ extern char*        dtostrf_internal(double number, signed char width, unsigned 
 
 #if !defined(BLYNK_NO_LONGLONG)
 extern long long    atoll_internal(const char *s);
+extern char*        lltoa_internal(long long val, char* buf, unsigned buf_len, int base);
+extern char*        ulltoa_internal(unsigned long long val, char* buf, unsigned buf_len, int base);
 #endif
 
 class BlynkParam
@@ -276,7 +278,7 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
     inline
     void BlynkParam::add(int value)
     {
-        char str[2 + 8 * sizeof(value)];
+        char str[2 + 3 * sizeof(value)];
         itoa(value, str, 10);
         add(str);
     }
@@ -284,7 +286,7 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
     inline
     void BlynkParam::add(unsigned int value)
     {
-        char str[1 + 8 * sizeof(value)];
+        char str[1 + 3 * sizeof(value)];
         utoa(value, str, 10);
         add(str);
     }
@@ -292,7 +294,7 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
     inline
     void BlynkParam::add(long value)
     {
-        char str[2 + 8 * sizeof(value)];
+        char str[2 + 3 * sizeof(value)];
         ltoa(value, str, 10);
         add(str);
     }
@@ -300,26 +302,28 @@ void BlynkParam::add(const __FlashStringHelper* ifsh)
     inline
     void BlynkParam::add(unsigned long value)
     {
-        char str[1 + 8 * sizeof(value)];
+        char str[1 + 3 * sizeof(value)];
         ultoa(value, str, 10);
         add(str);
     }
 
+#if !defined(BLYNK_NO_LONGLONG)
+
     inline
-    void BlynkParam::add(long long value)  // TODO: this currently adds just a long
+    void BlynkParam::add(long long value)
     {
-        char str[2 + 8 * sizeof(value)];
-        ltoa(value, str, 10);
-        add(str);
+        char str[2 + 3 * sizeof(value)];
+        add(lltoa_internal(value, str, sizeof(str), 10));
     }
 
     inline
-    void BlynkParam::add(unsigned long long value) // TODO: this currently adds just a long
+    void BlynkParam::add(unsigned long long value)
     {
-        char str[1 + 8 * sizeof(value)];
-        ultoa(value, str, 10);
-        add(str);
+        char str[1 + 3 * sizeof(value)];
+        add(ulltoa_internal(value, str, sizeof(str), 10));
     }
+
+#endif
 
 #ifndef BLYNK_NO_FLOAT
 

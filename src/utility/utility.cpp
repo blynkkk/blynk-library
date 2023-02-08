@@ -78,6 +78,49 @@ long long atoll_internal(const char *instr)
 
 #endif
 
+#if !defined(BLYNK_NO_LONGLONG)
+
+char* lltoa_internal(long long val, char* buf, unsigned buf_len, int base)
+{
+    int i = buf_len-2;
+    int sign = (val < 0);
+    buf[buf_len-1] = '\0';
+
+    if (val == 0) {
+        buf[i] = '0';
+        return &buf[i];
+    }
+
+    unsigned long long absval = sign ? -val : val;
+
+    for (; absval && i ; --i, absval /= base) {
+        buf[i] = "0123456789abcdef"[absval % base];
+    }
+
+    if (sign) { buf[i--] = '-'; }
+
+    return &buf[i+1];
+}
+
+char* ulltoa_internal(unsigned long long val, char* buf, unsigned buf_len, int base)
+{
+    int i = buf_len-2;
+    buf[buf_len-1] = '\0';
+
+    if (val == 0) {
+        buf[i] = '0';
+        return &buf[i];
+    }
+
+    for (; val && i ; --i, val /= base) {
+        buf[i] = "0123456789abcdef"[val % base];
+    }
+
+    return &buf[i+1];
+}
+
+#endif
+
 #define YEAR_0                  1900
 #define YEAR_EPOCH              1970
 #define SECS_IN_DAY             (24L * 60L * 60L)
