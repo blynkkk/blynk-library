@@ -37,7 +37,7 @@ __________
 * Download the Blynk app ([App Store](https://apps.apple.com/us/app/blynk-iot/id1559317868), [Google Play](https://play.google.com/store/apps/details?id=cloud.blynk))
 * Get the Auth Token from the app
 * Import this library to Arduino IDE. Guide [here](http://arduino.cc/en/guide/libraries)
-* In Arduino IDE, select File -> Examples -> Blynk -> Boards_Ethernet -> Arduino_Ethernet
+* In Arduino IDE, select `File -> Examples -> Blynk -> Boards_Ethernet -> Arduino_Ethernet`
 * Update Auth Token in the sketch and upload it to Arduino
 * Connect your Arduino with Ethernet shield to the internet
 
