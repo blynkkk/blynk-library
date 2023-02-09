@@ -46,7 +46,7 @@ When you are connected - check the included examples on how to use different typ
 
 ## Documentation and other helpful links
 
-[The list of supported hardware](https://docs.blynk.io/en/blynk.edgent-firmware-api/supported-boards) - supported boards, Ethernet, WiFi, Cellular...
+[The list of supported hardware](https://docs.blynk.io/en/blynk.edgent-firmware-api/supported-boards) - supported boards, Ethernet, WiFi, Cellular...  
 [Full Blynk Documentation](https://docs.blynk.io) - a complete guide on Blynk features  
 [Community (Forum)](http://community.blynk.cc) - join a 500,000 Blynk community to ask questions and share ideas  
 [Code Examples Browser](http://examples.blynk.cc) - browse examples to explore Blynk possibilities  
