@@ -21,7 +21,7 @@ Full list of supported hardware can be found [here](https://github.com/blynkkk/b
 
 - With Blynk apps for **iOS** and **Android** apps you can easily drag-n-drop graphic interfaces for any DIY or commercial project. It's a pure WYSIWG experience: no coding on iOS or Android required. 
 
-- Hardware can connect to Blynk Cloud (open-source server) over the Internet using hardware connectivity available on your board (like ESP32), or with the use of various shields (Ethernet, WiFi, GSM, LTE, etc). Blynk Cloud is available for every user of Blynk **for free**. Direct connection over Bluetooth is also possible. 
+- Hardware can connect to Blynk Cloud over the Internet using hardware connectivity available on your board (like ESP32), or with the use of various shields (Ethernet, WiFi, GSM, LTE, etc). Blynk Cloud is available for every user of Blynk **for free**.
 
 ![Blynk Banner](https://github.com/blynkkk/blynkkk.github.io/raw/master/images/GithubBanner.jpg)
 
@@ -44,7 +44,7 @@ Full list of supported hardware can be found [here](https://github.com/blynkkk/b
 
 When you are connected - check the included examples on how to use different types of connections (transports) and explore Blynk features. You can combine any example for your hardware + transport + features.
 
-## Supported boards, Ethernet, WiFi, Bluetooth, GSM, Serial, USB...
+## Supported boards, Ethernet, WiFi, Cellular...
 
 Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).  
 Check out our Examples Browser: http://examples.blynk.cc
