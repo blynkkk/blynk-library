@@ -44,13 +44,9 @@ Full list of supported hardware can be found [here](https://github.com/blynkkk/b
 
 When you are connected - check the included examples on how to use different types of connections (transports) and explore Blynk features. You can combine any example for your hardware + transport + features.
 
-## Supported boards, Ethernet, WiFi, Cellular...
-
-Full list of supported hardware is [here](https://github.com/blynkkk/blynkkk.github.io/blob/master/SupportedHardware.md).  
-Check out our Examples Browser: http://examples.blynk.cc
-
 ## Documentation and other helpful links
 
+[The list of supported hardware](https://docs.blynk.io/en/blynk.edgent-firmware-api/supported-boards) - supported boards, Ethernet, WiFi, Cellular...
 [Full Blynk Documentation](https://docs.blynk.io) - a complete guide on Blynk features  
 [Community (Forum)](http://community.blynk.cc) - join a 500,000 Blynk community to ask questions and share ideas  
 [Code Examples Browser](http://examples.blynk.cc) - browse examples to explore Blynk possibilities  
