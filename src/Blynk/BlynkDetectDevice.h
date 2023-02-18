@@ -367,15 +367,15 @@
         #define BLYNK_INFO_DEVICE  "ESP8266"
 
         /* ESP32 */
-        #elif defined(ARDUINO_ESP32C3_DEV)
-        #define BLYNK_INFO_DEVICE  "ESP32C3"
-        #elif defined(ARDUINO_ESP32C6_DEV)
-        #define BLYNK_INFO_DEVICE  "ESP32C6"
-        #elif defined(ARDUINO_ESP32S3_DEV)
-        #define BLYNK_INFO_DEVICE  "ESP32S3"
-        #elif defined(ARDUINO_ESP32S2_DEV)
-        #define BLYNK_INFO_DEVICE  "ESP32S2"
-        #elif defined(ARDUINO_ARCH_ESP32)
+        #elif defined(ARDUINO_ESP32C3_DEV) || defined(CONFIG_IDF_TARGET_ESP32C3)
+        #define BLYNK_INFO_DEVICE  "ESP32-C3"
+        #elif defined(ARDUINO_ESP32C6_DEV) || defined(CONFIG_IDF_TARGET_ESP32C6)
+        #define BLYNK_INFO_DEVICE  "ESP32-C6"
+        #elif defined(ARDUINO_ESP32S3_DEV) || defined(CONFIG_IDF_TARGET_ESP32S3)
+        #define BLYNK_INFO_DEVICE  "ESP32-S3"
+        #elif defined(ARDUINO_ESP32S2_DEV) || defined(CONFIG_IDF_TARGET_ESP32S2)
+        #define BLYNK_INFO_DEVICE  "ESP32-S2"
+        #elif defined(ARDUINO_ARCH_ESP32)  || defined(CONFIG_IDF_TARGET_ESP32)
         #define BLYNK_INFO_DEVICE  "ESP32"
 
         /* STM32 */
