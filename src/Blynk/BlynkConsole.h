@@ -236,7 +236,7 @@ public:
                 break;
             case NOT_FOUND:
                 stream->println("Command not found.");
-                __attribute__ ((fallthrough));
+                // Fall-through
             case EXECUTED:
                 stream->print(">");
                 break;

@@ -5,6 +5,7 @@ Blynk	KEYWORD1
 BlynkTimer	KEYWORD1
 WidgetLCD	KEYWORD1
 WidgetLED	KEYWORD1
+WidgetRTC	KEYWORD1
 WidgetTerminal	KEYWORD1
 WidgetMap	KEYWORD1
 BlynkParam	KEYWORD1
