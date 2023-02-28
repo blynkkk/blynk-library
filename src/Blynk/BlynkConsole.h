@@ -153,26 +153,35 @@ public:
         if (cmdPtr >= cmdBuff+sizeof(cmdBuff)) {
             reset_buff();
         }
-      
+
         *(cmdPtr++) = c;
         if (c == '\n' || c == '\r') {
-            ProcessResult ret = runCommand(cmdBuff);
-            reset_buff();
-            return ret;
+            return runCommandInBuff();
         }
         return PROCESSED;
     }
 
-    ProcessResult runCommand(char* cmd) {
+    ProcessResult runCommand(const char* cmd) {
+        strncpy(cmdBuff, cmd, sizeof(cmdBuff));
+        cmdBuff[sizeof(cmdBuff)-1] = '\0';
+        cmdPtr = cmdBuff + strlen(cmdBuff);
+        return runCommandInBuff();
+    }
+
+private:
+
+    ProcessResult runCommandInBuff() {
         char* argv[16];
-        int argc = split_argv(cmd, argv, 16);
+        int argc = split_argv(cmdBuff, argv, 16);
         if (argc <= 0) {
             return SKIPPED;
         }
 #ifdef BLYNK_CONSOLE_USE_STREAM
         if (stream) stream->println();
 #endif
-        return runCommand(argc, (const char**)argv);
+        ProcessResult ret = runCommand(argc, (const char**)argv);
+        reset_buff();
+        return ret;
     }
 
     ProcessResult runCommand(int argc, const char** argv) {
@@ -207,12 +216,10 @@ public:
         }
         return NOT_FOUND;
     }
-    
+
+public:
+
 #ifdef BLYNK_CONSOLE_USE_STREAM
-    BLYNK_DEPRECATED
-    void init(Stream& s) {
-        stream = &s;
-    }
 
     void begin(Stream& s) {
         stream = &s;
@@ -313,6 +320,11 @@ private:
                 }
                 len++;
             }
+        }
+        // Add final argument, if needed
+        if (len && result < (argv_capacity-1)) {
+            unescape(curr);
+            argv[result++] = curr;
         }
         return result;
     }

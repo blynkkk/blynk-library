@@ -72,7 +72,7 @@ struct BlynkHeader
 BLYNK_ATTR_PACKED;
 
 #if defined(ESP32) || defined(ESP8266)
-    #include <lwip/ip_addr.h>
+    #include <lwip/def.h>
 #elif !defined(htons) && (defined(ARDUINO) || defined(PARTICLE) || defined(__MBED__))
     #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         #define htons(x) ( ((x)<<8) | (((x)>>8)&0xFF) )
@@ -88,7 +88,7 @@ BLYNK_ATTR_PACKED;
         #define ntohs(x) (x)
         #define ntohl(x) (x)
     #else
-        #error byte order problem
+        #error "Byte order not defined"
     #endif
 #endif
 

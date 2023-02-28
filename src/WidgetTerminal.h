@@ -11,7 +11,7 @@
 #define WidgetTerminal_h
 
 #ifndef BLYNK_TERMINAL_BUFF_OUT
-    #define BLYNK_TERMINAL_BUFF_OUT BLYNK_MAX_SENDBYTES
+    #define BLYNK_TERMINAL_BUFF_OUT 250
 #endif
 #ifndef BLYNK_TERMINAL_BUFF_IN
     #define BLYNK_TERMINAL_BUFF_IN BLYNK_MAX_READBYTES
@@ -61,7 +61,6 @@ public:
 
     virtual void flush() {
         if (mOutQty) {
-            // TODO: split into BLYNK_MAX_SENDBYTES
             Blynk.virtualWriteBinary(mPin, mOutBuf, mOutQty);
             mOutQty = 0;
         }
