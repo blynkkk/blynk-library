@@ -235,7 +235,8 @@
 
         #if defined(ARDUINO_ARCH_SAMD) || \
             defined(ESP32) || defined(ESP8266) || \
-            defined(ARDUINO_ARCH_RP2040)
+            defined(ARDUINO_ARCH_RP2040) || \
+            defined(ARDUINO_ARCH_NRF52840)
 
             #define BLYNK_USE_128_VPINS
             #define BLYNK_BUFFERS_SIZE 1024
@@ -327,6 +328,10 @@
         #define BLYNK_INFO_DEVICE  "MKR WiFi 1010"
         #elif defined(ARDUINO_SAMD_MKRVIDOR4000)
         #define BLYNK_INFO_DEVICE  "MKR Vidor 4000"
+        #elif defined(ARDUINO_SAMD_NANO_33_IOT)
+        #define BLYNK_INFO_DEVICE  "Nano 33 IoT"
+        #elif defined(TARGET_ARDUINO_NANO33BLE) || defined(ARDUINO_ARDUINO_NANO33BLE) || defined(ARDUINO_NANO33BLE)
+        #define BLYNK_INFO_DEVICE  "Nano 33 BLE"
 
         /* RapsberryPi */
         #elif defined(ARDUINO_ARCH_RP2040)
