@@ -86,6 +86,16 @@ void            BlynkFatal() BLYNK_NORETURN;
     #endif
 #endif
 
+#if defined(BLYNK_MULTITHREADED)
+    #include <mutex>
+
+    #define BLYNK_MUTEX_DECL(x)     std::mutex x
+    #define BLYNK_MUTEX_GUARD(x)    std::lock_guard<std::mutex> BLYNK_CONCAT2(lg_, __LINE__)(x)
+#else
+    #define BLYNK_MUTEX_DECL(x)
+    #define BLYNK_MUTEX_GUARD(x)
+#endif
+
 #ifdef ARDUINO_AVR_DIGISPARK
     typedef fstr_t __FlashStringHelper;
 #endif
