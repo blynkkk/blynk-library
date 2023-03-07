@@ -239,8 +239,8 @@ BLYNK_WRITE(InternalPinVFS);
 BLYNK_WRITE(InternalPinDBG);
 
 // Aliases
-#define BLYNK_APP_CONNECTED()    BLYNK_WRITE(InternalPinACON)
-#define BLYNK_APP_DISCONNECTED() BLYNK_WRITE(InternalPinADIS)
+//#define BLYNK_APP_CONNECTED()    BLYNK_WRITE(InternalPinACON)
+//#define BLYNK_APP_DISCONNECTED() BLYNK_WRITE(InternalPinADIS)
 
 // Regular Virtual Pins
 BLYNK_READ_DEFAULT();
