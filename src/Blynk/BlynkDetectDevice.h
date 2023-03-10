@@ -334,6 +334,10 @@
         #define BLYNK_INFO_DEVICE  "Nano 33 BLE"
 
         /* RapsberryPi */
+        #elif defined(ARDUINO_RASPBERRY_PI_PICO_W)
+        #define BLYNK_INFO_DEVICE  "RPi Pico W"
+        #elif defined(ARDUINO_RASPBERRY_PI_PICO)
+        #define BLYNK_INFO_DEVICE  "RPi Pico"
         #elif defined(ARDUINO_ARCH_RP2040)
         #define BLYNK_INFO_DEVICE  "RP2040"
 
