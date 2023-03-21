@@ -105,6 +105,8 @@ public:
     bool operator >  (const BlynkTime& t) const { return mTime >  t.mTime; }
     bool operator <  (const BlynkTime& t) const { return mTime <  t.mTime; }
 
+    BlynkTime& operator = (const BlynkTime& t) { mTime = t.mTime; return *this; }
+
 private:
     uint32_t mTime;
 };
