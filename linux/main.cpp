@@ -7,6 +7,7 @@
  * @brief
  */
 
+/* Fill in information from your Blynk Template here */
 //#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
 //#define BLYNK_TEMPLATE_NAME         "Device"
 
