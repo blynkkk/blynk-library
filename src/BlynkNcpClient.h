@@ -18,6 +18,19 @@
 
 #define BLYNK_NCP_BAUD  2000000
 
+#if defined(LINUX)
+  #include <compat/LibSerialPort.h>
+
+  #if defined(NCP_PORT)
+    // OK, use it
+  #elif defined(BLYNK_NCP_TTGO_T7_S3)
+    #define NCP_PORT "/dev/ttyACM0"
+  #else
+    #define NCP_PORT "/dev/ttyUSB0"
+  #endif
+  SerialPort SerialUSB(NCP_PORT);
+#endif
+
 class BlynkNcpClient
     : public BlynkApi<BlynkNcpClient>
 {
@@ -58,6 +71,11 @@ private:
   #define SerialNCP       Serial1
   void ncpInitialize() {
     SerialNCP.setFIFOSize(2048);
+  }
+#elif defined(LINUX)
+  #define SerialNCP       SerialUSB
+  void ncpInitialize() {
+    BLYNK_LOG("NCP port: %s", NCP_PORT);
   }
 #else
   #error "Your device is not supported by Blynk.NCP out of the box"
@@ -332,7 +350,7 @@ void rpc_client_blynkStateChange_impl(uint8_t state) {
 
 void rpc_client_processEvent_impl(uint8_t event) {
     switch ((RpcEvent)event) {
-    case RPC_EVENT_NCP_REBOOTING:       Blynk._onNcpRebooting();    break;
+    case RPC_EVENT_NCP_REBOOTING:       Blynk._onNcpRebooting();    break; // TODO: reinit NCP
     case RPC_EVENT_BLYNK_PROVISIONED:   Blynk._onProvisioned();     break;
     case RPC_EVENT_BLYNK_TIME_SYNC:     Blynk._onTimeSync();        break;
     case RPC_EVENT_BLYNK_TIME_CHANGED:  Blynk._onTimeChanged();     break;
