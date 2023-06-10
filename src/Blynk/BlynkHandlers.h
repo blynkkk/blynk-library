@@ -210,7 +210,7 @@ extern "C" {
 
 struct BlynkReq
 {
-    uint8_t pin;
+    uint16_t pin;
 };
 
 typedef void (*WidgetReadHandler)(BlynkReq BLYNK_UNUSED &request);

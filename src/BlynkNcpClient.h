@@ -240,6 +240,9 @@ public:
 
     void run() {
         rpc_run();
+        if (_needReboot) {
+          BlynkReset();
+        }
     }
 
     const char* getStateString() const {
@@ -269,11 +272,13 @@ private:
     Callback0       _onTimeChanged  = Callback0_dummy;
 
     RpcBlynkState   _state;
+    bool            _needReboot = false;
 
     friend void rpc_client_blynkStateChange_impl(uint8_t state);
     friend void rpc_client_processEvent_impl(uint8_t event);
     friend bool rpc_client_adjustTime_impl(int64_t time, int16_t offset);
     friend void rpc_client_syncTime_impl();
+    friend bool rpc_system_reboot_impl();
 };
 
 /*
@@ -287,10 +292,15 @@ BlynkNcpClient Blynk;
  */
 
 #include <BlynkRpcInfraArduino.h>
+#include <utility/BlynkNcpOtaImpl.h>
 
 bool rpc_system_reboot_impl() {
-  // TODO
+#ifdef _BLYNK_USE_DEFAULT_RESET
   return false;
+#else
+  Blynk._needReboot = true;
+  return true;
+#endif
 }
 
 void rpc_client_blynkVPinChange_impl(uint16_t vpin, buffer_t param)
