@@ -31,6 +31,14 @@
     #define BLYNK_FIRMWARE_TYPE         BLYNK_TEMPLATE_ID
 #endif
 
+#if !defined(BLYNK_FIRMWARE_VERSION)
+    #define BLYNK_FIRMWARE_VERSION      "0.0.0"
+#endif
+
+#if !defined(BLYNK_TEMPLATE_ID) || !defined(BLYNK_TEMPLATE_NAME)
+    #error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_TEMPLATE_NAME"
+#endif
+
 #include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkDebug.h>
 #include <Blynk/BlynkParam.h>
@@ -164,9 +172,8 @@ public:
     /**
      * Handler helpers
      */
-    void callWriteHandler(int pin, const BlynkParam& param) {
-        BlynkReq req = { (uint8_t)pin };
-        WidgetWriteHandler handler = GetWriteHandler(pin);
+    void callWriteHandler(BlynkReq& req, const BlynkParam& param) {
+        WidgetWriteHandler handler = GetWriteHandler(req.pin);
         if (handler && (handler != BlynkWidgetWrite)) {
             handler(req, param);
         } else {
@@ -174,9 +181,8 @@ public:
         }
     }
 
-    void callReadHandler(int pin) {
-        BlynkReq req = { (uint8_t)pin };
-        WidgetReadHandler handler = GetReadHandler(pin);
+    void callReadHandler(BlynkReq& req) {
+        WidgetReadHandler handler = GetReadHandler(req.pin);
         if (handler && (handler != BlynkWidgetRead)) {
             handler(req);
         } else {

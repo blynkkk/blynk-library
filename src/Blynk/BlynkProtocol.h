@@ -102,6 +102,8 @@ public:
 #endif
     }
 
+    uint16_t getNextMsgId();
+
 private:
 
     void internalReconnect() {
@@ -111,7 +113,6 @@ private:
     }
 
     int readHeader(BlynkHeader& hdr);
-    uint16_t getNextMsgId();
 
 protected:
     void begin(const char* auth) {

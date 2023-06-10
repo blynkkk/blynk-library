@@ -13,8 +13,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <Blynk/BlynkConfig.h>
-#include <Blynk/BlynkDebug.h>
+#include <Blynk/BlynkHelpers.h>
 
 #define BLYNK_PARAM_KV(k, v) k "\0" v "\0"
 #define BLYNK_PARAM_PLACEHOLDER_64 "PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder"
@@ -146,8 +145,7 @@ public:
 
     void remove_key(const char* key);
 
-protected:
-    void add(const void* b, size_t l);
+    void add_raw(const void* b, size_t l);
 
 protected:
     char*    buff;
@@ -218,7 +216,7 @@ void BlynkParam::remove_key(const char* key)
 }
 
 inline
-void BlynkParam::add(const void* b, size_t l)
+void BlynkParam::add_raw(const void* b, size_t l)
 {
     if (len + l > buff_size)
         return;
@@ -233,7 +231,7 @@ void BlynkParam::add(const char* str)
         buff[len++] = '\0';
         return;
     }
-    add(str, strlen(str)+1);
+    add_raw(str, strlen(str)+1);
 }
 
 #if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)
@@ -247,7 +245,7 @@ void BlynkParam::add(const String& str)
     size_t len = str.length()+1;
     char buff[len];
     const_cast<String&>(str).toCharArray(buff, len);
-    add(buff, len);
+    add_raw(buff, len);
 #else
     add(str.c_str());
 #endif

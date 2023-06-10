@@ -65,6 +65,10 @@ public:
         return _avg;
     }
 
+    double getFloat() const {
+        return _avg;
+    }
+
     T push(T value) {
         if (_first) {
             _avg = value;
