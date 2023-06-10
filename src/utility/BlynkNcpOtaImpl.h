@@ -6,14 +6,14 @@
 #include "InternalStorageAVR.h"
 #elif defined(ARDUINO_ARCH_STM32)
 #include <InternalStorageSTM32.h>
-#elif defined(ARDUINO_ARCH_RP2040)
+#elif defined(ARDUINO_ARCH_RP2040) && !defined(__MBED__)
 #include <InternalStorageRP2.h>
 #elif defined(ESP8266) || defined(ESP32)
 #include "InternalStorageESP.h"
 #elif defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_NRF5)
 #include "InternalStorage.h"
 #else
-  #warning "Blynk.Air OTA updates not implemented for this Primary MCU"
+  #warning "Blynk.Air: MCU OTA update not implemented for this platform"
 
   class InternalStorageClass {
   public:

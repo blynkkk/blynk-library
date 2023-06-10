@@ -60,7 +60,7 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(ARDUINO) && defined(ESP8266)
+#elif defined(ARDUINO) && (defined(ESP8266) || defined(ESP32))
 
     #include <Arduino.h>
 
@@ -78,7 +78,7 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(ARDUINO_ARCH_RP2040)
+#elif defined(ARDUINO_ARCH_RP2040) && !defined(__MBED__)
 
     #include <Arduino.h>
 
