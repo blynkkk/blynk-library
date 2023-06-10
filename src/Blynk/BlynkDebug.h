@@ -36,6 +36,7 @@ millis_time_t   BlynkMillis();
 size_t          BlynkFreeRam();
 void            BlynkReset() BLYNK_NORETURN;
 void            BlynkFatal() BLYNK_NORETURN;
+bool            BlynkResetImplemented();
 
 #if defined(BLYNK_DEBUG_ALL) && !(__cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__))
     #warning "Compiler features not enabled -> please contact yor board vendor to enable c++0x"

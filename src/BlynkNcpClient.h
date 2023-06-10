@@ -295,12 +295,11 @@ BlynkNcpClient Blynk;
 #include <utility/BlynkNcpOtaImpl.h>
 
 bool rpc_system_reboot_impl() {
-#ifdef _BLYNK_USE_DEFAULT_RESET
-  return false;
-#else
-  Blynk._needReboot = true;
-  return true;
-#endif
+    if (BlynkResetImplemented()) {
+        Blynk._needReboot = true;
+        return true;
+    }
+    return false;
 }
 
 void rpc_client_blynkVPinChange_impl(uint16_t vpin, buffer_t param)

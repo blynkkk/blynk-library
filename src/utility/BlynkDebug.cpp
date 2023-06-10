@@ -78,7 +78,23 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_SAM)
+#elif defined(ARDUINO_ARCH_RP2040)
+
+    #include <Arduino.h>
+
+    void BlynkReset()
+    {
+        rp2040.reboot();
+        for(;;) {}
+    }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
+#elif defined(ARDUINO_ARCH_SAMD) || \
+      defined(ARDUINO_ARCH_SAM)  || \
+      defined(ARDUINO_ARCH_NRF5)
 
     #include <Arduino.h>
 
@@ -123,21 +139,6 @@
     void BlynkReset()
     {
         nvic_sys_reset();
-        for(;;) {}
-    }
-
-    #define _BLYNK_USE_DEFAULT_FREE_RAM
-    #define _BLYNK_USE_DEFAULT_MILLIS
-    #define _BLYNK_USE_DEFAULT_DELAY
-
-#elif defined(ARDUINO) && (defined(ARDUINO_ARDUINO_NANO33BLE))
-
-    #include <Arduino.h>
-    // #include <libmaple/nvic.h>
-
-    void BlynkReset()
-    {
-        // nvic_sys_reset();
         for(;;) {}
     }
 
@@ -262,9 +263,9 @@
 
     void BlynkReset()
     {
-	    sl_Stop(200);
-	    for(;;) {
-    	    PRCMHibernateCycleTrigger();
+        sl_Stop(200);
+        for(;;) {
+            PRCMHibernateCycleTrigger();
         }
     }
 
@@ -319,6 +320,12 @@
     {
         for(;;) {} // To make compiler happy
     }
+#endif
+
+#ifdef _BLYNK_USE_DEFAULT_RESET
+bool BlynkResetImplemented() { return false; }
+#else
+bool BlynkResetImplemented() { return true; }
 #endif
 
 void BlynkFatal()
