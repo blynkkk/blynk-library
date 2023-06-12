@@ -16,7 +16,9 @@
 #include <Blynk/BlynkUtility.h>
 #include <Blynk/BlynkTimer.h>
 
-#define BLYNK_NCP_BAUD  2000000
+#if !defined(BLYNK_NCP_BAUD)
+  #define BLYNK_NCP_BAUD 2000000
+#endif
 
 #if defined(LINUX)
   #include <compat/LibSerialPort.h>
@@ -214,6 +216,21 @@ public:
         return rpc_blynk_setTime(time);
     }
 
+    bool initNCP(uint32_t timeout = 2000) {
+        ncpInitialize();
+
+        const int retries = timeout / 100;
+        for (int retry = 0; ; retry++) {
+          if (ncpConnect(BLYNK_NCP_BAUD)) {
+            return true;
+          } else if (retry >= retries) {
+            return false;
+          } else {
+            delay(100);
+          }
+        }
+    }
+
     bool begin(const char* tmpl_id, const char* tmpl_name)
     {
         // This structure is used by Blynk.Cloud to identify the firmware during OTA
@@ -226,16 +243,6 @@ public:
             BLYNK_PARAM_KV("blynk"  , BLYNK_VERSION)
             "\0";
         (void)firmwareTag;
-
-        ncpInitialize();
-
-        for (int retry = 0; ; retry++) {
-          if (ncpConnect(BLYNK_NCP_BAUD)) {
-            break;
-          } else if (retry >= 5) {
-            return false;
-          }
-        }
 
         if (!String(tmpl_id).startsWith("TMPL") ||
             !strlen(tmpl_name)
@@ -255,7 +262,11 @@ public:
 
         ncpConfigure();
 
-        return rpc_blynk_initialize(tmpl_id, tmpl_name);
+        bool result = rpc_blynk_initialize(tmpl_id, tmpl_name);
+        if (!result) {
+          BLYNK_LOG("rpc_blynk_initialize failed");
+        }
+        return result;
     }
 
     RpcBlynkState getState() const {
