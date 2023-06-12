@@ -36,7 +36,8 @@ class BlynkNcpClient
 {
 private:
 
-#if defined(SerialNCP)
+#if defined(BLYNK_NCP_SERIAL)
+  #define SerialNCP       BLYNK_NCP_SERIAL
   void ncpInitialize() {
     // NOTE: NCP hardware initialization needs to be done
     // before calling Blynk.begin()
