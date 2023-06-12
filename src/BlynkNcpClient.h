@@ -36,7 +36,12 @@ class BlynkNcpClient
 {
 private:
 
-#if defined(ARDUINO_NANO_RP2040_CONNECT) && defined(__MBED__)
+#if defined(SerialNCP)
+  void ncpInitialize() {
+    // NOTE: NCP hardware initialization needs to be done
+    // before calling Blynk.begin()
+  }
+#elif defined(ARDUINO_NANO_RP2040_CONNECT) && defined(__MBED__)
   #define SerialNCP       SerialNina
   void ncpInitialize() {
     // Power-up NCP
