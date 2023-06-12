@@ -22,6 +22,9 @@
       "tests"
     ]
   },
+  "dependencies": {
+    "blynkkk/BlynkNcpDriver": "^0.4.6"
+  },
   "frameworks": "*",
   "platforms": "*",
   "examples": "examples/*/*/*.ino"
