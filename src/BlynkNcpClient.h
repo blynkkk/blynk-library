@@ -235,9 +235,7 @@ public:
     {
         // This structure is used by Blynk.Cloud to identify the firmware during OTA
         volatile const char firmwareTag[] BLYNK_PROGMEM = "blnkinf\0"
-#ifdef BLYNK_FIRMWARE_VERSION
             BLYNK_PARAM_KV("mcu"    , BLYNK_FIRMWARE_VERSION)
-#endif
             BLYNK_PARAM_KV("fw-type", BLYNK_FIRMWARE_TYPE)
             BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
             BLYNK_PARAM_KV("blynk"  , BLYNK_VERSION)
@@ -252,11 +250,7 @@ public:
         }
 
         rpc_blynk_setFirmwareInfo(BLYNK_FIRMWARE_TYPE,
-#ifdef BLYNK_FIRMWARE_VERSION
                                   BLYNK_FIRMWARE_VERSION,
-#else
-                                  "",
-#endif
                                   __DATE__ " " __TIME__,
                                   BLYNK_VERSION);
 

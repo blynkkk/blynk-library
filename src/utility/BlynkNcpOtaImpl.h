@@ -1,5 +1,4 @@
 
-
 // NOTE: This requires ArduinoOTA library
 
 #if   defined(__AVR__) && (FLASHEND >= 0xFFFF)

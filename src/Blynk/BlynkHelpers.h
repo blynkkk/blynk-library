@@ -46,9 +46,9 @@
 
 #define BLYNK_ATTR_PACKED     __attribute__ ((__packed__))
 #define BLYNK_NORETURN        __attribute__ ((noreturn))
-#define BLYNK_UNUSED          __attribute__((__unused__))
+#define BLYNK_UNUSED          __attribute__ ((__unused__))
 #define BLYNK_DEPRECATED      __attribute__ ((deprecated))
-#define BLYNK_CONSTRUCTOR     __attribute__((constructor))
+#define BLYNK_CONSTRUCTOR     __attribute__ ((constructor))
 #define BLYNK_FALLTHROUGH     __attribute__ ((fallthrough))
 
 // Causes problems on some platforms
