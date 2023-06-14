@@ -15,6 +15,7 @@
 #include <Blynk/BlynkApiNCP.h>
 #include <Blynk/BlynkUtility.h>
 #include <Blynk/BlynkTimer.h>
+#include <utility/BlynkNcpOtaImpl.h>
 
 #if !defined(BLYNK_NCP_BAUD)
   #define BLYNK_NCP_BAUD 2000000
@@ -269,6 +270,7 @@ public:
 
     void run() {
         rpc_run();
+        ota_apply_if_needed();
         if (_needReboot) {
           BlynkReset();
         }
@@ -321,7 +323,6 @@ BlynkNcpClient Blynk;
  */
 
 #include <BlynkRpcInfraArduino.h>
-#include <utility/BlynkNcpOtaImpl.h>
 
 bool rpc_system_reboot_impl() {
     if (BlynkResetImplemented()) {
