@@ -76,6 +76,19 @@ private:
     pinMode(NINA_RESETN, OUTPUT);
     digitalWrite(NINA_RESETN, LOW);
   }
+#elif defined(ARDUINO_PORTENTA_C33)
+  #define SerialNCP       Serial5
+  #define NCP_RESETN      (101)
+  void ncpInitialize() {
+    // Power-up NCP
+    pinMode(NCP_RESETN, OUTPUT);
+    digitalWrite(NCP_RESETN, HIGH);
+  }
+#elif defined(ARDUINO_UNOWIFIR4)
+  #define SerialNCP       Serial2
+  void ncpInitialize() {
+    // ESP32-S3 is always enabled
+  }
 #elif defined(ARDUINO_RASPBERRY_PI_PICO)
   #define SerialNCP       Serial1
   void ncpInitialize() {
