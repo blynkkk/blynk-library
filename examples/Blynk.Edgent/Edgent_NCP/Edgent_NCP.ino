@@ -12,11 +12,13 @@
 
   Blynk library is licensed under MIT license
  *************************************************************
-  Blynk.Edgent implements:
-  - Blynk.Inject - Dynamic WiFi credentials provisioning
-  - Blynk.Air    - Over The Air firmware updates
-  - Device state indication using a physical LED
-  - Credentials reset using a physical Button
+
+  NOTE: This example requires the connectivity module on your board to be
+        flashed using Blynk.NCP firmware.
+
+   The easiest way to install the NCP firmware is using this PlatformIO project:
+   https://github.com/blynkkk/BlynkNcpExample
+
  *************************************************************/
 
 /* Fill in information from your Blynk Template here */
@@ -55,7 +57,9 @@ void setup() {
     String ver = Blynk.getNcpVersion();
     BLYNK_LOG("Blynk.NCP firmware: %s", ver.c_str());
   } else {
-    BLYNK_LOG("Cannot communicate to Blynk.NCP");
+    BLYNK_LOG("Cannot communicate to the NCP");
+    BLYNK_LOG("  Please ensure you have flashed your board with the Blynk.NCP firmware, before running this example.");
+    BLYNK_LOG("  See: https://github.com/blynkkk/BlynkNcpExample");
     return;
   }
 
