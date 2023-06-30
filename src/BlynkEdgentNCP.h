@@ -230,19 +230,16 @@ public:
         return rpc_blynk_setTime(time);
     }
 
-    bool initNCP(uint32_t timeout = 2000) {
+    bool initNCP(uint32_t timeout = 5000) {
         ncpInitialize();
 
-        const int retries = timeout / 100;
-        for (int retry = 0; ; retry++) {
+        const uint32_t tstart = millis();
+        while (millis() - tstart < timeout) {
           if (ncpConnect(BLYNK_NCP_BAUD)) {
             return true;
-          } else if (retry >= retries) {
-            return false;
-          } else {
-            delay(100);
           }
         }
+        return false;
     }
 
     bool begin(const char* tmpl_id, const char* tmpl_name)
