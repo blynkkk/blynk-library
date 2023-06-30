@@ -24,7 +24,7 @@
  * Professional settings
  ***************************************************/
 // Library version.
-#define BLYNK_VERSION        "1.2.0"
+#define BLYNK_VERSION        "1.3.0"
 
 #define BLYNK_NEW_LIBRARY
 
