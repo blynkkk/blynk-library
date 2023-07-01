@@ -334,7 +334,7 @@ BlynkNcpClient Blynk;
 
 #include <BlynkRpcInfraArduino.h>
 
-bool rpc_system_reboot_impl() {
+bool rpc_mcu_reboot_impl() {
     if (BlynkResetImplemented()) {
         Blynk._needReboot = true;
         return true;
