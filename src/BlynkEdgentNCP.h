@@ -230,7 +230,7 @@ public:
         return rpc_blynk_setTime(time);
     }
 
-    bool initNCP(uint32_t timeout = 5000) {
+    bool initNCP(uint32_t timeout = 10000) {
         ncpInitialize();
 
         const uint32_t tstart = millis();
