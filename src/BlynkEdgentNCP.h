@@ -160,7 +160,7 @@ private:
       const uint32_t currentBaud = initialBauds[i];
       SerialNCP.begin(currentBaud);
       uint32_t tbeg = micros();
-      if (RPC_STATUS_OK == rpc_system_ping()) {
+      if (RPC_STATUS_OK == rpc_ncp_ping()) {
         uint32_t tend = micros();
         BLYNK_LOG("NCP responding (baud %u, %u us)", currentBaud, tend-tbeg);
         if (currentBaud == targetBaud) {
@@ -172,7 +172,7 @@ private:
           SerialNCP.begin(targetBaud);
           delay(20);
           tbeg = micros();
-          if (RPC_STATUS_OK == rpc_system_ping()) {
+          if (RPC_STATUS_OK == rpc_ncp_ping()) {
             tend = micros();
             BLYNK_LOG("NCP responding (baud %u, %u us)", targetBaud, tend-tbeg);
             return true;
@@ -319,7 +319,7 @@ private:
     friend void rpc_client_processEvent_impl(uint8_t event);
     friend bool rpc_client_adjustTime_impl(int64_t time, int16_t offset);
     friend void rpc_client_syncTime_impl();
-    friend bool rpc_system_reboot_impl();
+    friend bool rpc_mcu_reboot_impl();
 };
 
 /*
