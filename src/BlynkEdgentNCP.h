@@ -24,14 +24,14 @@
 #if defined(LINUX)
   #include <compat/LibSerialPort.h>
 
-  #if defined(NCP_PORT)
+  #if defined(BLYNK_NCP_PORT)
     // OK, use it
-  #elif defined(BLYNK_NCP_TTGO_T7_S3)
-    #define NCP_PORT "/dev/ttyACM0"
+  #elif defined(BLYNK_NCP_TYPE_TTGO_T7_S3)
+    #define BLYNK_NCP_PORT "/dev/ttyACM0"
   #else
-    #define NCP_PORT "/dev/ttyUSB0"
+    #define BLYNK_NCP_PORT "/dev/ttyUSB0"
   #endif
-  SerialPort SerialUSB(NCP_PORT);
+  SerialPort SerialUSB(BLYNK_NCP_PORT);
 #endif
 
 class BlynkNcpClient
@@ -97,7 +97,7 @@ private:
 #elif defined(LINUX)
   #define SerialNCP       SerialUSB
   void ncpInitialize() {
-    BLYNK_LOG("NCP port: %s", NCP_PORT);
+    BLYNK_LOG("NCP port: %s", BLYNK_NCP_PORT);
   }
 #else
   #error "Your device is not supported by Blynk.NCP out of the box"
@@ -117,31 +117,31 @@ private:
     rpc_hw_initRGB(26, 25, 27, false);
     rpc_hw_setLedBrightness(128);
   }
-#elif defined(BLYNK_NCP_WITTY_CLOUD)
+#elif defined(BLYNK_NCP_TYPE_WITTY_CLOUD)
   void ncpConfigure() {
     rpc_hw_initUserButton(4, true);
     rpc_hw_initRGB(15, 12, 13, false);
     rpc_hw_setLedBrightness(255);
   }
-#elif defined(BLYNK_NCP_TTGO_T7)
+#elif defined(BLYNK_NCP_TYPE_TTGO_T7)
   void ncpConfigure() {
     rpc_hw_initUserButton(0, true);
     rpc_hw_initLED(19, false);
     rpc_hw_setLedBrightness(160);
   }
-#elif defined(BLYNK_NCP_TTGO_T7_S3)
+#elif defined(BLYNK_NCP_TYPE_TTGO_T7_S3)
   void ncpConfigure() {
     rpc_hw_initUserButton(0, true);
     rpc_hw_initLED(17, false);
     rpc_hw_setLedBrightness(160);
   }
-#elif defined(BLYNK_NCP_TTGO_TOI_PLUS)
+#elif defined(BLYNK_NCP_TYPE_TTGO_TOI_PLUS)
   void ncpConfigure() {
     rpc_hw_initUserButton(0, true);
     rpc_hw_initLED(3, false);
     rpc_hw_setLedBrightness(255);
   }
-#elif defined(BLYNK_NCP_MACCHINA_SUPERB)
+#elif defined(BLYNK_NCP_TYPE_MACCHINA_SUPERB)
   void ncpConfigure() {
     rpc_hw_initUserButton(0, true);
     rpc_hw_initLED(26, false);
