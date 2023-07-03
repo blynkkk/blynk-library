@@ -87,8 +87,10 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, buffer_t chunk, uint32_t cr
 {
   bool crcOK = (calcCRC32(chunk.data, chunk.length) == crc32);
 
+#if defined(BLYNK_DEBUG_ALL)
   BLYNK_LOG("OTA chunk @% 6x, size: %d, crc: %08x => %s",
       offset, chunk.length, crc32, crcOK ? "OK" : "fail!");
+#endif
 
   if (!crcOK) { return false; }
   if (ota_info.offset != offset) {
@@ -157,6 +159,7 @@ void ota_apply_if_needed() {
     flagApplyOtaUpdate = false;
 
     BLYNK_LOG("Applying the update");
+    delay(10);
     // Apply the update and restart
     InternalStorage.apply();
   }
