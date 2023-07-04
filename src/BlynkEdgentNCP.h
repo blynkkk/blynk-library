@@ -89,6 +89,10 @@ private:
   void ncpInitialize() {
     // ESP32-S3 is always enabled
   }
+#elif defined(ARDUINO_RASPBERRY_PI_PICO) && defined(__MBED__)
+  #define SerialNCP       Serial1
+  void ncpInitialize() {
+  }
 #elif defined(ARDUINO_RASPBERRY_PI_PICO)
   #define SerialNCP       Serial1
   void ncpInitialize() {
