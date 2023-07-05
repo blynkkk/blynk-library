@@ -230,6 +230,18 @@ public:
         return rpc_blynk_setVendorServer(host);
     }
 
+    bool setConfigTimeout(uint16_t seconds) { // 60..3600 (1 hour)
+        return rpc_blynk_setConfigTimeout(seconds);
+    }
+
+    bool setConfigSkipLimit(uint16_t limit) { // 0, 5..50
+        return rpc_blynk_setConfigSkipLimit(limit);
+    }
+
+    bool resetConfig() {
+        return rpc_blynk_configReset();
+    }
+
     bool setTime(int64_t time) {
         return rpc_blynk_setTime(time);
     }

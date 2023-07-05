@@ -16,7 +16,7 @@
 
   class InternalStorageClass {
   public:
-    virtual int open(int length) { return false; }
+    virtual int open(int) { return false; }
     virtual size_t write(uint8_t) { return 0; }
     virtual void close() {}
     virtual void clear() {}
