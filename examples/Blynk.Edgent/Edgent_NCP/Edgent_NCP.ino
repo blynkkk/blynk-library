@@ -54,13 +54,14 @@ void setup() {
   delay(3000);
 
   BLYNK_LOG("Main firmware: %s", BLYNK_FIRMWARE_VERSION);
+  BLYNK_LOG("Build: %s", __DATE__ " " __TIME__);
 
   // Initialize the Blynk.NCP hardware
   if (Blynk.initNCP()) {
     String ver = Blynk.getNcpVersion();
     BLYNK_LOG("Blynk.NCP firmware: %s", ver.c_str());
   } else {
-    BLYNK_LOG("Cannot communicate to the NCP");
+    BLYNK_LOG("Cannot communicate to Blynk.NCP");
     BLYNK_LOG("  Please ensure you have flashed your board with the Blynk.NCP firmware, before running this example.");
     BLYNK_LOG("  See: https://github.com/blynkkk/BlynkNcpExample");
     return;
@@ -70,6 +71,8 @@ void setup() {
   Blynk.onStateChange([]() {
     BLYNK_LOG("State: %s", Blynk.getStateString());
   });
+
+  Blynk.setConfigTimeout(30*60); // 30 minutes
 
   // White labeling
   //Blynk.setVendorPrefix("MyCompany");
