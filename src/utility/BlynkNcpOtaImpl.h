@@ -12,7 +12,7 @@
 #elif defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_NRF5)
 #include "InternalStorage.h"
 #else
-  #warning "Blynk.Air: MCU OTA update not implemented for this platform"
+  #warning "Blynk.Air: OTA update not implemented for this Primary MCU"
 
   class InternalStorageClass {
   public:
@@ -73,6 +73,16 @@ bool rpc_client_otaUpdateAvailable_impl(const char* filename, uint32_t filesize,
     ota_info.size   = filesize;
     ota_info.offset = 0;
     ota_info.crc32  = 0;
+
+#if defined(BLYNK_NCP_OTA_PREFETCH)
+    uint8_t prefetch = rpc_blynk_otaUpdatePrefetch();
+    if (RPC_OTA_PREFETCH_OK == prefetch) {
+      BLYNK_LOG("OTA prefetch OK");
+    } else {
+      BLYNK_LOG("OTA prefetch FAILED");
+    }
+#endif
+
     // Request the update from NCP
     rpc_blynk_otaUpdateStart(1024);
     return true;
