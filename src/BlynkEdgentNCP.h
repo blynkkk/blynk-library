@@ -250,6 +250,19 @@ public:
         ncpInitialize();
 
         const uint32_t tstart = millis();
+
+        // This provides a simple way to verify the NCP boot log, i.e:
+        // [rpc port] Blynk.NCP started
+#if defined(BLYNK_NCP_PASSTHROUGH) && defined(BLYNK_PRINT)
+        SerialNCP.begin(115200);
+        while (millis() - tstart < timeout / 2) {
+          while (SerialNCP.available()) {
+            BLYNK_PRINT.write(SerialNCP.read());
+          }
+          delay(1);
+        }
+#endif
+
         while (millis() - tstart < timeout) {
           if (ncpConnect(BLYNK_NCP_BAUD)) {
             return true;
