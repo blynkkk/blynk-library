@@ -104,7 +104,7 @@ private:
     BLYNK_LOG("NCP port: %s", BLYNK_NCP_PORT);
   }
 #else
-  #error "Your device is not supported by Blynk.NCP out of the box"
+  #error "Your board needs extra configuration to work with Blynk.NCP: please define BLYNK_NCP_SERIAL and perform NCP hardware initialization if needed"
 #endif
 
 
