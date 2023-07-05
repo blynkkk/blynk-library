@@ -388,7 +388,10 @@ void rpc_client_blynkStateChange_impl(uint8_t state) {
 
 void rpc_client_processEvent_impl(uint8_t event) {
     switch ((RpcEvent)event) {
-    case RPC_EVENT_NCP_REBOOTING:       Blynk._onNcpRebooting();    break; // TODO: reinit NCP
+    case RPC_EVENT_NCP_REBOOTING:
+      BLYNK_LOG("NCP is rebooting. TODO: reinitialize NCP");
+      Blynk._onNcpRebooting();
+      break;
     case RPC_EVENT_BLYNK_PROVISIONED:   Blynk._onProvisioned();     break;
     case RPC_EVENT_BLYNK_TIME_SYNC:     Blynk._onTimeSync();        break;
     case RPC_EVENT_BLYNK_TIME_CHANGED:  Blynk._onTimeChanged();     break;
