@@ -361,7 +361,27 @@ BlynkNcpClient Blynk;
  * Blynk RPC services implementation
  */
 
-#include <BlynkRpcInfraArduino.h>
+int rpc_uart_available() {
+  // Return the amount of data in the UART input buffer
+  return SerialNCP.available();
+}
+int rpc_uart_read() {
+  // Get a byte from the UART input buffer
+  return SerialNCP.read();
+}
+size_t rpc_uart_write(uint8_t data) {
+  // Put a byte to the UART output buffer
+  return SerialNCP.write(data);
+}
+void rpc_uart_flush() {
+  // Wait for UART to output all the data
+  SerialNCP.flush();
+}
+uint32_t rpc_system_millis() {
+  // Return uptime in milliseconds
+  // This is used to implement the RPC timeout
+  return millis();
+}
 
 bool rpc_mcu_reboot_impl() {
     if (BlynkResetImplemented()) {
