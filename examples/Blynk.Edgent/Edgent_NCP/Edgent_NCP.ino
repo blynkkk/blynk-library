@@ -51,6 +51,8 @@ BLYNK_DISCONNECTED() {
 void setup() {
   Serial.begin(115200);
   Serial.println();
+
+  // Give Serial Monitor some time to connect
   delay(3000);
 
   BLYNK_LOG("Main firmware: %s", BLYNK_FIRMWARE_VERSION);
@@ -74,15 +76,16 @@ void setup() {
 
   Blynk.setConfigTimeout(30*60); // 30 minutes
 
-  // White labeling
+  // White labeling (use this ONLY if you have a branded Blynk App)
   //Blynk.setVendorPrefix("MyCompany");
   //Blynk.setVendorServer("dashboard.mycompany.com");
+
   // Product setup
   Blynk.begin(BLYNK_TEMPLATE_ID, BLYNK_TEMPLATE_NAME);
 
   // Publish some data periodically
   timer.setInterval(1000, []() {
-    Blynk.virtualWrite(V0, millis());
+    Blynk.virtualWrite(V0, millis() / 1000);
   });
 }
 
