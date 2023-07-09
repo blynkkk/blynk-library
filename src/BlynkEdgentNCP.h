@@ -17,7 +17,13 @@
 #include <Blynk/BlynkTimer.h>
 #include <utility/BlynkNcpOtaImpl.h>
 
-#if !defined(BLYNK_NCP_BAUD)
+#if defined(BLYNK_NCP_BAUD)
+  // OK, use it
+#elif defined(BLYNK_NCP_SERIAL)
+  #define BLYNK_NCP_BAUD 115200
+#elif defined(ARDUINO_UNOWIFIR4)
+  #define BLYNK_NCP_BAUD  921600
+#else
   #define BLYNK_NCP_BAUD 2000000
 #endif
 
