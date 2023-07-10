@@ -162,7 +162,7 @@ private:
   }
 #endif
 
-  bool ncpConnect(uint32_t targetBaud)
+  bool ncpConnect(long targetBaud)
   {
     // Start with the default NCP baud rate, then try the secondary
     const long initialBauds[3] = { 38400, 115200, targetBaud };
