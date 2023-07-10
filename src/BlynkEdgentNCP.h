@@ -20,11 +20,11 @@
 #if defined(BLYNK_NCP_BAUD)
   // OK, use it
 #elif defined(BLYNK_NCP_SERIAL)
-  #define BLYNK_NCP_BAUD 115200
+  #define BLYNK_NCP_BAUD  115200
 #elif defined(ARDUINO_UNOWIFIR4)
   #define BLYNK_NCP_BAUD  921600
 #else
-  #define BLYNK_NCP_BAUD 2000000
+  #define BLYNK_NCP_BAUD  2000000
 #endif
 
 #if defined(LINUX)
@@ -165,14 +165,14 @@ private:
   bool ncpConnect(uint32_t targetBaud)
   {
     // Start with the default NCP baud rate, then try the secondary
-    const uint32_t initialBauds[2] = { 115200, targetBaud };
-    for (int i = 0; i < 2; i++) {
-      const uint32_t currentBaud = initialBauds[i];
+    const long initialBauds[3] = { 38400, 115200, targetBaud };
+    for (int i = 0; i < 3; i++) {
+      const long currentBaud = initialBauds[i];
       SerialNCP.begin(currentBaud);
       uint32_t tbeg = micros();
       if (RPC_STATUS_OK == rpc_ncp_ping()) {
         uint32_t tend = micros();
-        BLYNK_LOG("NCP responding (baud %u, %u us)", currentBaud, tend-tbeg);
+        BLYNK_LOG("NCP responding (baud %ld, %u us)", currentBaud, tend-tbeg);
         if (currentBaud == targetBaud) {
           return true;
         }
@@ -184,10 +184,10 @@ private:
           tbeg = micros();
           if (RPC_STATUS_OK == rpc_ncp_ping()) {
             tend = micros();
-            BLYNK_LOG("NCP responding (baud %u, %u us)", targetBaud, tend-tbeg);
+            BLYNK_LOG("NCP responding (baud %ld, %u us)", targetBaud, tend-tbeg);
             return true;
           } else {
-            BLYNK_LOG("NCP not responding (baud: %u)", targetBaud);
+            BLYNK_LOG("NCP not responding (baud: %ld)", targetBaud);
             // TODO: handle this case, i.e:
             // Power-cycle the module, keep communicating on the initial baud rate
           }
@@ -256,25 +256,26 @@ public:
         ncpInitialize();
 
         const uint32_t tstart = millis();
-
-        // This provides a simple way to verify the NCP boot log, i.e:
-        // [rpc port] Blynk.NCP started
-#if defined(BLYNK_NCP_PASSTHROUGH) && defined(BLYNK_PRINT)
-        SerialNCP.begin(115200);
-        while (millis() - tstart < timeout / 2) {
-          while (SerialNCP.available()) {
-            BLYNK_PRINT.write(SerialNCP.read());
-          }
-          delay(1);
-        }
-#endif
-
         while (millis() - tstart < timeout) {
           if (ncpConnect(BLYNK_NCP_BAUD)) {
             return true;
           }
         }
         return false;
+    }
+
+    // This provides a simple way to verify the NCP boot log, i.e:
+    // [rpc port] Blynk.NCP started
+    void passthrough(long baud) {
+        if (baud > 0) {
+          SerialNCP.begin(baud);
+        }
+        while (true) {
+          while (SerialNCP.available()) {
+            BLYNK_PRINT.write(SerialNCP.read());
+          }
+          delay(1);
+        }
     }
 
     bool begin(const char* tmpl_id, const char* tmpl_name)
