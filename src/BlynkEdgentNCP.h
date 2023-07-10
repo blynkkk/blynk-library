@@ -22,7 +22,7 @@
 #elif defined(BLYNK_NCP_SERIAL)
   #define BLYNK_NCP_BAUD  115200
 #elif defined(ARDUINO_UNOWIFIR4)
-  #define BLYNK_NCP_BAUD  921600
+  #define BLYNK_NCP_BAUD  460800
 #else
   #define BLYNK_NCP_BAUD  2000000
 #endif
