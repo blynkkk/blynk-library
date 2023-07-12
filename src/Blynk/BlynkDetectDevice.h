@@ -216,7 +216,8 @@
         #if defined(ARDUINO_ARCH_SAMD) || \
             defined(ESP32) || defined(ESP8266) || \
             defined(ARDUINO_ARCH_RP2040) || \
-            defined(ARDUINO_ARCH_NRF52840)
+            defined(ARDUINO_ARCH_NRF52840) || \
+            defined(ARDUINO_ARCH_RENESAS)
 
             #define BLYNK_USE_128_VPINS
             #define BLYNK_BUFFERS_SIZE 1024
@@ -312,6 +313,14 @@
         #define BLYNK_INFO_DEVICE  "Nano 33 IoT"
         #elif defined(TARGET_ARDUINO_NANO33BLE) || defined(ARDUINO_ARDUINO_NANO33BLE) || defined(ARDUINO_NANO33BLE)
         #define BLYNK_INFO_DEVICE  "Nano 33 BLE"
+
+        /* Arduino RA */
+        #elif defined(ARDUINO_MINIMA)
+        #define BLYNK_INFO_DEVICE  "UNO R4 Minima"
+        #elif defined(ARDUINO_UNOWIFIR4)
+        #define BLYNK_INFO_DEVICE  "UNO R4 WiFi"
+        #elif defined(ARDUINO_PORTENTA_C33)
+        #define BLYNK_INFO_DEVICE  "Portenta C33"
 
         /* RapsberryPi */
         #elif defined(ARDUINO_RASPBERRY_PI_PICO_W)

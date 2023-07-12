@@ -253,6 +253,8 @@ public:
     }
 
     bool initNCP(uint32_t timeout = 10000) {
+        printBanner();
+
         ncpInitialize();
 
         const uint32_t tstart = millis();
@@ -310,6 +312,19 @@ public:
         return result;
     }
 
+    bool connected() const {
+        return _state == BLYNK_STATE_CONNECTED;
+    }
+
+    bool connect() {
+        // TODO
+        return connected();
+    }
+
+    void disconnect() {
+        // TODO
+    }
+
     RpcBlynkState getState() const {
         return _state;
     }
@@ -336,6 +351,27 @@ public:
 
         default                           : return "Unknown";
         }
+    }
+
+    void printBanner() {
+#if defined(BLYNK_NO_FANCY_LOGO)
+        BLYNK_LOG1(BLYNK_F("Blynk v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE
+            BLYNK_NEWLINE
+            " #StandWithUkraine    https://bit.ly/swua" BLYNK_NEWLINE
+            BLYNK_NEWLINE
+        ));
+#else
+        BLYNK_LOG1(BLYNK_F(BLYNK_NEWLINE
+            "    ___  __          __" BLYNK_NEWLINE
+            "   / _ )/ /_ _____  / /__" BLYNK_NEWLINE
+            "  / _  / / // / _ \\/  '_/" BLYNK_NEWLINE
+            " /____/_/\\_, /_//_/_/\\_\\" BLYNK_NEWLINE
+            "        /___/ v" BLYNK_VERSION " on " BLYNK_INFO_DEVICE BLYNK_NEWLINE
+            BLYNK_NEWLINE
+            " #StandWithUkraine    https://bit.ly/swua" BLYNK_NEWLINE
+            BLYNK_NEWLINE
+        ));
+#endif
     }
 
 private:
@@ -438,5 +474,7 @@ void rpc_client_processEvent_impl(uint8_t event) {
     default: break;
     }
 }
+
+#include <BlynkWidgets.h>
 
 #endif
