@@ -74,7 +74,8 @@ void setup() {
     BLYNK_LOG("State: %s", Blynk.getStateString());
   });
 
-  Blynk.setConfigTimeout(30*60); // 30 minutes
+  // Set config mode timeout to 30 minutes, for testing purposes
+  Blynk.setConfigTimeout(30*60);
 
   // White labeling (use this ONLY if you have a branded Blynk App)
   //Blynk.setVendorPrefix("MyCompany");
