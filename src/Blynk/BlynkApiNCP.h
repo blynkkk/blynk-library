@@ -23,6 +23,10 @@
     #error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_TEMPLATE_NAME"
 #endif
 
+#if defined(BLYNK_AUTH_TOKEN)
+    #error "BLYNK_AUTH_TOKEN is assigned automatically when using Blynk.Edgent, please remove it from the configuration"
+#endif
+
 #include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkParam.h>
 #include <Blynk/BlynkHandlers.h>
