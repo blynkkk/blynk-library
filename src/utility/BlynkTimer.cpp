@@ -44,7 +44,7 @@ void SimpleTimer::init() {
     unsigned long current_millis = elapsed();
 
     for (int i = 0; i < MAX_TIMERS; i++) {
-        memset(&timer[i], 0, sizeof (timer_t));
+        timer[i] = timer_t();
         timer[i].prev_millis = current_millis;
     }
 
@@ -63,17 +63,21 @@ void SimpleTimer::run() {
 
         timer[i].toBeCalled = DEFCALL_DONTRUN;
 
-        // no callback == no timer, i.e. jump over empty slots
-        if (timer[i].callback != NULL) {
+        // jump over empty slots
+        if (isValidTimer(i)) {
 
             // is it time to process this timer ?
             // see http://arduino.cc/forum/index.php/topic,124048.msg932592.html#msg932592
 
             if ((current_millis - timer[i].prev_millis) >= timer[i].delay) {
 
-                unsigned long skipTimes = (current_millis - timer[i].prev_millis) / timer[i].delay;
-                // update time
-                timer[i].prev_millis += timer[i].delay * skipTimes;
+                if (timer[i].delay) {
+                    unsigned long skipTimes = (current_millis - timer[i].prev_millis) / timer[i].delay;
+                    // update time
+                    timer[i].prev_millis += timer[i].delay * skipTimes;
+                } else {
+                    timer[i].prev_millis = current_millis;
+                }
 
                 // check if the timer callback has to be executed
                 if (timer[i].enabled) {
@@ -102,9 +106,9 @@ void SimpleTimer::run() {
             continue;
 
         if (timer[i].hasParam)
-            (*(timer_callback_p)timer[i].callback)(timer[i].param);
+            timer[i].callback_p(timer[i].param);
         else
-            (*(timer_callback)timer[i].callback)();
+            timer[i].callback();
 
         if (timer[i].toBeCalled == DEFCALL_RUNANDDEL)
             deleteTimer(i);
@@ -122,7 +126,7 @@ int SimpleTimer::findFirstFreeSlot() {
 
     // return the first slot with no callback (i.e. free)
     for (int i = 0; i < MAX_TIMERS; i++) {
-        if (timer[i].callback == NULL) {
+        if (!isValidTimer(i)) {
             return i;
         }
     }
@@ -132,7 +136,7 @@ int SimpleTimer::findFirstFreeSlot() {
 }
 
 
-int SimpleTimer::setupTimer(unsigned long d, void* f, void* p, bool h, unsigned n) {
+int SimpleTimer::setupTimer(unsigned long d, const timer_callback& f, unsigned n) {
     int freeTimer;
 
     if (numTimers < 0) {
@@ -150,8 +154,7 @@ int SimpleTimer::setupTimer(unsigned long d, void* f, void* p, bool h, unsigned 
 
     timer[freeTimer].delay = d;
     timer[freeTimer].callback = f;
-    timer[freeTimer].param = p;
-    timer[freeTimer].hasParam = h;
+    timer[freeTimer].hasParam = false;
     timer[freeTimer].maxNumRuns = n;
     timer[freeTimer].enabled = true;
     timer[freeTimer].prev_millis = elapsed();
@@ -161,29 +164,33 @@ int SimpleTimer::setupTimer(unsigned long d, void* f, void* p, bool h, unsigned 
     return freeTimer;
 }
 
+int SimpleTimer::setupTimer(unsigned long d, timer_callback_p f, void* p, unsigned n) {
+    int freeTimer;
 
-int SimpleTimer::setTimer(unsigned long d, timer_callback f, unsigned n) {
-  return setupTimer(d, (void *)f, NULL, false, n);
-}
+    if (numTimers < 0) {
+        init();
+    }
 
-int SimpleTimer::setTimer(unsigned long d, timer_callback_p f, void* p, unsigned n) {
-  return setupTimer(d, (void *)f, p, true, n);
-}
+    freeTimer = findFirstFreeSlot();
+    if (freeTimer < 0) {
+        return -1;
+    }
 
-int SimpleTimer::setInterval(unsigned long d, timer_callback f) {
-    return setupTimer(d, (void *)f, NULL, false, RUN_FOREVER);
-}
+    if (f == NULL) {
+        return -1;
+    }
 
-int SimpleTimer::setInterval(unsigned long d, timer_callback_p f, void* p) {
-  return setupTimer(d, (void *)f, p, true, RUN_FOREVER);
-}
+    timer[freeTimer].delay = d;
+    timer[freeTimer].callback_p = f;
+    timer[freeTimer].param = p;
+    timer[freeTimer].hasParam = true;
+    timer[freeTimer].maxNumRuns = n;
+    timer[freeTimer].enabled = true;
+    timer[freeTimer].prev_millis = elapsed();
 
-int SimpleTimer::setTimeout(unsigned long d, timer_callback f) {
-    return setupTimer(d, (void *)f, NULL, false, RUN_ONCE);
-}
+    numTimers++;
 
-int SimpleTimer::setTimeout(unsigned long d, timer_callback_p f, void* p) {
-  return setupTimer(d, (void *)f, p, true, RUN_ONCE);
+    return freeTimer;
 }
 
 bool SimpleTimer::changeInterval(unsigned numTimer, unsigned long d) {
@@ -192,7 +199,7 @@ bool SimpleTimer::changeInterval(unsigned numTimer, unsigned long d) {
     }
 
     // Updates interval of existing specified timer
-    if (timer[numTimer].callback != NULL) {
+    if (isValidTimer(numTimer)) {
         timer[numTimer].delay = d;
         timer[numTimer].prev_millis = elapsed();
         return true;
@@ -213,8 +220,8 @@ void SimpleTimer::deleteTimer(unsigned timerId) {
 
     // don't decrease the number of timers if the
     // specified slot is already empty
-    if (timer[timerId].callback != NULL) {
-        memset(&timer[timerId], 0, sizeof (timer_t));
+    if (isValidTimer(timerId)) {
+        timer[timerId] = timer_t();
         timer[timerId].prev_millis = elapsed();
 
         // update number of timers
@@ -232,6 +239,13 @@ void SimpleTimer::restartTimer(unsigned numTimer) {
     timer[numTimer].prev_millis = elapsed();
 }
 
+void SimpleTimer::executeNow(unsigned numTimer) {
+    if (numTimer >= MAX_TIMERS) {
+        return;
+    }
+
+    timer[numTimer].prev_millis = elapsed() - timer[numTimer].delay;
+}
 
 bool SimpleTimer::isEnabled(unsigned numTimer) {
     if (numTimer >= MAX_TIMERS) {
@@ -262,7 +276,7 @@ void SimpleTimer::disable(unsigned numTimer) {
 void SimpleTimer::enableAll() {
     // Enable all timers with a callback assigned (used)
     for (int i = 0; i < MAX_TIMERS; i++) {
-        if (timer[i].callback != NULL && timer[i].numRuns == RUN_FOREVER) {
+        if (isValidTimer(i) && timer[i].numRuns == RUN_FOREVER) {
             timer[i].enabled = true;
         }
     }
@@ -271,7 +285,7 @@ void SimpleTimer::enableAll() {
 void SimpleTimer::disableAll() {
     // Disable all timers with a callback assigned (used)
     for (int i = 0; i < MAX_TIMERS; i++) {
-        if (timer[i].callback != NULL && timer[i].numRuns == RUN_FOREVER) {
+        if (isValidTimer(i) && timer[i].numRuns == RUN_FOREVER) {
             timer[i].enabled = false;
         }
     }

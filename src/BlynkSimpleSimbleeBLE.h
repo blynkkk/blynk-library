@@ -117,9 +117,12 @@ public:
 
 BlynkTransportSimbleeBLE* BlynkTransportSimbleeBLE::instance = NULL;
 
-static BlynkTransportSimbleeBLE _blynkTransport;
-BlynkSimpleSimbleeBLE Blynk(_blynkTransport);
-
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportSimbleeBLE _blynkTransport;
+  BlynkSimpleSimbleeBLE Blynk(_blynkTransport);
+#else
+  extern BlynkSimpleSimbleeBLE Blynk;
+#endif
 
 void SimbleeBLE_onConnect()
 {

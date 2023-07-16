@@ -22,12 +22,14 @@
 #include <Adapters/BlynkArduinoClient.h>
 #include <WiFi.h>
 
+typedef BlynkArduinoClientGen<WiFiClient> BlynkEsp32Client;
+
 class BlynkWifi
-    : public BlynkProtocol<BlynkArduinoClient>
+    : public BlynkProtocol<BlynkEsp32Client>
 {
-    typedef BlynkProtocol<BlynkArduinoClient> Base;
+    typedef BlynkProtocol<BlynkEsp32Client> Base;
 public:
-    BlynkWifi(BlynkArduinoClient& transp)
+    BlynkWifi(BlynkEsp32Client& transp)
         : Base(transp)
     {}
 
@@ -90,9 +92,13 @@ public:
 
 };
 
-static WiFiClient _blynkWifiClient;
-static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
-BlynkWifi Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static WiFiClient _blynkWifiClient;
+  static BlynkEsp32Client _blynkTransport(_blynkWifiClient);
+  BlynkWifi Blynk(_blynkTransport);
+#else
+  extern BlynkWifi Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

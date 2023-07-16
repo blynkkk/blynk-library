@@ -1,17 +1,14 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
   Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
+  ESP32, Arduino, Raspberry Pi and the likes over the Internet.
+  You can easily build mobile and web interfaces for any
   projects by simply dragging and dropping widgets.
 
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
+    Downloads, docs, tutorials: https://www.blynk.io
+    Sketch generator:           https://examples.blynk.cc
+    Blynk community:            https://community.blynk.cc
+    Follow us:                  https://www.fb.com/blynkapp
+                                https://twitter.com/blynk_app
 
   Blynk library is licensed under MIT license
   This example code is in public domain.
@@ -23,7 +20,7 @@
   For this example you need WiFlyHQ library:
     https://github.com/harlequin-tech/WiFlyHQ
 
-  Note: Be sure to read this: http://www.theairboard.cc/quick-start/
+  NOTE: Be sure to read this: http://www.theairboard.cc/quick-start/
         WiFly firmware version 4.41 or later is preferred.
 
   Change WiFi ssid, pass, and Blynk auth token to run :)
@@ -36,14 +33,15 @@ SoftwareSerial DebugSerial(10, 11); // RX, TX
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT DebugSerial
 
+/* Fill in information from Blynk Device Info here */
+//#define BLYNK_TEMPLATE_ID           "TMPxxxxxx"
+//#define BLYNK_TEMPLATE_NAME         "Device"
+//#define BLYNK_AUTH_TOKEN            "YourAuthToken"
+
 
 #include <TheAirBoard.h>
 #include <WiFlyHQ.h>
 #include <BlynkSimpleWiFly.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
@@ -71,7 +69,7 @@ void setup()
   //wifly.setBaud(115200);
   //WiFlySerial.begin(115200);
 
-  Blynk.begin(auth, wifly, ssid, pass);
+  Blynk.begin(BLYNK_AUTH_TOKEN, wifly, ssid, pass);
 }
 
 void loop()

@@ -10,37 +10,49 @@
 #ifndef WidgetTerminal_h
 #define WidgetTerminal_h
 
+#ifndef BLYNK_TERMINAL_BUFF_OUT
+    #define BLYNK_TERMINAL_BUFF_OUT 250
+#endif
+#ifndef BLYNK_TERMINAL_BUFF_IN
+    #define BLYNK_TERMINAL_BUFF_IN BLYNK_MAX_READBYTES
+#endif
+
 #if defined(ARDUINO) && !(defined(LINUX) || defined(__MBED__))
-    #define BLYNK_USE_PRINT_CLASS
+    #define BLYNK_USE_STREAM_CLASS
 #elif defined(SPARK) || defined(PARTICLE)
-    #define BLYNK_USE_PRINT_CLASS
+    #define BLYNK_USE_STREAM_CLASS
 #endif
 
 #include <Blynk/BlynkWidgetBase.h>
+#include <utility/BlynkFifo.h>
 
-#ifdef BLYNK_USE_PRINT_CLASS
-    #if !(defined(SPARK) || defined(PARTICLE) || (PLATFORM_ID==88) || defined(ARDUINO_RedBear_Duo)) // 88 -> RBL Duo
-        // On Particle this is auto-included
-        #include <Print.h>
-    #endif
+#ifdef BLYNK_USE_STREAM_CLASS
+    #include <Stream.h>
 #endif
 
 class WidgetTerminal
     : public BlynkWidgetBase
-#ifdef BLYNK_USE_PRINT_CLASS
-    , public Print
+#ifdef BLYNK_USE_STREAM_CLASS
+    , public Stream
 #endif
 {
 public:
-    WidgetTerminal(uint8_t vPin)
+    WidgetTerminal(uint8_t vPin = -1)
         : BlynkWidgetBase(vPin)
         , mOutQty(0)
     {}
 
-    //virtual ~WidgetTerminal() {}
+    virtual ~WidgetTerminal() {}
+
+    /*
+     * Writing
+     */
 
     virtual size_t write(uint8_t byte) {
         mOutBuf[mOutQty++] = byte;
+        if (byte == '\n' && Blynk.connected()) {
+            flush();
+        }
         if (mOutQty >= sizeof(mOutBuf)) {
             flush();
         }
@@ -53,15 +65,48 @@ public:
             mOutQty = 0;
         }
     }
+
+    /*
+     * Reading
+     */
+
+    virtual int read()      { return mRxBuff.readable() ? mRxBuff.get() : -1;  }
+    virtual int available() { return mRxBuff.size(); }
+    virtual int peek()      { return mRxBuff.readable() ? mRxBuff.peek() : -1; }
+
+    void process(const BlynkParam& param) {
+        mRxBuff.put((uint8_t*)param.getBuffer(), param.getLength());
+
+        if (mAppendCR) { mRxBuff.put('\r'); }
+        if (mAppendLF) { mRxBuff.put('\n'); }
+    }
+
+    void onWrite(BlynkReq BLYNK_UNUSED &request, const BlynkParam& param) {
+        process(param);
+    }
+
+    /*
+     * Extra
+     */
     
     void clear() {
-        flush();
+        mOutQty = 0;
         Blynk.virtualWrite(mPin, "clr");
     }
 
-#ifdef BLYNK_USE_PRINT_CLASS
+    // Append '\r' on input
+    void autoAppendCR(bool v = true) {
+        mAppendCR = v;
+    }
 
-    using Print::write;
+    // Append '\n' on input
+    void autoAppendLF(bool v = true) {
+        mAppendLF = v;
+    }
+
+#ifdef BLYNK_USE_STREAM_CLASS
+
+    using Stream::write;
 
     virtual size_t write(const void* buff, size_t len) {
         return write((char*)buff, len);
@@ -85,8 +130,14 @@ public:
 #endif
 
 private:
-    uint8_t mOutBuf[64];
-    uint8_t mOutQty;
+    typedef BlynkFifo<uint8_t, BLYNK_TERMINAL_BUFF_IN> InputFifo;
+
+    bool        mAppendCR = false;
+    bool        mAppendLF = false;
+    InputFifo   mRxBuff;
+
+    uint8_t     mOutBuf[BLYNK_TERMINAL_BUFF_OUT];
+    unsigned    mOutQty;
 };
 
 #endif

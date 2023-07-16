@@ -1,0 +1,133 @@
+/**
+ * @file       BlynkParticle.h
+ * @author     Volodymyr Shymanskyy
+ * @license    This project is released under the MIT License (MIT)
+ * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
+ * @date       Mar 2015
+ * @brief
+ *
+ */
+
+#ifndef BlynkParticle_h
+#define BlynkParticle_h
+
+#include "BlynkApiParticle.h"
+#include "Blynk/BlynkProtocol.h"
+
+class BlynkTransportParticle
+{
+public:
+    BlynkTransportParticle()
+        : domain(NULL), port(0), actual_port(0)
+    {}
+
+    void begin(IPAddress a, uint16_t p) {
+        domain = NULL;
+        port = p;
+        addr = a;
+    }
+
+    void begin(const char* d, uint16_t p) {
+        domain = d;
+        port = p;
+    }
+
+    bool _connectToPort(uint16_t p) {
+        bool isConn = false;
+        if (domain) {
+            BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', p);
+            isConn = (1 == client.connect(domain, p));
+        } else {
+            BLYNK_LOG_IP("Connecting to ", addr);
+            isConn = (1 == client.connect(addr, p));
+        }
+        actual_port = isConn ? p : 0;
+        return isConn;
+    }
+
+    bool connect() {
+        bool isConn = _connectToPort(port);
+        if (!isConn) {
+            // If port is 80 or 8080, try an alternative port
+            if (port == 80) {
+                isConn = _connectToPort(8080);
+            } else if (port == 8080) {
+                isConn = _connectToPort(80);
+            }
+        }
+        return isConn;
+    }
+
+    uint16_t getActualPort() const {
+        return actual_port;
+    }
+
+    void disconnect() { client.stop(); }
+
+    size_t read(void* buf, size_t len) {
+        return client.readBytes((char*)buf, len);
+    }
+
+    size_t write(const void* buf, size_t len) {
+        return client.write((const uint8_t*)buf, len);
+    }
+
+    void flush() { client.flush(); }
+    bool connected() { return client.connected(); }
+    int available() { return client.available(); }
+
+private:
+    TCPClient   client;
+    IPAddress   addr;
+    const char* domain;
+    uint16_t    port;
+    uint16_t    actual_port;
+};
+
+class BlynkParticle
+    : public BlynkProtocol<BlynkTransportParticle>
+{
+    typedef BlynkProtocol<BlynkTransportParticle> Base;
+public:
+    BlynkParticle(BlynkTransportParticle& transp)
+        : Base(transp)
+    {}
+
+    void config(const char* auth,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        this->conn.begin(domain, port);
+    }
+
+    void config(const char* auth,
+                IPAddress addr,
+                uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        this->conn.begin(addr, port);
+    }
+
+    void begin( const char* auth,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
+        BlynkDelay(3000); // Give the board time to settle
+        config(auth, domain, port);
+        while(this->connect() != true) {}
+    }
+
+    void begin( const char* auth,
+                IPAddress addr,
+                uint16_t port      = BLYNK_DEFAULT_PORT)
+    {
+        BlynkDelay(3000); // Give the board time to settle
+        config(auth, addr, port);
+        while(this->connect() != true) {}
+    }
+private:
+
+};
+
+#endif

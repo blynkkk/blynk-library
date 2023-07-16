@@ -37,7 +37,7 @@ class BlynkTransportShieldEsp8266
         ((BlynkTransportShieldEsp8266*)ptr)->onData(mux_id, len);
     }
 
-    void onData(uint8_t mux_id, uint32_t len) {
+    void onData(uint8_t mux_id, int32_t len) {
         if (mux_id != BLYNK_ESP8266_MUX) {
             return;
         }
@@ -193,8 +193,12 @@ private:
     ESP8266* wifi;
 };
 
-static BlynkTransportShieldEsp8266 _blynkTransport;
-BlynkWifi Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkTransportShieldEsp8266 _blynkTransport;
+  BlynkWifi Blynk(_blynkTransport);
+#else
+  extern BlynkWifi Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

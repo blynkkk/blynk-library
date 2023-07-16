@@ -14,22 +14,29 @@
 #include "Blynk/BlynkApi.h"
 #include "Particle.h"
 
-#ifdef BLYNK_NO_INFO
-
-template<class Proto>
-BLYNK_FORCE_INLINE
-void BlynkApi<Proto>::sendInfo() {}
-
-#else
-
 template<class Proto>
 BLYNK_FORCE_INLINE
 void BlynkApi<Proto>::sendInfo()
 {
     static const char profile[] BLYNK_PROGMEM = "blnkinf\0"
-        BLYNK_PARAM_KV("ver"    , BLYNK_VERSION)
+
+        // Firmware info
+#if defined(BLYNK_NCP_VERSION)
+        BLYNK_PARAM_KV("ncp"    , BLYNK_NCP_VERSION)
+#else
+        BLYNK_PARAM_KV("mcu"    , BLYNK_FIRMWARE_VERSION)
+#endif
+#ifdef BLYNK_FIRMWARE_TYPE
+        BLYNK_PARAM_KV("fw-type", BLYNK_FIRMWARE_TYPE)
+#endif
+        BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
+        BLYNK_PARAM_KV("blynk"  , BLYNK_VERSION)
+
+        // Protocol setup
         BLYNK_PARAM_KV("h-beat" , BLYNK_TOSTRING(BLYNK_HEARTBEAT))
         BLYNK_PARAM_KV("buff-in", BLYNK_TOSTRING(BLYNK_MAX_READBYTES))
+
+        // Additional info
 #ifdef BLYNK_INFO_DEVICE
         BLYNK_PARAM_KV("dev"    , BLYNK_INFO_DEVICE)
 #endif
@@ -39,22 +46,15 @@ void BlynkApi<Proto>::sendInfo()
 #ifdef BLYNK_INFO_CONNECTION
         BLYNK_PARAM_KV("con"    , BLYNK_INFO_CONNECTION)
 #endif
-#ifdef BOARD_FIRMWARE_TYPE
-        BLYNK_PARAM_KV("fw-type", BOARD_FIRMWARE_TYPE)
-#endif
-#ifdef BOARD_FIRMWARE_VERSION
-        BLYNK_PARAM_KV("fw"     , BOARD_FIRMWARE_VERSION)
-#endif
-        BLYNK_PARAM_KV("build"  , __DATE__ " " __TIME__)
         "\0"
     ;
     const size_t profile_len = sizeof(profile)-8-2;
 
     char mem_dyn[64];
     BlynkParam profile_dyn(mem_dyn, 0, sizeof(mem_dyn));
-#ifdef BOARD_TEMPLATE_ID
+#ifdef BLYNK_TEMPLATE_ID
     {
-        const char* tmpl = BOARD_TEMPLATE_ID;
+        const char* tmpl = BLYNK_TEMPLATE_ID;
         if (tmpl && strlen(tmpl)) {
             profile_dyn.add_key("tmpl", tmpl);
         }
@@ -64,14 +64,12 @@ void BlynkApi<Proto>::sendInfo()
 #ifdef BLYNK_HAS_PROGMEM
     char mem[profile_len];
     memcpy_P(mem, profile+8, profile_len);
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, mem, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, mem, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength()-1);
 #else
-    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile+8, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength());
+    static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_INTERNAL, 0, profile+8, profile_len, profile_dyn.getBuffer(), profile_dyn.getLength()-1);
 #endif
     return;
 }
-
-#endif
 
 
 // Check if analog pins can be referenced by name on this device
@@ -174,24 +172,14 @@ void BlynkApi<Proto>::processCmd(const void* buff, size_t len)
 
     case BLYNK_HW_VR: {
         BlynkReq req = { pin };
-        WidgetReadHandler handler = GetReadHandler(pin);
-        if (handler && (handler != BlynkWidgetRead)) {
-            handler(req);
-        } else {
-            BlynkWidgetReadDefault(req);
-        }
+        callReadHandler(req);
     } break;
     case BLYNK_HW_VW: {
         ++it;
         char* start = (char*)it.asStr();
         BlynkParam param2(start, len - (start - (char*)buff));
         BlynkReq req = { pin };
-        WidgetWriteHandler handler = GetWriteHandler(pin);
-        if (handler && (handler != BlynkWidgetWrite)) {
-            handler(req, param2);
-        } else {
-            BlynkWidgetWriteDefault(req, param2);
-        }
+        callWriteHandler(req, param2);
     } break;
     default:
         BLYNK_LOG2(BLYNK_F("Invalid HW cmd: "), cmd);

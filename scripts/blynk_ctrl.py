@@ -74,7 +74,7 @@ parser.add_argument('--target',       action="store",      dest='target', metava
 parser.add_argument('--dump',         action="store_true", dest='dump',             help='dump communication')
 
 parser.set_defaults(
-    server='blynk-cloud.com',
+    server='blynk.cloud',
     port=80,
     dump=False,
     nodelay=True,

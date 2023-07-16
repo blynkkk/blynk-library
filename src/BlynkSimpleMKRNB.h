@@ -17,8 +17,12 @@
 #include <MKRNB.h>
 #include <Adapters/BlynkArduinoNB.h>
 
-static BlynkArduinoClient _blynkTransport;
-BlynkSIM Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static BlynkArduinoClient _blynkTransport;
+  BlynkSIM Blynk(_blynkTransport);
+#else
+  extern BlynkSIM Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 

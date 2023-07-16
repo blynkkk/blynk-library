@@ -1,5 +1,5 @@
 /**
- * @file       BlynkParam.h
+ * @file       BlynkArduinoClient.h
  * @author     Volodymyr Shymanskyy
  * @license    This project is released under the MIT License (MIT)
  * @copyright  Copyright (c) 2015 Volodymyr Shymanskyy
@@ -21,11 +21,11 @@
     #define YIELD_FIX()
 #endif
 
-template <typename Client>
+template <typename TClient>
 class BlynkArduinoClientGen
 {
 public:
-    BlynkArduinoClientGen(Client& c)
+    BlynkArduinoClientGen(TClient& c)
         : client(NULL), domain(NULL), port(0), isConn(false)
     {
         setClient(&c);
@@ -35,7 +35,7 @@ public:
         : client(NULL), domain(NULL), port(0), isConn(false)
     {}
 
-    void setClient(Client* c) {
+    void setClient(TClient* c) {
         client = c;
         client->setTimeout(BLYNK_TIMEOUT_MS);
     }
@@ -51,34 +51,47 @@ public:
         port = p;
     }
 
-    bool connect() {
+    bool _connectToPort(uint16_t p) {
         if (domain) {
-            BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', port);
-
-            isConn = (1 == client->connect(domain, port));
-            return isConn;
-        } else { //if (uint32_t(addr) != 0) {
+            BLYNK_LOG4(BLYNK_F("Connecting to "), domain, ':', p);
+            return (1 == client->connect(domain, p));
+        } else {
             BLYNK_LOG_IP("Connecting to ", addr);
-            isConn = (1 == client->connect(addr, port));
-            return isConn;
+            return (1 == client->connect(addr, p));
         }
         return false;
     }
 
-    void disconnect() { isConn = false; client->stop(); }
-
-#ifdef BLYNK_ENC28J60_FIX
-    size_t read(void* buf, size_t len) {
-        while (client->available() < len) { BLYNK_RUN_YIELD(); }
-        return client->read((uint8_t*)buf, len);
+    bool connect() {
+        isConn = _connectToPort(port);
+        if (!isConn) {
+            // If port is 80 or 8080, try an alternative port
+            if (port == 80) {
+                isConn = _connectToPort(8080);
+            } else if (port == 8080) {
+                isConn = _connectToPort(80);
+            }
+        }
+#ifdef BLYNK_NODELAY
+        if (isConn) {
+            client->setNoDelay(true);
+        }
+#endif
+        return isConn;
     }
-#else
+
+    void disconnect() {
+        isConn = false;
+        if (client) {
+            client->stop();
+        }
+    }
+
     size_t read(void* buf, size_t len) {
         size_t res = client->readBytes((char*)buf, len);
         YIELD_FIX();
         return res;
     }
-#endif
 
 #ifdef BLYNK_RETRY_SEND
     size_t write(const void* buf, size_t len) {
@@ -116,7 +129,7 @@ public:
     int available() {  YIELD_FIX(); return client->available(); }
 
 protected:
-    Client*     client;
+    TClient*    client;
     IPAddress   addr;
     const char* domain;
     uint16_t    port;

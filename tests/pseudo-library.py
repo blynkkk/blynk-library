@@ -24,7 +24,7 @@ except getopt.GetoptError:
     sys.exit(2)
 
 # Default options
-SERVER = "blynk-cloud.com"
+SERVER = "blynk.cloud"
 PORT = 80
 NODELAY = 1     # TCP_NODELAY
 SNDBUF = 0      # No SNDBUF override

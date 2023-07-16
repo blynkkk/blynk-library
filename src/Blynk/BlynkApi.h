@@ -11,6 +11,34 @@
 #ifndef BlynkApi_h
 #define BlynkApi_h
 
+// back-compat
+
+#ifdef BOARD_FIRMWARE_TYPE
+    #define BLYNK_FIRMWARE_TYPE         BOARD_FIRMWARE_TYPE
+#endif
+
+#ifdef BOARD_FIRMWARE_VERSION
+    #define BLYNK_FIRMWARE_VERSION      BOARD_FIRMWARE_VERSION
+#endif
+
+#ifdef BOARD_TEMPLATE_ID
+    #define BLYNK_TEMPLATE_ID           BOARD_TEMPLATE_ID
+#endif
+
+// end of back-compat
+
+#if !defined(BLYNK_FIRMWARE_TYPE) && defined(BLYNK_TEMPLATE_ID)
+    #define BLYNK_FIRMWARE_TYPE         BLYNK_TEMPLATE_ID
+#endif
+
+#if !defined(BLYNK_FIRMWARE_VERSION)
+    #define BLYNK_FIRMWARE_VERSION      "0.0.0"
+#endif
+
+#if !defined(BLYNK_TEMPLATE_ID) || !defined(BLYNK_TEMPLATE_NAME)
+    #error "Please specify your BLYNK_TEMPLATE_ID and BLYNK_TEMPLATE_NAME"
+#endif
+
 #include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkDebug.h>
 #include <Blynk/BlynkParam.h>
@@ -29,7 +57,10 @@ template <class Proto>
 class BlynkApi
 {
 public:
-    BlynkApi() {
+    BlynkApi()
+        : groupState(GROUP_NONE)
+        , groupTs(0)
+    {
     }
 
 #ifdef DOXYGEN // These API here are only for the documentation
@@ -104,11 +135,59 @@ public:
      * @param param
      */
     void virtualWrite(int pin, const BlynkParam& param) {
-        virtualWriteBinary(pin, param.getBuffer(), param.getLength());
+        virtualWriteBinary(pin, param.getBuffer(), param.getLength()-1);
     }
 
     void virtualWrite(int pin, const BlynkParamAllocated& param) {
-        virtualWriteBinary(pin, param.getBuffer(), param.getLength());
+        virtualWriteBinary(pin, param.getBuffer(), param.getLength()-1);
+    }
+
+    /**
+     * Command grouping
+     */
+    void beginGroup() {
+        if (GROUP_STARTED != groupState) {
+            groupState = GROUP_PENDING;
+            groupTs    = 0;
+        }
+    }
+
+    void beginGroup(uint64_t timestamp) {
+        if (GROUP_STARTED != groupState) {
+            groupState = GROUP_PENDING;
+            groupTs    = timestamp;
+        }
+    }
+
+    void endGroup() {
+        if (GROUP_STARTED == groupState) {
+            char mem[4];
+            BlynkParam cmd(mem, 0, sizeof(mem));
+            cmd.add("e");
+            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+        }
+        groupState = GROUP_NONE;
+    }
+
+    /**
+     * Handler helpers
+     */
+    void callWriteHandler(BlynkReq& req, const BlynkParam& param) {
+        WidgetWriteHandler handler = GetWriteHandler(req.pin);
+        if (handler && (handler != BlynkWidgetWrite)) {
+            handler(req, param);
+        } else {
+            BlynkWidgetWriteDefault(req, param);
+        }
+    }
+
+    void callReadHandler(BlynkReq& req) {
+        WidgetReadHandler handler = GetReadHandler(req.pin);
+        if (handler && (handler != BlynkWidgetRead)) {
+            handler(req);
+        } else {
+            BlynkWidgetReadDefault(req);
+        }
     }
 
     /**
@@ -145,77 +224,6 @@ public:
     }
 
     /**
-     * Tweets a message
-     *
-     * @param msg Text of the message
-     */
-    template<typename T>
-    void tweet(const T& msg) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
-     * Sends a push notification to the App
-     *
-     * @param msg Text of the message
-     */
-    template<typename T>
-    void notify(const T& msg) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
-     * Sends an SMS
-     *
-     * @param msg Text of the message
-     */
-    template<typename T>
-    void sms(const T& msg) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_SMS, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
-     * Sends an email message
-     *
-     * @param email   Email to send to
-     * @param subject Subject of message
-     * @param msg     Text of the message
-     */
-    template <typename T1, typename T2>
-    void email(const char* email, const T1& subject, const T2& msg) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(email);
-        cmd.add(subject);
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
-     * Sends an email message
-     *
-     * @param subject Subject of message
-     * @param msg     Text of the message
-     */
-    template <typename T1, typename T2>
-    void email(const T1& subject, const T2& msg) {
-        char mem[BLYNK_MAX_SENDBYTES];
-        BlynkParam cmd(mem, 0, sizeof(mem));
-        cmd.add(subject);
-        cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
-    }
-
-    /**
      * Sets property of a Widget
      *
      * @experimental
@@ -240,7 +248,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(pin);
         cmd.add(property);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength()-1);
     }
 
     template <typename T>
@@ -249,7 +257,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(pin);
         cmd.add(property);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength()-1);
     }
 
     template <typename NAME>
@@ -270,10 +278,19 @@ public:
     }
 
     template <typename NAME>
-    void clearEvent(const NAME& event_name) {
+    void resolveEvent(const NAME& event_name) {
         char mem[BLYNK_MAX_SENDBYTES];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(event_name);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_CLEAR, 0, cmd.getBuffer(), cmd.getLength()-1);
+    }
+
+    template <typename NAME>
+    void resolveAllEvents(const NAME& event_name) {
+        char mem[BLYNK_MAX_SENDBYTES];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(event_name);
+        cmd.add("all");
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_CLEAR, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
@@ -323,6 +340,34 @@ public:
 protected:
     void processCmd(const void* buff, size_t len);
     void sendInfo();
+
+    void sendPendingGroup() {
+        if (GROUP_PENDING == groupState) {
+            // Set groupState here as sendCmd is recursive
+            groupState = GROUP_STARTED;
+            if (groupTs) {
+                char mem[24];
+                BlynkParam cmd(mem, 0, sizeof(mem));
+                cmd.add("t");
+                cmd.add(groupTs);
+                static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+            } else {
+                char mem[4];
+                BlynkParam cmd(mem, 0, sizeof(mem));
+                cmd.add("b");
+                static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_GROUP, 0, cmd.getBuffer(), cmd.getLength()-1);
+            }
+        }
+    }
+
+protected:
+    enum GroupState {
+        GROUP_NONE,
+        GROUP_PENDING,
+        GROUP_STARTED,
+    } groupState;
+    uint64_t groupTs;
+
 };
 
 

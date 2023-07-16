@@ -1,3 +1,2 @@
 ## Please take a look at:
-[Blynk Firmware documentation](http://docs.blynk.cc/#blynk-firmware)  
-[Blynk Help Center](http://help.blynk.cc)
+[Blynk Firmware Documentation](https://docs.blynk.io/en/blynk.edgent-firmware-api/supported-boards) 

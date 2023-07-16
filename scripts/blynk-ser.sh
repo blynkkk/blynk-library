@@ -10,7 +10,7 @@ FROM_TYPE="SER" # SER, TCP
 TO_TYPE="SSL"   # TCP, SSL
 
 COMM_BAUD=9600
-SERV_ADDR=blynk-cloud.com
+SERV_ADDR=blynk.cloud
 SERV_PORT_SSL=443
 SERV_PORT_TCP=80
 LSTN_PORT=80
@@ -30,7 +30,7 @@ usage="
       -c,--comm      single available port (on Linux, OSX)
                      COM1                  (on Windows)
       -b,--baud      9600
-      -s,--server    blynk-cloud.com
+      -s,--server    blynk.cloud
       -p,--port      80
 
     If the specified serial port is not found, it will ask to enter another one.

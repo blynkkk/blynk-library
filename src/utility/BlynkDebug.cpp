@@ -60,7 +60,7 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(ARDUINO) && defined(ESP8266)
+#elif defined(ARDUINO) && (defined(ESP8266) || defined(ESP32))
 
     #include <Arduino.h>
 
@@ -78,7 +78,23 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_SAM)
+#elif defined(ARDUINO_ARCH_RP2040) && !defined(__MBED__)
+
+    #include <Arduino.h>
+
+    void BlynkReset()
+    {
+        rp2040.reboot();
+        for(;;) {}
+    }
+
+    #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_MILLIS
+    #define _BLYNK_USE_DEFAULT_DELAY
+
+#elif defined(ARDUINO_ARCH_SAMD) || \
+      defined(ARDUINO_ARCH_SAM)  || \
+      defined(ARDUINO_ARCH_NRF5)
 
     #include <Arduino.h>
 
@@ -144,7 +160,7 @@
     #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_DELAY
 
-#elif defined(__MBED__)
+#elif defined(__MBED__) && !defined(ARDUINO)
 
     #include "mbed.h"
 
@@ -247,9 +263,9 @@
 
     void BlynkReset()
     {
-	    sl_Stop(200);
-	    for(;;) {
-    	    PRCMHibernateCycleTrigger();
+        sl_Stop(200);
+        for(;;) {
+            PRCMHibernateCycleTrigger();
         }
     }
 
@@ -304,6 +320,12 @@
     {
         for(;;) {} // To make compiler happy
     }
+#endif
+
+#ifdef _BLYNK_USE_DEFAULT_RESET
+bool BlynkResetImplemented() { return false; }
+#else
+bool BlynkResetImplemented() { return true; }
 #endif
 
 void BlynkFatal()

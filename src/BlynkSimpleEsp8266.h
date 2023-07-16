@@ -119,6 +119,8 @@ public:
         while(this->connect() != true) {}
     }
     
+    
+
     bool begin_t(const char* auth,
                  const char* ssid,
                  const char* pass,
@@ -133,13 +135,17 @@ public:
 		}
         config(auth, ip, port);
 		return this->connect();
-    } 
+    }
 
 };
 
-static WiFiClient _blynkWifiClient;
-static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
-BlynkWifi Blynk(_blynkTransport);
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_BLYNK)
+  static WiFiClient _blynkWifiClient;
+  static BlynkArduinoClient _blynkTransport(_blynkWifiClient);
+  BlynkWifi Blynk(_blynkTransport);
+#else
+  extern BlynkWifi Blynk;
+#endif
 
 #include <BlynkWidgets.h>
 
