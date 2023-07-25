@@ -68,6 +68,13 @@ private:
     SerialNCP.setTX(SERIAL3_TX);
     SerialNCP.setRX(SERIAL3_RX);
   }
+#elif defined(ARDUINO_TTGO_T_PICO_C3)
+  #define SerialNCP       Serial2
+  void ncpInitialize() {
+    SerialNCP.setFIFOSize(2048);
+    SerialNCP.setTX(8);
+    SerialNCP.setRX(9);
+  }
 #elif defined(ARDUINO_SAMD_NANO_33_IOT)
   #define SerialNCP       SerialNina
   void ncpInitialize() {
