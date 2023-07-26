@@ -23,7 +23,7 @@
     ]
   },
   "dependencies": {
-    "blynkkk/BlynkNcpDriver": "^0.6.0"
+    "blynkkk/BlynkNcpDriver": "^0.6.2"
   },
   "frameworks": "*",
   "platforms": "*",
