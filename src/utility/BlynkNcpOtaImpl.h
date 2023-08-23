@@ -7,6 +7,8 @@
 #include <InternalStorageSTM32.h>
 #elif defined(ARDUINO_ARCH_RP2040) && !defined(__MBED__)
 #include <InternalStorageRP2.h>
+#elif defined(ARDUINO_ARCH_RENESAS_UNO)
+#include <InternalStorageRenesas.h>
 #elif defined(ESP8266) || defined(ESP32)
 #include "InternalStorageESP.h"
 #elif defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_NRF5)

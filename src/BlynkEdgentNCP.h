@@ -23,6 +23,36 @@
   #define BLYNK_NCP_BAUD  115200
 #elif defined(ARDUINO_UNOWIFIR4)
   #define BLYNK_NCP_BAUD  460800
+#elif defined(SEEED_WIO_TERMINAL)
+  #define BLYNK_NCP_BAUD  2000000
+
+  #define PIN_BLE_SERIAL_X_RX (84ul)
+  #define PIN_BLE_SERIAL_X_TX (85ul)
+  #define PAD_BLE_SERIAL_X_RX (SERCOM_RX_PAD_2)
+  #define PAD_BLE_SERIAL_X_TX (UART_TX_PAD_0)
+  #define SERCOM_BLE_SERIAL_X sercom0
+
+  Uart rtl_uart(&SERCOM_BLE_SERIAL_X, PIN_BLE_SERIAL_X_RX, PIN_BLE_SERIAL_X_TX, PAD_BLE_SERIAL_X_RX, PAD_BLE_SERIAL_X_TX);
+
+  extern "C" {
+      void SERCOM0_0_Handler()
+      {
+        rtl_uart.IrqHandler();
+      }
+      void SERCOM0_1_Handler()
+      {
+          rtl_uart.IrqHandler();
+      }
+      void SERCOM0_2_Handler()
+      {
+          rtl_uart.IrqHandler();
+      }
+      void SERCOM0_3_Handler()
+      {
+          rtl_uart.IrqHandler();
+      }
+  }
+
 #else
   #define BLYNK_NCP_BAUD  2000000
 #endif
@@ -110,6 +140,15 @@ private:
   #define SerialNCP       Serial1
   void ncpInitialize() {
     SerialNCP.setFIFOSize(2048);
+  }
+#elif defined(SEEED_WIO_TERMINAL)
+  #define SerialNCP       rtl_uart //RTL8720D
+  void ncpInitialize() {
+    // Power-up NCP
+    pinMode(RTL8720D_CHIP_PU, OUTPUT);
+    //digitalWrite(RTL8720D_CHIP_PU, LOW);
+    //delay(100);
+    digitalWrite(RTL8720D_CHIP_PU, HIGH);
   }
 #elif defined(LINUX)
   #define SerialNCP       SerialUSB
@@ -204,6 +243,28 @@ private:
     return false;
   }
 
+  bool ncpSetup(const char* tmpl_id, const char* tmpl_name)
+  {
+    rpc_blynk_setFirmwareInfo(BLYNK_FIRMWARE_TYPE,
+                              BLYNK_FIRMWARE_VERSION,
+                              __DATE__ " " __TIME__,
+                              BLYNK_VERSION);
+
+    ncpConfigure();
+
+    if (_vendor.length()) {
+      rpc_blynk_setVendorPrefix(_vendor.c_str());
+    }
+    if (_server.length()) {
+      rpc_blynk_setVendorServer(_server.c_str());
+    }
+
+    bool result = rpc_blynk_initialize(tmpl_id, tmpl_name);
+    if (!result) {
+      BLYNK_LOG("rpc_blynk_initialize failed");
+    }
+    return result;
+  }
 
 public:
     typedef void (*Callback0)();
@@ -235,12 +296,12 @@ public:
         return mac;
     }
 
-    bool setVendorPrefix(const char* vendor) {
-        return rpc_blynk_setVendorPrefix(vendor);
+    void setVendorPrefix(const char* vendor) {
+        _vendor = vendor;
     }
 
-    bool setVendorServer(const char* host) {
-        return rpc_blynk_setVendorServer(host);
+    void setVendorServer(const char* host) {
+        _server = host;
     }
 
     bool setConfigTimeout(uint16_t seconds) { // 60..3600 (1 hour)
@@ -269,6 +330,7 @@ public:
           if (ncpConnect(BLYNK_NCP_BAUD)) {
             return true;
           }
+          delay(100);
         }
         return false;
     }
@@ -305,18 +367,19 @@ public:
           return false;
         }
 
-        rpc_blynk_setFirmwareInfo(BLYNK_FIRMWARE_TYPE,
-                                  BLYNK_FIRMWARE_VERSION,
-                                  __DATE__ " " __TIME__,
-                                  BLYNK_VERSION);
-
-        ncpConfigure();
-
-        bool result = rpc_blynk_initialize(tmpl_id, tmpl_name);
-        if (!result) {
-          BLYNK_LOG("rpc_blynk_initialize failed");
+        uint8_t state = rpc_blynk_getState();
+        if (rpc_get_status() == RPC_STATUS_OK) {
+          if (state == BLYNK_STATE_NOT_INITIALIZED) {
+            return ncpSetup(tmpl_id, tmpl_name);
+          } else {
+            rpc_client_blynkStateChange_impl(state);
+            return true;
+          }
+        } else {
+          BLYNK_LOG("NCP state is unknown, initializing anyway");
+          return ncpSetup(tmpl_id, tmpl_name);
         }
-        return result;
+        return false;
     }
 
     bool connected() const {
@@ -393,6 +456,8 @@ private:
 
     RpcBlynkState   _state;
     bool            _needReboot = false;
+    String          _vendor;
+    String          _server;
 
     friend void rpc_client_blynkStateChange_impl(uint8_t state);
     friend void rpc_client_processEvent_impl(uint8_t event);
