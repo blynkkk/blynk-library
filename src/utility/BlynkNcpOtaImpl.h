@@ -28,12 +28,22 @@
   static InternalStorageClass InternalStorage;
 #endif
 
-bool flagApplyOtaUpdate = false;
+typedef enum BlynkOtaState {
+  OTA_STATE_IDLE,
+  OTA_STATE_PREFETCH,
+  OTA_STATE_START,
+  OTA_STATE_IN_PROGRESS,
+  OTA_STATE_APPLY,
+
+  OTA_STATE_QTY
+} BlynkOtaState;
 
 static struct {
   uint32_t size;
   uint32_t offset;
   uint32_t crc32;
+  int      progress;
+  BlynkOtaState state;
 } ota_info;
 
 uint32_t calcCRC32(const void* data, size_t length, uint32_t previousCrc32 = 0)
@@ -60,6 +70,8 @@ bool rpc_client_otaUpdateAvailable_impl(const char* filename, uint32_t filesize,
     return false;
   }
 
+  //InternalStorage.debugPrint();
+
   uint32_t percentSize = ((filesize * 100) / maxSize);
   BLYNK_LOG("OTA update: %s size: %d (%d%%), type: %s, version: %s, build: %s",
       filename, filesize, percentSize, fw_type, fw_ver, fw_build);
@@ -75,18 +87,13 @@ bool rpc_client_otaUpdateAvailable_impl(const char* filename, uint32_t filesize,
     ota_info.size   = filesize;
     ota_info.offset = 0;
     ota_info.crc32  = 0;
+    ota_info.progress = 0;
 
 #if defined(BLYNK_NCP_OTA_PREFETCH)
-    uint8_t prefetch = rpc_blynk_otaUpdatePrefetch();
-    if (RPC_OTA_PREFETCH_OK == prefetch) {
-      BLYNK_LOG("OTA prefetch OK");
-    } else {
-      BLYNK_LOG("OTA prefetch FAILED");
-    }
+    ota_info.state = OTA_STATE_PREFETCH;
+#else
+    ota_info.state = OTA_STATE_START;
 #endif
-
-    // Request the update from NCP
-    rpc_blynk_otaUpdateStart(1024);
     return true;
   } else {
     BLYNK_LOG("Starting OTA failed");
@@ -122,11 +129,25 @@ bool rpc_client_otaUpdateWrite_impl(uint32_t offset, buffer_t chunk, uint32_t cr
   ota_info.crc32  = calcCRC32(chunk.data, chunk.length, ota_info.crc32);
   ota_info.offset += chunk.length;
 
+#ifdef BLYNK_PRINT
+  const int progress = (ota_info.offset*100)/ota_info.size;
+  if (progress - ota_info.progress >= 5 || progress == 100) {
+    ota_info.progress = progress;
+    BLYNK_PRINT.print("\rUpdating MCU... ");
+    BLYNK_PRINT.print(progress);
+    BLYNK_PRINT.print('%');
+  }
+#endif
+
   return true;
 }
 
 bool rpc_client_otaUpdateFinish_impl()
 {
+#ifdef BLYNK_PRINT
+  BLYNK_PRINT.println();
+#endif
+
   if (ota_info.offset != ota_info.size) {
     BLYNK_LOG("File size mismatch");
     return false;
@@ -155,7 +176,7 @@ bool rpc_client_otaUpdateFinish_impl()
 
   // Apply the update and restart
   InternalStorage.close();
-  flagApplyOtaUpdate = true;
+  ota_info.state = OTA_STATE_APPLY;
 
   return true;
 }
@@ -166,13 +187,30 @@ void rpc_client_otaUpdateCancel_impl() {
   InternalStorage.close();
 }
 
-void ota_apply_if_needed() {
-  if (flagApplyOtaUpdate) {
-    flagApplyOtaUpdate = false;
-
-    BLYNK_LOG("Applying the update");
-    delay(10);
-    // Apply the update and restart
-    InternalStorage.apply();
+void ota_run() {
+  switch (ota_info.state) {
+#if defined(BLYNK_NCP_OTA_PREFETCH)
+    case OTA_STATE_PREFETCH: {
+      uint8_t prefetch = rpc_blynk_otaUpdatePrefetch();
+      if (RPC_OTA_PREFETCH_OK == prefetch) {
+        BLYNK_LOG("OTA prefetch OK");
+      } else {
+        BLYNK_LOG("OTA prefetch FAILED");
+      }
+      ota_info.state = OTA_STATE_START;
+    } break;
+#endif
+    case OTA_STATE_START: {
+      rpc_blynk_otaUpdateStart(1024);
+      ota_info.state = OTA_STATE_IN_PROGRESS;
+    } break;
+    case OTA_STATE_APPLY: {
+      BLYNK_LOG("Applying the update");
+      ota_info.state = OTA_STATE_IDLE;
+      delay(10);
+      // Apply the update and restart
+      InternalStorage.apply();
+    } break;
+    default: break;
   }
 }

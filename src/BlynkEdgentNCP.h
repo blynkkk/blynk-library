@@ -401,7 +401,7 @@ public:
 
     void run() {
         rpc_run();
-        ota_apply_if_needed();
+        ota_run();
         if (_needReboot) {
           BlynkReset();
         }
