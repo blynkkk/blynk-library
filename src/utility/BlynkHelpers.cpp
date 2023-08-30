@@ -1,3 +1,4 @@
+#include <Blynk/BlynkConfig.h>
 #include <Blynk/BlynkHelpers.h>
 
 #include <math.h>
