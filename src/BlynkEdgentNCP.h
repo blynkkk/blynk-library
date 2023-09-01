@@ -243,7 +243,7 @@ private:
     return false;
   }
 
-  bool ncpSetup(const char* tmpl_id, const char* tmpl_name)
+  bool ncpSetup()
   {
     rpc_blynk_setFirmwareInfo(BLYNK_FIRMWARE_TYPE,
                               BLYNK_FIRMWARE_VERSION,
@@ -259,7 +259,7 @@ private:
       rpc_blynk_setVendorServer(_server.c_str());
     }
 
-    bool result = rpc_blynk_initialize(tmpl_id, tmpl_name);
+    bool result = rpc_blynk_initialize(_tmplID.c_str(), _tmplName.c_str());
     if (!result) {
       BLYNK_LOG("rpc_blynk_initialize failed");
     }
@@ -360,14 +360,16 @@ public:
             "\0";
         (void)firmwareTag;
 
-        if (!String(tmpl_id).startsWith("TMPL") ||
-            !strlen(tmpl_name)
-        ) {
+        _tmplID   = tmpl_id;
+        _tmplName = tmpl_name;
+
+        if (_tmplID.startsWith("TMPL") && _tmplName.length()) {
+          return ncpSetup();
+        } else {
           BLYNK_LOG("Invalid configuration of TEMPLATE_ID / TEMPLATE_NAME");
+          _tmplID = _tmplName = "";
           return false;
         }
-
-        return ncpSetup(tmpl_id, tmpl_name);
     }
 
     bool connected() const {
@@ -393,10 +395,28 @@ public:
         if (_needReboot) {
           BlynkReset();
         }
+        if (_needReinit) {
+          _needReinit = false;
+          if (_tmplID.length() && _tmplName.length()) {
+            BLYNK_LOG("Reinitializing NCP...");
+            const uint32_t tstart = millis();
+            while (millis() - tstart < 10000) {
+              if (ncpConnect(BLYNK_NCP_BAUD)) {
+                ncpSetup();
+                return;
+              }
+              delay(100);
+            }
+          }
+        }
     }
 
     const char* getStateString() const {
-        switch (_state) {
+        return getStateString(_state);
+    }
+
+    const char* getStateString(RpcBlynkState state) const {
+        switch (state) {
         case BLYNK_STATE_IDLE             : return "Idle";
         case BLYNK_STATE_CONFIG           : return "Configuration";
         case BLYNK_STATE_CONNECTING_NET   : return "Connecting Network";
@@ -444,8 +464,11 @@ private:
 
     RpcBlynkState   _state;
     bool            _needReboot = false;
+    bool            _needReinit = false;
     String          _vendor;
     String          _server;
+    String          _tmplID;
+    String          _tmplName;
 
     friend void rpc_client_blynkStateChange_impl(uint8_t state);
     friend void rpc_client_processEvent_impl(uint8_t event);
@@ -525,7 +548,7 @@ void rpc_client_blynkStateChange_impl(uint8_t state) {
 void rpc_client_processEvent_impl(uint8_t event) {
     switch ((RpcEvent)event) {
     case RPC_EVENT_NCP_REBOOTING:
-      BLYNK_LOG("NCP is rebooting. TODO: reinitialize NCP");
+      Blynk._needReinit = true;
       Blynk._onNcpRebooting();
       break;
     case RPC_EVENT_BLYNK_PROVISIONED:   Blynk._onProvisioned();     break;
