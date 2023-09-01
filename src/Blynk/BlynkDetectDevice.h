@@ -321,6 +321,7 @@
         #define BLYNK_INFO_DEVICE  "UNO R4 WiFi"
         #elif defined(ARDUINO_PORTENTA_C33)
         #define BLYNK_INFO_DEVICE  "Portenta C33"
+        #define BLYNK_USE_INTERNAL_DTOSTRF
 
         /* RapsberryPi */
         #elif defined(ARDUINO_RASPBERRY_PI_PICO_W)
