@@ -367,19 +367,7 @@ public:
           return false;
         }
 
-        uint8_t state = rpc_blynk_getState();
-        if (rpc_get_status() == RPC_STATUS_OK) {
-          if (state == BLYNK_STATE_NOT_INITIALIZED) {
-            return ncpSetup(tmpl_id, tmpl_name);
-          } else {
-            rpc_client_blynkStateChange_impl(state);
-            return true;
-          }
-        } else {
-          BLYNK_LOG("NCP state is unknown, initializing anyway");
-          return ncpSetup(tmpl_id, tmpl_name);
-        }
-        return false;
+        return ncpSetup(tmpl_id, tmpl_name);
     }
 
     bool connected() const {
