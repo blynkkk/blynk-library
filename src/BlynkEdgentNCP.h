@@ -203,6 +203,10 @@ private:
     rpc_hw_initLED(26, false);
     rpc_hw_setLedBrightness(128);
   }
+#elif defined(BLYNK_NCP_TYPE_MICRODUINO_ESP8266)
+  void ncpConfigure() {
+    rpc_hw_initUserButton(0, true);
+  }
 #else
   void ncpConfigure() {
   }
@@ -220,6 +224,7 @@ private:
         uint32_t tend = micros();
         BLYNK_LOG("NCP responding (baud %ld, %u us)", currentBaud, tend-tbeg);
         if (currentBaud == targetBaud) {
+          _pingFails = 0;
           return true;
         }
         // Upgrade baud rate
@@ -231,6 +236,7 @@ private:
           if (RPC_STATUS_OK == rpc_ncp_ping()) {
             tend = micros();
             BLYNK_LOG("NCP responding (baud %ld, %u us)", targetBaud, tend-tbeg);
+            _pingFails = 0;
             return true;
           } else {
             BLYNK_LOG("NCP not responding (baud: %ld)", targetBaud);
@@ -259,15 +265,27 @@ private:
       rpc_blynk_setVendorServer(_server.c_str());
     }
 
-    bool result = rpc_blynk_initialize(_tmplID.c_str(), _tmplName.c_str());
-    if (!result) {
-      BLYNK_LOG("rpc_blynk_initialize failed");
+    return rpc_blynk_initialize(_tmplID.c_str(), _tmplName.c_str());
+  }
+
+  bool ncpReinit() {
+    if (!(_tmplID.length() && _tmplName.length())) {
+      return false;
     }
-    return result;
+    BLYNK_LOG("Reinitializing NCP...");
+    const millis_time_t now = BlynkMillis();
+    while (BlynkMillis() - now < 10000) {
+      if (ncpConnect(BLYNK_NCP_BAUD)) {
+        return ncpSetup();
+      }
+      delay(100);
+    }
+    return false;
   }
 
 public:
     typedef void (*Callback0)();
+    typedef void (*CallbackEvent)(RpcEvent e);
 
     BlynkNcpClient() {
     }
@@ -277,6 +295,7 @@ public:
     void onProvisioned(Callback0 cbk)         { _onProvisioned = cbk;   }
     void onTimeSync(Callback0 cbk)            { _onTimeSync = cbk;      }
     void onTimeChanged(Callback0 cbk)         { _onTimeChanged = cbk;   }
+    void onHwEvent(CallbackEvent cbk)         { _onHwEvent = cbk;       }
 
     String getNcpVersion() {
         const char* ncpFwVer = "unknown";
@@ -325,8 +344,8 @@ public:
 
         ncpInitialize();
 
-        const uint32_t tstart = millis();
-        while (millis() - tstart < timeout) {
+        const millis_time_t tstart = BlynkMillis();
+        while (BlynkMillis() - tstart < timeout) {
           if (ncpConnect(BLYNK_NCP_BAUD)) {
             return true;
           }
@@ -394,19 +413,19 @@ public:
         ota_run();
         if (_needReboot) {
           BlynkReset();
-        }
-        if (_needReinit) {
+        } else if (_needReinit) {
           _needReinit = false;
-          if (_tmplID.length() && _tmplName.length()) {
-            BLYNK_LOG("Reinitializing NCP...");
-            const uint32_t tstart = millis();
-            while (millis() - tstart < 10000) {
-              if (ncpConnect(BLYNK_NCP_BAUD)) {
-                ncpSetup();
-                return;
-              }
-              delay(100);
+          ncpReinit();
+        } else if (rpc_get_last_rx() > 30000) {
+          //BLYNK_LOG("NCP ping");
+          const uint8_t ncpState = rpc_blynk_getState();
+          if (RPC_STATUS_OK == rpc_get_status()) {
+            _pingFails = 0;
+            if (BLYNK_STATE_NOT_INITIALIZED == ncpState) {
+              ncpReinit();
             }
+          } else if (++_pingFails >= 10) {
+            ncpReinit();
           }
         }
     }
@@ -455,20 +474,23 @@ public:
 private:
 
     static void Callback0_dummy() {}
+    static void CallbackEv_dummy(RpcEvent) {}
 
     Callback0       _onStateChange  = Callback0_dummy;
     Callback0       _onNcpRebooting = Callback0_dummy;
     Callback0       _onProvisioned  = Callback0_dummy;
     Callback0       _onTimeSync     = Callback0_dummy;
     Callback0       _onTimeChanged  = Callback0_dummy;
+    CallbackEvent   _onHwEvent      = CallbackEv_dummy;
 
-    RpcBlynkState   _state;
-    bool            _needReboot = false;
-    bool            _needReinit = false;
     String          _vendor;
     String          _server;
     String          _tmplID;
     String          _tmplName;
+    RpcBlynkState   _state;
+    bool            _needReboot = false;
+    bool            _needReinit = false;
+    uint8_t         _pingFails = 0;
 
     friend void rpc_client_blynkStateChange_impl(uint8_t state);
     friend void rpc_client_processEvent_impl(uint8_t event);
@@ -506,7 +528,7 @@ void rpc_uart_flush() {
 uint32_t rpc_system_millis() {
   // Return uptime in milliseconds
   // This is used to implement the RPC timeout
-  return millis();
+  return BlynkMillis();
 }
 
 bool rpc_mcu_reboot_impl() {
@@ -546,7 +568,8 @@ void rpc_client_blynkStateChange_impl(uint8_t state) {
 }
 
 void rpc_client_processEvent_impl(uint8_t event) {
-    switch ((RpcEvent)event) {
+    const RpcEvent e = (RpcEvent)event;
+    switch (e) {
     case RPC_EVENT_NCP_REBOOTING:
       Blynk._needReinit = true;
       Blynk._onNcpRebooting();
@@ -554,7 +577,16 @@ void rpc_client_processEvent_impl(uint8_t event) {
     case RPC_EVENT_BLYNK_PROVISIONED:   Blynk._onProvisioned();     break;
     case RPC_EVENT_BLYNK_TIME_SYNC:     Blynk._onTimeSync();        break;
     case RPC_EVENT_BLYNK_TIME_CHANGED:  Blynk._onTimeChanged();     break;
-    default: break;
+
+    case RPC_EVENT_HW_USER_CLICK:
+    case RPC_EVENT_HW_USER_DBLCLICK:
+    case RPC_EVENT_HW_USER_LONGPRESS:
+    case RPC_EVENT_HW_USER_LONGRELEASE:
+    case RPC_EVENT_HW_USER_RESET_START:
+    case RPC_EVENT_HW_USER_RESET_CANCEL:
+    case RPC_EVENT_HW_USER_RESET_DONE:
+      Blynk._onHwEvent(e);
+      break;
     }
 }
 
