@@ -19,9 +19,9 @@
  *************************************************************/
 
 #ifdef ESP32
-#  include <WiFi.h>
+  #include <WiFi.h>
 #else
-#  include <ESP8266WiFi.h>
+  #include <ESP8266WiFi.h>
 #endif
 
 /* Fill in information from Blynk Device Info here */
