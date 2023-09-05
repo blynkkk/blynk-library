@@ -223,10 +223,6 @@
             #define BLYNK_BUFFERS_SIZE 1024
         #endif
 
-        #if defined(ESP32)
-            #define BLYNK_NO_ANALOG_PINS
-        #endif
-
         #if defined(ARDUINO_ARCH_AVR)
             #define BLYNK_USE_INTERNAL_ATOLL
             #define BLYNK_MAX_TIMERS 8
