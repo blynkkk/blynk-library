@@ -3,12 +3,17 @@
   "version": "1.3.2",
   "description": "Build a smartphone app for your project in minutes. Blynk allows creating IoT solutions easily. It supports  WiFi, Ethernet, Cellular connectivity. Works with over 400 boards like ESP8266, ESP32, Arduino, Raspberry Pi, Particle, etc.",
   "keywords": "sensors, control, device, smartphone, mobile, app, web, cloud, communication, protocol, iot, m2m, wifi, ble, bluetooth, ethernet, usb, serial, gsm, gprs, 3g, data, esp8266, http",
-  "authors":
-  {
-    "name":  "Volodymyr Shymanskyy",
-    "url":   "https://github.com/vshymanskyy",
-    "maintainer": true
-  },
+  "authors": [
+    {
+      "name":  "Blynk",
+      "url":   "https://github.com/blynkkk"
+    },
+    {
+      "name":  "Volodymyr Shymanskyy",
+      "url":   "https://github.com/vshymanskyy",
+      "maintainer": true
+    }
+  ],
   "repository":
   {
     "type": "git",
