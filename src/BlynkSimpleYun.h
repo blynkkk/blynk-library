@@ -68,7 +68,7 @@ public:
   static BridgeClient _blynkYunClient;
   static BlynkArduinoClient _blynkTransport(_blynkYunClient);
   BlynkYun Blynk(_blynkTransport);
-#endif
+#else
   extern BlynkYun Blynk;
 #endif
 
