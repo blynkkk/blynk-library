@@ -16,7 +16,7 @@
 /***************************************************
  * Change these settings to match your need
  ***************************************************/
-#define BLYNK_DEFAULT_DOMAIN     "blynk.cloud"
+#define BLYNK_DEFAULT_DOMAIN     "api.bajjtech.co.ke"
 #define BLYNK_DEFAULT_PORT       80
 #define BLYNK_DEFAULT_PORT_SSL   443
 
