@@ -50,6 +50,14 @@
     #include <Blynk/BlynkEveryN.h>
 #endif
 
+#if (BLYNK_TIMEOUT_MS < 1000 || BLYNK_TIMEOUT_MS > 10000)
+    #error "BLYNK_TIMEOUT_MS should be 1000..10000 milliseconds"
+#endif
+
+#if (BLYNK_HEARTBEAT < 10 || BLYNK_HEARTBEAT > 3600)
+    #error "BLYNK_HEARTBEAT should be 10..3600 seconds"
+#endif
+
 /**
  * Represents high-level functions of Blynk
  */
