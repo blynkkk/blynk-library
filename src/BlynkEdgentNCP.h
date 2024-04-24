@@ -15,7 +15,12 @@
 #include <Blynk/BlynkApiNCP.h>
 #include <Blynk/BlynkUtility.h>
 #include <Blynk/BlynkTimer.h>
-#include <utility/BlynkNcpOtaImpl.h>
+
+#if defined(BLYNK_CUSTOM_NCP_OTA)
+  extern "C" void ota_run();
+#else
+  #include <utility/BlynkNcpOtaImpl.h>
+#endif
 
 #if defined(BLYNK_NCP_BAUD)
   // OK, use it

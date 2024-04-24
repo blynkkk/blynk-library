@@ -13,6 +13,8 @@
 #include "InternalStorageESP.h"
 #elif defined(ARDUINO_ARCH_SAMD) || defined(ARDUINO_ARCH_NRF5)
 #include "InternalStorage.h"
+#elif defined(BLYNK_NCP_INTERNAL_STORAGE)
+#include "BlynkNcpInternalStorage.h"
 #else
   #warning "Blynk.Air: OTA update not implemented for this Primary MCU"
 
