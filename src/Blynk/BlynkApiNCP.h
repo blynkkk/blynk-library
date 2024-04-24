@@ -52,7 +52,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add_multi(values...);
 
-        buffer_t val = { (uint8_t*)cmd.getBuffer(), cmd.getLength()-1 };
+        rpc_buffer_t val = { (uint8_t*)cmd.getBuffer(), cmd.getLength()-1 };
         rpc_blynk_virtualWrite(pin, val);
     }
 
@@ -64,7 +64,7 @@ public:
      * @param len  Length of data
      */
     void virtualWriteBinary(int pin, const void* buff, size_t len) {
-        buffer_t val = { (uint8_t*)buff, len };
+        rpc_buffer_t val = { (uint8_t*)buff, len };
         rpc_blynk_virtualWrite(pin, val);
     }
 
@@ -126,7 +126,7 @@ public:
     void syncVirtual(Args... pins) {
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add_multi(pins...);
-        buffer_t val = { (uint8_t*)cmd.getBuffer(), cmd.getLength()-1 };
+        rpc_buffer_t val = { (uint8_t*)cmd.getBuffer(), cmd.getLength()-1 };
         rpc_blynk_syncVirtual(val);
     }
 
@@ -144,17 +144,17 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add_multi(values...);
 
-        buffer_t val = { (uint8_t*)cmd.getBuffer(), cmd.getLength()-1 };
+        rpc_buffer_t val = { (uint8_t*)cmd.getBuffer(), cmd.getLength()-1 };
         rpc_blynk_setProperty(pin, property, val);
     }
 
     void setProperty(int pin, const char* property, const BlynkParam& param) {
-        buffer_t val = { (uint8_t*)param.getBuffer(), param.getLength()-1 };
+        rpc_buffer_t val = { (uint8_t*)param.getBuffer(), param.getLength()-1 };
         rpc_blynk_setProperty(pin, property, val);
     }
 
     void setProperty(int pin, const char* property, const BlynkParamAllocated& param) {
-        buffer_t val = { (uint8_t*)param.getBuffer(), param.getLength()-1 };
+        rpc_buffer_t val = { (uint8_t*)param.getBuffer(), param.getLength()-1 };
         rpc_blynk_setProperty(pin, property, val);
     }
 

@@ -539,7 +539,7 @@ bool rpc_mcu_reboot_impl() {
     return false;
 }
 
-void rpc_client_blynkVPinChange_impl(uint16_t vpin, buffer_t param)
+void rpc_client_blynkVPinChange_impl(uint16_t vpin, rpc_buffer_t param)
 {
     // NOTE: we could copy the buffer, but we use 0-copy instead
     // But we need to 0-terminate it, overwriting the CRC8
