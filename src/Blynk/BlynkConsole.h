@@ -84,7 +84,7 @@ public:
         reset_buff();
 
 #if defined(BLYNK_CONSOLE_USE_STREAM) && defined(BLYNK_HAS_FUNCTIONAL_H)
-        help = [=]() {
+        help = [this]() {
             if (!stream) return;
             stream->print("Available commands: ");
             for (size_t i=0; i<commandsQty; i++) {
