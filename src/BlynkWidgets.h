@@ -18,30 +18,94 @@
 
 template<class T>
 class VPinWriteOnChange {
-    T prev;
-    const int vpin;
+
 public:
-    VPinWriteOnChange(int v)
-        : vpin(v)
-    {}
+    VPinWriteOnChange(int vpin)
+        : _vPin(vpin)
+    {
+        reset();
+    }
 
     VPinWriteOnChange<T>& operator= (const T& value) {
         update(value);
         return *this;
     }
 
+    void reset() {
+        _hasValue = false;
+    }
+
+    bool hasValue() const {
+        return _hasValue;
+    }
+
     void set(const T& value) {
-        prev = value;
+        _value = value;
+        _hasValue = true;
     }
 
     void update(const T& value) {
-        if (value != prev) {
-            prev = value;
+        if (!hasValue() || value != _value) {
+            set(value);
             report();
         }
     }
 
     void report() {
-        Blynk.virtualWrite(vpin, prev);
+        if (hasValue()) {
+            Blynk.virtualWrite(_vPin, _value);
+        }
     }
+
+private:
+    const int   _vPin;
+    T           _value;
+    bool        _hasValue;
+};
+
+template<>
+class VPinWriteOnChange<float> {
+
+public:
+    VPinWriteOnChange(int vpin, float threshold)
+        : _vPin(vpin)
+        , _threshold(threshold)
+    {
+        reset();
+    }
+
+    VPinWriteOnChange<float>& operator= (const float& value) {
+        update(value);
+        return *this;
+    }
+
+    void reset() {
+        _value = NAN;
+    }
+
+    bool hasValue() const {
+        return !isnan(_value);
+    }
+
+    void set(const float& value) {
+        _value = value;
+    }
+
+    void update(const float& value) {
+        if (!hasValue() || fabs(value - _value) > _threshold) {
+            set(value);
+            report();
+        }
+    }
+
+    void report() {
+        if (hasValue()) {
+            Blynk.virtualWrite(_vPin, _value);
+        }
+    }
+
+private:
+    const int   _vPin;
+    float       _value;
+    float       _threshold;
 };
