@@ -21,6 +21,7 @@ static const char BLYNK_DEFAULT_ROOT_CA[] =
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
+#include <WiFi.h>
 #include <WiFiClientSecure.h>
 
 template <typename Client>
