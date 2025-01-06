@@ -84,6 +84,15 @@ public:
         void changeInterval(unsigned long d) {
             if (isValid()) st->changeInterval(id, d);
         }
+        unsigned long remainingTime() const {
+            return isValid() ? st->remainingTime(id) : -1;
+        }
+        bool changeFunction(const timer_callback& f) {
+            return isValid() && st->changeFunction(id, f);
+        }
+        bool changeFunction(timer_callback_p f, void* p) {
+            return isValid() && st->changeFunction(id, f, p);
+        }
         void deleteTimer()  { if (isValid()) st->deleteTimer(id); invalidate(); }
         void restartTimer() { if (isValid()) st->restartTimer(id);        }
         bool isEnabled()    { return isValid() && st->isEnabled(id);      }
@@ -137,19 +146,23 @@ public:
     // Timer will call function 'f' every 'd' milliseconds 'n' times
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    Handle setTimer(unsigned long d, const timer_callback& f, unsigned n) {
+    Handle setTimer(unsigned long d, const timer_callback& f, uint16_t n) {
         return Handle(this, setupTimer(d, f, n));
     }
 
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds 'n' times
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    Handle setTimer(unsigned long d, timer_callback_p f, void* p, unsigned n) {
+    Handle setTimer(unsigned long d, timer_callback_p f, void* p, uint16_t n) {
         return Handle(this, setupTimer(d, f, p, n));
     }
 
     // updates interval of the specified timer
     bool changeInterval(unsigned numTimer, unsigned long d);
+
+    // updates function of the specified timer
+    bool changeFunction(unsigned numTimer, const timer_callback& f);
+    bool changeFunction(unsigned numTimer, timer_callback_p f, void* p);
 
     // destroy the specified timer
     void deleteTimer(unsigned numTimer);
@@ -162,6 +175,9 @@ public:
 
     // returns true if the specified timer is enabled
     bool isEnabled(unsigned numTimer);
+
+    // returns the remaining time until next run
+    unsigned long remainingTime(unsigned numTimer);
 
     // enables the specified timer
     void enable(unsigned numTimer);
@@ -194,8 +210,8 @@ private:
     // low level function to initialize and enable a new timer
     // returns the timer number (numTimer) on success or
     // -1 on failure (f == NULL) or no free timers
-    int setupTimer(unsigned long d, const timer_callback& f, unsigned n);
-    int setupTimer(unsigned long d,      timer_callback_p f, void* p, unsigned n);
+    int setupTimer(unsigned long d, const timer_callback& f, uint16_t n);
+    int setupTimer(unsigned long d,      timer_callback_p f, void* p, uint16_t n);
 
     bool isValidTimer(unsigned id) {
         return timer[id].callback || timer[id].callback_p;
@@ -211,12 +227,11 @@ private:
       timer_callback_p  callback_p;
 
       void* param;                      // function parameter
-      bool hasParam;                 // true if callback takes a parameter
       unsigned long delay;              // delay value
-      unsigned maxNumRuns;              // number of runs to be executed
-      unsigned numRuns;                 // number of executed runs
-      bool enabled;                  // true if enabled
-      unsigned toBeCalled;              // deferred function call (sort of) - N.B.: only used in run()
+      uint16_t maxNumRuns;              // number of runs to be executed
+      uint16_t numRuns;                 // number of executed runs
+      uint8_t enabled;                  // true if enabled
+      uint8_t toBeCalled;               // deferred function call (sort of) - N.B.: only used in run()
     } timer_t;
 
     timer_t timer[MAX_TIMERS];
