@@ -59,17 +59,6 @@ When you are connected - check the included examples on how to use different typ
 [Instagram](https://www.instagram.com/blynk.iot/) | 
 [LinkedIn](https://www.linkedin.com/company/b-l-y-n-k/)
 
-## Blynk libraries for other platforms
-* [Python, MicroPython](https://github.com/blynkkk/lib-python)
-
-## Libraries by community
-* [Python, MicroPython](https://github.com/vshymanskyy/blynk-library-python)
-* [Particle](https://github.com/vshymanskyy/blynk-library-particle)
-* [Lua, OpenWrt, NodeMCU](https://github.com/vshymanskyy/blynk-library-lua)
-* [OpenWrt packages](https://github.com/vshymanskyy/blynk-library-openwrt)
-* [MBED](https://developer.mbed.org/users/vshymanskyy/code/Blynk/)
-* [Node-RED for Blynk IoT](https://flows.nodered.org/node/node-red-contrib-blynk-iot)
-
 ## Contributing
 We accept contributions from our community: stability bugfixes, new hardware support, or any other improvements.  
 [Here](https://github.com/blynkkk/blynk-library/labels/help%20wanted) is a list of what you could help with.
