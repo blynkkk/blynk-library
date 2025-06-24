@@ -16,7 +16,7 @@
 #endif
 
 static const char BLYNK_DEFAULT_ROOT_CA[] =
-#include <certs/letsencrypt_pem.h>
+#include <certs/certs_pem.h>
 
 #define BLYNK_SEND_ATOMIC
 

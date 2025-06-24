@@ -22,7 +22,7 @@
 #endif
 
 static const char BLYNK_DEFAULT_ROOT_CA[] PROGMEM =
-#include <certs/letsencrypt_pem.h>
+#include <certs/certs_pem.h>
 
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
