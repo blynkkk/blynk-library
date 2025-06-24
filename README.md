@@ -6,7 +6,6 @@
 [![GitHub download](https://img.shields.io/github/downloads/blynkkk/blynk-library/total.svg)](https://github.com/blynkkk/blynk-library/releases/latest)
 [![GitHub stars](https://img.shields.io/github/stars/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/blynkkk/blynk-library.svg)](https://github.com/blynkkk/blynk-library/issues)
-[![Build Status](https://img.shields.io/travis/blynkkk/blynk-library.svg)](https://travis-ci.org/blynkkk/blynk-library)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/blynkkk/blynk-library/blob/master/LICENSE)
 
 If you like **Blynk** - give it a star, or fork it and contribute! 
@@ -60,8 +59,7 @@ When you are connected - check the included examples on how to use different typ
 [LinkedIn](https://www.linkedin.com/company/b-l-y-n-k/)
 
 ## Contributing
-We accept contributions from our community: stability bugfixes, new hardware support, or any other improvements.  
-[Here](https://github.com/blynkkk/blynk-library/labels/help%20wanted) is a list of what you could help with.
+We accept contributions from our community: stability bugfixes, new hardware support, or any other improvements.
 
 ### License
 This project is released under The MIT License (MIT)
