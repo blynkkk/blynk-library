@@ -55,6 +55,31 @@ public:
         (void)myip; // Eliminate warnings about unused myip
         BLYNK_LOG_IP("IP: ", myip);
     }
+    
+    bool connectWiFi_t(const char* ssid, 
+                       const char* pass, 
+                       uint16_t timeout = 10000)
+    {
+        BLYNK_LOG2(BLYNK_F("Connecting to "), ssid);
+        WiFi.mode(WIFI_STA);
+        if (WiFi.status() != WL_CONNECTED) {
+          if (pass && strlen(pass)) {
+            WiFi.begin(ssid, pass);
+          } else {
+            WiFi.begin(ssid);
+          }
+        }
+		int WFB = timeout / 500;  // set default 20 cycles 
+        while ((WiFi.status() != WL_CONNECTED) && (WFB>0)) {
+          BlynkDelay(500);
+		  --WFB;
+        }
+        if (WiFi.status() != WL_CONNECTED) return false;		
+        BLYNK_LOG1(BLYNK_F("Connected to WiFi"));
+        IPAddress myip = WiFi.localIP();
+        BLYNK_LOG_IP("IP: ", myip);
+		return true;
+    }
 
     void config(const char* auth,
                 const char* domain = BLYNK_DEFAULT_DOMAIN,
@@ -93,6 +118,22 @@ public:
         config(auth, ip, port);
         while(this->connect() != true) {}
     }
+    
+    bool begin_t(const char* auth,
+                 const char* ssid,
+                 const char* pass,
+                 IPAddress   ip,
+                 uint16_t    port   = BLYNK_DEFAULT_PORT,
+			     uint16_t wifi_timeout = 30000)
+    {
+		if (WiFi.status() != WL_CONNECTED) {
+		  uint16_t connect_count = wifi_timeout / 10000;
+          while ((connectWiFi_t(ssid, pass, wifi_timeout / 3)) && (connect_count>0)) --connect_count;   
+		  if (WiFi.status() != WL_CONNECTED) return false;
+		}
+        config(auth, ip, port);
+		return this->connect();
+    } 
 
 };
 
