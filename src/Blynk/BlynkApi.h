@@ -234,8 +234,6 @@ public:
     /**
      * Sets property of a Widget
      *
-     * @experimental
-     *
      * @param pin      Virtual Pin number
      * @param property Property name ("label", "labels", "color", ...)
      * @param value    Property value
@@ -268,6 +266,22 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PROPERTY, 0, cmd.getBuffer(), cmd.getLength(), param.getBuffer(), param.getLength()-1);
     }
 
+    /**
+     * Sets the value of device Metadata field
+     *
+     * @param field    Metadata field name
+     * @param value    Metadata value
+     */
+    template <typename T, typename T2>
+    void setMetadata(const T& field, const T2& value) {
+        static_cast<Proto*>(this)->sendInternal("meta", "set", field, value);
+    }
+
+    /**
+     * Logs a device event
+     *
+     * @param event_name    Event name
+     */
     template <typename NAME>
     void logEvent(const NAME& event_name) {
         char mem[BLYNK_MAX_SENDBYTES];
@@ -276,6 +290,12 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_LOG, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
+    /**
+     * Logs a device event
+     *
+     * @param event_name    Event name
+     * @param description   Event description
+     */
     template <typename NAME, typename DESCR>
     void logEvent(const NAME& event_name, const DESCR& description) {
         char mem[BLYNK_MAX_SENDBYTES];
@@ -285,6 +305,11 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_LOG, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
+    /**
+     * Resolve the most recent device event with a given name
+     *
+     * @param event_name    Event name
+     */
     template <typename NAME>
     void resolveEvent(const NAME& event_name) {
         char mem[BLYNK_MAX_SENDBYTES];
@@ -293,6 +318,11 @@ public:
         static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EVENT_CLEAR, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
+    /**
+     * Resolve all device events with a given name
+     *
+     * @param event_name    Event name
+     */
     template <typename NAME>
     void resolveAllEvents(const NAME& event_name) {
         char mem[BLYNK_MAX_SENDBYTES];
