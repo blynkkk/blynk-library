@@ -56,8 +56,8 @@ void setup()
 
   Blynk.begin(BLYNK_AUTH_TOKEN);
 
-  // Setup a function to be called every second
-  timer.setInterval(1000L, myTimerEvent);
+  // Setup a function to be called every 10 seconds
+  timer.setInterval(10000L, myTimerEvent);
 }
 
 void loop()

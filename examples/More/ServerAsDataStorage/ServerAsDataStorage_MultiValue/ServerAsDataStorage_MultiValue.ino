@@ -71,7 +71,7 @@ void setup()
 
   Blynk.begin(BLYNK_AUTH_TOKEN);
 
-  timer.setInterval(1000L, increment);
+  timer.setInterval(10000L, increment);
 }
 
 void loop()

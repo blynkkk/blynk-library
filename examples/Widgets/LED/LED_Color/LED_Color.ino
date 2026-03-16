@@ -75,7 +75,7 @@ void setup()
   Blynk.begin(BLYNK_AUTH_TOKEN);
 
   // Setup periodic color change
-  timer.setInterval(1000L, blinkLedWidget);
+  timer.setInterval(5000L, blinkLedWidget);
 }
 
 void loop()

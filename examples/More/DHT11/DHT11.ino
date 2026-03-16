@@ -77,8 +77,8 @@ void setup()
 
   dht.begin();
 
-  // Setup a function to be called every second
-  timer.setInterval(1000L, sendSensor);
+  // Setup a function to be called every 10 seconds
+  timer.setInterval(10000L, sendSensor);
 }
 
 void loop()

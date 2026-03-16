@@ -85,7 +85,7 @@ void setup() {
   Blynk.begin(BLYNK_TEMPLATE_ID, BLYNK_TEMPLATE_NAME);
 
   // Publish some data periodically
-  timer.setInterval(1000, []() {
+  timer.setInterval(10000, []() {
     Blynk.virtualWrite(V0, millis() / 1000);
   });
 }
