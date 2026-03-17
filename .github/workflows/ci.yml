@@ -18,6 +18,8 @@ jobs:
           extra_args: --board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_NCP
           extra_args: --board=uno_r4_wifi
+        - example: examples/Blynk.Edgent/Edgent_Wio_Terminal
+          extra_args: --board=seeed_wio_terminal
 
     steps:
       - uses: actions/checkout@v6
@@ -94,7 +96,7 @@ jobs:
         - example: examples/Boards_WiFi/WildFire_V3
           extra_args: --board=wildfirev3 --project-option='lib_deps=WildFire-CC3000'
         - example: examples/Boards_WiFi/Wio_Terminal
-          extra_args: --board=uno
+          extra_args: --board=seeed_wio_terminal
         - example: examples/Boards_WiFi/WizFi250
           extra_args: --board=uno
         - example: examples/Boards_WiFi/WizFi310
@@ -133,6 +135,8 @@ jobs:
           pio pkg install -g -l "michael71/Timer5"
           pio pkg install -g -l "vshymanskyy/TinyGSM"
           pio pkg install -g -l "arduino-libraries/WiFi"
+          pio pkg install -g -l "arduino-libraries/WiFiNINA"
+          pio pkg install -g -l "arduino-libraries/Bridge"
           pio pkg install -g -l "arduino-libraries/GSM"
           pio pkg install -g -l "arduino-libraries/MKRGSM"
           pio pkg install -g -l "arduino-libraries/MKRNB"
@@ -244,7 +248,7 @@ jobs:
         - example: examples/More/FormatString
           extra_args: --board=uno
         - example: examples/More/HandleDisconnect
-          extra_args: --board=nodemcuv2
+          extra_args: --board=uno
         - example: examples/More/NeoPixel
           extra_args: --board=uno
         - example: examples/More/PrintAllVirtual
