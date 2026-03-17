@@ -17,7 +17,7 @@ jobs:
         - example: examples/Blynk.Edgent/Edgent_ESP8266
           extra_args: --board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_NCP
-          extra_args: --board=uno
+          extra_args: --board=uno_r4_wifi
 
     steps:
       - uses: actions/checkout@v6
@@ -40,7 +40,6 @@ jobs:
         run: |
           pio pkg install -g -l "adafruit/Adafruit NeoPixel"
           pio pkg install -g -l "adafruit/Adafruit Unified Sensor"
-          pio pkg install -g -l "michael71/Timer5"
 
       - name: Build PlatformIO example
         run: pio ci --lib=. ${{ matrix.extra_args }}
@@ -62,7 +61,7 @@ jobs:
         - example: examples/Boards_WiFi/Arduino_MKR1000
           extra_args: --board=mkr1000USB --project-option='lib_deps=WiFi101'
         - example: examples/Boards_WiFi/Arduino_MKR1010
-          extra_args: --board=uno
+          extra_args: --board=mkrwifi1010
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield
           extra_args: --board=uno
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield_101
@@ -74,7 +73,7 @@ jobs:
         - example: examples/Boards_WiFi/ESP32_WiFi
           extra_args: --board=esp32dev --project-option='framework=arduino'
         - example: examples/Boards_WiFi/ESP32_WiFi_SSL
-          extra_args: --board=uno
+          extra_args: --board=esp32dev
         - example: examples/Boards_WiFi/ESP8266_Shield
           extra_args: --board=megaatmega2560
         - example: examples/Boards_WiFi/ESP8266_Standalone
