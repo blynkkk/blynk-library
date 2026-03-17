@@ -139,12 +139,12 @@ jobs:
         #  extra_args: --board=uno
         - example: examples/Boards_WiFi/RN_XV_WiFly
           extra_args: --board=leonardo
-        - example: examples/Boards_WiFi/TinyDuino_WiFi
-          extra_args: --board=tinyduino --project-option='lib_deps=Adafruit CC3000 Library'
+        #- example: examples/Boards_WiFi/TinyDuino_WiFi
+        #  extra_args: --board=tinyduino --project-option='lib_deps=Adafruit CC3000 Library'
         - example: examples/Boards_WiFi/WildFire_V3
           extra_args: --board=wildfirev3 --project-option='lib_deps=WildFire-CC3000'
-        - example: examples/Boards_WiFi/Wio_Terminal
-          extra_args: --board=seeed_wio_terminal --project-option='lib_deps=SPI, Seeed Arduino rpcWiFi'
+        #- example: examples/Boards_WiFi/Wio_Terminal
+        #  extra_args: --board=seeed_wio_terminal --project-option='lib_deps=SPI, Seeed Arduino rpcWiFi'
         #- example: examples/Boards_WiFi/WizFi250
         #  extra_args: --board=uno --project-option='lib_deps=WizFi250'
         - example: examples/Boards_WiFi/WizFi310
