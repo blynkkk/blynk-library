@@ -133,6 +133,8 @@ jobs:
           pio pkg install -g -l "vshymanskyy/TinyGSM"
           pio pkg install -g -l "arduino-libraries/WiFi"
           pio pkg install -g -l "arduino-libraries/GSM"
+          pio pkg install -g -l "arduino-libraries/MKRGSM"
+          pio pkg install -g -l "arduino-libraries/MKRNB"
           pio pkg install -g -l "arduino-libraries/ArduinoECCX08"
           pio pkg install -g -l "arduino-libraries/Ethernet"
           pio pkg install -g -l "arduino-libraries/Servo"
@@ -190,7 +192,7 @@ jobs:
         - example: examples/Boards_GSM/TinyGSM_MKR1400
           extra_args: --board=mkrgsm1400
         - example: examples/Boards_GSM/TinyGSM_SIM800_SIM900
-          extra_args: --board=uno
+          extra_args: --board=leonardo
 
     steps: *platformio_steps
 
@@ -206,7 +208,9 @@ jobs:
         - example: examples/Boards_With_HTTP_API/Arduino_GSM
           extra_args: --board=uno
         - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
-          extra_args: --board=uno
+          extra_args: --board=esp32dev
+        - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
+          extra_args: --board=nodemcuv2
         - example: examples/Boards_With_HTTP_API/SIM800_SIM900
           extra_args: --board=leonardo
 
