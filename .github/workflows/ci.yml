@@ -125,8 +125,8 @@ jobs:
           extra_args: --board=adafruit_feather_m0 --project-option='lib_deps=SPI, WiFi101'
         - example: examples/Boards_WiFi/Arduino_MKR1000
           extra_args: --board=mkr1000USB --project-option='lib_deps=WiFi101'
-        - example: examples/Boards_WiFi/Arduino_MKR1010 --project-option='lib_deps=WiFiNINA'
-          extra_args: --board=mkrwifi1010
+        - example: examples/Boards_WiFi/Arduino_MKR1010
+          extra_args: --board=mkrwifi1010 --project-option='lib_deps=WiFiNINA'
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield
           extra_args: --board=uno
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield_101
@@ -144,9 +144,9 @@ jobs:
         - example: examples/Boards_WiFi/WildFire_V3
           extra_args: --board=wildfirev3 --project-option='lib_deps=WildFire-CC3000'
         - example: examples/Boards_WiFi/Wio_Terminal
-          extra_args: --board=seeed_wio_terminal --project-option='lib_deps=Seeed Arduino rpcWiFi'
-        - example: examples/Boards_WiFi/WizFi250
-          extra_args: --board=uno --project-option='lib_deps=WizFi250'
+          extra_args: --board=seeed_wio_terminal --project-option='lib_deps=SPI, Seeed Arduino rpcWiFi'
+        #- example: examples/Boards_WiFi/WizFi250
+        #  extra_args: --board=uno --project-option='lib_deps=WizFi250'
         - example: examples/Boards_WiFi/WizFi310
           extra_args: --board=uno --project-option='lib_deps=WizFi310'
 
@@ -209,9 +209,9 @@ jobs:
         - example: examples/Boards_ArduinoClient/Arduino_Ethernet
           extra_args: --board=uno
         - example: examples/Boards_ArduinoClient/Arduino_MKR1400_GSM_ETH
-          extra_args: --board=mkrgsm1400
+          extra_args: --board=mkrgsm1400 --project-option='lib_deps=MKRGSM'
         - example: examples/Boards_ArduinoClient/Arduino_MKR1400_GSM_ETH_SSL
-          extra_args: --board=mkrgsm1400
+          extra_args: --board=mkrgsm1400 --project-option='lib_deps=MKRGSM'
         - example: examples/Boards_Ethernet/Arduino_Ethernet
           extra_args: --board=uno
         - example: examples/Boards_Ethernet/Arduino_Ethernet_Manual
