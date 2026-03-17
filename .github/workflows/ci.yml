@@ -43,6 +43,7 @@ jobs:
           pio pkg install -g -l "adafruit/Adafruit NeoPixel"
           pio pkg install -g -l "adafruit/Adafruit Unified Sensor"
           pio pkg install -g -l "jandrassy/ArduinoOTA"
+          pio pkg install -g -l "seeed-studio/Seeed Arduino rpcWiFi"
 
       - name: Build PlatformIO example
         run: pio ci --lib=. ${{ matrix.extra_args }}
@@ -52,6 +53,64 @@ jobs:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
 
+  platformio-esp:
+    name: PIO ESP - ${{ matrix.example }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
+          extra_args: --board=esp32dev
+        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
+          extra_args: --board=nodemcuv2
+        - example: examples/Boards_WiFi/ESP32_WiFi
+          extra_args: --board=esp32dev --project-option='framework=arduino'
+        - example: examples/Boards_WiFi/ESP32_WiFi_SSL
+          extra_args: --board=esp32dev
+        - example: examples/Boards_WiFi/ESP8266_Shield
+          extra_args: --board=megaatmega2560
+        - example: examples/Boards_WiFi/ESP8266_Standalone
+          extra_args: --board=nodemcuv2
+        - example: examples/Boards_WiFi/ESP8266_Standalone_Manual_IP
+          extra_args: --board=nodemcuv2
+        - example: examples/Boards_WiFi/ESP8266_Standalone_SSL
+          extra_args: --board=nodemcuv2
+        - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
+          extra_args: --board=esp32dev
+        - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
+          extra_args: --board=nodemcuv2
+        - example: examples/Boards_WiFi/Sparkfun_Blynk_Board
+          extra_args: --board=nodemcuv2
+        - example: examples/More/HandleDisconnect
+          extra_args: --board=nodemcuv2
+          
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      - name: Build PlatformIO example
+        run: pio ci --lib=. ${{ matrix.extra_args }}
+        env:
+          PLATFORMIO_CI_SRC: ${{ matrix.example }}
+          PLATFORMIO_BUILD_FLAGS:
+            -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
+            -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
+            -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
+          
   platformio-wifi:
     name: PIO WiFi - ${{ matrix.example }}
     runs-on: ubuntu-latest
@@ -73,24 +132,10 @@ jobs:
           extra_args: --board=yun
         - example: examples/Boards_WiFi/Arduino_org_UNO_WiFi
           extra_args: --board=uno --project-option='build_flags=-DESP_CH_SPI' --project-option='lib_deps=WiFi Link'
-        - example: examples/Boards_WiFi/ESP32_WiFi
-          extra_args: --board=esp32dev --project-option='framework=arduino'
-        - example: examples/Boards_WiFi/ESP32_WiFi_SSL
-          extra_args: --board=esp32dev
-        - example: examples/Boards_WiFi/ESP8266_Shield
-          extra_args: --board=megaatmega2560
-        - example: examples/Boards_WiFi/ESP8266_Standalone
-          extra_args: --board=nodemcuv2
-        - example: examples/Boards_WiFi/ESP8266_Standalone_Manual_IP
-          extra_args: --board=nodemcuv2
-        - example: examples/Boards_WiFi/ESP8266_Standalone_SSL
-          extra_args: --board=nodemcuv2
         - example: examples/Boards_WiFi/Fishino
           extra_args: --board=uno
         - example: examples/Boards_WiFi/RN_XV_WiFly
           extra_args: --board=leonardo
-        - example: examples/Boards_WiFi/Sparkfun_Blynk_Board
-          extra_args: --board=nodemcuv2
         - example: examples/Boards_WiFi/TinyDuino_WiFi
           extra_args: --board=tinyduino --project-option='lib_deps=Adafruit CC3000 Library'
         - example: examples/Boards_WiFi/WildFire_V3
@@ -169,18 +214,14 @@ jobs:
           extra_args: --board=mkrgsm1400
         - example: examples/Boards_ArduinoClient/Arduino_MKR1400_GSM_ETH_SSL
           extra_args: --board=mkrgsm1400
-        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
-          extra_args: --board=esp32dev
-        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
-          extra_args: --board=nodemcuv2
         - example: examples/Boards_Ethernet/Arduino_Ethernet
           extra_args: --board=uno
         - example: examples/Boards_Ethernet/Arduino_Ethernet_Manual
           extra_args: --board=uno
         - example: examples/Boards_Ethernet/Arduino_MKR_ETH
-          extra_args: --board=uno
+          extra_args: --board=mkrzero
         - example: examples/Boards_Ethernet/Arduino_MKR_ETH_SSL
-          extra_args: --board=uno
+          extra_args: --board=mkrzero
         - example: examples/Boards_Ethernet/ENC28J60
           extra_args: --board=nanoatmega328
 
@@ -202,7 +243,7 @@ jobs:
         - example: examples/Boards_GSM/TinyGSM_SIM800_SIM900
           extra_args: --board=leonardo
 
-    steps: *platformio_steps
+    steps: *platformio_steps_mkr
 
   platformio-http:
     name: PIO HTTP API - ${{ matrix.example }}
@@ -215,16 +256,12 @@ jobs:
           extra_args: --board=uno
         - example: examples/Boards_With_HTTP_API/Arduino_GSM
           extra_args: --board=uno
-        - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
-          extra_args: --board=esp32dev
-        - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
-          extra_args: --board=nodemcuv2
         - example: examples/Boards_With_HTTP_API/SIM800_SIM900
           extra_args: --board=leonardo
 
     steps: *platformio_steps
 
-  platformio-core-more:
+  platformio-core:
     name: PIO Core - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
@@ -246,8 +283,6 @@ jobs:
         - example: examples/More/DHT11
           extra_args: --board=uno --project-option='lib_deps=Adafruit Unified Sensor'
         - example: examples/More/FormatString
-          extra_args: --board=uno
-        - example: examples/More/HandleDisconnect
           extra_args: --board=uno
         - example: examples/More/NeoPixel
           extra_args: --board=uno
