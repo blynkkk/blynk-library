@@ -40,6 +40,7 @@ jobs:
         run: |
           pio pkg install -g -l "adafruit/Adafruit NeoPixel"
           pio pkg install -g -l "adafruit/Adafruit Unified Sensor"
+          pio pkg install -g -l "jandrassy/ArduinoOTA"
 
       - name: Build PlatformIO example
         run: pio ci --lib=. ${{ matrix.extra_args }}
@@ -132,6 +133,7 @@ jobs:
           pio pkg install -g -l "vshymanskyy/TinyGSM"
           pio pkg install -g -l "arduino-libraries/WiFi"
           pio pkg install -g -l "arduino-libraries/GSM"
+          pio pkg install -g -l "arduino-libraries/ArduinoECCX08"
           pio pkg install -g -l "arduino-libraries/Ethernet"
           pio pkg install -g -l "arduino-libraries/Servo"
           pio pkg install -g -l "sumotoy/simplyEncoder"
@@ -182,11 +184,11 @@ jobs:
       matrix:
         include:
         - example: examples/Boards_GSM/Arduino_MKRGSM
-          extra_args: --board=uno
+          extra_args: --board=mkrgsm1400
         - example: examples/Boards_GSM/Arduino_MKRNB
-          extra_args: --board=uno
+          extra_args: --board=mkrnb1500
         - example: examples/Boards_GSM/TinyGSM_MKR1400
-          extra_args: --board=uno
+          extra_args: --board=mkrgsm1400
         - example: examples/Boards_GSM/TinyGSM_SIM800_SIM900
           extra_args: --board=uno
 
