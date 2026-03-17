@@ -215,7 +215,7 @@ jobs:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
-            -DBLYNK_DEVICE_NAME="\"MyDevice\""
+            -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
             -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
 
   linux:
@@ -228,4 +228,4 @@ jobs:
         env:
           CXXFLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
-            -DBLYNK_DEVICE_NAME="\"MyDevice\""
+            -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
