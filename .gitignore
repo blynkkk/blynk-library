@@ -8,7 +8,4 @@ extras/ide-tools/BlynkUsbScript/*
 *.bak
 *.pyc
 *.o
-.cproject
-.project
-.settings
 .development
