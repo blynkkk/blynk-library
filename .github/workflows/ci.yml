@@ -18,8 +18,8 @@ jobs:
           extra_args: --board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_NCP
           extra_args: --board=uno_r4_wifi
-        - example: examples/Blynk.Edgent/Edgent_Wio_Terminal
-          extra_args: --board=seeed_wio_terminal
+        #- example: examples/Blynk.Edgent/Edgent_Wio_Terminal
+        #  extra_args: --board=seeed_wio_terminal
 
     steps:
       - uses: actions/checkout@v6
@@ -43,7 +43,9 @@ jobs:
           pio pkg install -g -l "adafruit/Adafruit NeoPixel"
           pio pkg install -g -l "adafruit/Adafruit Unified Sensor"
           pio pkg install -g -l "jandrassy/ArduinoOTA"
-          pio pkg install -g -l "seeed-studio/Seeed Arduino rpcWiFi"
+          
+        #pio pkg install -g -l "seeed-studio/Seeed Arduino rpcWiFi"
+        #pio pkg install -g -l "arduino-libraries/ArduinoHttpClient"
 
       - name: Build PlatformIO example
         run: pio ci --lib=. ${{ matrix.extra_args }}
@@ -101,6 +103,10 @@ jobs:
 
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
+
+      - name: Install PlatformIO libraries
+        run: |
+          pio pkg install -g -l "https://github.com/vshymanskyy/BlynkESP8266.git"
 
       - name: Build PlatformIO example
         run: pio ci --lib=. ${{ matrix.extra_args }}
@@ -190,7 +196,6 @@ jobs:
           pio pkg install -g -l "arduino-libraries/Ethernet"
           pio pkg install -g -l "arduino-libraries/Servo"
           pio pkg install -g -l "sumotoy/simplyEncoder"
-          pio pkg install -g -l "https://github.com/vshymanskyy/BlynkESP8266.git"
 
       - name: Build PlatformIO example
         run: pio ci --lib=. ${{ matrix.extra_args }}
