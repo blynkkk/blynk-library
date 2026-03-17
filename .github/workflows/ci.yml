@@ -214,9 +214,9 @@ jobs:
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
-            -DBLYNK_TEMPLATE_ID="TMPLxxxx"
-            -DBLYNK_DEVICE_NAME="MyDevice"
-            -DBLYNK_AUTH_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
+            -DBLYNK_DEVICE_NAME="\"MyDevice\""
+            -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
 
   linux:
     name: Linux build
@@ -225,3 +225,7 @@ jobs:
       - uses: actions/checkout@v6
       - name: Build Linux target
         run: make -C linux
+        env:
+          CXXFLAGS:
+            -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
+            -DBLYNK_DEVICE_NAME="\"MyDevice\""
