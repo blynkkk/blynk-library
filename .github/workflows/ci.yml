@@ -243,7 +243,7 @@ jobs:
         - example: examples/Boards_GSM/TinyGSM_SIM800_SIM900
           extra_args: --board=leonardo
 
-    steps: *platformio_steps_mkr
+    steps: *platformio_steps
 
   platformio-http:
     name: PIO HTTP API - ${{ matrix.example }}
