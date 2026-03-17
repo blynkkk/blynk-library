@@ -122,6 +122,7 @@ jobs:
           pio pkg install -g -l "adafruit/Adafruit NeoPixel"
           pio pkg install -g -l "adafruit/Adafruit Unified Sensor"
           pio pkg install -g -l "ntruchsess/UIPEthernet"
+          pio pkg install -g -l "jandrassy/EthernetENC"
           pio pkg install -g -l "wickeddevice/WildFireCore"
           pio pkg install -g -l "harlequin-tech/WiFlyHQ"
           pio pkg install -g -l "paulstoffregen/Time"
@@ -135,6 +136,7 @@ jobs:
           pio pkg install -g -l "arduino-libraries/GSM"
           pio pkg install -g -l "arduino-libraries/MKRGSM"
           pio pkg install -g -l "arduino-libraries/MKRNB"
+          pio pkg install -g -l "arduino-libraries/ArduinoBearSSL"
           pio pkg install -g -l "arduino-libraries/ArduinoECCX08"
           pio pkg install -g -l "arduino-libraries/Ethernet"
           pio pkg install -g -l "arduino-libraries/Servo"
@@ -160,11 +162,13 @@ jobs:
         - example: examples/Boards_ArduinoClient/Arduino_Ethernet
           extra_args: --board=uno
         - example: examples/Boards_ArduinoClient/Arduino_MKR1400_GSM_ETH
-          extra_args: --board=uno
+          extra_args: --board=mkrgsm1400
         - example: examples/Boards_ArduinoClient/Arduino_MKR1400_GSM_ETH_SSL
-          extra_args: --board=uno
+          extra_args: --board=mkrgsm1400
         - example: examples/Boards_ArduinoClient/ESP8266_ESP32
-          extra_args: --board=uno
+          extra_args: --board=esp32dev
+        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
+          extra_args: --board=nodemcuv2
         - example: examples/Boards_Ethernet/Arduino_Ethernet
           extra_args: --board=uno
         - example: examples/Boards_Ethernet/Arduino_Ethernet_Manual
