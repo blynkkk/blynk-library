@@ -12,6 +12,7 @@
 #include <WidgetTerminal.h>
 #include <WidgetTimeInput.h>
 #include <WidgetMap.h>
+#include <math.h>
 
 // Cannot auto-include as these have library dependencies
 //#include <WidgetRTC.h>
