@@ -18,8 +18,8 @@ jobs:
           extra_args: --board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_NCP
           extra_args: --board=uno_r4_wifi
-        #- example: examples/Blynk.Edgent/Edgent_Wio_Terminal
-        #  extra_args: --board=seeed_wio_terminal
+        - example: examples/Blynk.Edgent/Edgent_Wio_Terminal
+          extra_args: --board=seeed_wio_terminal --project-option='lib_deps=Seeed Arduino rpcWiFi, ArduinoHttpClient'
 
     steps:
       - uses: actions/checkout@v6
@@ -43,9 +43,6 @@ jobs:
           pio pkg install -g -l "adafruit/Adafruit NeoPixel"
           pio pkg install -g -l "adafruit/Adafruit Unified Sensor"
           pio pkg install -g -l "jandrassy/ArduinoOTA"
-          
-        #pio pkg install -g -l "seeed-studio/Seeed Arduino rpcWiFi"
-        #pio pkg install -g -l "arduino-libraries/ArduinoHttpClient"
 
       - name: Build PlatformIO example
         run: pio ci --lib=. ${{ matrix.extra_args }}
@@ -128,14 +125,14 @@ jobs:
           extra_args: --board=adafruit_feather_m0 --project-option='lib_deps=SPI, WiFi101'
         - example: examples/Boards_WiFi/Arduino_MKR1000
           extra_args: --board=mkr1000USB --project-option='lib_deps=WiFi101'
-        - example: examples/Boards_WiFi/Arduino_MKR1010
+        - example: examples/Boards_WiFi/Arduino_MKR1010 --project-option='lib_deps=WiFiNINA'
           extra_args: --board=mkrwifi1010
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield
           extra_args: --board=uno
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield_101
           extra_args: --board=uno --project-option='lib_deps=WiFi101'
         - example: examples/Boards_WiFi/Arduino_Yun
-          extra_args: --board=yun
+          extra_args: --board=yun --project-option='lib_deps=Bridge'
         - example: examples/Boards_WiFi/Arduino_org_UNO_WiFi
           extra_args: --board=uno --project-option='build_flags=-DESP_CH_SPI' --project-option='lib_deps=WiFi Link'
         #- example: examples/Boards_WiFi/Fishino
@@ -147,7 +144,7 @@ jobs:
         - example: examples/Boards_WiFi/WildFire_V3
           extra_args: --board=wildfirev3 --project-option='lib_deps=WildFire-CC3000'
         - example: examples/Boards_WiFi/Wio_Terminal
-          extra_args: --board=seeed_wio_terminal
+          extra_args: --board=seeed_wio_terminal --project-option='lib_deps=Seeed Arduino rpcWiFi'
         - example: examples/Boards_WiFi/WizFi250
           extra_args: --board=uno --project-option='lib_deps=WizFi250'
         - example: examples/Boards_WiFi/WizFi310
@@ -186,11 +183,7 @@ jobs:
           pio pkg install -g -l "michael71/Timer5"
           pio pkg install -g -l "vshymanskyy/TinyGSM"
           pio pkg install -g -l "arduino-libraries/WiFi"
-          pio pkg install -g -l "arduino-libraries/WiFiNINA"
-          pio pkg install -g -l "arduino-libraries/Bridge"
           pio pkg install -g -l "arduino-libraries/GSM"
-          pio pkg install -g -l "arduino-libraries/MKRGSM"
-          pio pkg install -g -l "arduino-libraries/MKRNB"
           pio pkg install -g -l "arduino-libraries/ArduinoBearSSL"
           pio pkg install -g -l "arduino-libraries/ArduinoECCX08"
           pio pkg install -g -l "arduino-libraries/Ethernet"
@@ -240,9 +233,9 @@ jobs:
       matrix:
         include:
         - example: examples/Boards_GSM/Arduino_MKRGSM
-          extra_args: --board=mkrgsm1400
+          extra_args: --board=mkrgsm1400 --project-option='lib_deps=MKRGSM'
         - example: examples/Boards_GSM/Arduino_MKRNB
-          extra_args: --board=mkrnb1500
+          extra_args: --board=mkrnb1500 --project-option='lib_deps=MKRNB'
         - example: examples/Boards_GSM/TinyGSM_MKR1400
           extra_args: --board=mkrgsm1400
         - example: examples/Boards_GSM/TinyGSM_SIM800_SIM900
