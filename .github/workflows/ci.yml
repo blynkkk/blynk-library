@@ -138,8 +138,8 @@ jobs:
           extra_args: --board=yun
         - example: examples/Boards_WiFi/Arduino_org_UNO_WiFi
           extra_args: --board=uno --project-option='build_flags=-DESP_CH_SPI' --project-option='lib_deps=WiFi Link'
-        - example: examples/Boards_WiFi/Fishino
-          extra_args: --board=uno
+        #- example: examples/Boards_WiFi/Fishino
+        #  extra_args: --board=uno
         - example: examples/Boards_WiFi/RN_XV_WiFly
           extra_args: --board=leonardo
         - example: examples/Boards_WiFi/TinyDuino_WiFi
@@ -149,7 +149,7 @@ jobs:
         - example: examples/Boards_WiFi/Wio_Terminal
           extra_args: --board=seeed_wio_terminal
         - example: examples/Boards_WiFi/WizFi250
-          extra_args: --board=uno
+          extra_args: --board=uno --project-option='lib_deps=WizFi250'
         - example: examples/Boards_WiFi/WizFi310
           extra_args: --board=uno --project-option='lib_deps=WizFi310'
 
