@@ -101,7 +101,7 @@ String getWiFiName(bool withPrefix = true)
   }
   String devUnique = encodeUniquePart(unique, 4);
 
-  String devPrefix = CONFIG_DEVICE_PREFIX;
+  String devPrefix = CONFIG_VENDOR_PREFIX;
   String devName = String(BLYNK_TEMPLATE_NAME).substring(0, 31-6-devPrefix.length());
 
   if (withPrefix) {

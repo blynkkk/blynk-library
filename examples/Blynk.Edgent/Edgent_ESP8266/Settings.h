@@ -63,8 +63,12 @@
 
 #define BOARD_PWM_MAX                 1023
 
-#if !defined(CONFIG_DEVICE_PREFIX)
-#define CONFIG_DEVICE_PREFIX          "Blynk"
+#if !defined(CONFIG_VENDOR_PREFIX)
+  #if defined(CONFIG_DEVICE_PREFIX)
+    #define CONFIG_VENDOR_PREFIX      CONFIG_DEVICE_PREFIX
+  #else
+    #define CONFIG_VENDOR_PREFIX      "Blynk"
+  #endif
 #endif
 #if !defined(CONFIG_AP_URL)
 #define CONFIG_AP_URL                 "blynk.setup"

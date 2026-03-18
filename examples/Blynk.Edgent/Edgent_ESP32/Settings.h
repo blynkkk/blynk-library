@@ -95,8 +95,12 @@
 #define BOARD_LEDC_TIMER_BITS         10
 #define BOARD_LEDC_BASE_FREQ          12000
 
-#if !defined(CONFIG_DEVICE_PREFIX)
-#define CONFIG_DEVICE_PREFIX          "Blynk"
+#if !defined(CONFIG_VENDOR_PREFIX)
+  #if defined(CONFIG_DEVICE_PREFIX)
+    #define CONFIG_VENDOR_PREFIX      CONFIG_DEVICE_PREFIX
+  #else
+    #define CONFIG_VENDOR_PREFIX      "Blynk"
+  #endif
 #endif
 #if !defined(CONFIG_AP_URL)
 #define CONFIG_AP_URL                 "blynk.setup"
