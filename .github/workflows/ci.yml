@@ -14,6 +14,11 @@ jobs:
         include:
         - example: examples/Blynk.Edgent/Edgent_ESP32
           extra_args: --board=esp32dev --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
+        - example: examples/Blynk.Edgent/Edgent_ESP32
+          extra_args: |
+            --board=esp32dev
+            --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
+            --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip'
         - example: examples/Blynk.Edgent/Edgent_ESP8266
           extra_args: --board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_NCP
@@ -48,7 +53,7 @@ jobs:
         run: pio ci --lib=. ${{ matrix.extra_args }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
-          PLATFORMIO_BUILD_FLAGS:
+          PLATFORMIO_BUILD_FLAGS: |
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
 
@@ -64,9 +69,13 @@ jobs:
         - example: examples/Boards_ArduinoClient/ESP8266_ESP32
           extra_args: --board=nodemcuv2
         - example: examples/Boards_WiFi/ESP32_WiFi
-          extra_args: --board=esp32dev --project-option='framework=arduino'
+          extra_args: --board=esp32dev
         - example: examples/Boards_WiFi/ESP32_WiFi_SSL
           extra_args: --board=esp32dev
+        - example: examples/Boards_WiFi/ESP32_WiFi
+          extra_args: --board=esp32dev --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip'
+        - example: examples/Boards_WiFi/ESP32_WiFi_SSL
+          extra_args: --board=esp32dev --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip'
         - example: examples/Boards_WiFi/ESP8266_Shield
           extra_args: --board=megaatmega2560
         - example: examples/Boards_WiFi/ESP8266_Standalone
@@ -109,11 +118,11 @@ jobs:
         run: pio ci --lib=. ${{ matrix.extra_args }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
-          PLATFORMIO_BUILD_FLAGS:
+          PLATFORMIO_BUILD_FLAGS: |
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
             -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
-          
+
   platformio-wifi:
     name: PIO WiFi - ${{ matrix.example }}
     runs-on: ubuntu-latest
@@ -194,7 +203,7 @@ jobs:
         run: pio ci --lib=. ${{ matrix.extra_args }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
-          PLATFORMIO_BUILD_FLAGS:
+          PLATFORMIO_BUILD_FLAGS: |
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
             -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
@@ -359,6 +368,6 @@ jobs:
       - name: Build Linux target
         run: make -C linux
         env:
-          CXXFLAGS:
+          CXXFLAGS: |
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
