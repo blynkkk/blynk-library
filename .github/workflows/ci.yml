@@ -63,7 +63,7 @@ jobs:
           ${{ matrix.extra_args }} ${{ matrix.platform }} \
           --project-option="extra_scripts=post:${{ github.workspace }}/extras/check_mem.py"
         env:
-          PLATFORMIO_CI_SRC: ${{ github.workspace }}/${{ matrix.example }}
+          PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
@@ -143,7 +143,7 @@ jobs:
           ${{ matrix.extra_args }} ${{ matrix.platform }} \
           --project-option="extra_scripts=post:${{ github.workspace }}/extras/check_mem.py"
         env:
-          PLATFORMIO_CI_SRC: ${{ github.workspace }}/${{ matrix.example }}
+          PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
@@ -236,7 +236,7 @@ jobs:
           ${{ matrix.extra_args }} ${{ matrix.platform }} \
           --project-option="extra_scripts=post:${{ github.workspace }}/extras/check_mem.py"
         env:
-          PLATFORMIO_CI_SRC: ${{ github.workspace }}/${{ matrix.example }}
+          PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
