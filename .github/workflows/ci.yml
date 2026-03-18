@@ -61,7 +61,7 @@ jobs:
         run: |
           pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} \
           ${{ matrix.extra_args }} ${{ matrix.platform }} \
-          --project-option='extra_scripts=post:$GITHUB_WORKSPACE/extras/check_mem.py'
+          --project-option="extra_scripts=post:${{ github.workspace }}/extras/check_mem.py"
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
@@ -141,7 +141,7 @@ jobs:
         run: |
           pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} \
           ${{ matrix.extra_args }} ${{ matrix.platform }} \
-          --project-option='extra_scripts=post:$GITHUB_WORKSPACE/extras/check_mem.py'
+          --project-option="extra_scripts=post:${{ github.workspace }}/extras/check_mem.py"
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
@@ -234,7 +234,7 @@ jobs:
         run: |
           pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} \
           ${{ matrix.extra_args }} ${{ matrix.platform }} \
-          --project-option='extra_scripts=post:$GITHUB_WORKSPACE/extras/check_mem.py'
+          --project-option="extra_scripts=post:${{ github.workspace }}/extras/check_mem.py"
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
