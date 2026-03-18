@@ -6,7 +6,6 @@ import sys
 
 from platformio.proc import exec_command
 
-
 WARNING_THRESHOLD = 0.90  # 90%
 
 
@@ -18,7 +17,7 @@ def _configure_defaults():
     )
 
 
-def _get_size_output(source):
+def _get_size_output(target):
     cmd = env.get("SIZECHECKCMD")
     if not cmd:
         return None
@@ -26,13 +25,19 @@ def _get_size_output(source):
     if not isinstance(cmd, list):
         cmd = cmd.split()
 
-    cmd = [arg.replace("$SOURCES", str(source[0])) for arg in cmd if arg]
+    # In AddPostAction("$PROGPATH", ...), the built program is target[0]
+    program_path = str(target[0])
+
+    cmd = [arg.replace("$SOURCES", program_path) for arg in cmd if arg]
 
     sysenv = os.environ.copy()
     sysenv["PATH"] = str(env["ENV"]["PATH"])
 
     result = exec_command(env.subst(cmd), env=sysenv)
     if result["returncode"] != 0:
+        print("SIZECHECKCMD failed:", " ".join(env.subst(cmd)))
+        print("stdout:", result.get("out", ""))
+        print("stderr:", result.get("err", ""))
         return None
 
     return result["out"].strip()
@@ -95,7 +100,10 @@ def check_memory_threshold(source, target, env):
     if not env.get("SIZECHECKCMD") and not env.get("SIZEPROGREGEXP"):
         _configure_defaults()
 
-    output = _get_size_output(source)
+    output = _get_size_output(target)
+    if output:
+        print(output)
+
     program_size = _calculate_size(output, env.get("SIZEPROGREGEXP"))
     data_size = _calculate_size(output, env.get("SIZEDATAREGEXP"))
 
@@ -104,7 +112,6 @@ def check_memory_threshold(source, target, env):
     _warn_if_high("RAM", data_size, data_max_size)
     _warn_if_high("Flash", program_size, program_max_size)
 
-    # Keep PlatformIO's original hard limits behavior
     if data_max_size and data_size > data_max_size:
         sys.stderr.write(
             "Warning! The data size (%d bytes) is greater than maximum allowed (%s bytes)\n"
