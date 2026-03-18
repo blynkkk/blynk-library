@@ -75,6 +75,7 @@ def _warn_if_high(label, used, total):
             WARNING_THRESHOLD * 100.0,
         )
         if src := os.environ.get("PLATFORMIO_CI_SRC"):
+            print("CWD:", os.getcwd())
             # Find ino or cpp file in the source path
             files = (f for f in os.listdir(src) if f.endswith((".ino", ".cpp", ".c")))
             file = next(files, None)
