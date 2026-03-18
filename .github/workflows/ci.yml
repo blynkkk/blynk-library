@@ -5,8 +5,9 @@ on:
   pull_request:
 
 env:
-  ESP32_CORE_V2: platformio/espressif32
-  ESP32_CORE_V3: https://github.com/pioarduino/platform-espressif32/releases/latest/download/platform-espressif32.zip
+  DEFAULT_BOARD: uno
+  ESP32_CORE_V2: &esp32_core_v2 --project-option='platform=platformio/espressif32'
+  ESP32_CORE_V3: &esp32_core_v3 --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/latest/download/platform-espressif32.zip'
 
 jobs:
   platformio-edgent:
@@ -17,21 +18,21 @@ jobs:
       matrix:
         include:
         - example: examples/Blynk.Edgent/Edgent_ESP32
-          extra_args:
-            --board=esp32dev
-            --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
-            --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+          board: esp32dev
+          extra_args: --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
+          platform: *esp32_core_v2
         - example: examples/Blynk.Edgent/Edgent_ESP32
-          extra_args:
-            --board=esp32dev
-            --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
-            --project-option='platform=${{ env.ESP32_CORE_V3 }}'
+          board: esp32dev
+          extra_args: --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
+          platform: *esp32_core_v3
         - example: examples/Blynk.Edgent/Edgent_ESP8266
-          extra_args: --board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
+          board: nodemcuv2
+          extra_args: --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_NCP
-          extra_args: --board=uno_r4_wifi
+          board: uno_r4_wifi
         - example: examples/Blynk.Edgent/Edgent_Wio_Terminal
-          extra_args: --board=seeed_wio_terminal --project-option='lib_deps=Seeed Arduino rpcWiFi, ArduinoHttpClient'
+          board: seeed_wio_terminal
+          extra_args: --project-option='lib_deps=Seeed Arduino rpcWiFi, ArduinoHttpClient'
 
     steps:
       - uses: actions/checkout@v6
@@ -57,7 +58,7 @@ jobs:
           pio pkg install -g -l "jandrassy/ArduinoOTA"
 
       - name: Build PlatformIO example
-        run: pio ci --lib=. ${{ matrix.extra_args }}
+        run: pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} ${{ matrix.extra_args }} ${{ matrix.platform }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
@@ -72,38 +73,46 @@ jobs:
       matrix:
         include:
         - example: examples/Boards_ArduinoClient/ESP8266_ESP32
-          extra_args: --board=nodemcuv2
+          board: nodemcuv2
         - example: examples/Boards_ArduinoClient/ESP8266_ESP32
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+          board: esp32dev
+          platform: *esp32_core_v2
         - example: examples/Boards_ArduinoClient/ESP8266_ESP32
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
+          board: esp32dev
+          platform: *esp32_core_v3
         - example: examples/Boards_WiFi/ESP32_WiFi
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+          board: esp32dev
+          platform: *esp32_core_v2
         - example: examples/Boards_WiFi/ESP32_WiFi
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
+          board: esp32dev
+          platform: *esp32_core_v3
         - example: examples/Boards_WiFi/ESP32_WiFi_SSL
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+          board: esp32dev
+          platform: *esp32_core_v2
         - example: examples/Boards_WiFi/ESP32_WiFi_SSL
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
+          board: esp32dev
+          platform: *esp32_core_v3
         - example: examples/Boards_WiFi/ESP8266_Shield
-          extra_args: --board=megaatmega2560
+          board: megaatmega2560
         - example: examples/Boards_WiFi/ESP8266_Standalone
-          extra_args: --board=nodemcuv2
+          board: nodemcuv2
         - example: examples/Boards_WiFi/ESP8266_Standalone_Manual_IP
-          extra_args: --board=nodemcuv2
+          board: nodemcuv2
         - example: examples/Boards_WiFi/ESP8266_Standalone_SSL
-          extra_args: --board=nodemcuv2
+          board: nodemcuv2
         - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+          board: esp32dev
+          platform: *esp32_core_v2
         - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
-          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
+          board: esp32dev
+          platform: *esp32_core_v3
         - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
-          extra_args: --board=nodemcuv2
+          board: nodemcuv2
         - example: examples/Boards_WiFi/Sparkfun_Blynk_Board
-          extra_args: --board=nodemcuv2
+          board: nodemcuv2
         - example: examples/More/HandleDisconnect
-          extra_args: --board=nodemcuv2
-          
+          board: nodemcuv2
+
     steps:
       - uses: actions/checkout@v6
 
@@ -126,7 +135,7 @@ jobs:
           pio pkg install -g -l "https://github.com/vshymanskyy/BlynkESP8266.git"
 
       - name: Build PlatformIO example
-        run: pio ci --lib=. ${{ matrix.extra_args }}
+        run: pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} ${{ matrix.extra_args }} ${{ matrix.platform }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
@@ -142,33 +151,38 @@ jobs:
       matrix:
         include:
         - example: examples/Boards_WiFi/Adafruit_Feather_M0_WiFi
-          extra_args: --board=adafruit_feather_m0 --project-option='lib_deps=SPI, WiFi101'
+          board: adafruit_feather_m0
+          extra_args: --project-option='lib_deps=SPI, WiFi101'
         - example: examples/Boards_WiFi/Arduino_MKR1000
-          extra_args: --board=mkr1000USB --project-option='lib_deps=WiFi101'
+          board: mkr1000USB
+          extra_args: --project-option='lib_deps=WiFi101'
         - example: examples/Boards_WiFi/Arduino_MKR1010
-          extra_args: --board=mkrwifi1010 --project-option='lib_deps=WiFiNINA'
+          board: mkrwifi1010
+          extra_args: --project-option='lib_deps=WiFiNINA'
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield
-          extra_args: --board=uno
         - example: examples/Boards_WiFi/Arduino_WiFi_Shield_101
-          extra_args: --board=uno --project-option='lib_deps=WiFi101'
+          extra_args: --project-option='lib_deps=WiFi101'
         - example: examples/Boards_WiFi/Arduino_Yun
-          extra_args: --board=yun --project-option='lib_deps=Bridge'
+          board: yun
+          extra_args: --project-option='lib_deps=Bridge'
         - example: examples/Boards_WiFi/Arduino_org_UNO_WiFi
-          extra_args: --board=uno --project-option='build_flags=-DESP_CH_SPI' --project-option='lib_deps=WiFi Link'
+          extra_args: --project-option='build_flags=-DESP_CH_SPI' --project-option='lib_deps=WiFi Link'
         #- example: examples/Boards_WiFi/Fishino
-        #  extra_args: --board=uno
         - example: examples/Boards_WiFi/RN_XV_WiFly
-          extra_args: --board=leonardo
+          board: leonardo
         #- example: examples/Boards_WiFi/TinyDuino_WiFi
-        #  extra_args: --board=tinyduino --project-option='lib_deps=Adafruit CC3000 Library'
+        #  board: tinyduino
+        #  extra_args: --project-option='lib_deps=Adafruit CC3000 Library'
         - example: examples/Boards_WiFi/WildFire_V3
-          extra_args: --board=wildfirev3 --project-option='lib_deps=WildFire-CC3000'
+          board: wildfirev3
+          extra_args: --project-option='lib_deps=WildFire-CC3000'
         #- example: examples/Boards_WiFi/Wio_Terminal
-        #  extra_args: --board=seeed_wio_terminal --project-option='lib_deps=SPI, Seeed Arduino rpcWiFi'
+        #  board: seeed_wio_terminal
+        #  extra_args: --project-option='lib_deps=SPI, Seeed Arduino rpcWiFi'
         #- example: examples/Boards_WiFi/WizFi250
-        #  extra_args: --board=uno --project-option='lib_deps=WizFi250'
+        #  extra_args: --project-option='lib_deps=WizFi250'
         - example: examples/Boards_WiFi/WizFi310
-          extra_args: --board=uno --project-option='lib_deps=WizFi310'
+          extra_args: --project-option='lib_deps=WizFi310'
 
     steps: &platformio_steps
       - uses: actions/checkout@v6
@@ -211,7 +225,7 @@ jobs:
           pio pkg install -g -l "sumotoy/simplyEncoder"
 
       - name: Build PlatformIO example
-        run: pio ci --lib=. ${{ matrix.extra_args }}
+        run: pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} ${{ matrix.extra_args }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
@@ -227,21 +241,20 @@ jobs:
       matrix:
         include:
         - example: examples/Boards_ArduinoClient/Arduino_Ethernet
-          extra_args: --board=uno
         - example: examples/Boards_ArduinoClient/Arduino_MKR1400_GSM_ETH
-          extra_args: --board=mkrgsm1400 --project-option='lib_deps=MKRGSM'
+          board: mkrgsm1400
+          extra_args: --project-option='lib_deps=MKRGSM'
         - example: examples/Boards_ArduinoClient/Arduino_MKR1400_GSM_ETH_SSL
-          extra_args: --board=mkrgsm1400 --project-option='lib_deps=MKRGSM'
+          board: mkrgsm1400
+          extra_args: --project-option='lib_deps=MKRGSM'
         - example: examples/Boards_Ethernet/Arduino_Ethernet
-          extra_args: --board=uno
         - example: examples/Boards_Ethernet/Arduino_Ethernet_Manual
-          extra_args: --board=uno
         - example: examples/Boards_Ethernet/Arduino_MKR_ETH
-          extra_args: --board=mkrzero
+          board: mkrzero
         - example: examples/Boards_Ethernet/Arduino_MKR_ETH_SSL
-          extra_args: --board=mkrzero
+          board: mkrzero
         - example: examples/Boards_Ethernet/ENC28J60
-          extra_args: --board=nanoatmega328
+          board: nanoatmega328
 
     steps: *platformio_steps
 
@@ -253,13 +266,15 @@ jobs:
       matrix:
         include:
         - example: examples/Boards_GSM/Arduino_MKRGSM
-          extra_args: --board=mkrgsm1400 --project-option='lib_deps=MKRGSM'
+          board: mkrgsm1400
+          extra_args: --project-option='lib_deps=MKRGSM'
         - example: examples/Boards_GSM/Arduino_MKRNB
-          extra_args: --board=mkrnb1500 --project-option='lib_deps=MKRNB'
+          board: mkrnb1500
+          extra_args: --project-option='lib_deps=MKRNB'
         - example: examples/Boards_GSM/TinyGSM_MKR1400
-          extra_args: --board=mkrgsm1400
+          board: mkrgsm1400
         - example: examples/Boards_GSM/TinyGSM_SIM800_SIM900
-          extra_args: --board=leonardo
+          board: leonardo
 
     steps: *platformio_steps
 
@@ -271,11 +286,9 @@ jobs:
       matrix:
         include:
         - example: examples/Boards_With_HTTP_API/Arduino_Ethernet
-          extra_args: --board=uno
         - example: examples/Boards_With_HTTP_API/Arduino_GSM
-          extra_args: --board=uno
         - example: examples/Boards_With_HTTP_API/SIM800_SIM900
-          extra_args: --board=leonardo
+          board: leonardo
 
     steps: *platformio_steps
 
@@ -287,49 +300,28 @@ jobs:
       matrix:
         include:
         - example: examples/GettingStarted/BlynkBlink
-          extra_args: --board=uno
         - example: examples/GettingStarted/GetData
-          extra_args: --board=uno
         - example: examples/GettingStarted/PushData
-          extra_args: --board=uno
         - example: examples/GettingStarted/Servo
-          extra_args: --board=uno
         - example: examples/GettingStarted/VirtualPinRead
-          extra_args: --board=uno
         - example: examples/GettingStarted/VirtualPinWrite
-          extra_args: --board=uno
         - example: examples/More/DHT11
-          extra_args: --board=uno --project-option='lib_deps=Adafruit Unified Sensor'
+          extra_args: --project-option='lib_deps=Adafruit Unified Sensor'
         - example: examples/More/FormatString
-          extra_args: --board=uno
         - example: examples/More/NeoPixel
-          extra_args: --board=uno
         - example: examples/More/PrintAllVirtual
-          extra_args: --board=uno
         - example: examples/More/RTC
-          extra_args: --board=uno
         - example: examples/More/RTC_Advanced
-          extra_args: --board=uno
         - example: examples/More/ServerAsDataStorage/ServerAsDataStorage_MultiValue
-          extra_args: --board=uno
         - example: examples/More/ServerAsDataStorage/ServerAsDataStorage_SingleValue
-          extra_args: --board=uno
         - example: examples/More/SetProperty/SetProperty_MultiValue
-          extra_args: --board=uno
         - example: examples/More/SetProperty/SetProperty_SingleValue
-          extra_args: --board=uno
         - example: examples/More/Stroboscope
-          extra_args: --board=uno
         - example: examples/More/Sync/ButtonInterrupt
-          extra_args: --board=uno
         - example: examples/More/Sync/ButtonPoll
-          extra_args: --board=uno
         - example: examples/More/Sync/HardwareSyncStateFromApp
-          extra_args: --board=uno
         - example: examples/More/Sync/SyncPhysicalButton
-          extra_args: --board=uno
         - example: examples/More/TimeAndLocation
-          extra_args: --board=uno
 
     steps: *platformio_steps
 
@@ -341,33 +333,19 @@ jobs:
       matrix:
         include:
         - example: examples/Widgets/Joystick
-          extra_args: --board=uno
         - example: examples/Widgets/LCD/LCD_AdvancedMode
-          extra_args: --board=uno
         - example: examples/Widgets/LCD/LCD_SimpleMode
-          extra_args: --board=uno
         - example: examples/Widgets/LED/LED_Blink
-          extra_args: --board=uno
         - example: examples/Widgets/LED/LED_Color
-          extra_args: --board=uno
         - example: examples/Widgets/LED/LED_Fade
-          extra_args: --board=uno
         - example: examples/Widgets/LED/LED_StatusOfButton
-          extra_args: --board=uno
         - example: examples/Widgets/Map
-          extra_args: --board=uno
         - example: examples/Widgets/Menu
-          extra_args: --board=uno
         - example: examples/Widgets/MusicPlayer
-          extra_args: --board=uno
         - example: examples/Widgets/Terminal
-          extra_args: --board=uno
         - example: examples/Widgets/TimeInput/AdvancedTimeInput
-          extra_args: --board=uno
         - example: examples/Widgets/TimeInput/SimpleTimeInput
-          extra_args: --board=uno
         - example: examples/Widgets/TimeInput/UpdateTimeInputState
-          extra_args: --board=uno
 
     steps: *platformio_steps
 
