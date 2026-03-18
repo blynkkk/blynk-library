@@ -6,7 +6,7 @@ import sys
 
 from platformio.proc import exec_command
 
-WARNING_THRESHOLD = 0.90  # 90%
+WARNING_THRESHOLD = 0.8
 
 
 def _configure_defaults():
@@ -106,8 +106,10 @@ def check_memory_threshold(source, target, env):
 
     program_size = _calculate_size(output, env.get("SIZEPROGREGEXP"))
     data_size = _calculate_size(output, env.get("SIZEDATAREGEXP"))
-
-    print('Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"')
+    
+    if data_size <= 0 or program_size <= 0:
+        sys.stderr.write("Error: Unable to determine program or data size from output\n")
+        env.Exit(1)
 
     _warn_if_high("RAM", data_size, data_max_size)
     _warn_if_high("Flash", program_size, program_max_size)
