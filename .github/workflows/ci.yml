@@ -15,7 +15,7 @@ jobs:
         - example: examples/Blynk.Edgent/Edgent_ESP32
           extra_args: --board=esp32dev --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_ESP32
-          extra_args: |
+          extra_args:
             --board=esp32dev
             --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
             --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip'
@@ -53,7 +53,7 @@ jobs:
         run: pio ci --lib=. ${{ matrix.extra_args }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
-          PLATFORMIO_BUILD_FLAGS: |
+          PLATFORMIO_BUILD_FLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
 
@@ -118,7 +118,7 @@ jobs:
         run: pio ci --lib=. ${{ matrix.extra_args }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
-          PLATFORMIO_BUILD_FLAGS: |
+          PLATFORMIO_BUILD_FLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
             -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
@@ -203,7 +203,7 @@ jobs:
         run: pio ci --lib=. ${{ matrix.extra_args }}
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
-          PLATFORMIO_BUILD_FLAGS: |
+          PLATFORMIO_BUILD_FLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
             -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
@@ -368,6 +368,6 @@ jobs:
       - name: Build Linux target
         run: make -C linux
         env:
-          CXXFLAGS: |
+          CXXFLAGS:
             -DBLYNK_TEMPLATE_ID="\"TMPLxxxx\""
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
