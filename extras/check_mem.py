@@ -79,9 +79,7 @@ def _warn_if_high(label, used, total):
         )
 
 
-def check_memory_threshold(source, target, env_):
-    del target, env_  # unused
-
+def check_memory_threshold(source, target, env):
     if not env.get("BOARD"):
         return
 
