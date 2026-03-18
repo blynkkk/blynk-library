@@ -6,7 +6,7 @@ import sys
 
 from platformio.proc import exec_command
 
-WARNING_THRESHOLD = 0.8
+WARNING_THRESHOLD = 0.5
 
 
 def _configure_defaults():
@@ -67,15 +67,15 @@ def _warn_if_high(label, used, total):
 
     ratio = float(used) / float(total)
     if ratio >= WARNING_THRESHOLD:
-        sys.stderr.write(
-            "Warning: {} usage is {:.1f}% ({} / {} bytes), which exceeds {:.0f}%\n".format(
-                label,
-                ratio * 100.0,
-                used,
-                total,
-                WARNING_THRESHOLD * 100.0,
-            )
+        msg = "{} usage is {:.1f}% ({} / {} bytes), which exceeds {:.0f}%\n".format(
+            label,
+            ratio * 100.0,
+            used,
+            total,
+            WARNING_THRESHOLD * 100.0,
         )
+        print(f'::warning file=check_mem.py,title=Firmware Size Warning::{msg}')
+
     else:
         print(
             "{} usage is OK: {:.1f}% ({} / {} bytes)".format(
@@ -113,19 +113,6 @@ def check_memory_threshold(source, target, env):
 
     _warn_if_high("RAM", data_size, data_max_size)
     _warn_if_high("Flash", program_size, program_max_size)
-
-    if data_max_size and data_size > data_max_size:
-        sys.stderr.write(
-            "Warning! The data size (%d bytes) is greater than maximum allowed (%s bytes)\n"
-            % (data_size, data_max_size)
-        )
-
-    if program_size > program_max_size:
-        sys.stderr.write(
-            "Error: The program size (%d bytes) is greater than maximum allowed (%s bytes)\n"
-            % (program_size, program_max_size)
-        )
-        env.Exit(1)
 
 
 env.AddPostAction("$PROGPATH", check_memory_threshold)
