@@ -6,7 +6,7 @@ import sys
 
 from platformio.proc import exec_command
 
-WARNING_THRESHOLD = 0.5
+WARNING_THRESHOLD = 0.9
 
 
 def _configure_defaults():
@@ -74,7 +74,13 @@ def _warn_if_high(label, used, total):
             total,
             WARNING_THRESHOLD * 100.0,
         )
-        print(f'::warning file=check_mem.py,title=Firmware Size Warning::{msg}')
+        if src := os.environ.get("PLATFORMIO_CI_SRC"):
+            # Find ino or cpp file in the source path
+            files = (f for f in os.listdir(src) if f.endswith((".ino", ".cpp", ".c")))
+            file = next(files, None)
+            print(f'::warning f"file={file},title=Firmware Size Warning::{msg}')
+        else:
+            print("WARNING:", msg)
 
     else:
         print(
