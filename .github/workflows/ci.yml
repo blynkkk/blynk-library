@@ -58,7 +58,10 @@ jobs:
           pio pkg install -g -l "jandrassy/ArduinoOTA"
 
       - name: Build PlatformIO example
-        run: pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} ${{ matrix.extra_args }} ${{ matrix.platform }}
+        run: |
+          pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} \
+          ${{ matrix.extra_args }} ${{ matrix.platform }} \
+          --project-option='extra_scripts=post:extras/check_mem.py'
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
@@ -135,7 +138,10 @@ jobs:
           pio pkg install -g -l "https://github.com/vshymanskyy/BlynkESP8266.git"
 
       - name: Build PlatformIO example
-        run: pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} ${{ matrix.extra_args }} ${{ matrix.platform }}
+        run: |
+          pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} \
+          ${{ matrix.extra_args }} ${{ matrix.platform }} \
+          --project-option='extra_scripts=post:extras/check_mem.py'
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
@@ -225,7 +231,10 @@ jobs:
           pio pkg install -g -l "sumotoy/simplyEncoder"
 
       - name: Build PlatformIO example
-        run: pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} ${{ matrix.extra_args }}
+        run: |
+          pio ci --lib=. --board=${{ matrix.board || env.DEFAULT_BOARD }} \
+          ${{ matrix.extra_args }} ${{ matrix.platform }} \
+          --project-option='extra_scripts=post:extras/check_mem.py'
         env:
           PLATFORMIO_CI_SRC: ${{ matrix.example }}
           PLATFORMIO_BUILD_FLAGS:
