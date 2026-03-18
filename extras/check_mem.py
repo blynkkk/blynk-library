@@ -75,9 +75,9 @@ def _warn_if_high(label, used, total):
             WARNING_THRESHOLD * 100.0,
         )
         if src := os.environ.get("PLATFORMIO_CI_SRC"):
-            print("CWD:", os.getcwd())
+            project_dir = env.subst("$PROJECT_DIR")
             # Find ino or cpp file in the source path
-            files = (f for f in os.listdir(src) if f.endswith((".ino", ".cpp", ".c")))
+            files = (f for f in os.listdir(project_dir + "/" + src) if f.endswith((".ino", ".cpp", ".c")))
             file = next(files, None)
             print(f'::warning f"file={file},title=Firmware Size Warning::{msg}')
         else:
