@@ -4,21 +4,28 @@ on:
   push:
   pull_request:
 
+env:
+  ESP32_CORE_V2: platformio/espressif32
+  ESP32_CORE_V3: https://github.com/pioarduino/platform-espressif32/releases/latest/download/platform-espressif32.zip
+
 jobs:
   platformio-edgent:
-    name: PIO Edgent - ${{ matrix.example }}
+    name: Edgent - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
         - example: examples/Blynk.Edgent/Edgent_ESP32
-          extra_args: --board=esp32dev --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
+          extra_args:
+            --board=esp32dev
+            --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
+            --project-option='platform=${{ env.ESP32_CORE_V2 }}'
         - example: examples/Blynk.Edgent/Edgent_ESP32
           extra_args:
             --board=esp32dev
             --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
-            --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip'
+            --project-option='platform=${{ env.ESP32_CORE_V3 }}'
         - example: examples/Blynk.Edgent/Edgent_ESP8266
           extra_args: --board=nodemcuv2 --project-option='build_flags=-DBOARD_LED_PIN_WS2812 -DUSE_TICKER'
         - example: examples/Blynk.Edgent/Edgent_NCP
@@ -58,24 +65,26 @@ jobs:
             -DBLYNK_TEMPLATE_NAME="\"MyDevice\""
 
   platformio-esp:
-    name: PIO ESP - ${{ matrix.example }}
+    name: ESP - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
         - example: examples/Boards_ArduinoClient/ESP8266_ESP32
-          extra_args: --board=esp32dev
-        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
           extra_args: --board=nodemcuv2
+        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+        - example: examples/Boards_ArduinoClient/ESP8266_ESP32
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
         - example: examples/Boards_WiFi/ESP32_WiFi
-          extra_args: --board=esp32dev
-        - example: examples/Boards_WiFi/ESP32_WiFi_SSL
-          extra_args: --board=esp32dev
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
         - example: examples/Boards_WiFi/ESP32_WiFi
-          extra_args: --board=esp32dev --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip'
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
         - example: examples/Boards_WiFi/ESP32_WiFi_SSL
-          extra_args: --board=esp32dev --project-option='platform=https://github.com/pioarduino/platform-espressif32/releases/download/55.03.37/platform-espressif32.zip'
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+        - example: examples/Boards_WiFi/ESP32_WiFi_SSL
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
         - example: examples/Boards_WiFi/ESP8266_Shield
           extra_args: --board=megaatmega2560
         - example: examples/Boards_WiFi/ESP8266_Standalone
@@ -85,7 +94,9 @@ jobs:
         - example: examples/Boards_WiFi/ESP8266_Standalone_SSL
           extra_args: --board=nodemcuv2
         - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
-          extra_args: --board=esp32dev
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V2 }}'
+        - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
+          extra_args: --board=esp32dev --project-option='platform=${{ env.ESP32_CORE_V3 }}'
         - example: examples/Boards_With_HTTP_API/ESP8266_ESP32
           extra_args: --board=nodemcuv2
         - example: examples/Boards_WiFi/Sparkfun_Blynk_Board
@@ -124,7 +135,7 @@ jobs:
             -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
 
   platformio-wifi:
-    name: PIO WiFi - ${{ matrix.example }}
+    name: WiFi - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -209,7 +220,7 @@ jobs:
             -DBLYNK_AUTH_TOKEN="\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\""
 
   platformio-ethernet:
-    name: PIO Ethernet - ${{ matrix.example }}
+    name: Ethernet - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -235,7 +246,7 @@ jobs:
     steps: *platformio_steps
 
   platformio-gsm:
-    name: PIO GSM - ${{ matrix.example }}
+    name: GSM - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -253,7 +264,7 @@ jobs:
     steps: *platformio_steps
 
   platformio-http:
-    name: PIO HTTP API - ${{ matrix.example }}
+    name: HTTP API - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -269,7 +280,7 @@ jobs:
     steps: *platformio_steps
 
   platformio-core:
-    name: PIO Core - ${{ matrix.example }}
+    name: Core - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -323,7 +334,7 @@ jobs:
     steps: *platformio_steps
 
   platformio-widgets:
-    name: PIO Widgets - ${{ matrix.example }}
+    name: Widgets - ${{ matrix.example }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
