@@ -6,7 +6,7 @@
   "authors": [
     {
       "name":  "Blynk",
-      "url":   "https://github.com/blynkkk"
+      "url":   "https://github.com/Blynk-Technologies"
     },
     {
       "name":  "Volodymyr Shymanskyy",
@@ -17,7 +17,7 @@
   "repository":
   {
     "type": "git",
-    "url": "https://github.com/blynkkk/blynk-library.git"
+    "url": "https://github.com/Blynk-Technologies/blynk-library.git"
   },
   "homepage": "https://blynk.io",
   "export": {

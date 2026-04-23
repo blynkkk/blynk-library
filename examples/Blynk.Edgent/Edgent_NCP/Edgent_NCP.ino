@@ -17,7 +17,7 @@
         flashed using Blynk.NCP firmware.
 
    The easiest way to install the NCP firmware is using this PlatformIO project:
-   https://github.com/blynkkk/BlynkNcpExample
+   https://github.com/Blynk-Technologies/Blynk-NCP-Example-Arduino
 
  *************************************************************/
 
@@ -65,7 +65,7 @@ void setup() {
   } else {
     BLYNK_LOG("Cannot communicate to Blynk.NCP");
     BLYNK_LOG("  Please ensure you have flashed your board with the Blynk.NCP firmware, before running this example.");
-    BLYNK_LOG("  See: https://github.com/blynkkk/BlynkNcpExample");
+    BLYNK_LOG("  See: https://github.com/Blynk-Technologies/Blynk-NCP-Example-Arduino");
     return;
   }
 

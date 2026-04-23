@@ -3,7 +3,7 @@ Thanks for using Blynk App :-)
 
 Before opening an issue, please make sure you've read these:
   http://docs.blynk.cc
-  https://github.com/blynkkk/blynk-library/wiki
+  https://github.com/Blynk-Technologies/blynk-library/wiki
   https://guides.github.com/features/mastering-markdown
 
 Please provide the following information for all issues.
