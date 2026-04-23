@@ -93,8 +93,13 @@ def check_memory_threshold(source, target, env):
 
     if not env.get("SIZECHECKCMD") and not env.get("SIZETOOL"):
         return
-
-    program_max_size = int(env.BoardConfig().get("upload.maximum_size", 0))
+    platform = env.PioPlatform()
+    if "espressif32" in platform.name:
+        program_max_size = 1310720
+    elif "espressif8266" in platform.name:
+        program_max_size = 1044464
+    else:
+        program_max_size = int(env.BoardConfig().get("upload.maximum_size", 0))
     data_max_size = int(env.BoardConfig().get("upload.maximum_ram_size", 0))
 
     if program_max_size == 0:
@@ -104,9 +109,6 @@ def check_memory_threshold(source, target, env):
         _configure_defaults()
 
     output = _get_size_output(target)
-    if output:
-        print(output)
-
     program_size = _calculate_size(output, env.get("SIZEPROGREGEXP"))
     data_size = _calculate_size(output, env.get("SIZEDATAREGEXP"))
     
