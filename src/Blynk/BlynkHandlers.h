@@ -151,57 +151,21 @@
 #define BLYNK_WRITE_2(pin) \
     void BlynkWidgetWrite ## pin (BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param)
 
-#define BLYNK_READ_2(pin)  \
-    void BlynkWidgetRead ## pin  (BlynkReq BLYNK_UNUSED &request)
-
 #define BLYNK_WRITE_DEFAULT() BLYNK_WRITE_2(Default)
-#define BLYNK_READ_DEFAULT()  BLYNK_READ_2(Default)
 
 #define BLYNK_WRITE(pin)      BLYNK_WRITE_2(pin)
-#define BLYNK_READ(pin)       BLYNK_READ_2(pin)
 
 // New, more readable syntax:
 #define BLYNK_IN_2(pin)  \
     void BlynkWidgetWrite ## pin (BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &getValue)
 
-#define BLYNK_OUT_2(pin) \
-    void BlynkWidgetRead ## pin  (BlynkReq BLYNK_UNUSED &request)
-
 #define BLYNK_INPUT_DEFAULT()   BLYNK_IN_2(Default)
-#define BLYNK_OUTPUT_DEFAULT()  BLYNK_OUT_2(Default)
 
 #define BLYNK_INPUT(pin)        BLYNK_IN_2(pin)
-#define BLYNK_OUTPUT(pin)       BLYNK_OUT_2(pin)
 
 // Additional handlers
 #define BLYNK_CONNECTED()    void BlynkOnConnected()
 #define BLYNK_DISCONNECTED() void BlynkOnDisconnected()
-
-// Advanced functions
-
-#define BLYNK_VAR_INT(name, pin) \
-    int name;  \
-    BLYNK_WRITE(pin) { name = param.asInt(); } \
-    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
-
-#define BLYNK_VAR_LONG(name, pin) \
-    long name;  \
-    BLYNK_WRITE(pin) { name = param.asLong(); } \
-    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
-
-#ifndef BLYNK_NO_FLOAT
-#define BLYNK_VAR_DOUBLE(name, pin) \
-    double name;  \
-    BLYNK_WRITE(pin) { name = param.asDouble(); } \
-    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
-#endif
-
-#ifdef ARDUINO
-#define BLYNK_VAR_STRING(name, pin) \
-    String name;  \
-    BLYNK_WRITE(pin) { name = param.asStr(); } \
-    BLYNK_READ(pin)  { Blynk.virtualWrite(pin, name); }
-#endif
 
 // Default read/write handlers (you can redefine them in your code)
 #ifdef __cplusplus
@@ -213,14 +177,11 @@ struct BlynkReq
     uint16_t pin;
 };
 
-typedef void (*WidgetReadHandler)(BlynkReq BLYNK_UNUSED &request);
 typedef void (*WidgetWriteHandler)(BlynkReq BLYNK_UNUSED &request, const BlynkParam BLYNK_UNUSED &param);
 
-WidgetReadHandler GetReadHandler(uint8_t pin);
 WidgetWriteHandler GetWriteHandler(uint8_t pin);
 
 // Declare placeholders
-BLYNK_READ();
 BLYNK_WRITE();
 void BlynkNoOpCbk();
 
@@ -243,139 +204,7 @@ BLYNK_WRITE(InternalPinDBG);
 //#define BLYNK_APP_DISCONNECTED() BLYNK_WRITE(InternalPinADIS)
 
 // Regular Virtual Pins
-BLYNK_READ_DEFAULT();
 BLYNK_WRITE_DEFAULT();
-
-BLYNK_READ(0 );
-BLYNK_READ(1 );
-BLYNK_READ(2 );
-BLYNK_READ(3 );
-BLYNK_READ(4 );
-BLYNK_READ(5 );
-BLYNK_READ(6 );
-BLYNK_READ(7 );
-BLYNK_READ(8 );
-BLYNK_READ(9 );
-BLYNK_READ(10);
-BLYNK_READ(11);
-BLYNK_READ(12);
-BLYNK_READ(13);
-BLYNK_READ(14);
-BLYNK_READ(15);
-BLYNK_READ(16);
-BLYNK_READ(17);
-BLYNK_READ(18);
-BLYNK_READ(19);
-BLYNK_READ(20);
-BLYNK_READ(21);
-BLYNK_READ(22);
-BLYNK_READ(23);
-BLYNK_READ(24);
-BLYNK_READ(25);
-BLYNK_READ(26);
-BLYNK_READ(27);
-BLYNK_READ(28);
-BLYNK_READ(29);
-BLYNK_READ(30);
-BLYNK_READ(31);
-#ifdef BLYNK_USE_128_VPINS
-  BLYNK_READ(32);
-  BLYNK_READ(33);
-  BLYNK_READ(34);
-  BLYNK_READ(35);
-  BLYNK_READ(36);
-  BLYNK_READ(37);
-  BLYNK_READ(38);
-  BLYNK_READ(39);
-  BLYNK_READ(40);
-  BLYNK_READ(41);
-  BLYNK_READ(42);
-  BLYNK_READ(43);
-  BLYNK_READ(44);
-  BLYNK_READ(45);
-  BLYNK_READ(46);
-  BLYNK_READ(47);
-  BLYNK_READ(48);
-  BLYNK_READ(49);
-  BLYNK_READ(50);
-  BLYNK_READ(51);
-  BLYNK_READ(52);
-  BLYNK_READ(53);
-  BLYNK_READ(54);
-  BLYNK_READ(55);
-  BLYNK_READ(56);
-  BLYNK_READ(57);
-  BLYNK_READ(58);
-  BLYNK_READ(59);
-  BLYNK_READ(60);
-  BLYNK_READ(61);
-  BLYNK_READ(62);
-  BLYNK_READ(63);
-  BLYNK_READ(64);
-  BLYNK_READ(65);
-  BLYNK_READ(66);
-  BLYNK_READ(67);
-  BLYNK_READ(68);
-  BLYNK_READ(69);
-  BLYNK_READ(70);
-  BLYNK_READ(71);
-  BLYNK_READ(72);
-  BLYNK_READ(73);
-  BLYNK_READ(74);
-  BLYNK_READ(75);
-  BLYNK_READ(76);
-  BLYNK_READ(77);
-  BLYNK_READ(78);
-  BLYNK_READ(79);
-  BLYNK_READ(80);
-  BLYNK_READ(81);
-  BLYNK_READ(82);
-  BLYNK_READ(83);
-  BLYNK_READ(84);
-  BLYNK_READ(85);
-  BLYNK_READ(86);
-  BLYNK_READ(87);
-  BLYNK_READ(88);
-  BLYNK_READ(89);
-  BLYNK_READ(90);
-  BLYNK_READ(91);
-  BLYNK_READ(92);
-  BLYNK_READ(93);
-  BLYNK_READ(94);
-  BLYNK_READ(95);
-  BLYNK_READ(96);
-  BLYNK_READ(97);
-  BLYNK_READ(98);
-  BLYNK_READ(99);
-  BLYNK_READ(100);
-  BLYNK_READ(101);
-  BLYNK_READ(102);
-  BLYNK_READ(103);
-  BLYNK_READ(104);
-  BLYNK_READ(105);
-  BLYNK_READ(106);
-  BLYNK_READ(107);
-  BLYNK_READ(108);
-  BLYNK_READ(109);
-  BLYNK_READ(110);
-  BLYNK_READ(111);
-  BLYNK_READ(112);
-  BLYNK_READ(113);
-  BLYNK_READ(114);
-  BLYNK_READ(115);
-  BLYNK_READ(116);
-  BLYNK_READ(117);
-  BLYNK_READ(118);
-  BLYNK_READ(119);
-  BLYNK_READ(120);
-  BLYNK_READ(121);
-  BLYNK_READ(122);
-  BLYNK_READ(123);
-  BLYNK_READ(124);
-  BLYNK_READ(125);
-  BLYNK_READ(126);
-  BLYNK_READ(127);
-#endif
 
 BLYNK_WRITE(0 );
 BLYNK_WRITE(1 );

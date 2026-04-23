@@ -68,7 +68,7 @@ BLYNK_WRITE(V3)
   test = param.asInt();
 }
 
-BLYNK_READ(V4)
+void testWrites()
 {
   Blynk.virtualWrite(V4, millis(), BlynkFreeRam());
 }
@@ -78,9 +78,9 @@ BLYNK_READ(V4)
 void loop()
 {
   bool hasIncomingData = (test > 0);
-
   if (!Blynk.run(hasIncomingData)) {
 
   }
+  testWrites();
 }
 

@@ -189,15 +189,6 @@ public:
         }
     }
 
-    void callReadHandler(BlynkReq& req) {
-        WidgetReadHandler handler = GetReadHandler(req.pin);
-        if (handler && (handler != BlynkWidgetRead)) {
-            handler(req);
-        } else {
-            BlynkWidgetReadDefault(req);
-        }
-    }
-
     /**
      * Requests Server to re-send current values for all widgets.
      */
@@ -335,21 +326,6 @@ public:
 #if defined(BLYNK_EXPERIMENTAL)
     // Attention!
     // Every function in this section may be changed, removed or renamed.
-
-    /**
-     * Refreshes value of a widget by running
-     * user-defined BLYNK_READ handler of a pin.
-     *
-     * @experimental
-     *
-     * @param pin Virtual Pin number
-     */
-    void refresh(int pin) {
-        if (WidgetReadHandler handler = GetReadHandler(pin)) {
-            BlynkReq req = { 0, BLYNK_SUCCESS, (uint8_t)pin };
-            handler(req);
-        }
-    }
 
     /**
      * Delays for N milliseconds, handling server communication in background.
