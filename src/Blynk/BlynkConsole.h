@@ -154,7 +154,7 @@ public:
     }
 
     ProcessResult process(char c) {
-        if (cmdPtr >= cmdBuff+sizeof(cmdBuff)) {
+        if (cmdPtr >= cmdBuff + sizeof(cmdBuff) - 1) {
             reset_buff();
         }
 
@@ -227,10 +227,12 @@ public:
 
     void begin(Stream& s) {
         stream = &s;
+        reset_buff();
     }
 
     void begin(Stream* s) {
         stream = s;
+        reset_buff();
     }
 
     Stream& getStream() {
