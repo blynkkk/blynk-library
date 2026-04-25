@@ -19,10 +19,9 @@
 
 #if defined(ARDUINO) && !(defined(LINUX) || defined(__MBED__))
     #define BLYNK_USE_STREAM_CLASS
-    #define BLYNK_STREAM_CLASS_OVERRIDE
 #elif defined(SPARK) || defined(PARTICLE)
     #define BLYNK_USE_STREAM_CLASS
-    #define BLYNK_STREAM_CLASS_OVERRIDE
+    
 #endif
 
 #include <Blynk/BlynkWidgetBase.h>
@@ -30,6 +29,9 @@
 
 #ifdef BLYNK_USE_STREAM_CLASS
     #include <Stream.h>
+    #define BLYNK_STREAM_CLASS_OVERRIDE override
+#else
+    #define BLYNK_STREAM_CLASS_OVERRIDE
 #endif
 
 class WidgetTerminal
