@@ -123,7 +123,7 @@ public:
     }
 
     virtual size_t write(const char* str) {
-        return write(str, strlen(str));
+        return write((const uint8_t*)str, strlen(str));
     }
 
 #endif

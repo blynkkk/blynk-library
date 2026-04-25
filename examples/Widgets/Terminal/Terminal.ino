@@ -53,7 +53,7 @@ BLYNK_WRITE(V10)
 
     // Send it back
     terminal.print("You said:");
-    terminal.write(param.getBuffer(), param.getLength());
+    terminal.write((const uint8_t*)param.getBuffer(), param.getLength());
     terminal.println();
   }
 
